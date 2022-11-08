@@ -8,7 +8,7 @@
 					
 		            </div>
 		            <div class="col-sm-3">
-		                <h5>Category</h5>
+		                <h5><a href="./boardList.re">Category</a></h5>
 		                <ul>
 		                    <li><a href="blog.html">한 식</a>  </li>
 		                    <li><a href="single.html">양 식</a>  </li>
