@@ -75,6 +75,27 @@ public class StoreFrontController extends HttpServlet {
 					
 					
 				}
+				else if(command.equals("/StoreJoin.st")) {
+					System.out.println(" C : /StoreJoin.st 호출");
+					
+					forward = new ActionForward();
+					forward.setPath("./ceo/storeJoin.jsp");
+					forward.setRedirect(false);
+				}
+				else if(command.equals("/StoreJoinAction.st")) {
+					System.out.println(" C : /StoreJoinAction.st 호출");
+					System.out.println(" C : [패턴2] "); // 리다이렉션
+					
+					// StoreJoinAction()
+					action = new StoreJoinAction();
+					
+					try {
+						forward = action.execute(request, response);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					
+				}
 				
 				System.out.println(" C : 2. 가상주소 매핑 끝 \n");
 				// 3. 페이지 이동
