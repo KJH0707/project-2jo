@@ -11,7 +11,7 @@
     <head>
        <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>GARO ESTATE | Submit property Page</title>
+        <title>FORK & KNIFE | Submit Store Page</title>
         <meta name="description" content="GARO is a real-estate template">
         <meta name="author" content="Kimarotec">
         <meta name="keyword" content="html5, css, bootstrap, property, real-estate theme , bootstrap template">
@@ -19,26 +19,9 @@
 
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700,800' rel='stylesheet' type='text/css'>
 
-        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-        <link rel="icon" href="favicon.ico" type="image/x-icon">
-
-        <link rel="stylesheet" href="assets/css/normalize.css">
-        <link rel="stylesheet" href="assets/css/font-awesome.min.css">
-        <link rel="stylesheet" href="assets/css/fontello.css">
-        <link href="assets/fonts/icon-7-stroke/css/pe-icon-7-stroke.css" rel="stylesheet">
-        <link href="assets/fonts/icon-7-stroke/css/helper.css" rel="stylesheet">
-        <link href="css/animate.css" rel="stylesheet" media="screen">
-        <link rel="stylesheet" href="assets/css/bootstrap-select.min.css"> 
-        <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
-        <link rel="stylesheet" href="assets/css/icheck.min_all.css">
-        <link rel="stylesheet" href="assets/css/price-range.css">
-        <link rel="stylesheet" href="assets/css/owl.carousel.css">  
-        <link rel="stylesheet" href="assets/css/owl.theme.css">
-        <link rel="stylesheet" href="assets/css/owl.transitions.css"> 
+		<!-- tab 마법사 -->
         <link rel="stylesheet" href="assets/css/wizard.css"> 
-        <link rel="stylesheet" href="assets/css/style.css">
-        <link rel="stylesheet" href="assets/css/responsive.css">
+        <!-- jQuery CDN -->
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 		<!-- Latest compiled and minified CSS -->
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
@@ -46,8 +29,6 @@
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 		<!-- (Optional) Latest compiled and minified JavaScript translation files -->
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js"></script>
-		<!-- 타임피커 CDN  -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script type="text/javascript" language="javascript">
 $(document).ready(function(){
@@ -65,40 +46,6 @@ $(document).ready(function(){
 		});
 	
 });
-	
-	function bussNo(){
-		
-		if(document.fr.storeName.value==""){
-			alert("상호명을 입력하세요");
-			document.fr.storeName.focus;
-			return false;
-		}
-		if(document.fr.tel.value==""){
-			alert("전화번호를 입력하세요");
-			document.fr.tel.focus;
-			return false;
-		}
-		if(document.fr.businessNumber.value.length != 10){
-			alert("사업자번호 10자 입력");
-			document.fr.businessNumber.focus;
-			return false;
-		}
-		if(document.fr.sort.value==""){
-			alert("분류를 선택하세요");
-			document.fr.sort.focus;
-			return false;
-		}
-		if(document.fr.Addr2.value==""){
-			alert("주소를 입력하세요");
-			document.fr.Addr2.focus;
-			return false;
-		}
-		if(document.fr.necessity.checked == false){
-			alert("필수약관에 동의하세요");
-			document.fr.necessity.focus;
-			return false;
-		}
-	}
 	
 	//전화번호 입력형식 
 	function autoHypenTel(str) {
@@ -158,9 +105,42 @@ $(document).ready(function(){
 		  return str;
 		}
 	
+	function bussNo(){
+		
+		if(document.fr.storeName.value==""){
+			alert("상호명을 입력하세요");
+			document.fr.storeName.focus;
+			return false;
+		}
+		if(document.fr.tel.value==""){
+			alert("전화번호를 입력하세요");
+			document.fr.tel.focus;
+			return false;
+		}
+		if(document.fr.businessNumber.value.length != 10){
+			alert("사업자번호 10자 입력");
+			document.fr.businessNumber.focus;
+			return false;
+		}
+		if(document.fr.sort.value==""){
+			alert("분류를 선택하세요");
+			document.fr.sort.focus;
+			return false;
+		}
+		if(document.fr.Addr2.value==""){
+			alert("주소를 입력하세요");
+			document.fr.Addr2.focus;
+			return false;
+		}
+		if(document.fr.necessity.checked == false){
+			alert("필수약관에 동의하세요");
+			document.fr.necessity.focus;
+			return false;
+		}
+	}
+	
 }
 </script>
-
 <style type="text/css">
 .box {
 	float: left;
@@ -214,7 +194,7 @@ $(document).ready(function(){
 								<!-- Start tab content -->
                                 <div class="tab-content">
                                 	<!-- Start step1 -->
-                                    <div class="tab-pane" id="step1"> <!-- class="tab-pane active" 로 바꿀것  -->
+                                    <div class="tab-pane active" id="step1"> <!-- class="tab-pane active" 로 바꿀것  -->
 	                                    <h4 class="info-text"> 기본 정보 입력 <small>(필수입력사항)</small></h4>
 	                                    <div class="col-sm-6">
 		                                    <!-- 가게 메인이미지 -->
@@ -233,6 +213,7 @@ $(document).ready(function(){
 			                                       	<input type="text" id="postcode" placeholder="우편번호" readonly>
 													<input type="text" name="Addr1" id="Addr1" placeholder="도로명주소" readonly>
 													<input type="text" id="jibunAddress" placeholder="지번주소"readonly>
+													<span id="guide" style="color:#999;display:none"></span>
 													<input type="text" name="Addr2" id="Addr2" placeholder="상세주소" style="margin-bottom: 1%;" required>
 													<input type="text" id="extraAddress" placeholder="" readonly>
 												</div>
@@ -336,7 +317,7 @@ $(document).ready(function(){
                                     <!-- End step 2 -->
 
                                     <!-- Start step 3 -->
-                                    <div class="tab-pane active" id="step3">                                        
+                                    <div class="tab-pane" id="step3">                                        
                                         <h4 class="info-text">메뉴 등록 </h4>
                                             <div class="col-sm-6 col-sm-offset-1"> <!-- 메뉴와 사진을 추가 버튼을 통해 추가할 수 있도록 할 것 -->
                                             	<!-- <div class="pull-right">
@@ -597,6 +578,7 @@ $(document).ready(function(){
 		                document.getElementById("Addr1").value = roadAddr;
 		                document.getElementById("jibunAddress").value = data.jibunAddress;
 		                
+		                
 		                // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
 		                if(roadAddr !== ''){
 		                    document.getElementById("extraAddress").value = extraRoadAddr;
@@ -620,9 +602,10 @@ $(document).ready(function(){
 		                    guideTextBox.style.display = 'none';
 		                }
 		                
+		                console.log(roadAddr);
 	                    
 		                // 주소로 상세 정보를 검색
-		                geocoder.addressSearch(data.address, function(results, status) {
+		                geocoder.addressSearch(data.roadAddr, function(results, status) {
 		                    // 정상적으로 검색이 완료됐으면
 		                    if (status === daum.maps.services.Status.OK) {
 		
@@ -636,14 +619,13 @@ $(document).ready(function(){
 		                        // 지도 중심을 변경한다.
 		                        map.setCenter(coords);
 		                        // 마커를 결과값으로 받은 위치로 옮긴다.
-		                        marker.setPosition(coords)
+		                        marker.setPosition(coords);
 		                    }
 		                });
 		            }
 		        }).open();
 		    }
-		   
-		    </script>
+		</script>
 		</script>
 	    <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 	    <script src="assets/js/vendor/modernizr-2.6.2.min.js"></script>
