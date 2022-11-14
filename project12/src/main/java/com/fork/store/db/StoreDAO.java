@@ -7,16 +7,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
-
-
-
 
 public class StoreDAO {
 	private Connection con = null;
@@ -84,11 +80,11 @@ public class StoreDAO {
 				rs = pstmt.executeQuery();
 				if(rs.next()) {
 				StoreDTO dto = new StoreDTO();
-				dto.setM_no(rs.getLong("m_no"));
+				dto.setC_no(rs.getInt("c_no"));
 				dto.setS_image(rs.getString("s_image"));
 				dto.setS_name(rs.getString("s_name"));
 				dto.setS_star(rs.getDouble("s_star"));
-				dto.setS_no(rs.getLong("s_no"));
+				dto.setS_no(rs.getInt("s_no"));
 				dto.setS_type(rs.getString("s_type"));
 				//DTO -> List
 				
@@ -119,7 +115,7 @@ public class StoreDAO {
 			con = getConnection();
 		// 3. sql 작성(select) & pstmt 객체
 //			sql = "select * from itwill_board";
-			sql = "select * from store " + "limit ?,? ";
+			sql = "select * from store " + "limit ?,?";
 			pstmt = con.prepareStatement(sql);
 		// ?????
 			pstmt.setInt(1, startRow-1); // 시작행-1
@@ -130,11 +126,11 @@ public class StoreDAO {
 			while(rs.next()) {
 				// DB -> DTO
 				StoreDTO dto = new StoreDTO();
-				dto.setM_no(rs.getLong("m_no"));
+				dto.setC_no(rs.getInt("c_no"));
 				dto.setS_image(rs.getString("s_image"));
 				dto.setS_name(rs.getString("s_name"));
 				dto.setS_star(rs.getDouble("s_star"));
-				dto.setS_no(rs.getLong("s_no"));
+				dto.setS_no(rs.getInt("s_no"));
 				dto.setS_type(rs.getString("s_type"));
 				//DTO -> List
 				
@@ -191,7 +187,56 @@ public class StoreDAO {
 	
 	// getStoreCount 가게 갯수 end
 	
+	// getStoreDetails 가게 상세보기 (s_no) - 추가함
+	public StoreDTO getStoreDetails(Long s_no) {
+		StoreDTO dto = null;
+		try {
+			con = getConnection();
+			sql = "select * from store where s_no=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setLong(1,s_no);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				dto = new StoreDTO();
+				dto.setS_no(rs.getInt("s_no"));
+				dto.setS_name(rs.getString("s_name"));
+				dto.setS_addr(rs.getString("s_addr"));
+				dto.setS_tel(rs.getString("s_tel"));
+				dto.setS_hours(rs.getString("s_hours"));
+				dto.setS_type(rs.getString("s_type"));
+
+				dto.setC_no(rs.getInt("c_no"));
+				dto.setS_image(rs.getString("s_image"));
+				
+				dto.setS_content(rs.getString("s_content"));
+				dto.setS_facility(rs.getString("s_facility"));
+				dto.setS_latitude(rs.getString("s_latitude"));
+				dto.setS_longtude(rs.getString("s_longtude"));
+				dto.setS_menuname(rs.getString("s_menuname"));
+				dto.setS_menuprice(rs.getString("s_menuprice"));
+				dto.setS_menuImg(rs.getString("s_menuImg"));
+				dto.setS_number(rs.getInt("s_number"));
+	
+				dto.setS_star(rs.getDouble("s_star"));
+				dto.setS_regdate(rs.getTimestamp("s_regdate"));
+				
+				
+				
+			}
+			
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}finally {
+			closeDB();
+			
+		}
+		return dto;
+	}
+
 	
 	
-	
+	// getStoreDetails 가게 상세보기 (s_no)
 }

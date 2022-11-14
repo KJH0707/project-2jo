@@ -1,4 +1,4 @@
-package com.fork.store.action;
+package com.fork.review.action;
 
 import java.io.IOException;
 
@@ -10,8 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-@WebServlet("*.st")
-public class StoreFrontController extends HttpServlet {
+
+@WebServlet("*.rv")
+public class ReviewFrontController extends HttpServlet {
 
 	protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println(" Store - doProcess()");
@@ -29,52 +30,63 @@ public class StoreFrontController extends HttpServlet {
 				Action action = null;
 				ActionForward forward = null;
 				
-				// 2. 호출
-				if(command.equals("/main.st")) {
-					System.out.println("C : /main.st 호출");
-					System.out.println("C : [패턴1] DB X, view");
-					
+				if (command.equals("/ReviewWrite.rv")) {
+
 					forward = new ActionForward();
-					forward.setPath("./main/main.jsp");
+					forward.setPath("./board/reviewWrite.jsp");
 					forward.setRedirect(false);
-				}
-				
-				else if(command.equals("/loginForm.st")) {
+
+					// 리뷰 액션 페이지 이동
+				} else if (command.equals("/ReviewWriteAction.rv")) {
+					System.out.println(" C : /ReviewWriteAction.rv  호출 ");
+					System.out.println(" C : [패턴2] DB사용 O, 페이지 이동(화면전환)");
+
+					action = new ReviewWriteAction();
+
+					try {
+						forward = action.execute(request, response);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				} // ReviewWriteAction.rv
+				else if(command.equals("/ReviewList.rv")) {
+					System.out.println(" C : /ReviewList.rv  호출 ");
+					System.out.println(" C : [패턴3] DB사용o, view출력");
 					
-					forward = new ActionForward();
-					forward.setPath("./main/login.jsp");
-					forward.setRedirect(false);
-				}
-				
-				else if(command.equals("/registerForm.st")) {
-					
-					forward = new ActionForward();
-					forward.setPath("./main/register.jsp");
-					forward.setRedirect(false);
-					
-				}
-				
-				else if(command.equals("/storeList.st")) {
-					
-					action = new StoreListAction();
+					// BoardListAction 객체 생성
+					action = new ReviewListAction();
 					
 					try {
 						forward = action.execute(request, response);
 					} catch (Exception e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					
-				}
+				} // BoardList.bo
 				
-				else if(command.equals("/storeDetails.st")) {
+				else if(command.equals("/ReviewUpdate.rv")) {
+					System.out.println(" C : /ReviewUpdate.bo 호출 ");
+					System.out.println(" C : [패턴3] DB사용o, view출력");
 					
-					action = new StoreDetailsAction();
+					// BoardUpdateAction 객체
+					action = new ReviewUpdateAction();
 					
 					try {
 						forward = action.execute(request, response);
 					} catch (Exception e) {
-						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				else if(command.equals("/ReviewUpdateProAction.bo")) {
+					System.out.println(" C : /ReviewUpdateProAction.bo 호출 ");
+					System.out.println(" C : [패턴2] DB사용 O, 페이지 이동(화면전환)");
+					
+					// BoardUpdateProAction 객체 생성
+					action = new ReviewUpdateProAction();
+					
+					try {
+						forward = action.execute(request, response);
+					} catch (Exception e) {
 						e.printStackTrace();
 					}
 					

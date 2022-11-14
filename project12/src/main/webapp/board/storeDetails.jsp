@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
@@ -25,16 +25,70 @@ crossorigin="anonymous"/>
 <link rel="stylesheet" href="assets/css/lightslider.min.css">
 <link rel="stylesheet" href="assets/css/responsive.css">
       
-<script src="jquery-3.6.1.js"></script>
+<script src="./board/jquery-3.6.1.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-$.getJSON("foodmenu.json",function(data){
-	console.log(data);
-	$(data).each(function(idx,item){
-		$('table').append("<tr> <td>"+item.name+"</td> <td>"+item.addr+"</td> <td>"+item.tel+"</td> </tr>");
+	
+	alert('hi');
+	
+	function clip(){
+		var url = '';
+		var textarea = document.createElement("textarea");
+		document.body.appendChild(textarea);
+		url = window.document.location.href;
+		textarea.value = url;
+		textarea.select();
+		document.execCommand("copy");
+		document.body.removeChild(textarea);
+		alert("URL이 복사되었습니다.");
+	};
+	
+	
+	    var $wrap = $('.totalFn'), 
+	        $btnMinus = $wrap.find('.minus'),
+	        $btnPlus = $wrap.find('.plus');
+	        $cell = $wrap.find('.cell');
+	         
+	    $btnMinus.on('click', function(e){
+	        var $this = $(this);
+	        var num = $this.parent().find('.num').text();
+	        num --;
+	        if (num <= 0) {
+	            num = 0;
+	        }
+	        $this.parent().find('.num').text(num);
+	        totalFn();
+	    });
+	 
+	    $btnPlus.on('click', function(){
+	        var $this = $(this);
+	        var num = $this.parent().find('.num').text();
+	        num ++;
+	        if (20 <= num) {
+	            num = 20; // 최대 인원수 
+	        }
+	        $this.parent().find('.num').text(num);
+	        totalFn();
+	    });
+	 
+	    function totalFn(){
+	        var $total = $(".totalFn .count-box")
+	        var total = 0;
+	        $total.find(".num").each(function(){ 
+	            total += Number($(this).text());
+	        });
+	        $(".count-total").text(total);
+	    };
+	
+
+	
+// $.getJSON("foodmenu.json",function(data){
+// 	console.log(data);
+// 	$(data).each(function(idx,item){
+// 		$('table').append("<tr> <td>"+item.name+"</td> <td>"+item.addr+"</td> <td>"+item.tel+"</td> </tr>");
 		
-		});
-	});
+// 		});
+// 	});
 	
 
     $('#image-gallery').lightSlider({
@@ -52,6 +106,8 @@ $.getJSON("foodmenu.json",function(data){
 	
 });
 </script>
+
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	
@@ -90,6 +146,11 @@ $.getJSON("foodmenu.json",function(data){
      <!-- End page header -->
 
      <!-- property area -->
+     
+     <form action="" method="post" name="fr">
+		<input type="hidden" name="s_no"value="${dto.s_no }" >
+	</form> 
+	
      <div class="content-area single-property" style="background-color: #FCFCFC;">
          <div class="container">
 
@@ -98,21 +159,23 @@ $.getJSON("foodmenu.json",function(data){
                      <div class="row">
                          <div class="light-slide-item">            
                              <div class="clearfix">
-                                 
-								<!-- 배너 사진 -->
+                                
+                                
+								
+								배너 사진
                                  <ul id="image-gallery" class="gallery list-unstyled cS-hidden">
-                                     <li data-thumb="assets/img/maki.jpeg"> 
-                                         <img src="assets/img/maki.jpeg" />
+                                     <li data-thumb="./upload/${dto.s_menuImg.split(',')[0] }"> 
+                                         <img src="./upload/${dto.s_menuImg.split(',')[0] }" />
                                      </li>
-                                     <li data-thumb="assets/img/sushi.jpeg"> 
-                                         <img src="assets/img/sushi.jpeg" />
+                                     <li data-thumb="./upload/${dto.s_menuImg.split(',')[1] }"> 
+                                         <img src="./upload/${dto.s_menuImg.split(',')[1] }" />
                                      </li>
-                                     <li data-thumb="assets/img/maki.jpeg"> 
-                                         <img src="assets/img/maki.jpeg" />
+                                     <li data-thumb="./upload/${dto.s_menuImg.split(',')[2] }"> 
+                                         <img src="./upload/${dto.s_menuImg.split(',')[2] }" />
                                      </li>
-                                     <li data-thumb="assets/img/sushi.jpeg"> 
-                                         <img src="assets/img/sushi.jpeg" />
-                                     </li>                                         
+                                     <li data-thumb="./upload/${dto.s_menuImg.split(',')[3] }"> 
+                                         <img src="./upload/${dto.s_menuImg.split(',')[3] }" />
+                                     </li>                                       
                                  </ul>
                              </div>
                          </div>
@@ -122,7 +185,8 @@ $.getJSON("foodmenu.json",function(data){
                          <div class="single-property-header">   
                           <h4 class="s-property-title">		 F A C I L I T I E S 	 </h4>   
                          </div>
-
+						
+						${dto.s_facility }
                          <div class="property-meta entry-meta clearfix ">   
 
                              <div class="col-xs-3 col-sm-3 col-md-3 p-b-15">
@@ -201,7 +265,7 @@ $.getJSON("foodmenu.json",function(data){
                              <ul class="additional-details-list clearfix">
                                  <li>
                                      <span class="col-xs-6 col-sm-4 col-md-4 add-d-title">영업시간</span>
-                                     <span class="col-xs-6 col-sm-8 col-md-8 add-d-entry">open all day from 11:00-22:00</span>
+                                     <span class="col-xs-6 col-sm-8 col-md-8 add-d-entry">${dto.s_hours }</span>
                                  </li>
 
                                  <li>
@@ -239,38 +303,39 @@ $.getJSON("foodmenu.json",function(data){
 								<h3>HOME</h3>
 								<p>Some content.</p>
 
-
-								<table border="1">
-									<tr>
-										<td>이름</td>
-										<td>주소</td>
-										<td>전화번호</td>
-									</tr>
-								</table>
+								
+								
+								<c:forEach var="i" begin="0" end="10" step="1">
+										
+										<tr>
+										 <td>메뉴 : ${dto.s_menuname.split(',')[i]}</td>
+										<td> 가격 : ${dto.s_menuprice.split(',')[i] }</td>
+										</tr><br>
+								</c:forEach>
+								
 							</div>
 							<div id="about" class="tab-pane fade">
 								<h3>About our restaurant</h3>
 								<p>Some content in menu 1.</p>
 
-								<table border="1">
-									<tr>
-										<td>이름</td>
-										<td>주소</td>
-										<td>전화번호</td>
-									</tr>
-								</table>
+										<p>${dto.s_content } </p>
+										
 							</div>
 							<div id="review" class="tab-pane fade">
 								<h3>review board</h3>
 								<p>please write review for our restaurant.</p>
-
+								
 								<table border="1">
-									<tr>
-										<td>이름</td>
-										<td>주소</td>
-										<td>전화번호</td>
-									</tr>
+								<!-- jsp? 가상주소? -->
+								<iframe 
+									src="./review/reviewList.jsp" 
+									width="730" height="400" >
+								</iframe>
+								
+								
 								</table>
+								<input type="submit" value="리뷰쓰기" onclick="location.href='/ReviewWrite.rv';">
+									
 
 							</div>
 						</div>
@@ -283,13 +348,13 @@ $.getJSON("foodmenu.json",function(data){
                         
                 <!-- End features area  -->
                  <h4 class="s-property-title">M A P </h4>
-                <p>위치 : 제주도 종달리</p>
+                <p>위치 :  ${dto.s_addr }</p>
 				<!--  지도 api -->
 				 
 				<div id="map" style="width: 730px; height: 400px;"></div>
 				
 			<br>
-			
+			${dto }
                        
                      </div>
                  </div>
@@ -314,28 +379,28 @@ $.getJSON("foodmenu.json",function(data){
                                          <div class="col-xs-12 col-sm-12 dealer-face">
                                              <a href="">
                                                  <img src="assets/img/octocat.png" class="img-circle">
+                                                 <img src="./upload/${dto.s_image }" />
                                              </a>
                                          </div>
                                          <br>
                                          <div class="col-xs-8 col-sm-8 ">
                                              <h3 class="dealer-name">
                                              
-										<c:out value="${dto.s_name}" default="name"/> <b>지 원 스 시</b>
-										 <p>Back end developer</p>
-                                                     
+										<b> ${dto.s_name } </b>
+										 <p>Back end developer ${dto.s_type } 전문점</p>
                                              </h3>
                                             
 
                                          </div>
                                      </div>
-
+									
                                      <div class="clear">
                                          <ul class="dealer-contacts">                                       
-                                             <li><i class="pe-7s-map-marker strong pe-2x"> </i><a href=""> MAP url 위치 복사 되게</a></li>
-                                             <li><i class="pe-7s-mail strong pe-2x"> </i><a href="">Store Email</a></li>
-                                             <li><i class="pe-7s-call strong pe-2x"> </i> <a href="">Store Tel :  </a></li>
+                                             <li><i class="pe-7s-map-marker strong pe-2x"> </i><a href="#" onclick="clip(); return false;"> MAP url ${dto.s_addr} </a></li>
+                                             <li><i class="pe-7s-call strong pe-2x"> </i> <a href="">Store Tel : ${dto.s_tel } </a></li>
+                                             <li><i class="pe-7s-star strong pe-2x"> </i>  ${dto.s_star }</li>
                                          </ul>
-                                         <p> 가게 상세정보 db에 잇는거</p>
+                                         <p> ${dto.s_content }</p>
                                      </div>
 
                                  </div>
@@ -354,19 +419,39 @@ $.getJSON("foodmenu.json",function(data){
                 
                <hr>
 			<fieldset>
+			
 				How many? 
-				<div>성인<input type='number' 
-						id="adult" name="성인"
-						value="0"
-						step="1"
-						min="1"
-						max="7"></div>
-				<div>아이<input type='number' 
-						id="kids" name="아이"
-						value="0"
-						step="1"
-						min="1"
-						max="7"></div>
+				<div class="totalFn">
+    <div class="count-box"> 성인
+        <button type="button" class="minus">-</button>
+        <span class="num">0</span>
+        <button type="button" class="plus">+</button>
+    </div>
+    <div class="count-box"> 아이
+        <button type="button" class="minus">-</button>
+        <span class="num">0</span>
+        <button type="button" class="plus">+</button>
+    </div>
+   
+    <!-- 합계 -->
+    <div class="total-area">
+        <span>Total =</span>
+        <strong class="count-total">0</strong>
+    </div>
+    <!-- // 합계 -->
+</div>
+<!-- 				<div>성인<input type='number'  -->
+<!-- 						id="adult" name="성인" -->
+<!-- 						value="0" -->
+<!-- 						step="1" -->
+<!-- 						min="1" -->
+<!-- 						max="7"></div> -->
+<!-- 				<div>아이<input type='number'  -->
+<!-- 						id="kids" name="아이" -->
+<!-- 						value="0" -->
+<!-- 						step="1" -->
+<!-- 						min="1" -->
+<!-- 						max="7"></div> -->
 					
 										<hr>
 
@@ -396,80 +481,42 @@ $.getJSON("foodmenu.json",function(data){
        </div>
 	
 <hr>
-                           <div class="panel panel-default sidebar-menu similar-property-wdg wow fadeInRight animated">
-                               <div class="panel-heading">
-                                   <h3 class="panel-title">F & K가 추천하는 메뉴!</h3>
-                               </div>
-                               <div class="panel-body recent-property-widget">
-                                   <ul>
-                                       <li>
-                                           <div class="col-md-3 col-sm-3 col-xs-3 blg-thumb p0">
-                                               <a href="single.html"><img src="assets/img/demo/small-property-2.jpg"></a>
-                                               <span class="property-seeker">
-                                                   <b class="b-1">A</b>
-                                                   <b class="b-2">S</b>
-                                               </span>
-                                           </div>
-                                           <div class="col-md-8 col-sm-8 col-xs-8 blg-entry">
-                                               <h6> <a href="single.html">김치찌개</a></h6>
-                                               <span class="property-price">3,000,000원</span>
-                                           </div>
-                                       </li>
-                                       <li>
-                                           <div class="col-md-3 col-sm-3  col-xs-3 blg-thumb p0">
-                                               <a href="single.html"><img src="assets/img/demo/small-property-1.jpg"></a>
-                                               <span class="property-seeker">
-                                                   <b class="b-1">A</b>
-                                                   <b class="b-2">S</b>
-                                               </span>
-                                           </div>
-                                           <div class="col-md-8 col-sm-8 col-xs-8 blg-entry">
-                                               <h6> <a href="single.html">Super nice villa </a></h6>
-                                               <span class="property-price">3,000,000원</span>
-                                           </div>
-                                       </li>
-                                       <li>
-                                           <div class="col-md-3 col-sm-3 col-xs-3 blg-thumb p0">
-                                               <a href="single.html"><img src="assets/img/demo/small-property-3.jpg"></a>
-                                               <span class="property-seeker">
-                                                   <b class="b-1">A</b>
-                                                   <b class="b-2">S</b>
-                                               </span>
-                                           </div>
-                                           <div class="col-md-8 col-sm-8 col-xs-8 blg-entry">
-                                               <h6> <a href="single.html">Super nice villa </a></h6>
-                                               <span class="property-price">3,000,000원</span>
-                                           </div>
-                                       </li>
+                          <div class="panel panel-default sidebar-menu wow fadeInRight animated"> 
+                            <div class="panel-heading">
+                                <h3 class="panel-title">F & K 의 추천</h3>
+                            </div>
+                            <div class="panel-body recent-property-widget">
+                                        <ul>
+                                        <c:forEach var="rec" items="${recStore}">
+                                        <li>
+                                            <div class="col-md-3 col-sm-3 col-xs-3 blg-thumb p0">
+                                                <a href="single.html"><img src="assets/img/demo/small-property-2.jpg"></a>
+                                                <span class="property-seeker">
+<!--                                                     <b class="b-1"></b> -->
+                                                    <b class="b-2">${rec.s_type }</b>
+                                                </span>
+                                            </div>
+                                            <div class="col-md-8 col-sm-8 col-xs-8 blg-entry">
+                                                <h6> <a href="single.htmlr">${rec.s_name } </a></h6>
+                                                <span class="property-price">별점 : ${rec.s_star }</span>
+                                            </div>
+                                        </li>
+                                        </c:forEach>
 
-                                       <li>
-                                           <div class="col-md-3 col-sm-3 col-xs-3 blg-thumb p0">
-                                               <a href="single.html"><img src="assets/img/demo/small-property-2.jpg"></a>
-                                               <span class="property-seeker">
-                                                   <b class="b-1">A</b>
-                                                   <b class="b-2">S</b>
-                                               </span>
-                                           </div>
-                                           <div class="col-md-8 col-sm-8 col-xs-8 blg-entry">
-                                               <h6> <a href="single.html">Super nice villa </a></h6>
-                                               <span class="property-price">3,000,000원</span>
-                                           </div>
-                                       </li>
-
-                                   </ul>
-                               </div>
-                           </div>
+                                    </ul>
+                            </div>
+                        </div>
 
 
 
-                           <div class="panel panel-default sidebar-menu wow fadeInRight animated">
-                               <div class="panel-heading">
-                                   <h3 class="panel-title">Ads her  </h3>
-                               </div>
-                               <div class="panel-body recent-property-widget">
-                                   <img src="assets/img/ads.jpg">
-                               </div>
-                           </div>
+<!--                            <div class="panel panel-default sidebar-menu wow fadeInRight animated"> -->
+<!--                                <div class="panel-heading"> -->
+<!--                                    <h3 class="panel-title">Ads her  </h3> -->
+<!--                                </div> -->
+<!--                                <div class="panel-body recent-property-widget"> -->
+<!--                                    <img src="assets/img/ads.jpg"> -->
+<!--                                </div> -->
+<!--                            </div> -->
 
                            
                        </aside>
