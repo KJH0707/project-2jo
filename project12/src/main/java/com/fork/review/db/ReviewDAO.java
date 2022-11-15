@@ -10,6 +10,8 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import com.fork.review.action.ActionForward;
+
 public class ReviewDAO {
 		private Connection con = null;
 		private PreparedStatement pstmt = null;
@@ -48,7 +50,7 @@ public class ReviewDAO {
 		// 자원해제 메서드 - closeDB()
 		// 글쓰기 메서드-insertReview(DTO)
 		public void insertReview(ReviewDTO dto) {
-			int bno = 0;
+			int rev_no = 0;
 			
 			try {
 				// 1.2. 디비연결
@@ -58,36 +60,57 @@ public class ReviewDAO {
 				pstmt = con.prepareStatement(sql);
 				// 4. sql 실행
 				rs = pstmt.executeQuery();
+				
+				
 				// 5. 데이터 처리
 				if(rs.next()) {
-					bno = rs.getInt(1)+1;
+					rev_no = rs.getInt(1)+1;
 				}
 				
-				System.out.println(" DAO : bno : "+bno);
+				System.out.println(" DAO : rev_no : "+ rev_no);
 				//3.
 				sql = "insert into reviewcs(rev_no,s_no,rev_date,rev_star,rev_subject,"
-						+ "rev_category,m_no,qna_sort,rev_content,rev_file) "
-						+ "values(?,?,now(),?,?,?,?,?,?,?)";
+						+ "rev_category,m_no,rev_content,rev_file) "
+						+ "values(?,?,now(),?,?,?,?,?,?)";
+//				sql = "insert into reviewcs(rev_no,s_no,rev_date,rev_subject,rev_content) values(?,?,now(),?,?)";
+//						+ "values(?,now(),?,?,?,?,?,?,?)";
 				
 				pstmt = con.prepareStatement(sql);
 				
 				// ???
-				pstmt.setInt(1, dto.getRev_no()); //리뷰번호
+				pstmt.setInt(1, rev_no); //리뷰번호
 				pstmt.setInt(2, dto.getS_no()); //가게 번호
 				pstmt.setInt(3, dto.getRev_star()); //리뷰별점
 				pstmt.setString(4, dto.getRev_subject()); //리뷰 제목
-				pstmt.setInt(5, dto.getRev_category()); //리뷰카테고리?머고
+//				pstmt.setString(5, dto.getQna_sort()); 
+				pstmt.setInt(5, 1); //리뷰카테고리?머고   0(문의) 1(리뷰) 
 				pstmt.setInt(6, dto.getM_no()); //멤버번호
-				pstmt.setString(7, dto.getQna_sort()); // ref == bno
-				
-				pstmt.setString(10, dto.getRev_content());
-				pstmt.setString(11, dto.getRev_file());
+				pstmt.setString(7, dto.getRev_content());
+				pstmt.setString(8, dto.getRev_file());
 				
 				// 4. 
 				pstmt.executeUpdate();
 				
+				
+				
+				sql="update store A set s_star=("
+						+ "select avg(rev_star) "
+						+ "from reviewcs B "
+						+ "where A.s_no=B.s_no) "
+						+ "where A.s_no=?";
+				
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1,dto.getS_no());
+				
+				pstmt.executeUpdate();
+				
+				
 				System.out.println(" DAO : 글쓰기 완료! ");
 				
+				ActionForward forward = new ActionForward();
+				
+				forward.setPath("./ReviewList.rv");
+				forward.setRedirect(true);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}finally {
@@ -96,6 +119,31 @@ public class ReviewDAO {
 		}
 		// 글쓰기 메서드-insertReview(DTO)
 		
+		//리드카운트
+		
+		//리드카운트
+		
+		
+		// 별점 평균
+		public int getAvg(int rev_star) {
+	        int avg = 0;
+	        String sql = "select avg(rev_star) as avg from reviewcs where s_no=?";
+	        
+	        try {
+	            pstmt = con.prepareStatement(sql);
+	            
+	            pstmt.setInt(1, s_no);
+	            
+	            rs = pstmt.executeQuery();
+	            if(rs.next())
+	                avg = rs.getInt("avg");
+	        } catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				closeDB();
+			}
+		}
+		// 별점
 		// 글 전체 개수 확인 - getReviewCount()
 		public int getReviewCount() {
 			int cnt = 0;
@@ -151,7 +199,7 @@ public class ReviewDAO {
 						dto.setRev_subject(rs.getString("rev_subject"));
 						dto.setRev_category(rs.getInt("rev_category"));
 						dto.setM_no(rs.getInt("m_no"));
-						dto.setQna_sort(rs.getString("qna_sort"));
+//						dto.setQna_sort(rs.getString("qna_sort"));
 						dto.setRev_content(rs.getString("re_content"));
 						dto.setRev_file(rs.getString("rev_file"));
 						
@@ -182,8 +230,7 @@ public class ReviewDAO {
 						// 1.2. 디비연결
 						con = getConnection();
 						// 3. sql 작성(select) & pstmt 객체 
-						sql = "select * from reviewcs "
-								+ "order by rev_no";
+						sql = "select * from reviewcs " + "limit ?,?";
 						pstmt = con.prepareStatement(sql);
 						// ?????
 						pstmt.setInt(1, startRow-1); // 시작행 - 1
@@ -202,8 +249,8 @@ public class ReviewDAO {
 							dto.setRev_subject(rs.getString("rev_subject"));
 							dto.setRev_category(rs.getInt("rev_category"));
 							dto.setM_no(rs.getInt("m_no"));
-							dto.setQna_sort(rs.getString("qna_sort"));
-							dto.setRev_content(rs.getString("re_content"));
+//							dto.setQna_sort(rs.getString("qna_sort"));
+							dto.setRev_content(rs.getString("rev_content"));
 							dto.setRev_file(rs.getString("rev_file"));
 							
 							// DTO -> List
@@ -230,7 +277,7 @@ public class ReviewDAO {
 						// 1.2. 디비연결
 						con = getConnection();
 						// 3. sql 작성(select) & pstmt 객체
-						sql = "select * from review where rev_no = ?";
+						sql = "select * from review where rev_no=?";
 						pstmt = con.prepareStatement(sql);
 						// ???
 						pstmt.setInt(1, rev_no);
@@ -249,7 +296,7 @@ public class ReviewDAO {
 							dto.setRev_subject(rs.getString("rev_subject"));
 							dto.setRev_category(rs.getInt("rev_category"));
 							dto.setM_no(rs.getInt("m_no"));
-							dto.setQna_sort(rs.getString("qna_sort"));
+//							dto.setQna_sort(rs.getString("qna_sort"));
 							dto.setRev_content(rs.getString("re_content"));
 							dto.setRev_file(rs.getString("rev_file"));
 							
@@ -267,31 +314,31 @@ public class ReviewDAO {
 				}
 				// 리뷰 조회 - getBoard(bno)
 				
-//				// 리뷰 수정 - updateBoard(DTO) -> 세션에 아이디값으로 구별..?
+////				// 리뷰 수정 - updateBoard(DTO) -> 세션에 아이디값으로 구별..?
 //				public int updateReview(ReviewDTO dto) {
-//					int result = -1;
-//					
-//					try {
-//						// 1.2. 디비 연결
-//						con = getConnection();
-//						// 3. sql 작성(select) & pstmt 객체
-//						sql = "select pass from reviewcs where rev_no=?";
-//						pstmt = con.prepareStatement(sql);
-//						// ???
-//						pstmt.setInt(1, dto.getRev_no());
-//						// 4. sql 실행
-//						rs = pstmt.executeQuery();
-//						// 5. 데이터 처리
+//				int result = -1;
+//				
+//				try {
+//				// 1.2. 디비 연결
+//					con = getConnection();
+//					// 3. sql 작성(select) & pstmt 객체
+//					sql = "select pass from reviewcs where rev_no=?";
+//					pstmt = con.prepareStatement(sql);
+//					// ???
+//					pstmt.setInt(1, dto.getRev_no());
+//					// 4. sql 실행
+//					rs = pstmt.executeQuery();
+//					// 5. 데이터 처리
 //						if(rs.next()) {
-//							if(id.equals(getAttribute("id"))) {
+//							if(dto.m_id.equals(getAttribute("m_id"))) {
 //								// 3. sql 작성(update) & pstmt 객체
 //								sql = "update reviewcs set rev_subject=?,rev_content=? where rev_no=?";
 //								pstmt = con.prepareStatement(sql);
 //								
 //								//??? 
 //								pstmt.setString(1, dto.getRev_subject());
-//								pstmt.setString(3, dto.getRev_content());
-//								pstmt.setInt(4, dto.getRev_no());
+//								pstmt.setString(2, dto.getRev_content());
+//								pstmt.setInt(3, dto.getRev_no());
 //								
 //								// 4. sql 실행
 //								result = pstmt.executeUpdate();
@@ -314,9 +361,9 @@ public class ReviewDAO {
 //					
 //					return result;
 //				}
-				// 리뷰 수정 - updateReview(DTO)
-				
-//				// 리뷰 삭제 - deleteReview(s_no,pass)
+//				// 리뷰 수정 - updateReview(DTO)
+//				
+////				// 리뷰 삭제 - deleteReview(s_no,pass)
 //				public int deleteReview(int s_no, String pass) {
 //					int result = -1;
 //					
@@ -359,5 +406,5 @@ public class ReviewDAO {
 //					
 //					return result;
 //				}
-//				// 게시판 글 삭제 - deleteReview(s_no,pass)
+				// 게시판 글 삭제 - deleteReview(s_no,pass)
 }

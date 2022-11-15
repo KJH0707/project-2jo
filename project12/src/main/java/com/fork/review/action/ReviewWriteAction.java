@@ -2,6 +2,7 @@ package com.fork.review.action;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.fork.review.db.ReviewDAO;
 import com.fork.review.db.ReviewDTO;
@@ -22,11 +23,14 @@ public class ReviewWriteAction implements Action {
 		
 		ReviewDTO dto = new ReviewDTO();
 		
+		dto.setS_no(Integer.parseInt(request.getParameter("s_no")));
+		dto.setRev_subject(request.getParameter("rev_subject"));
+		dto.setRev_content(request.getParameter("rev_content"));
+		dto.setRev_star(Integer.parseInt(request.getParameter("rev_star")));
+//		dto.setM_no(Integer.parseInt(request.getParameter("m_no")));
 		
 		
-//		dto.setRev_subject(request.getParameter("rev_subject"));
-//		dto.setRev_content(request.getParameter("rev_content"));
-		
+	
 		// ip 저장
 //		dto.setIp(request.getRemoteAddr());
 		System.out.println(" M : "+dto);

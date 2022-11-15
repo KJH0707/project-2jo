@@ -5,7 +5,9 @@
 // 	response.sendRedirect("main.st");
 // 	response.sendRedirect("storeDetails.st");
 	response.sendRedirect("storeList.st");
-// 	response.sendRedirect("./ReviewWrite.rv");
+// 	response.sendRedirect("ReviewWrite.rv");
+// 	response.sendRedirect("ReviewList.rv");
+
 	
 
 

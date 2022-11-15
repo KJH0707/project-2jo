@@ -38,7 +38,7 @@ public class ReviewFrontController extends HttpServlet {
 
 					// 리뷰 액션 페이지 이동
 				} else if (command.equals("/ReviewWriteAction.rv")) {
-					System.out.println(" C : /ReviewWriteAction.rv  호출 ");
+					System.out.println(" C : /ReviewWriteAction.rv 호출 ");
 					System.out.println(" C : [패턴2] DB사용 O, 페이지 이동(화면전환)");
 
 					action = new ReviewWriteAction();
@@ -65,7 +65,7 @@ public class ReviewFrontController extends HttpServlet {
 				} // BoardList.bo
 				
 				else if(command.equals("/ReviewUpdate.rv")) {
-					System.out.println(" C : /ReviewUpdate.bo 호출 ");
+					System.out.println(" C : /ReviewUpdate.rv 호출 ");
 					System.out.println(" C : [패턴3] DB사용o, view출력");
 					
 					// BoardUpdateAction 객체
@@ -77,7 +77,7 @@ public class ReviewFrontController extends HttpServlet {
 						e.printStackTrace();
 					}
 				}
-				else if(command.equals("/ReviewUpdateProAction.bo")) {
+				else if(command.equals("/ReviewUpdateProAction.rv")) {
 					System.out.println(" C : /ReviewUpdateProAction.bo 호출 ");
 					System.out.println(" C : [패턴2] DB사용 O, 페이지 이동(화면전환)");
 					

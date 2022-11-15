@@ -188,13 +188,13 @@ public class StoreDAO {
 	// getStoreCount 가게 갯수 end
 	
 	// getStoreDetails 가게 상세보기 (s_no) - 추가함
-	public StoreDTO getStoreDetails(Long s_no) {
+	public StoreDTO getStoreDetails(int s_no) {
 		StoreDTO dto = null;
 		try {
 			con = getConnection();
 			sql = "select * from store where s_no=?";
 			pstmt = con.prepareStatement(sql);
-			pstmt.setLong(1,s_no);
+			pstmt.setInt(1,s_no);
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {

@@ -14,7 +14,7 @@ public class StoreDetailsAction implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		System.out.println(" M : StoreDetailsAction_execute()호출 ");
-		Long s_no=  (Long.parseLong(request.getParameter("s_no")));
+		int s_no=  (Integer.parseInt(request.getParameter("s_no")));
 		StoreDAO dao = new StoreDAO();
 		int cnt = dao.getBoardCount();
 		ArrayList recStore = dao.getBoardList(cnt);

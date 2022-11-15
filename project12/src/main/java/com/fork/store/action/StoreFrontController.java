@@ -78,6 +78,14 @@ public class StoreFrontController extends HttpServlet {
 						e.printStackTrace();
 					}
 					
+				}else if(command.equals("/reservation.st")) {
+					
+
+					forward = new ActionForward();
+					forward.setPath("./board/reservation.jsp");
+					forward.setRedirect(false);
+					
+					
 				}
 				
 				

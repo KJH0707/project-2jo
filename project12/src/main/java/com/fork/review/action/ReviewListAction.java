@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.fork.review.db.ReviewDAO;
 
@@ -13,6 +14,7 @@ public class ReviewListAction implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+//		HttpSession session = request.getSession();
 		
 		ReviewDAO dao = new ReviewDAO();
 		
@@ -86,7 +88,7 @@ public class ReviewListAction implements Action {
 		
 		// 페이지 이동준비(티켓 생성)
 		ActionForward forward = new ActionForward();
-		forward.setPath("./review/reviewList.jsp");
+		forward.setPath("./board/reviewList.jsp");
 		forward.setRedirect(false);
 		
 		

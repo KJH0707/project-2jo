@@ -18,36 +18,14 @@
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700,800' rel='stylesheet' type='text/css'>
 
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-        	<jsp:include page="../inc/top.jsp"/>
-    </head>
-    <body>
-
-        <div id="preloader">
-            <div id="status">&nbsp;</div>
-        </div>
-        <!-- Body content -->
-
-        <div class="page-head"> 
-            <div class="container">
-                <div class="row">
-                    <div class="page-head-content">
-                        <h1 class="page-title">리뷰 게시판</h1>   
-                                   
-                    </div>
-                   
-                </div>
-            </div>
-        </div>
+        	
         <!-- End page header -->
 
         <!-- property area -->
         <div class="content-area recent-property" style="background-color: #FFF;">
-         
             <div class="container">   
                 <div class="row">
-                
-           
-	<input class="form-control" type="text" value="전체 리뷰 : ${requestScope.totalCnt } 개">
+	<input class="form-control" type="text">
                     <div class="col-md-9 pr-30 padding-top-40 properties-page user-properties">
 
                         <div class="section"> 
@@ -58,55 +36,34 @@
                         </div>
 
                         <div class="section"> 
-<%--                         <c:forEach var="dto" items="${ReviewListAll }"> --%>
-<%--                         	 <a href="./ReviewContent.rv?rev_no=${dto.rev_no }&pageNum=${pageNum}">${dto.rev_subject }</a>    </c:forEach>   --%>
-                        
-                           <div id="list-type" class="proerty-th-list">
+                            <div id="list-type" class="proerty-th-list">
                                 <div class="col-md-4 p0">
                                     <div class="box-two proerty-item">
                                         <div class="item-entry overflow">
                                             <h5><a href="property-1.html">[글번호] 제목</a></h5>
                                             <div class="dot-hr"></div>
                                                 <div class="dealer-action pull-right">                                        
-                                                    <a href="" class="button">작성자  </a>
-                                                    <a href="" class="button delete_user_car">작성일 </a>
+                                                    <a href="" class="button">작성자 </a>
+                                                    <a href="" class="button delete_user_car">작성일</a>
+                                                    <a href="" class="button">조회수</a>
                                                 </div>
                                             </div>
 
 
                                         </div>
                                     </div>
-                                </div>  <br>   
-                              
-       </div>
+                                </div>  <br>                           
 
-	
-	
-	
-<%-- 	<c:if test="${totalCnt != 0}">
-	  
-	    <!-- 이전 -->
-	    <c:if test="${startPage > pageBlock }">
-	    	<a href="./ReviewList.rv?pageNum=${startPage-pageBlock }"> < </a>
-	    </c:if>
-	    <!-- 페이지 번호(1,2,3....) -->	  
-	    <c:forEach var="i" begin="${startPage }" end="${endPage }" step="1">
-	          <a href="./ReviewList.rv?pageNum=${i }">${i }</a> 
-	    </c:forEach>  
-	    
-	    <!-- 다음 -->	
-	    <c:if test="${endPage < pageCount }">
-	        <a href="./ReviewList.rv?pageNum=${startPage+pageBlock }"> > </a>
-	    </c:if>
-	
-	</c:if>
-	
-        
-        <script src="assets/js/jquery.bootstrap.wizard.js" type="text/javascript"></script>
-        <script src="assets/js/jquery.validate.min.js"></script>
-        <script src="assets/js/wizard.js"></script> --%>
+                                   
+                                
+                                        </div>
 
-        <jsp:include page="../inc/bottom.jsp"></jsp:include>
+
+                                    </div>
+                                </div>                                                        
+                            </div>
+                        </div>
+
                        
 
 
