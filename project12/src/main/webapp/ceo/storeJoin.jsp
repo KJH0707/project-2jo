@@ -29,118 +29,89 @@
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 		<!-- (Optional) Latest compiled and minified JavaScript translation files -->
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js"></script>
-
-<script type="text/javascript" language="javascript">
-$(document).ready(function(){
-	
-	/* 메뉴 추가 이벤트  */
-	document.getElementById("menuAddbtn").addEventListener("click", function(e){
-	      var target = document.querySelector("#menuTable").cloneNode(true);
-	      document.querySelector(".menuAdd").innerHTML += target.innerHTML;
-	});
-	
-	$('#telInput').keyup(function (event) {
-		  event = event || window.event;
-		  var _val = this.value.trim();
-		  this.value = autoHypenTel(_val);
-		});
-	
-});
-	
-	//전화번호 입력형식 
-	function autoHypenTel(str) {
-		  str = str.replace(/[^0-9]/g, '');
-		  var tmp = '';
-
-		  if (str.substring(0, 2) == 02) {
-		    // 서울 전화번호일 경우 10자리까지만 나타나고 그 이상의 자리수는 자동삭제
-		    if (str.length < 3) {
-		      return str;
-		    } else if (str.length < 6) {
-		      tmp += str.substr(0, 2);
-		      tmp += '-';
-		      tmp += str.substr(2);
-		      return tmp;
-		    } else if (str.length < 10) {
-		      tmp += str.substr(0, 2);
-		      tmp += '-';
-		      tmp += str.substr(2, 3);
-		      tmp += '-';
-		      tmp += str.substr(5);
-		      return tmp;
-		    } else {
-		      tmp += str.substr(0, 2);
-		      tmp += '-';
-		      tmp += str.substr(2, 4);
-		      tmp += '-';
-		      tmp += str.substr(6, 4);
-		      return tmp;
-		    }
-		  } else {
-		    // 핸드폰 및 다른 지역 전화번호 일 경우
-		    if (str.length < 4) {
-		      return str;
-		    } else if (str.length < 7) {
-		      tmp += str.substr(0, 3);
-		      tmp += '-';
-		      tmp += str.substr(3);
-		      return tmp;
-		    } else if (str.length < 11) {
-		      tmp += str.substr(0, 3);
-		      tmp += '-';
-		      tmp += str.substr(3, 3);
-		      tmp += '-';
-		      tmp += str.substr(6);
-		      return tmp;
-		    } else {
-		      tmp += str.substr(0, 3);
-		      tmp += '-';
-		      tmp += str.substr(3, 4);
-		      tmp += '-';
-		      tmp += str.substr(7);
-		      return tmp;
-		    }
-		  }
-
-		  return str;
-		}
-	
-	function bussNo(){
 		
-		if(document.fr.storeName.value==""){
-			alert("상호명을 입력하세요");
-			document.fr.storeName.focus;
-			return false;
-		}
-		if(document.fr.tel.value==""){
-			alert("전화번호를 입력하세요");
-			document.fr.tel.focus;
-			return false;
-		}
-		if(document.fr.businessNumber.value.length != 10){
-			alert("사업자번호 10자 입력");
-			document.fr.businessNumber.focus;
-			return false;
-		}
-		if(document.fr.sort.value==""){
-			alert("분류를 선택하세요");
-			document.fr.sort.focus;
-			return false;
-		}
-		if(document.fr.Addr2.value==""){
-			alert("주소를 입력하세요");
-			document.fr.Addr2.focus;
-			return false;
-		}
-		if(document.fr.necessity.checked == false){
-			alert("필수약관에 동의하세요");
-			document.fr.necessity.focus;
-			return false;
-		}
-	}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>		
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+	$('#telInput').keyup(function (event) {
+	  event = event || window.event;
+	  var _val = this.value.trim();
+	  this.value = autoHypenTel(_val);
+	  
+	});
+});
+
+
+function autoHypenTel(str) {
+	  str = str.replace(/[^0-9]/g, '') // 숫자를 제외한 모든 문자 제거 
+	 
+	  var tmp = '';
 	
+	  if (str.substring(0, 2) == 02) {
+	    // 서울 전화번호일 경우 10자리까지만 나타나고 그 이상의 자리수는 자동삭제
+	    if (str.length < 3) {
+	      return str;
+	    } else if (str.length < 6) {
+	      tmp += str.substr(0, 2);
+	      tmp += '-';
+	      tmp += str.substr(2);
+	      return tmp;
+	    } else if (str.length < 10) {
+	      tmp += str.substr(0, 2);
+	      tmp += '-';
+	      tmp += str.substr(2, 3);
+	      tmp += '-';
+	      tmp += str.substr(5);
+	      return tmp;
+	    } else {
+	      tmp += str.substr(0, 2);
+	      tmp += '-';
+	      tmp += str.substr(2, 4);
+	      tmp += '-';
+	      tmp += str.substr(6, 4);
+	      return tmp;
+	    }
+	  } else {
+	    // 핸드폰 및 다른 지역 전화번호 일 경우
+	    if (str.length < 4) {
+	      return str;
+	    } else if (str.length < 7) {
+	      tmp += str.substr(0, 3);
+	      tmp += '-';
+	      tmp += str.substr(3);
+	      return tmp;
+	    } else if (str.length < 11) {
+	      tmp += str.substr(0, 3);
+	      tmp += '-';
+	      tmp += str.substr(3, 3);
+	      tmp += '-';
+	      tmp += str.substr(6);
+	      return tmp;
+	    } else {
+	      tmp += str.substr(0, 3);
+	      tmp += '-';
+	      tmp += str.substr(3, 4);
+	      tmp += '-';
+	      tmp += str.substr(7);
+	      return tmp;
+	    }
+	  }
+	
+	  return str;
 }
-</script>
+
+function bussCK(){
+	
+	if(document.fr.necessity.checked == false){
+	alert("필수약관에 동의하세요");
+	document.fr.necessity.focus;
+	return false;
+	}
+}
+//alert('hello');
+</script>	
 <style type="text/css">
 .box {
 	float: left;
@@ -154,6 +125,7 @@ $(document).ready(function(){
 }
 </style>
 </head>
+<body>
  		<!-- header  -->
  		<jsp:include page="../inc/top.jsp" />
  		<!-- header  -->
@@ -175,7 +147,7 @@ $(document).ready(function(){
                 <div class="clearfix" > 
                     <div class="wizard-container"> 
                         <div class="wizard-card ct-wizard-orange" id="wizardProperty" > <!-- onsubmit="return bussNo();" -->
-	                        <form action="./StoreJoinAction.st" method="post" enctype="multipart/form-data" name="fr">
+	                        <form action="./StoreJoinAction.st" method="post" enctype="multipart/form-data" name="fr" onsubmit="bussCK();">
                                 <div class="wizard-header">
                                     <h3>
                                         <b>Submit</b> YOUR STORE <br>
@@ -201,20 +173,20 @@ $(document).ready(function(){
 		                                    <div class="picture-container">
 		                                        <div class="picture">
 		                                            <img src="assets/img/default-property.jpg" class="picture-src" id="wizardPicturePreview" title="" style="height: 100%;" />
-		                                            <input type="file" id="wizard-picture" name="stfile1" >
+		                                            <input type="file" id="wizard-picture" name="stfile1">
 		                                        </div> 
 		                                    </div>
 		                                    <!-- 가게 메인이미지 -->
 		                                    <div class="form-group">
 		                                    <!-- 주소 -->
 												<label>도로명주소 <sup>*</sup></label>
-												<input type="button" onclick="mapCall();" value="우편번호 찾기" style="margin-bottom: 1%; width: 150px;float: right;" ><br>
+												<input type="button" onclick="execDaumPostcode()" value="우편번호 찾기" style="margin-bottom: 1%; width: 150px;float: right;" ><br>
 												<div style="color:#999;display:block; border: 1px solid #DADADA;">
-			                                       	<input type="text" id="postcode" placeholder="우편번호" readonly>
-													<input type="text" name="Addr1" id="Addr1" placeholder="도로명주소" readonly>
-													<input type="text" id="jibunAddress" placeholder="지번주소"readonly>
+			                                       	<input type="text" id="postcode" placeholder="우편번호"readonly>
+													<input type="text" id="Addr1" name="Addr1" placeholder="도로명주소" readonly>
+													<input type="text" id="jibunAddress" placeholder="지번주소" readonly>
 													<span id="guide" style="color:#999;display:none"></span>
-													<input type="text" name="Addr2" id="Addr2" placeholder="상세주소" style="margin-bottom: 1%;" required>
+													<input type="text" id="Addr2" name="Addr2" placeholder="상세주소" style="margin-bottom: 1%;" required>
 													<input type="text" id="extraAddress" placeholder="" readonly>
 												</div>
 												<!-- <input type="text" id="address" name="addr" placeholder="" class="form-control" style="margin-bottom: 1%;">
@@ -232,7 +204,7 @@ $(document).ready(function(){
                                            </div>
                                            <div class="form-group">
                                                <label>대표 전화번호 <sup>*</sup></label>
-                                               <input type="tel" name="tel" class="form-control" id="telInput" required pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}" maxlength="13"placeholder="010-1234-5678"/> 
+                                               <input type="tel" name="tel" id="telInput" class="form-control" required pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}" maxlength="13" placeholder="010-1234-5678"/>
                                            </div> 
                                            <div class="form-group">
                                                <label>사업자등록번호 <sup>*</sup></label>
@@ -506,7 +478,7 @@ $(document).ready(function(){
                                 <!-- <div class="pull-right" style="clear: both;"> -->
                                 <div class="wizard-footer" style="clear: both;">
                                 <div class="pull-right" style="clear: both;">
-                                    <input type='button' class='btn btn-next btn-primary' name='next' value='Next' onclick="bussNo();" />
+                                    <input type='button' class='btn btn-next btn-primary' name='next' value='Next' />
                                     <input type="submit" class='btn btn-finish btn-primary' name='finish' value='Finish' id='button'/>
                                 </div>
 
@@ -527,107 +499,10 @@ $(document).ready(function(){
     <!-- Footer area-->
 	<jsp:include page="../inc/bottom.jsp"/>
     <!-- Footer area-->
-	</script> 
-		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-		<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1900efb9ff28bb0a54c68c9b272a9b10&libraries=services"></script>
-		<script>
-		    var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-		        mapOption = {
-		            center: new daum.maps.LatLng(35.1584134149369, 129.0620342646736), // 지도의 중심좌표
-		            level: 3 // 지도의 확대 레벨
-		        };
-		
-		    //지도를 미리 생성
-		    var map = new daum.maps.Map(mapContainer, mapOption);
-		    //주소-좌표 변환 객체를 생성
-		    var geocoder = new daum.maps.services.Geocoder();
-		    //마커를 미리 생성
-		    var marker = new daum.maps.Marker({
-		        position: new daum.maps.LatLng(35.1584134149369, 129.0620342646736),
-		        map: map
-		    }); // 초기화
-		
-		
-		    function mapCall() {
-		        new daum.Postcode({
-		            oncomplete: function(data) {
-		                var addr = data.address; // 최종 주소 변수
-		                var extraRoadAddr = ''; // 참고 항목 변수
-		
-		                // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
-	                    // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-		                var roadAddr = data.roadAddress; // 도로명 주소 변수
-		                var extraRoadAddr = ''; // 참고 항목 변수
-
-		                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-		                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-		                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-		                    extraRoadAddr += data.bname;
-		                }
-		                // 건물명이 있고, 공동주택일 경우 추가한다.
-		                if(data.buildingName !== '' && data.apartment === 'Y'){
-		                   extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-		                }
-		                // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-		                if(extraRoadAddr !== ''){
-		                    extraRoadAddr = ' (' + extraRoadAddr + ')';
-		                }
-
-		                // 우편번호와 주소 정보를 해당 필드에 넣는다.
-		                document.getElementById('postcode').value = data.zonecode;
-		                document.getElementById("Addr1").value = roadAddr;
-		                document.getElementById("jibunAddress").value = data.jibunAddress;
-		                
-		                
-		                // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
-		                if(roadAddr !== ''){
-		                    document.getElementById("extraAddress").value = extraRoadAddr;
-		                } else {
-		                    document.getElementById("extraAddress").value = '';
-		                }
-
-		                var guideTextBox = document.getElementById("guide");
-		                // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
-		                if(data.autoRoadAddress) {
-		                    var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
-		                    guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
-		                    guideTextBox.style.display = 'block';
-
-		                } else if(data.autoJibunAddress) {
-		                    var expJibunAddr = data.autoJibunAddress;
-		                    guideTextBox.innerHTML = '(예상 지번 주소 : ' + expJibunAddr + ')';
-		                    guideTextBox.style.display = 'block';
-		                } else {
-		                    guideTextBox.innerHTML = '';
-		                    guideTextBox.style.display = 'none';
-		                }
-		                
-		                console.log(roadAddr);
-	                    
-		                // 주소로 상세 정보를 검색
-		                geocoder.addressSearch(data.roadAddr, function(results, status) {
-		                    // 정상적으로 검색이 완료됐으면
-		                    if (status === daum.maps.services.Status.OK) {
-		
-		                        var result = results[0]; //첫번째 결과의 값을 활용
-		
-		                        // 해당 주소에 대한 좌표를 받아서
-		                        var coords = new daum.maps.LatLng(result.y, result.x);
-		                        // 지도를 보여준다.
-		                        mapContainer.style.display = "block";
-		                        map.relayout();
-		                        // 지도 중심을 변경한다.
-		                        map.setCenter(coords);
-		                        // 마커를 결과값으로 받은 위치로 옮긴다.
-		                        marker.setPosition(coords);
-		                    }
-		                });
-		            }
-		        }).open();
-		    }
-		</script>
-		</script>
-	    <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1900efb9ff28bb0a54c68c9b272a9b10&libraries=services"></script>
+		<script src="ceo/mapAPI.js"></script> <!-- 위치를 옮길 때는 반드시 주소 변경해주기  -->
+    <!-- 지도 API javascript -->
 	    <script src="assets/js/vendor/modernizr-2.6.2.min.js"></script>
         <script src="assets/js//jquery-1.10.2.min.js"></script>
         <script src="bootstrap/js/bootstrap.min.js"></script>

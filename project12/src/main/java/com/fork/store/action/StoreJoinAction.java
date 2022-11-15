@@ -62,12 +62,16 @@ public class StoreJoinAction implements Action {
 		dto.setS_addr(addrArr);
 		System.out.println(addrArr);
 		
-		String facArr = multi.getParameter("facility1")+","
-						+ multi.getParameter("facility2")+","
-						+ multi.getParameter("facility3")+","
-						+ multi.getParameter("facility4")+","
-						+ multi.getParameter("facility5");
-		dto.setS_facility(facArr);
+		
+		
+		
+		  String facArr = multi.getParameter("facility1")+"," 
+						  + multi.getParameter("facility2")+"," 
+						  + multi.getParameter("facility3")+"," 
+						  +multi.getParameter("facility4")+"," 
+						  + multi.getParameter("facility5");
+		  dto.setS_facility(facArr);
+		 
 		
 		/*  step2 편의시설의 추가 정보를 저장하는 콘텐츠를 사용하려면 사용 - 추가로 할 일 1) db에 컬럼추가 2) dao에 sql문 변경, pstmt.setString()으로 추가
 		 * String FDArr = multi.getParameter("facDisc1")+"," +
@@ -81,6 +85,7 @@ public class StoreJoinAction implements Action {
 						+ multi.getParameter("menuName3")+","
 						+ multi.getParameter("menuName4")+","
 						+ multi.getParameter("menuName5");
+		
 		dto.setS_menuname(MNArr);
 		
 		String MPArr = multi.getParameter("menuPrice1")+","
