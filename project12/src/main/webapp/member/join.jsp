@@ -47,6 +47,7 @@
 			let name = $('#name').val();
 			let email = $('#email').val();
 			let nick = $('#nick').val();
+			let tel = $('#tel').val();
 			let pw = $('#pw').val();
 			let pwc = $('#pwc').val();
 			let hidEmail = $('#hidEmail').val(); 
@@ -56,42 +57,49 @@
 			
 			
 			if(id.length == 0){
-				alert('아이디를 확인해주세요');
+				alert('아이디를 입력해주세요');
 				$('#id').focus();
 				
 			 	return;
 			}
 			
 			if(name.length == 0){
-				alert('이름을 확인해주세요');
+				alert('이름을 입력해주세요');
 				$('#name').focus();
 				
 			 	return;
 			}
 			
 			if(email.length == 0){
-				alert('이름을 확인해주세요');
+				alert('이메일을 입력해주세요');
 				$('email').focus();
 				
 			 	return;
 			}
 			
 			if(nick.length == 0){
-				alert('이름을 확인해주세요');
+				alert('닉네임을 입력해주세요');
 				$('#nick').focus();
 				
 			 	return;
 			}
 			
+			if(tel.length == 0){
+				alert('연락처를 입력해주세요');
+				$('#tel').focus();
+				
+			 	return;
+			}
+			
 			if(pw.length == 0){
-				alert('이름을 확인해주세요');
+				alert('비밀번호를 입력해주세요');
 				$('#pw').focus();
 				
 			 	return;
 			}
 			
 			if(pwc.length == 0){
-				alert('이름을 확인해주세요');
+				alert('비밀번호 확인을 입력해주세요');
 				$('#pwc').focus();
 				
 			 	return;
@@ -135,7 +143,7 @@
 //	 	    open(url,"emailwindow", "statusbar=no, scrollbar=no, menubar=no, width=400, height=200" );
 
 			// 새창열기
-			window.open("./MemberEmailCheck.re?email="+email,"","width=400,height=200,top=300,left=500");
+			window.open("./MemberEmailCheck.us?email="+email,"","width=400,height=200,top=300,left=500");
 			
 		 }	
 		
@@ -164,7 +172,7 @@
 		
 	  if(id.length > 5){
 		$.ajax({
-			url:'${pageContext.request.contextPath}/DCheckAction.re',
+			url:'${pageContext.request.contextPath}/DCheckAction.us',
 			method:'post',
 			data:{id:id},
 			dataType:'json',
@@ -234,7 +242,7 @@
 		let email = $("#email").val();
   		
 		$.ajax({
-			url:'${pageContext.request.contextPath}/DCheckAction.re',
+			url:'${pageContext.request.contextPath}/DCheckAction.us',
 			method:'post',
 			data:{email:email},
 			dataType:'json',
@@ -289,7 +297,7 @@
 		
 		if(nick.length > 1){
 		$.ajax({
-			url:'${pageContext.request.contextPath}/DCheckAction.re',
+			url:'${pageContext.request.contextPath}/DCheckAction.us',
 			method:'post',
 			data:{nick:nick},
 			dataType:'json',
@@ -315,6 +323,51 @@
 		}
 	});
 	////////닉네임 ///////////////////
+	
+	///////// 연락처 /////////////////////
+	$("#tel").on("blur", function(){
+		if($("#tel").val().trim() == "" ){
+			$('#checkTel').html("연락처를 입력하세요.");
+			$('#checkTel').attr('color','red');
+			$('#noch').val(1);
+		}
+
+	});
+	// 중복체크
+	$("#tel").keyup(function() {
+		let tel = $("#tel").val();
+		
+	  if(tel.length > 12){
+		$.ajax({
+			url:'${pageContext.request.contextPath}/DCheckAction.us',
+			method:'post',
+			data:{tel:tel},
+			dataType:'json',
+			success:function(result){
+				if(result == 1){
+					$('#checkTel').html('사용 중인 연락처입니다.');
+					$('#checkTel').attr('color','red');
+					$('#noch').val(1);
+				} else if(!/^\d{3}-\d{4}-\d{4}$/.test(tel)){
+					$('#checkTel').html("연락처 형식에 맞지 않습니다.");
+					$('#checkTel').attr('color','red');
+					$('#noch').val(1);
+				} else if(result == 0) {
+					$('#checkTel').html('사용 가능한 연락처입니다.');
+					$('#checkTel').attr('color','green');
+					$('#noch').val(0);
+				}
+				
+			},
+				error : function(){
+				alert("실패");
+			}
+		});
+	  }
+		
+	});
+	///////// 연락처 /////////////////////
+	
 	
 	///// 비밀번호  ///////////
 	$("#pw").on("blur", function(){
@@ -412,7 +465,7 @@
 <!-- 				<p>회 원 가 입</p> -->
 <!-- 			  </div> -->
 		 <div class="form-content bk">
-				<form action="./JoinAction.re" method="POST"  align="left" name="fr" onsubmit="return false" >
+				<form action="./JoinAction.us" method="POST"  align="left" name="fr" onsubmit="return false" >
 					<p><h2  style="text-align:center; color:black">회 원 가 입</h2></p>
 				<!-- /////////////// 필수입력 사항 ////////////////////////-->
 					<fieldset class="scheduler-border" >
@@ -445,7 +498,7 @@
 							  <input type="text" class="form-control" id="name" placeholder="이름을 입력하세요" name="name"  style="width:300px" maxlength="20">
 							</div>
 							<div class="col-SM-2" style="padding:0 0 0 15px">
-							  <label for="email">이메일&nbsp;&nbsp;
+							  <label for="email" >이메일&nbsp;&nbsp;
 							  	<font id = "checkEmail" size="2"></font>
 							  </label>
 							  <input type="email" class="form-control" id="email" placeholder="이메일을 입력하세요" name="email"  style="width:300px">
@@ -456,6 +509,12 @@
 							  <font id = "checkNick" size = "2"></font>
 							  </label>
 							  <input type="text" class="form-control" id="nick" placeholder="2~8자 한글,영문자로 입력하세요" name="nick"  style="width:300px" maxlength="8">
+							</div>
+							<div class="col-SM-2" style="padding:0 0 0 15px">
+							  <label for="tel">전화번호( - 포함)&nbsp;&nbsp;
+							  <font id = "checkTel" size = "2"></font>
+							  </label>
+							  <input type="tel" class="form-control" id="tel" name="tel" placeholder="(-)를 포함하여 입력하세요" style="width:300px" maxlength="13">
 							</div>
 							<div class="col-SM-2" style="padding:0 0 0 15px">
 							  <label for="pw">비밀번호&nbsp;&nbsp;
@@ -491,26 +550,7 @@
 							  <label for="gender"><input type="radio" class="form-control" id="gender" value="남"  name="gender" >남</label>
 							  <label for="gender2"><input type="radio" class="form-control" id="gender2" value="여" name="gender" >여</label>
 							</div>
-<!-- 							<div class="col-SM-2" style="padding:15px 0 0 15px"> -->
-<!-- 							  <label for="checkbox">선호지역(최대 3개)</label><br> -->
-<!-- 							  <label for=""><input type="checkbox" name="country[]" value="Australia">강서구</label> -->
-<!-- 							  <label for=""><input type="checkbox" name="country[]" value="Australia">금정구</label> -->
-<!-- 							  <label for=""><input type="checkbox" name="country[]" value="Australia">기장군&nbsp;&nbsp;&nbsp;&nbsp;</label> -->
-<!-- 							  <label for=""><input type="checkbox" name="country[]" value="Australia">남구</label><br> -->
-<!-- 							  <label for=""><input type="checkbox" name="country[]" value="Australia">동구&nbsp;&nbsp;&nbsp;&nbsp;</label> -->
-<!-- 							  <label for=""><input type="checkbox" name="country[]" value="Australia">동래구</label> -->
-<!-- 							  <label for=""><input type="checkbox" name="country[]" value="Australia">부산진구</label> -->
-<!-- 							  <label for=""><input type="checkbox" name="country[]" value="Australia">북구</label><br> -->
-<!-- 							  <label for=""><input type="checkbox" name="country[]" value="Australia">사상구</label> -->
-<!-- 							  <label for=""><input type="checkbox" name="country[]" value="Australia">사하구</label> -->
-<!-- 							  <label for=""><input type="checkbox" name="country[]" value="Australia">수영구&nbsp;&nbsp;&nbsp;&nbsp;</label> -->
-<!-- 							  <label for=""><input type="checkbox" name="country[]" value="Australia">서구</label><br> -->
-<!-- 							  <label for=""><input type="checkbox" name="country[]" value="Australia">연제구</label> -->
-<!-- 							  <label for=""><input type="checkbox" name="country[]" value="Australia">영도구</label> -->
-<!-- 							  <label for=""><input type="checkbox" name="country[]" value="Australia">해운대구</label> -->
-<!-- 							  <label for=""><input type="checkbox" name="country[]" value="Australia">중구</label> -->
-							  
-<!-- 							</div> -->
+
 						</div>
 					</fieldset>
 					</div>
@@ -524,7 +564,6 @@
 <!-- 							  <label for="agree2"><input type="radio" class="form-control" id="agree2" value="N" name="agree" >아니오</label>&nbsp;&nbsp; -->
 							  <input type="button" value="약관 보기" class="bttn" onclick="infoform();">
 							</div>
-						
 						</div>
 					</fieldset>
 					<!-- Study Abroad Plans -->

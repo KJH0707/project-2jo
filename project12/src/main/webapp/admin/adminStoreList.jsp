@@ -5,6 +5,8 @@
 <!doctype html>
 <html lang="en">
  
+ 
+ 
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -20,6 +22,20 @@
     <link rel="stylesheet" href="assets/vendor/charts/c3charts/c3.css">
     <link rel="stylesheet" href="assets/vendor/fonts/flag-icon-css/flag-icon.min.css">
     <title>Admin Dashboard </title>
+    <script type="text/javascript">
+    function isDelete(x,y){
+    
+    var isMove = confirm("진짜 삭제하실?");
+	
+	if(isMove){
+		// 장바구니 페이지 이동
+		location.href="./adminDeleteStoreAction.us?s_no="+x+"&pageNum="+y;
+	}
+	
+	}
+    
+    </script>
+    
 </head>
 
 <body>
@@ -76,7 +92,7 @@
                                             <table class="table">
                                                 <thead class="bg-light">
                                                     <tr class="border-0">
-                                                        <th class="border-0">#</th>
+                                                        <th class="border-0">가게번호</th>
                                                         <th class="border-0">Image</th>
                                                         <th class="border-0">Store Name</th>
                                                         <th class="border-0">사업자번호</th>
@@ -89,79 +105,47 @@
                                                 </thead>
                                                 <!-- 가게 정보입력 -->
                                                 <tbody>
+                                                    <c:forEach var="st" items="${storeListAll }">
                                                     <tr>
-                                                        <td>1</td>
+                                                    
+                                                        <td>${st.s_no }</td>
                                                         <td>
                                                             <div class="m-r-10"><img src="assets/images/product-pic.jpg" alt="user" class="rounded" width="45"></div>
                                                         </td>
-                                                        <td>Product #1 </td>
-                                                        <td>id000001 </td>
-                                                        <td>한식</td>
-                                                        <td>부산광역시 부산진구</td>
-                                                        <td>27-08-2018 01:22:12</td>
-                                                        <td>Patricia J. King </td>
+                                                        <td>${st.s_name }</td>
+                                                        <td>${st.s_number }</td>
+                                                        <td>${st.s_type }</td>
+                                                        <td>${st.s_addr }</td>
+                                                        <td>${st.s_regdate }</td>
+                                                        <td>${st.c_name }</td>
                                                         <td>
                                                         	<a href="#">수정</a> 
-                                                        	/
-                                                        	<a href="#">삭제</a>
+                                                        	
+                                                        	<a href="javascript: isDelete(${st.s_no },${pageNum })">삭제</a>
                                                          </td>
                                                     </tr>
-                                                    <tr>
-                                                        <td>2</td>
-                                                        <td>
-                                                            <div class="m-r-10"><img src="assets/images/product-pic.jpg" alt="user" class="rounded" width="45"></div>
-                                                        </td>
-                                                        <td>Product #2 </td>
-                                                        <td>id000001 </td>
-                                                        <td>양식</td>
-                                                        <td>부산광역시 부산진구</td>
-                                                        <td>27-08-2018 01:22:12</td>
-                                                        <td>Patricia J. King </td>
-                                                        <td>
-                                                        	<a href="#">수정</a> 
-                                                        	/
-                                                        	<a href="#">삭제</a>
-                                                         </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>3</td>
-                                                        <td>
-                                                            <div class="m-r-10"><img src="assets/images/product-pic.jpg" alt="user" class="rounded" width="45"></div>
-                                                        </td>
-                                                        <td>Product #3 </td>
-                                                        <td>id000001 </td>
-                                                        <td>바</td>
-                                                        <td>부산광역시 부산진구</td>
-                                                        <td>27-08-2018 01:22:12</td>
-                                                        <td>Patricia J. King </td>
-                                                        <td>
-                                                        	<a href="#">수정</a> 
-                                                        	/
-                                                        	<a href="#">삭제</a>
-                                                         </td>
-                                                    </tr>
+                                                   </c:forEach>
                                                     <tr>
                                                     	<td colspan="4"> <!-- 페이지 -->
-                                                    		<%-- <c:if test="${totalCnt != 0}" >  <!-- ${requestScope.totalCnt} -->
+                                                    	<div>
+                                                    		<c:if test="${reqeustScope.totalCnt != 0 }">
 	
 																<!-- 이전 -->
-																<c:if test="${startPage > pageBlock}">
-																	<a href="./#.re?pageNum=${startPage-pageBlock }">[Prev]</a> 
+																<c:if test="${startPage > pageBlock }">
+																	<a href="./adminStoreList.us?pageNum=${startPage-pageBlock }">Prev</a>
 																</c:if>
-																<!-- 페이지 번호(1,2,3,4 ...) --> 		
-																<c:forEach var="i" begin="${startPage}" end="${endPage }" step="1">
-																	<a href="./#?pageNum=${i }">${i }</a>
+																<!-- 페이지 번호(1,2,3....) -->
+																<c:forEach var="i" begin="${startPage }" end="${endPage }" step="1">
+																	<a href="./adminStoreList.us?pageNum=${i }">${i }&nbsp;&nbsp;</a>
 																</c:forEach>
 																<!-- 다음 -->
-																<c:if test="${endPage < pageCount}">
-																<a href="././#?pageNum=${startPage+pageBlock }">[Next]</a>
+																<c:if test="${endPage < pageCount }">
+																	<a href="./adminStoreList.us?pageNum=${startPage+pageBlock }">[다음]</a>
 																</c:if>
-																
-															</c:if> --%>
-														<!-- 페이지 위치 확인  -->
-														<div> 
-															<a href="#">Prev</a>&nbsp;12345&nbsp;<a href="#">Next</a>
+															</c:if>
 														</div>
+														<!-- 페이지 위치 확인  -->
+														
 														<!-- 페이지 위치 확인  -->
 														<td>
                                                         <td colspan="5"><a href="#" class="btn btn-outline-light float-right">View Details</a></td>
@@ -317,205 +301,205 @@
                             </div>
                         </div>
 
-                        <div class="row">
+<!--                         <div class="row"> -->
                             <!-- ============================================================== -->
                             <!-- sales  -->
                             <!-- ============================================================== -->
-                            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
-                                <div class="card border-3 border-top border-top-primary">
-                                    <div class="card-body">
-                                        <h5 class="text-muted">Sales</h5>
-                                        <div class="metric-value d-inline-block">
-                                            <h1 class="mb-1">$12099</h1>
-                                        </div>
-                                        <div class="metric-label d-inline-block float-right text-success font-weight-bold">
-                                            <span class="icon-circle-small icon-box-xs text-success bg-success-light"><i class="fa fa-fw fa-arrow-up"></i></span><span class="ml-1">5.86%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- ============================================================== -->
-                            <!-- end sales  -->
-                            <!-- ============================================================== -->
-                            <!-- ============================================================== -->
-                            <!-- new customer  -->
-                            <!-- ============================================================== -->
-                            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
-                                <div class="card border-3 border-top border-top-primary">
-                                    <div class="card-body">
-                                        <h5 class="text-muted">New Customer</h5>
-                                        <div class="metric-value d-inline-block">
-                                            <h1 class="mb-1">1245</h1>
-                                        </div>
-                                        <div class="metric-label d-inline-block float-right text-success font-weight-bold">
-                                            <span class="icon-circle-small icon-box-xs text-success bg-success-light"><i class="fa fa-fw fa-arrow-up"></i></span><span class="ml-1">10%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- ============================================================== -->
-                            <!-- end new customer  -->
-                            <!-- ============================================================== -->
-                            <!-- ============================================================== -->
-                            <!-- visitor  -->
-                            <!-- ============================================================== -->
-                            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
-                                <div class="card border-3 border-top border-top-primary">
-                                    <div class="card-body">
-                                        <h5 class="text-muted">Visitor</h5>
-                                        <div class="metric-value d-inline-block">
-                                            <h1 class="mb-1">13000</h1>
-                                        </div>
-                                        <div class="metric-label d-inline-block float-right text-success font-weight-bold">
-                                            <span class="icon-circle-small icon-box-xs text-success bg-success-light"><i class="fa fa-fw fa-arrow-up"></i></span><span class="ml-1">5%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- ============================================================== -->
-                            <!-- end visitor  -->
-                            <!-- ============================================================== -->
-                            <!-- ============================================================== -->
-                            <!-- total orders  -->
-                            <!-- ============================================================== -->
-                            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
-                                <div class="card border-3 border-top border-top-primary">
-                                    <div class="card-body">
-                                        <h5 class="text-muted">Total Orders</h5>
-                                        <div class="metric-value d-inline-block">
-                                            <h1 class="mb-1">1340</h1>
-                                        </div>
-                                        <div class="metric-label d-inline-block float-right text-danger font-weight-bold">
-                                            <span class="icon-circle-small icon-box-xs text-danger bg-danger-light bg-danger-light "><i class="fa fa-fw fa-arrow-down"></i></span><span class="ml-1">4%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- ============================================================== -->
-                            <!-- end total orders  -->
-                            <!-- ============================================================== -->
-                        </div>
-                        <div class="row">
-                            <!-- ============================================================== -->
-                            <!-- total revenue  -->
-                            <!-- ============================================================== -->
+<!--                             <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12"> -->
+<!--                                 <div class="card border-3 border-top border-top-primary"> -->
+<!--                                     <div class="card-body"> -->
+<!--                                         <h5 class="text-muted">Sales</h5> -->
+<!--                                         <div class="metric-value d-inline-block"> -->
+<!--                                             <h1 class="mb-1">$12099</h1> -->
+<!--                                         </div> -->
+<!--                                         <div class="metric-label d-inline-block float-right text-success font-weight-bold"> -->
+<!--                                             <span class="icon-circle-small icon-box-xs text-success bg-success-light"><i class="fa fa-fw fa-arrow-up"></i></span><span class="ml-1">5.86%</span> -->
+<!--                                         </div> -->
+<!--                                     </div> -->
+<!--                                 </div> -->
+<!--                             </div> -->
+<!--                             ============================================================== -->
+<!--                             end sales  -->
+<!--                             ============================================================== -->
+<!--                             ============================================================== -->
+<!--                             new customer  -->
+<!--                             ============================================================== -->
+<!--                             <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12"> -->
+<!--                                 <div class="card border-3 border-top border-top-primary"> -->
+<!--                                     <div class="card-body"> -->
+<!--                                         <h5 class="text-muted">New Customer</h5> -->
+<!--                                         <div class="metric-value d-inline-block"> -->
+<!--                                             <h1 class="mb-1">1245</h1> -->
+<!--                                         </div> -->
+<!--                                         <div class="metric-label d-inline-block float-right text-success font-weight-bold"> -->
+<!--                                             <span class="icon-circle-small icon-box-xs text-success bg-success-light"><i class="fa fa-fw fa-arrow-up"></i></span><span class="ml-1">10%</span> -->
+<!--                                         </div> -->
+<!--                                     </div> -->
+<!--                                 </div> -->
+<!--                             </div> -->
+<!--                             ============================================================== -->
+<!--                             end new customer  -->
+<!--                             ============================================================== -->
+<!--                             ============================================================== -->
+<!--                             visitor  -->
+<!--                             ============================================================== -->
+<!--                             <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12"> -->
+<!--                                 <div class="card border-3 border-top border-top-primary"> -->
+<!--                                     <div class="card-body"> -->
+<!--                                         <h5 class="text-muted">Visitor</h5> -->
+<!--                                         <div class="metric-value d-inline-block"> -->
+<!--                                             <h1 class="mb-1">13000</h1> -->
+<!--                                         </div> -->
+<!--                                         <div class="metric-label d-inline-block float-right text-success font-weight-bold"> -->
+<!--                                             <span class="icon-circle-small icon-box-xs text-success bg-success-light"><i class="fa fa-fw fa-arrow-up"></i></span><span class="ml-1">5%</span> -->
+<!--                                         </div> -->
+<!--                                     </div> -->
+<!--                                 </div> -->
+<!--                             </div> -->
+<!--                             ============================================================== -->
+<!--                             end visitor  -->
+<!--                             ============================================================== -->
+<!--                             ============================================================== -->
+<!--                             total orders  -->
+<!--                             ============================================================== -->
+<!--                             <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12"> -->
+<!--                                 <div class="card border-3 border-top border-top-primary"> -->
+<!--                                     <div class="card-body"> -->
+<!--                                         <h5 class="text-muted">Total Orders</h5> -->
+<!--                                         <div class="metric-value d-inline-block"> -->
+<!--                                             <h1 class="mb-1">1340</h1> -->
+<!--                                         </div> -->
+<!--                                         <div class="metric-label d-inline-block float-right text-danger font-weight-bold"> -->
+<!--                                             <span class="icon-circle-small icon-box-xs text-danger bg-danger-light bg-danger-light "><i class="fa fa-fw fa-arrow-down"></i></span><span class="ml-1">4%</span> -->
+<!--                                         </div> -->
+<!--                                     </div> -->
+<!--                                 </div> -->
+<!--                             </div> -->
+<!--                             ============================================================== -->
+<!--                             end total orders  -->
+<!--                             ============================================================== -->
+<!--                         </div> -->
+<!--                         <div class="row"> -->
+<!--                             ============================================================== -->
+<!--                             total revenue  -->
+<!--                             ============================================================== -->
   
                             
-                            <!-- ============================================================== -->
-                            <!-- ============================================================== -->
-                            <!-- category revenue  -->
-                            <!-- ============================================================== -->
-                            <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12">
-                                <div class="card">
-                                    <h5 class="card-header">Revenue by Category</h5>
-                                    <div class="card-body">
-                                        <div id="c3chart_category" style="height: 420px;"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- ============================================================== -->
-                            <!-- end category revenue  -->
-                            <!-- ============================================================== -->
+<!--                             ============================================================== -->
+<!--                             ============================================================== -->
+<!--                             category revenue  -->
+<!--                             ============================================================== -->
+<!--                             <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12"> -->
+<!--                                 <div class="card"> -->
+<!--                                     <h5 class="card-header">Revenue by Category</h5> -->
+<!--                                     <div class="card-body"> -->
+<!--                                         <div id="c3chart_category" style="height: 420px;"></div> -->
+<!--                                     </div> -->
+<!--                                 </div> -->
+<!--                             </div> -->
+<!--                             ============================================================== -->
+<!--                             end category revenue  -->
+<!--                             ============================================================== -->
 
-                            <div class="col-xl-7 col-lg-7 col-md-12 col-sm-12 col-12">
-                                <div class="card">
-                                    <h5 class="card-header"> Total Revenue</h5>
-                                    <div class="card-body">
-                                        <div id="morris_totalrevenue"></div>
-                                    </div>
-                                    <div class="card-footer">
-                                        <p class="display-7 font-weight-bold"><span class="text-primary d-inline-block">$26,000</span><span class="text-success float-right">+9.45%</span></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xl-5 col-lg-6 col-md-6 col-sm-12 col-12">
-                                <!-- ============================================================== -->
-                                <!-- social source  -->
-                                <!-- ============================================================== -->
-                                <div class="card">
-                                    <h5 class="card-header"> Sales By Social Source</h5>
-                                    <div class="card-body p-0">
-                                        <ul class="social-sales list-group list-group-flush">
-                                            <li class="list-group-item social-sales-content"><span class="social-sales-icon-circle facebook-bgcolor mr-2"><i class="fab fa-facebook-f"></i></span><span class="social-sales-name">Facebook</span><span class="social-sales-count text-dark">120 Sales</span>
-                                            </li>
-                                            <li class="list-group-item social-sales-content"><span class="social-sales-icon-circle twitter-bgcolor mr-2"><i class="fab fa-twitter"></i></span><span class="social-sales-name">Twitter</span><span class="social-sales-count text-dark">99 Sales</span>
-                                            </li>
-                                            <li class="list-group-item social-sales-content"><span class="social-sales-icon-circle instagram-bgcolor mr-2"><i class="fab fa-instagram"></i></span><span class="social-sales-name">Instagram</span><span class="social-sales-count text-dark">76 Sales</span>
-                                            </li>
-                                            <li class="list-group-item social-sales-content"><span class="social-sales-icon-circle pinterest-bgcolor mr-2"><i class="fab fa-pinterest-p"></i></span><span class="social-sales-name">Pinterest</span><span class="social-sales-count text-dark">56 Sales</span>
-                                            </li>
-                                            <li class="list-group-item social-sales-content"><span class="social-sales-icon-circle googleplus-bgcolor mr-2"><i class="fab fa-google-plus-g"></i></span><span class="social-sales-name">Google Plus</span><span class="social-sales-count text-dark">36 Sales</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="card-footer text-center">
-                                        <a href="#" class="btn-primary-link">View Details</a>
-                                    </div>
-                                </div>
-                                <!-- ============================================================== -->
-                                <!-- end social source  -->
-                                <!-- ============================================================== -->
-                            </div>
-                            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12">
-                                <!-- ============================================================== -->
-                                <!-- sales traffice source  -->
-                                <!-- ============================================================== -->
-                                <div class="card">
-                                    <h5 class="card-header"> Sales By Traffic Source</h5>
-                                    <div class="card-body p-0">
-                                        <ul class="traffic-sales list-group list-group-flush">
-                                            <li class="traffic-sales-content list-group-item "><span class="traffic-sales-name">Direct</span><span class="traffic-sales-amount">$4000.00  <span class="icon-circle-small icon-box-xs text-success ml-4 bg-success-light"><i class="fa fa-fw fa-arrow-up"></i></span><span class="ml-1 text-success">5.86%</span></span>
-                                            </li>
-                                            <li class="traffic-sales-content list-group-item"><span class="traffic-sales-name">Search<span class="traffic-sales-amount">$3123.00  <span class="icon-circle-small icon-box-xs text-success ml-4 bg-success-light"><i class="fa fa-fw fa-arrow-up"></i></span><span class="ml-1 text-success">5.86%</span></span>
-                                                </span>
-                                            </li>
-                                            <li class="traffic-sales-content list-group-item"><span class="traffic-sales-name">Social<span class="traffic-sales-amount ">$3099.00  <span class="icon-circle-small icon-box-xs text-success ml-4 bg-success-light"><i class="fa fa-fw fa-arrow-up"></i></span><span class="ml-1 text-success">5.86%</span></span>
-                                                </span>
-                                            </li>
-                                            <li class="traffic-sales-content list-group-item"><span class="traffic-sales-name">Referrals<span class="traffic-sales-amount ">$2220.00   <span class="icon-circle-small icon-box-xs text-danger ml-4 bg-danger-light"><i class="fa fa-fw fa-arrow-down"></i></span><span class="ml-1 text-danger">4.02%</span></span>
-                                                </span>
-                                            </li>
-                                            <li class="traffic-sales-content list-group-item "><span class="traffic-sales-name">Email<span class="traffic-sales-amount">$1567.00   <span class="icon-circle-small icon-box-xs text-danger ml-4 bg-danger-light"><i class="fa fa-fw fa-arrow-down"></i></span><span class="ml-1 text-danger">3.86%</span></span>
-                                                </span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="card-footer text-center">
-                                        <a href="#" class="btn-primary-link">View Details</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- ============================================================== -->
-                            <!-- end sales traffice source  -->
-                            <!-- ============================================================== -->
-                            <!-- ============================================================== -->
-                            <!-- sales traffic country source  -->
-                            <!-- ============================================================== -->
-                            <div class="col-xl-3 col-lg-12 col-md-6 col-sm-12 col-12">
-                                <div class="card">
-                                    <h5 class="card-header">Sales By Country Traffic Source</h5>
-                                    <div class="card-body p-0">
-                                        <ul class="country-sales list-group list-group-flush">
-                                            <li class="country-sales-content list-group-item"><span class="mr-2"><i class="flag-icon flag-icon-us" title="us" id="us"></i> </span>
-                                                <span class="">United States</span><span class="float-right text-dark">78%</span>
-                                            </li>
-                                            <li class="list-group-item country-sales-content"><span class="mr-2"><i class="flag-icon flag-icon-ca" title="ca" id="ca"></i></span><span class="">Canada</span><span class="float-right text-dark">7%</span>
-                                            </li>
-                                            <li class="list-group-item country-sales-content"><span class="mr-2"><i class="flag-icon flag-icon-ru" title="ru" id="ru"></i></span><span class="">Russia</span><span class="float-right text-dark">4%</span>
-                                            </li>
-                                            <li class="list-group-item country-sales-content"><span class=" mr-2"><i class="flag-icon flag-icon-in" title="in" id="in"></i></span><span class="">India</span><span class="float-right text-dark">12%</span>
-                                            </li>
-                                            <li class="list-group-item country-sales-content"><span class=" mr-2"><i class="flag-icon flag-icon-fr" title="fr" id="fr"></i></span><span class="">France</span><span class="float-right text-dark">16%</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="card-footer text-center">
-                                        <a href="#" class="btn-primary-link">View Details</a>
-                                    </div>
-                                </div>
-                            </div>
+<!--                             <div class="col-xl-7 col-lg-7 col-md-12 col-sm-12 col-12"> -->
+<!--                                 <div class="card"> -->
+<!--                                     <h5 class="card-header"> Total Revenue</h5> -->
+<!--                                     <div class="card-body"> -->
+<!--                                         <div id="morris_totalrevenue"></div> -->
+<!--                                     </div> -->
+<!--                                     <div class="card-footer"> -->
+<!--                                         <p class="display-7 font-weight-bold"><span class="text-primary d-inline-block">$26,000</span><span class="text-success float-right">+9.45%</span></p> -->
+<!--                                     </div> -->
+<!--                                 </div> -->
+<!--                             </div> -->
+<!--                         </div> -->
+<!--                         <div class="row"> -->
+<!--                             <div class="col-xl-5 col-lg-6 col-md-6 col-sm-12 col-12"> -->
+<!--                                 ============================================================== -->
+<!--                                 social source  -->
+<!--                                 ============================================================== -->
+<!--                                 <div class="card"> -->
+<!--                                     <h5 class="card-header"> Sales By Social Source</h5> -->
+<!--                                     <div class="card-body p-0"> -->
+<!--                                         <ul class="social-sales list-group list-group-flush"> -->
+<!--                                             <li class="list-group-item social-sales-content"><span class="social-sales-icon-circle facebook-bgcolor mr-2"><i class="fab fa-facebook-f"></i></span><span class="social-sales-name">Facebook</span><span class="social-sales-count text-dark">120 Sales</span> -->
+<!--                                             </li> -->
+<!--                                             <li class="list-group-item social-sales-content"><span class="social-sales-icon-circle twitter-bgcolor mr-2"><i class="fab fa-twitter"></i></span><span class="social-sales-name">Twitter</span><span class="social-sales-count text-dark">99 Sales</span> -->
+<!--                                             </li> -->
+<!--                                             <li class="list-group-item social-sales-content"><span class="social-sales-icon-circle instagram-bgcolor mr-2"><i class="fab fa-instagram"></i></span><span class="social-sales-name">Instagram</span><span class="social-sales-count text-dark">76 Sales</span> -->
+<!--                                             </li> -->
+<!--                                             <li class="list-group-item social-sales-content"><span class="social-sales-icon-circle pinterest-bgcolor mr-2"><i class="fab fa-pinterest-p"></i></span><span class="social-sales-name">Pinterest</span><span class="social-sales-count text-dark">56 Sales</span> -->
+<!--                                             </li> -->
+<!--                                             <li class="list-group-item social-sales-content"><span class="social-sales-icon-circle googleplus-bgcolor mr-2"><i class="fab fa-google-plus-g"></i></span><span class="social-sales-name">Google Plus</span><span class="social-sales-count text-dark">36 Sales</span> -->
+<!--                                             </li> -->
+<!--                                         </ul> -->
+<!--                                     </div> -->
+<!--                                     <div class="card-footer text-center"> -->
+<!--                                         <a href="#" class="btn-primary-link">View Details</a> -->
+<!--                                     </div> -->
+<!--                                 </div> -->
+<!--                                 ============================================================== -->
+<!--                                 end social source  -->
+<!--                                 ============================================================== -->
+<!--                             </div> -->
+<!--                             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12"> -->
+<!--                                 ============================================================== -->
+<!--                                 sales traffice source  -->
+<!--                                 ============================================================== -->
+<!--                                 <div class="card"> -->
+<!--                                     <h5 class="card-header"> Sales By Traffic Source</h5> -->
+<!--                                     <div class="card-body p-0"> -->
+<!--                                         <ul class="traffic-sales list-group list-group-flush"> -->
+<!--                                             <li class="traffic-sales-content list-group-item "><span class="traffic-sales-name">Direct</span><span class="traffic-sales-amount">$4000.00  <span class="icon-circle-small icon-box-xs text-success ml-4 bg-success-light"><i class="fa fa-fw fa-arrow-up"></i></span><span class="ml-1 text-success">5.86%</span></span> -->
+<!--                                             </li> -->
+<!--                                             <li class="traffic-sales-content list-group-item"><span class="traffic-sales-name">Search<span class="traffic-sales-amount">$3123.00  <span class="icon-circle-small icon-box-xs text-success ml-4 bg-success-light"><i class="fa fa-fw fa-arrow-up"></i></span><span class="ml-1 text-success">5.86%</span></span> -->
+<!--                                                 </span> -->
+<!--                                             </li> -->
+<!--                                             <li class="traffic-sales-content list-group-item"><span class="traffic-sales-name">Social<span class="traffic-sales-amount ">$3099.00  <span class="icon-circle-small icon-box-xs text-success ml-4 bg-success-light"><i class="fa fa-fw fa-arrow-up"></i></span><span class="ml-1 text-success">5.86%</span></span> -->
+<!--                                                 </span> -->
+<!--                                             </li> -->
+<!--                                             <li class="traffic-sales-content list-group-item"><span class="traffic-sales-name">Referrals<span class="traffic-sales-amount ">$2220.00   <span class="icon-circle-small icon-box-xs text-danger ml-4 bg-danger-light"><i class="fa fa-fw fa-arrow-down"></i></span><span class="ml-1 text-danger">4.02%</span></span> -->
+<!--                                                 </span> -->
+<!--                                             </li> -->
+<!--                                             <li class="traffic-sales-content list-group-item "><span class="traffic-sales-name">Email<span class="traffic-sales-amount">$1567.00   <span class="icon-circle-small icon-box-xs text-danger ml-4 bg-danger-light"><i class="fa fa-fw fa-arrow-down"></i></span><span class="ml-1 text-danger">3.86%</span></span> -->
+<!--                                                 </span> -->
+<!--                                             </li> -->
+<!--                                         </ul> -->
+<!--                                     </div> -->
+<!--                                     <div class="card-footer text-center"> -->
+<!--                                         <a href="#" class="btn-primary-link">View Details</a> -->
+<!--                                     </div> -->
+<!--                                 </div> -->
+<!--                             </div> -->
+<!--                             ============================================================== -->
+<!--                             end sales traffice source  -->
+<!--                             ============================================================== -->
+<!--                             ============================================================== -->
+<!--                             sales traffic country source  -->
+<!--                             ============================================================== -->
+<!--                             <div class="col-xl-3 col-lg-12 col-md-6 col-sm-12 col-12"> -->
+<!--                                 <div class="card"> -->
+<!--                                     <h5 class="card-header">Sales By Country Traffic Source</h5> -->
+<!--                                     <div class="card-body p-0"> -->
+<!--                                         <ul class="country-sales list-group list-group-flush"> -->
+<!--                                             <li class="country-sales-content list-group-item"><span class="mr-2"><i class="flag-icon flag-icon-us" title="us" id="us"></i> </span> -->
+<!--                                                 <span class="">United States</span><span class="float-right text-dark">78%</span> -->
+<!--                                             </li> -->
+<!--                                             <li class="list-group-item country-sales-content"><span class="mr-2"><i class="flag-icon flag-icon-ca" title="ca" id="ca"></i></span><span class="">Canada</span><span class="float-right text-dark">7%</span> -->
+<!--                                             </li> -->
+<!--                                             <li class="list-group-item country-sales-content"><span class="mr-2"><i class="flag-icon flag-icon-ru" title="ru" id="ru"></i></span><span class="">Russia</span><span class="float-right text-dark">4%</span> -->
+<!--                                             </li> -->
+<!--                                             <li class="list-group-item country-sales-content"><span class=" mr-2"><i class="flag-icon flag-icon-in" title="in" id="in"></i></span><span class="">India</span><span class="float-right text-dark">12%</span> -->
+<!--                                             </li> -->
+<!--                                             <li class="list-group-item country-sales-content"><span class=" mr-2"><i class="flag-icon flag-icon-fr" title="fr" id="fr"></i></span><span class="">France</span><span class="float-right text-dark">16%</span> -->
+<!--                                             </li> -->
+<!--                                         </ul> -->
+<!--                                     </div> -->
+<!--                                     <div class="card-footer text-center"> -->
+<!--                                         <a href="#" class="btn-primary-link">View Details</a> -->
+<!--                                     </div> -->
+<!--                                 </div> -->
+<!--                             </div> -->
                             <!-- ============================================================== -->
                             <!-- end sales traffice country source  -->
                             <!-- ============================================================== -->
@@ -559,6 +543,7 @@
     <script src="assets/vendor/charts/c3charts/d3-5.4.0.min.js"></script>
     <script src="assets/vendor/charts/c3charts/C3chartjs.js"></script>
     <script src="assets/libs/js/dashboard-ecommerce.js"></script>
+    
 </body>
  
 </html>

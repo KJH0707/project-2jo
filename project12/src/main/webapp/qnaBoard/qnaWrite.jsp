@@ -70,33 +70,36 @@
                        
                         <hr>
                         <h2>QnA 문의하기</h2>
-                        <form action="./QnaBoardWriteAction.re" method="post">
+                        ${param.s_no}
+                        <form action="./QnaBoardWriteAction.br" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="s_no" value="${param.s_no}">
+                        
 <!--                             <div class="row"> -->
 <!--                                 <div class="col-sm-6"> -->
 <!--                                     <div class="form-group"> -->
                                         <label for="firstname">문의분류</label>
-                                        <input type="radio" name="qna" value="예약문의">예약 문의
-                                        <input type="radio" name="qna" value="식당문의">식당 문의
-                                        <input type="radio" name="qna" value="기타문의">기타 문의
+                                        <input type="radio" name="qna_sort" value="reser" checked>예약 문의
+                                        <input type="radio" name="qna_sort" value="store">식당 문의
+                                        <input type="radio" name="qna_sort" value="etc">기타 문의
 <!--                                     </div> -->
 <!--                                 </div> -->
                                 <br>
 <!--                                 <div class="col-sm-6"> -->
 <!--                                     <div class="form-group"> -->
                                         <label for="subject">제목</label>
-                                        <input type="text" class="form-control" id="subject" name="">
+                                        <input type="text" class="form-control" id="subject" name="rev_subject">
 <!--                                     </div> -->
 <!--                                 </div> -->
 <!--                                 <div class="col-sm-6"> -->
 <!--                                     <div class="form-group"> -->
                                         <label for="subject">첨부파일</label>
-                                        <input type="file" class="form-control" id="file" name="">
+                                        <input type="file" class="form-control" id="file" name="rev_file">
 <!--                                     </div> -->
-<!--                                 </div> -->
+<!--                                  </div> -->
 <!--                                 <div class="col-sm-12"> -->
 <!--                                     <div class="form-group"> -->
                                         <label for="message">내용</label>
-                                        <textarea id="message" class="form-control1" name=""></textarea>
+                                        <textarea id="message" class="form-control1" name="rev_content"></textarea>
 <!--                                     </div> -->
 <!--                                 </div> -->
 									<br>
@@ -111,6 +114,7 @@
                 <!-- /.col-md-9 -->              
 <!--             </div> -->
         </div>
+        
         
          <!-- Footer area-->
         <script src="assets/js/modernizr-2.6.2.min.js"></script>

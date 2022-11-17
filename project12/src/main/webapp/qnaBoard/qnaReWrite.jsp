@@ -70,7 +70,7 @@
                        
                         <hr>
                         <h2>QnA 답변하기</h2>
-                        <form action="" method="post">
+                        <form action="./QnaBoardWriteAction.br" method="post" enctype="multipart/form-data">
 <!--                             <div class="row"> -->
 <!--                                 <div class="col-sm-6"> -->
 <!--                                     <div class="form-group"> -->
@@ -79,20 +79,20 @@
 <!--                                 </div> -->
 <!--                                 <div class="col-sm-6"> -->
 <!--                                     <div class="form-group"> -->
-                                        <label for="subject">제목</label>
-                                        <input type="text" class="form-control" id="subject" value="[RE]">
+                                         <label for="subject">제목</label>
+                                        <input type="text" class="form-control" id="subject" name="rev_subject" value="[RE]">
 <!--                                     </div> -->
 <!--                                 </div> -->
 <!--                                 <div class="col-sm-6"> -->
 <!--                                     <div class="form-group"> -->
                                         <label for="subject">첨부파일</label>
-                                        <input type="file" class="form-control" id="file">
+                                        <input type="file" class="form-control" id="file" name="rev_file">
 <!--                                     </div> -->
 <!--                                 </div> -->
 <!--                                 <div class="col-sm-12"> -->
 <!--                                     <div class="form-group"> -->
-                                        <label for="message">내용</label>
-                                        <textarea id="message" class="form-control1"></textarea>
+                                       <label for="message">내용</label>
+                                        <textarea id="message" class="form-control1" name="rev_content"></textarea>
 <!--                                     </div> -->
 <!--                                 </div> -->
 									<br>

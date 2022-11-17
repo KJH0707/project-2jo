@@ -2,12 +2,15 @@ package com.fork.store.action;
 
 import java.io.IOException;
 
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+
 
 
 @WebServlet("*.st")
@@ -74,6 +77,29 @@ public class StoreFrontController extends HttpServlet {
 					forward.setRedirect(false);
 					
 					
+				}
+				
+				else if(command.equals("/StoreJoinAction.st")) {
+					System.out.println(" C : /StoreJoinAction.st 호출");
+					System.out.println(" C : [패턴2] "); // 리다이렉션
+					
+					// StoreJoinAction()
+					action = new StoreJoinAction();
+					
+					try {
+						forward = action.execute(request, response);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					
+				}
+
+				else if(command.equals("/StoreJoin.st")) {
+					System.out.println(" C : /StoreJoin.st 호출");
+					
+					forward = new ActionForward();
+					forward.setPath("./ceo/storeJoin.jsp");
+					forward.setRedirect(false);
 				}
 				
 				System.out.println(" C : 2. 가상주소 매핑 끝 \n");

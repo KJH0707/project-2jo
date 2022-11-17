@@ -19,6 +19,7 @@ public class MemberDTO {
 	private String m_pw;
 	private String m_birth;
 	private String m_gender;
+	private String m_tel;
 	private Timestamp m_regdate;
 	
 	

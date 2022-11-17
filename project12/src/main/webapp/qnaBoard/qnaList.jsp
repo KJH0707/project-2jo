@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -54,7 +55,7 @@
             </div>
         </div>
         <!-- End page header -->
-
+       <input type="button" onclick="location.href='./QnaWrite.br?s_no=${s_no}'" value="write" class="button">
         <!-- property area -->
         <div class="content-area recent-property" style="background-color: #FFF;">
             <div class="container">   
@@ -70,148 +71,74 @@
                         </div>
 
                         <div class="section"> 
+                        <c:forEach var="dto" items="${boardListAll }">
                             <div id="list-type" class="proerty-th-list">
                                 <div class="col-md-4 p0">
                                     <div class="box-two proerty-item">
                                         <div class="item-entry overflow">
-                                            <h5><a href="property-1.html">[글번호] 제목</a></h5>
+                                            <h5><a href="./QnaContent.br?rev_no=${dto.rev_no}&s_no=${dto.s_no}&pageNum=${pageNum}">${dto.rev_no} ${dto.rev_subject }</a></h5>
                                             <div class="dot-hr"></div>
                                                 <div class="dealer-action pull-right">                                        
                                                     <a href="" class="button">작성자 </a>
-                                                    <a href="" class="button delete_user_car">작성일</a>
-                                                    <a href="" class="button">조회수</a>
-                                                </div>
+                                                    <a href="" class="button delete_user_car">${dto.rev_date}</a>
+<!--                                                     <a href="" class="button">조회수</a>
+ -->                                                </div>
                                             </div>
-
-
                                         </div>
                                     </div>
                                 </div>  <br>                           
-
-                                <div id="list-type" class="proerty-th-list">
-                                <div class="col-md-4 p0">
-                                    <div class="box-two proerty-item">
-                                        <div class="item-entry overflow">
-                                            <h5><a href="property-1.html">[글번호] 제목</a></h5>
-                                            <div class="dot-hr"></div>
-                                                <div class="dealer-action pull-right">                                        
-                                                    <a href="" class="button">작성자 </a>
-                                                    <a href="" class="button delete_user_car">작성일</a>
-                                                    <a href="" class="button">조회수</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>  <br>    
-
-                                <div id="list-type" class="proerty-th-list">
-                                <div class="col-md-4 p0">
-                                    <div class="box-two proerty-item">
-                                        <div class="item-entry overflow">
-                                            <h5><a href="property-1.html">[글번호] 제목</a></h5>
-                                            <div class="dot-hr"></div>
-                                                <div class="dealer-action pull-right">                                        
-                                                    <a href="" class="button">작성자 </a>
-                                                    <a href="" class="button delete_user_car">작성일</a>
-                                                    <a href="" class="button">조회수</a>
-                                                </div>
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-                                </div>  <br>    
-
-
-                                   <div id="list-type" class="proerty-th-list">
-                                <div class="col-md-4 p0">
-                                    <div class="box-two proerty-item">
-                                        <div class="item-entry overflow">
-                                            <h5><a href="property-1.html">[글번호] 제목</a></h5>
-                                            <div class="dot-hr"></div>
-                                             <div class="dealer-action pull-right">                                        
-                                                    <a href="" class="button">작성자 </a>
-                                                    <a href="" class="button delete_user_car">작성일</a>
-                                                    <a href="" class="button">조회수</a>
-                                                </div>
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-                                </div>  <br>    
-
-
-                                   <div id="list-type" class="proerty-th-list">
-                                <div class="col-md-4 p0">
-                                    <div class="box-two proerty-item">
-                                        <div class="item-entry overflow">
-                                            <h5><a href="property-1.html">[글번호] 제목</a></h5>
-                                            <div class="dot-hr"></div>
-                                                <div class="dealer-action pull-right">                                        
-                                                    <a href="" class="button">작성자 </a>
-                                                    <a href="" class="button delete_user_car">작성일</a>
-                                                    <a href="" class="button">조회수</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>  <br> 
-                                   
-							<div id="list-type" class="proerty-th-list">
-                                <div class="col-md-4 p0">
-                                    <div class="box-two proerty-item">
-                                        <div class="item-entry overflow">
-                                            <h5><a href="property-1.html">[글번호] 제목</a></h5>
-                                            <div class="dot-hr"></div>
-                                                <div class="dealer-action pull-right">                                        
-                                                    <a href="" class="button">작성자 </a>
-                                                    <a href="" class="button delete_user_car">작성일</a>
-                                                    <a href="" class="button">조회수</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>  <br> 
-                                
-                                <div id="list-type" class="proerty-th-list">
-                                <div class="col-md-4 p0">
-                                    <div class="box-two proerty-item">
-                                        <div class="item-entry overflow">
-                                            <h5><a href="property-1.html">[글번호] 제목</a></h5>
-                                            <div class="dot-hr"></div>
-                                                <div class="dealer-action pull-right">                                        
-                                                    <a href="" class="button">작성자 </a>
-                                                    <a href="" class="button delete_user_car">작성일</a>
-                                                    <a href="" class="button">조회수</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>  <br> 
+							</c:forEach>
+<!--                                 <div id="list-type" class="proerty-th-list"> -->
+<!--                                 <div class="col-md-4 p0"> -->
+<!--                                     <div class="box-two proerty-item"> -->
+<!--                                         <div class="item-entry overflow"> -->
+<!--                                             <h5><a href="property-1.html">[글번호] 제목</a></h5> -->
+<!--                                             <div class="dot-hr"></div> -->
+<!--                                                 <div class="dealer-action pull-right">                                         -->
+<!--                                                     <a href="" class="button">작성자 </a> -->
+<!--                                                     <a href="" class="button delete_user_car">작성일</a> -->
+<!--                                                     <a href="" class="button">조회수</a> -->
+<!--                                                 </div> -->
+<!--                                             </div> -->
+<!--                                         </div> -->
+<!--                                     </div> -->
+<!--                                 </div>  <br>     -->
 
                                 </div> 
-
-                                
                                         </div>
-
-
                                     </div>
                                 </div>                                                        
                             </div>
-                        </div>
 
                         <div class="section"> 
                             <div class="pull-right">
                                 <div class="pagination">
-                                    <ul>
-                                        <li><a href="#">Prev</a></li>
-                                        <li><a href="#">1</a></li>
-                                        <li><a href="#">2</a></li>
-                                        <li><a href="#">3</a></li>
-                                        <li><a href="#">4</a></li>
-                                        <li><a href="#">Next</a></li>
-                                    </ul>
+                                <c:if test="${requestScope.totalCnt !=0 }"}>
+                                <c:if test="${startPage > pageBlock }">
+								<a href="./QnaList.br?pageNum=${startPage-pageBlock }">
+								[이전]
+								</a>
+								</c:if>
+								
+								<!-- 페이지 번호(1,2,3...) -->
+								<c:forEach var="i" begin="${startPage }" end="${endPage }" step="1">
+								<a href="./QnaList.br?pageNum=${i }">${i }</a>
+								</c:forEach>
+							
+								<!-- 다음 -->
+								<c:if test="${endPage < pageCount }">
+								<a href="./QnaList.br?pageNum=${startPage+pageBlock }">
+								[다음]
+								</a></c:if>
+							</c:if>
+<!--                                     <ul> -->
+<!--                                         <li><a href="#">Prev</a></li> -->
+<!--                                         <li><a href="#">1</a></li> -->
+<!--                                         <li><a href="#">2</a></li> -->
+<!--                                         <li><a href="#">3</a></li> -->
+<!--                                         <li><a href="#">4</a></li> -->
+<!--                                         <li><a href="#">Next</a></li> -->
+<!--                                     </ul> -->
                                 </div>
                             </div>                
                         </div>

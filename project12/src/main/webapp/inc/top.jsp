@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
         <link rel="icon" href="favicon.ico" type="image/x-icon">
 
@@ -18,6 +19,7 @@
         <link rel="stylesheet" href="assets/css/owl.transitions.css">
         <link rel="stylesheet" href="assets/css/style.css">
         <link rel="stylesheet" href="assets/css/responsive.css">
+       
     </head>
     <body>
     
@@ -41,12 +43,10 @@
                     <div class="col-md-2 col-md-offset-5  col-sm-3 col-sm-offset-1  col-xs-12">
                         <div class="header-half header-social">
                             <ul class="list-inline">
-                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                <li><a href="#"><i class="fa fa-vine"></i></a></li>
-                                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                                <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-                                <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                            	<c:if test="${id!=null }">
+                            	<li>${id }님 어서오세요.</li>
+                            	</c:if>
+                                
                             </ul>
                         </div>
                     </div>
@@ -70,28 +70,46 @@
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse yamm" id="navigation">
+                    
                     <div class="button navbar-right">
-                        <button class="navbar-btn nav-button wow bounceInRight login" onclick="location.href='./loginForm.st'" data-wow-delay="0.4s">로그인</button>
+                    <c:choose>
+                    <c:when test="${id==null }">
+                        <button class="navbar-btn nav-button wow bounceInRight login" onclick="location.href='./Login.us'" data-wow-delay="0.4s">로그인</button>
                         <button class="navbar-btn nav-button wow fadeInRight" onclick="location.href='./Join.us'" data-wow-delay="0.5s">회원가입</button>
+                    </c:when>
+                    <c:when test="${id.equals('admin') }">
+                    <button class="navbar-btn nav-button wow bounceInRight login" onclick="location.href='./loginForm.st'" data-wow-delay="0.4s">관리자페이지</button>
+                        <button class="navbar-btn nav-button wow fadeInRight" onclick="location.href='./LogoutAction.us'" data-wow-delay="0.5s">로그아웃</button>
+                    </c:when>
+                    <c:when test="${result==1}">
+                    	<button class="navbar-btn nav-button wow bounceInRight login" onclick="location.href='./MemberMyPage.us'" data-wow-delay="0.4s">마이페이지</button>
+                        <button class="navbar-btn nav-button wow fadeInRight" onclick="location.href='./LogoutAction.us'" data-wow-delay="0.5s">로그아웃</button>
+                    </c:when>
+                    <c:otherwise>
+                    	<button class="navbar-btn nav-button wow bounceInRight login" onclick="location.href='./CeoMyPage.us'" data-wow-delay="0.4s">마이페이지</button>
+                        <button class="navbar-btn nav-button wow fadeInRight" onclick="location.href='./LogoutAction.us'" data-wow-delay="0.5s">로그아웃</button>
+                    </c:otherwise>
+                    </c:choose>
                     </div>
+                    
                     <ul class="main-nav nav navbar-nav navbar-right">
                          <li class="dropdown yamm-fw" data-wow-delay="0.1s">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200">Home <b class="caret"></b></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200"><b>Home</b></a>
                             <jsp:include page="categories.jsp"/>
                         </li>
-
+<!-- <b class="caret"></b> -->
                         <li class="dropdown yamm-fw" data-wow-delay="0.1s">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200">Category <b class="caret"></b></a>
-                            <jsp:include page="categories.jsp"/>
-                        </li>
-                        
-                        <li class="dropdown yamm-fw" data-wow-delay="0.1s">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200">Event <b class="caret"></b></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200"><b>Category</b> </a>
                             <jsp:include page="categories.jsp"/>
                         </li>
                         
                         <li class="dropdown yamm-fw" data-wow-delay="0.1s">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200">Notice <b class="caret"></b></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200"><b>Event</b> </a>
+                            <jsp:include page="categories.jsp"/>
+                        </li>
+                        
+                        <li class="dropdown yamm-fw" data-wow-delay="0.1s">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200"><b>Notice </b></a>
                             <jsp:include page="categories.jsp"/>
                             
                         </li>

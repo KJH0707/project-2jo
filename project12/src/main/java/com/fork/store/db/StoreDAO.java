@@ -81,14 +81,15 @@ public class StoreDAO {
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1, it.next());
 				
+				
 				rs = pstmt.executeQuery();
 				if(rs.next()) {
 				StoreDTO dto = new StoreDTO();
-				dto.setM_no(rs.getLong("m_no"));
+				dto.setC_no(rs.getInt("c_no"));
 				dto.setS_image(rs.getString("s_image"));
 				dto.setS_name(rs.getString("s_name"));
 				dto.setS_star(rs.getDouble("s_star"));
-				dto.setS_no(rs.getLong("s_no"));
+				dto.setS_no(rs.getInt("s_no"));
 				dto.setS_type(rs.getString("s_type"));
 				//DTO -> List
 				
@@ -130,11 +131,11 @@ public class StoreDAO {
 			while(rs.next()) {
 				// DB -> DTO
 				StoreDTO dto = new StoreDTO();
-				dto.setM_no(rs.getLong("m_no"));
+				dto.setC_no(rs.getInt("c_no"));
 				dto.setS_image(rs.getString("s_image"));
 				dto.setS_name(rs.getString("s_name"));
 				dto.setS_star(rs.getDouble("s_star"));
-				dto.setS_no(rs.getLong("s_no"));
+				dto.setS_no(rs.getInt("s_no"));
 				dto.setS_type(rs.getString("s_type"));
 				//DTO -> List
 				
@@ -152,11 +153,59 @@ public class StoreDAO {
 		return boardList;
 	}
 	
-	// getStoreList(페이징X) 가게 목록 전체 불러오기 start
-	
-	
-	
-	// getStoreList(페이징X) 가게 목록 전체 불러오기 end
+	// 점주의 가게입력 메서드 -storeJoin(DTO,c_no)
+		/**
+		 * 점주의 가게추가 메서드
+		 * @param dto
+		 * @return int형태로 정상 가입: 1, 실패 0, 잘못된 접근 -1
+		 */
+		public int storeJoin(StoreDTO dto, int c_no) { // 점주의 정보를 파라미터	storeDTO dto
+			int s_no = 0;
+			int result = -1;
+
+			try {
+				con = getConnection();
+				// 마지막 가게number를 추가
+				sql="select max(s_no) from store";
+				pstmt = con.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+
+				if(rs.next()) {
+					s_no = rs.getInt(1)+1; // 첫번째 인덱스를 가져와서 +1
+				}
+
+				sql = "insert into store(s_no,s_name,s_addr,s_tel,s_hours,s_type,s_image,s_content,s_facility,s_menuname,s_menuprice,s_menuImg,s_number,c_no) "
+						+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+				pstmt = con.prepareStatement(sql);
+
+				pstmt.setInt(1, s_no);
+				pstmt.setString(2,dto.getS_name());
+				pstmt.setString(3, dto.getS_addr());
+				pstmt.setString(4, dto.getS_tel());
+				pstmt.setString(5, dto.getS_hours());
+				pstmt.setString(6, dto.getS_type());
+				pstmt.setString(7, dto.getS_image());
+				pstmt.setString(8, dto.getS_content());
+				pstmt.setString(9, dto.getS_facility());
+				pstmt.setString(10, dto.getS_menuname());
+				pstmt.setString(11, dto.getS_menuprice());
+				pstmt.setString(12, dto.getS_menuImg());
+				pstmt.setInt(13, dto.getS_number());
+
+				pstmt.setInt(14, c_no);
+
+				result = pstmt.executeUpdate(); // result = 1 / 실패시 0 
+
+				System.out.println(" DAO : 가게입력(1-성공/0-실패) " + result);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				closeDB();
+			}
+				return result;	
+		}
+		// 점주의 가게입력 메서드 - storeJoin(DTO,c_no)
 	
 	
 	// getStoreCount 가게 갯수 start

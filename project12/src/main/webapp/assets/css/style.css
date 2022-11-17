@@ -304,6 +304,16 @@ input[type="search"]::-webkit-search-decoration {
     border-color: #F0F0F0;
     font-weight: 600;
 }
+
+.btn-default-login-kjh {
+    border-radius: 1px;
+    padding: 10px 20px;
+    border: 1px solid #1C1A18;
+    color: #fff;
+    background-color: #1C1A18;
+    border-color: #F0F0F0;
+    font-weight: 600;
+}
 .btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default.active, .open > .dropdown-toggle.btn-default {
     color: #000;
     background-color: #1C1A18;
@@ -324,7 +334,7 @@ input[type="search"]::-webkit-search-decoration {
     padding-top:15px;
 }
 
-.form-inline .form-control, .form-inline .form-control {
+.form-inline .form-control, .form-inline .form-control .form-controlkjh {
     background: rgba(252, 252, 252, 0.35);
     border-radius: 1px;
     color: #ADADAD;
@@ -347,6 +357,21 @@ input[type="search"]::-webkit-search-decoration {
     box-shadow: 0px 1px 1px rgba(179, 179, 179, 0.1) inset;
     transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
 }
+.form-controlkjh {
+    width: 200px;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 13px;
+    line-height: 1.42857;
+    color: #555;
+    background-color: #FFF;
+    background-image: none;
+    border: 1px solid #EAE9E9;
+    border-radius: 4px;
+    box-shadow: 0px 1px 1px rgba(179, 179, 179, 0.1) inset;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+}
+
 .font12kjh{
 	font-size: 12px;
 }
@@ -694,12 +719,14 @@ label small{
 
 .navbar-default .navbar-nav > li > a{
     color: black;
-    font-size: 25px;
+    font-size: 24px;
     font-weight: 400;
     text-transform: capitalize;
     position: relative;
 
 }
+
+
 .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
     color: #929292;
     background-color: transparent;

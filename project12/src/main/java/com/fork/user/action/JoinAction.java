@@ -17,7 +17,6 @@ public class JoinAction implements Action {
 		// DTO
 		String hid = request.getParameter("hid");
 		
-		
 		if(hid.equals("일반")) {
 			MemberDTO mdto = new MemberDTO();
 		
@@ -29,11 +28,11 @@ public class JoinAction implements Action {
 		mdto.setM_birth(request.getParameter("birth"));
 		mdto.setM_gender(request.getParameter("gender"));
 		
-		StoreDAO mdao = new StoreDAO();
+		UserDAO mdao = new UserDAO();
 		mdao.memberJoin(mdto);
 		
 		} else if(hid.equals("사업자")) {
-			StoreDTO cdto = new StoreDTO();
+			CeoDTO cdto = new CeoDTO();
 			
 			cdto.setC_id(request.getParameter("id"));
 			cdto.setC_name(request.getParameter("name"));
@@ -41,7 +40,7 @@ public class JoinAction implements Action {
 			cdto.setC_nickName(request.getParameter("nick"));
 			cdto.setC_pw(request.getParameter("pw"));
 			
-			StoreDAO cdao = new StoreDAO();
+			UserDAO cdao = new UserDAO();
 			cdao.ceoJoin(cdto);
 		}
 		
@@ -56,7 +55,7 @@ public class JoinAction implements Action {
 		
 		// 페이지 이동
 		ActionForward forward = new ActionForward();
-		forward.setPath("./login.re");
+		forward.setPath("./Login.us");
 		forward.setRedirect(true);
 				
 		return forward;
