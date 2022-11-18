@@ -30,6 +30,7 @@ public class CeoMypageAction implements Action {
 		
 		// 정보 request 에 저장
 		request.setAttribute("cdto", cdto);
+		session.setAttribute("c_no", cdto.getC_no()); 
 		
 		// 페이지 이동
 		forward.setPath("./member/ceoMyPage.jsp");

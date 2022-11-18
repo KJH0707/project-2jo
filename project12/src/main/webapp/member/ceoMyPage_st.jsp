@@ -135,7 +135,7 @@ $(function(){
                         <div class="row">
                             <div class="col-md-8 col-sm-12">
                                 <h3 class="tm-block-title d-inline-block">가 게 관 리
-                                <button type=button onclick="location.href='./member/addStore.jsp';" style="background:black; color:white; font-size:13px;">가게+</button>
+                                <button type=button onclick="location.href='./StoreJoin.st';" style="background:black; color:white; font-size:13px;">가게+</button>
                                </h3>
                             </div>
                             <br>

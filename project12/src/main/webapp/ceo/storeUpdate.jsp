@@ -2,18 +2,17 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix ="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> 
-
-<!-- 포트 8080 으로 맞춰야함 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
 <html class="no-js"> <!--<![endif]-->
     <head>
        <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>FORK & KNIFE | Submit Store Page</title>
+        <title>FORK & KNIFE | Update Store Page</title>
         <meta name="description" content="GARO is a real-estate template">
         <meta name="author" content="Kimarotec">
         <meta name="keyword" content="html5, css, bootstrap, property, real-estate theme , bootstrap template">
@@ -23,91 +22,11 @@
 
 		<!-- tab 마법사 -->
         <link rel="stylesheet" href="assets/css/wizard.css"> 
-        <!-- jQuery CDN -->
-        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
-		<!-- Latest compiled and minified CSS -->
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
-		<!-- Latest compiled and minified JavaScript -->
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 		<!-- (Optional) Latest compiled and minified JavaScript translation files -->
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js"></script>
 		
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>		
-
 <script type="text/javascript">
-$(document).ready(function(){
-	$('#telInput').keyup(function (event) {
-	  event = event || window.event;
-	  var _val = this.value.trim();
-	  this.value = autoHypenTel(_val);
-	  
-	});
-});
-function autoHypenTel(str) {
-	  str = str.replace(/[^0-9]/g, '') // 숫자를 제외한 모든 문자 제거 
-	 
-	  var tmp = '';
-	
-	  if (str.substring(0, 2) == 02) {
-	    // 서울 전화번호일 경우 10자리까지만 나타나고 그 이상의 자리수는 자동삭제
-	    if (str.length < 3) {
-	      return str;
-	    } else if (str.length < 6) {
-	      tmp += str.substr(0, 2);
-	      tmp += '-';
-	      tmp += str.substr(2);
-	      return tmp;
-	    } else if (str.length < 10) {
-	      tmp += str.substr(0, 2);
-	      tmp += '-';
-	      tmp += str.substr(2, 3);
-	      tmp += '-';
-	      tmp += str.substr(5);
-	      return tmp;
-	    } else {
-	      tmp += str.substr(0, 2);
-	      tmp += '-';
-	      tmp += str.substr(2, 4);
-	      tmp += '-';
-	      tmp += str.substr(6, 4);
-	      return tmp;
-	    }
-	  } else {
-	    // 핸드폰 및 다른 지역 전화번호 일 경우
-	    if (str.length < 4) {
-	      return str;
-	    } else if (str.length < 7) {
-	      tmp += str.substr(0, 3);
-	      tmp += '-';
-	      tmp += str.substr(3);
-	      return tmp;
-	    } else if (str.length < 11) {
-	      tmp += str.substr(0, 3);
-	      tmp += '-';
-	      tmp += str.substr(3, 3);
-	      tmp += '-';
-	      tmp += str.substr(6);
-	      return tmp;
-	    } else {
-	      tmp += str.substr(0, 3);
-	      tmp += '-';
-	      tmp += str.substr(3, 4);
-	      tmp += '-';
-	      tmp += str.substr(7);
-	      return tmp;
-	    }
-	  }
-	
-	  return str;
-}
-function bussCK(){
-	
-	if(document.fr.necessity.checked == false){
-	alert("필수약관에 동의하세요");
-	document.fr.necessity.focus;
-	return false;
-	}
-}
 //alert('hello');
 </script>	
 <style type="text/css">
@@ -120,6 +39,26 @@ function bussCK(){
 	background: #DADADA;
 	color: #1C1A18; 
 	border: #DADADA; 
+}
+.wizard-card .picture23 {
+    width: 100%;
+    height: 100%;
+    color: #FFF;
+    border-radius: 4px;
+    margin: 5px auto;
+    overflow: hidden;
+    transition: all 0.2s;
+    -webkit-transition: all 0.2s;
+}
+#wizard-picture2 {
+    cursor: pointer;
+    display: block;
+    height: 100%;
+    left: 0;
+    opacity: 0 !important;
+    position: absolute;
+    top: 0;
+    width: 100%;
 }
 </style>
 </head>
@@ -138,14 +77,13 @@ function bussCK(){
             </div>
         </div>
         <!-- End page header -->
-
         <!-- property area -->
         <div class="content-area submit-property" style="background-color: #FCFCFC;">&nbsp;
             <div class="container">
                 <div class="clearfix" > 
                     <div class="wizard-container"> 
                         <div class="wizard-card ct-wizard-orange" id="wizardProperty" > <!-- onsubmit="return bussNo();" -->
-	                        <form action="./StoreJoinProAction.st" method="post" enctype="multipart/form-data" name="fr" onsubmit="bussCK();">
+	                        <form action="./" method="post" id="update" enctype="multipart/form-data" name="fr" onsubmit="check();">
                                 <div class="wizard-header">
                                     <h3>
                                         <b>Submit</b> YOUR STORE <br>
@@ -169,27 +107,27 @@ function bussCK(){
 	                                    <div class="col-sm-6">
 		                                    <!-- 가게 메인이미지 -->
 		                                    <div class="picture-container">
-		                                    <h5><label>M A I N &nbsp; I M A G E</label></h5>
-		                                        <div class="picture">
-		                                            <img src="assets/img/default-property.jpg" class="picture-src" id="wizardPicturePreview" title="" style="height: 100%;" />
-		                                            <input type="file" id="wizard-picture" name="stfile1">
+                                        	<h5><label>M A I N &nbsp; I M A G E</label></h5>
+		                                        <div class="picture23">
+		                                            <img src="upload/${dto.s_image.split(',')[0]}" class="picture-src" id="wizardPicturePreview" title="" alt="기존이미지"/>
+		                                            <input type="file" id="wizard-picture" name="stfile1" > <%-- http://yangyag.tistory.com/277 --%>
 		                                        </div> 
 		                                    </div>
 		                                    <!-- 가게 메인이미지 -->
 		                                    <div class="form-group">
 		                                    <!-- 주소 -->
 												<label>도로명주소 <sup>*</sup></label>
-												<input type="button" onclick="execDaumPostcode()" value="우편번호 찾기" style="margin-bottom: 1%; width: 150px;float: right;" ><br>
+												<c:if test=""></c:if>
+												<input type="text" value="${dto.s_addr }" class="form-control" readonly="readonly" style="font-weight: 600; ">
+												<input type="button" onclick="execDaumPostcode()" value="주소 변경" style="margin-bottom: 1%; width: 150px;float: right;"><br>
 												<div style="color:#999;display:block; border: 1px solid #DADADA;">
-			                                       	<input type="text" id="postcode" placeholder="우편번호"readonly>
-													<input type="text" id="Addr1" name="Addr1" placeholder="도로명주소" readonly>
-													<input type="text" id="jibunAddress" placeholder="지번주소" readonly>
+			                                       	<input type="text" id="postcode" placeholder="우편번호" readonly hidden="">
+													<input type="text" id="Addr1" name="Addr1" placeholder="도로명주소"  readonly>
+													<input type="text" id="jibunAddress" placeholder="지번주소" readonly hidden="">
 													<span id="guide" style="color:#999;display:none"></span>
-													<input type="text" id="Addr2" name="Addr2" placeholder="상세주소" style="margin-bottom: 1%;" required>
-													<input type="text" id="extraAddress" placeholder="" readonly>
+													<input type="text" id="Addr2" name="Addr2" placeholder="상세주소" style="margin-bottom: 1%;">
+													<input type="text" id="extraAddress" placeholder="" readonly hidden="">
 												</div>
-												<!-- <input type="text" id="address" name="addr" placeholder="" class="form-control" style="margin-bottom: 1%;">
-												<input type="button" onclick="mapCall();" value="주소 검색" style="margin-bottom: 1%; width: 150px;float: right;"><br> -->
 		                                       <!-- 지도API -->
 		                                       <div id="map" style="width:100%;height:300px;margin-bottom: 1%;"></div>
 		                                       <!-- 지도API -->
@@ -199,37 +137,60 @@ function bussCK(){
                                         <div class="col-sm-6" style="float: left;">
 	                                       <div class="form-group">
                                                <label>상호명 <sup>*</sup></label>
-                                               <input name="storeName" type="text" id="nameInput" class="form-control" placeholder="Fork&Knife" required> 
+                                               <input name="storeName" type="text" id="nameInput" class="form-control" value="${dto.s_name }" required> 
                                            </div>
                                            <div class="form-group">
                                                <label>대표 전화번호 <sup>*</sup></label>
-                                               <input type="tel" name="tel" id="telInput" class="form-control" required pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}" maxlength="13" placeholder="010-1234-5678"/>
+                                               <input type="tel" name="tel" id="telInput" class="form-control" required pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}" maxlength="13" value="${dto.s_tel}"/>
                                            </div> 
                                            <div class="form-group">
                                                <label>사업자등록번호 <sup>*</sup></label>
-                                               <input name="businessNumber" type="text" class="form-control" maxlength="10" placeholder="0123456789" required>
+                                               <input name="businessNumber" type="text" class="form-control" maxlength="10" value="${dto.s_number }" required>
                                            </div>
                                            <div class="form-group">
 	                                          <label>업종 <sup>*</sup>&nbsp;</label>
                                               <select name="sort" class="form-control" id="basic" required>
                                               	<option value="">선택하세요</option>
-                                              	<option value="한식">한식</option>
-                                              	<option value="일식">일식</option>
-                                              	<option value="중식">중식</option>
-                                              	<option value="양식">양식</option>
-                                              	<option value="오마카세">오마카세</option>
+                                              	<option value="한식"
+                                              		<c:if test="${dto.s_type == '한식' }">
+                                              		selected
+                                              		</c:if>
+                                              	>한식</option>
+                                              	<option value="일식"
+                                              	<c:if test="${dto.s_type == '일식' }">
+                                              		selected
+                                              		</c:if>
+                                              	>일식</option>
+                                              	<option value="중식"
+                                              		<c:if test="${dto.s_type == '중식' }">
+                                              		selected
+                                              		</c:if>
+                                              	>중식</option>
+                                              	<option value="양식"
+                                              		<c:if test="${dto.s_type == '양식' }">
+                                              		selected
+                                              		</c:if>
+                                              	>양식</option>
+                                              	<option value="오마카세"
+                                              		<c:if test="${dto.s_type == '오마카세' }">
+                                              		selected
+                                              		</c:if>
+                                              	>오마카세</option>
                                               </select>
                                            </div>
                                            <div class="form-group">
 											<fieldset>
+											<c:set var="hour" value="${dto.s_hours.split('~') }"/>
+											<%-- ${dto.s_hours.split('~')[0] }
+											${dto.s_hours.split('~')[1] } --%>
 											<label>영업시간 <sup>*</sup></label><hr style="margin-top: 5px; margin-bottom: 10px;">
                                       			<div class="col-sm-6">
 	                                             	<label for="open" style="color: gray; font-size: 14px;">오픈시간</label>
-		                                            <input name="openTime" id="open" type="time" class="form-control" required>
+		                                            <input name="openTime" id="open" type="time" value="${dto.s_hours.split('~')[0] }" class="form-control" required>
 	                                          	</div>
                                            		<div class="col-sm-6">
 	                                            	<label for="close" style="color: gray; font-size: 14px;">마감시간</label>
-	                                            	<input name="closeTime" id="close" type="time" class="form-control" required>
+	                                            	<input name="closeTime" id="close" type="time" value="${dto.s_hours.split('~')[1] }" class="form-control" required>
 	                                          	</div>
 	                                        </fieldset>
 	                                        </div>
@@ -243,7 +204,7 @@ function bussCK(){
 	                                        <div class="col-sm-6"> 
 	                                            <div class="form-group">
 	                                                <label>식당소개글 :</label>
-	                                                <textarea name="discrition" class="form-control" rows="12"></textarea>
+	                                                <textarea name="discrition" class="form-control" rows="12">${dto.s_content }</textarea>
 	                                            </div> 
 	                                        </div>
 	                                        <div class="col-sm-6">
@@ -259,10 +220,11 @@ function bussCK(){
 	                                        </div>
 	                                        <div class="col-sm-12">
                                         		<div class="form-group">
+                                        		<c:set /> 
 	                                               	<div class="checkbox padding-bottom-15">
 	                                                    <label>
 	                                                        <input type="checkbox" name="facility1" value="주차가능"> 주차 가능
-	                                                        	<input type="text" class="form-control" name="facDisc1" placeholder="상세정보(선택)">
+	                                                        	<input type="text" class="form-control" name="facDisc1" >
 	                                                    </label>
 	                                                    <label>
 	                                                        <input type="checkbox" name="facility2" value="반려동물가능"> 반려동물 동반
@@ -286,29 +248,29 @@ function bussCK(){
                                     	</div>
 	                                </div> <br>
                                     <!-- End step 2 -->
-
                                     <!-- Start step 3 -->
                                     <div class="tab-pane" id="step3">                                        
                                         <h4 class="info-text">메뉴 등록 </h4>
                                             <div class="col-sm-6 col-sm-offset-1"> <!-- 메뉴와 사진을 추가 버튼을 통해 추가할 수 있도록 할 것 -->
-                                            	<!-- <div class="pull-right">
-                                            		<input type="button" value="메뉴 항목 추가" class="btn btn-next btn-primary" id="menuAddbtn">
-                                            	</div> -->
                                             	<!-- 메뉴 등록 -->
                                             	<div class="pull-left">
                                             	<label>* 최대 5개까지 등록 가능합니다. </label>
                                             	</div>
+    													<c:set value="${dto.s_menuname}" var="name"/>
+    													<c:set value="${dto.s_menuprice}" var="price"/>
+    													<c:set value="${dto.s_menuImg}" var="img"/>
 	                                            <div class="form-group" id="menuTable">
 	                                            	<table border="1" style="border: 1px #DADADA; line-height: 2.5; width: 100%; height: 44px; padding: 6px 12px; color: #838383; box-shadow: 0px 1px 1px rgb(179 179 179 / 10%) inset;
     													transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s; text-align: center; "> 
+    													<c:if test="${name.split(',')[0]!='null' && price.split(',')[0]!='null'}">
 		                                            	<tr>
 		                                            		<td><b>메뉴명</b></td>
-		                                            		<td><input type="text" name="menuName1"></td>
+		                                            		<td><input type="text" name="menuName1" value=${name.split(',')[0] }></td>
 		                                            	</tr>
 		                                            	<tr>
 		                                            		<td><b>가격</b></td>
 		                                            		<td>
-		                                            		<input type="number" name="menuPrice1" placeholder="숫자만 입력해주세요">
+		                                            		<input type="number" name="menuPrice1" value=${price.split(',')[0] }>
 		                                            		</td>
 		                                            	</tr>
 		                                            	<tr>
@@ -318,22 +280,25 @@ function bussCK(){
 		                                            	<tr>
 		                                            		<td><b>이미지</b></td>
 		                                            		<td>
-			                                            		<input type="file" name="mfile1"> 
+			                                            		<input type="file" name="mfile1" value="" >${img.split(',')[0]}
+			                                            		<a href="/upload/${img.split(',')[0]}">${img.split(',')[0]}</a>
 		                                            		</td>
 		                                            	</tr>
+    													</c:if>
 	                                            	</table>
 	                                        	</div>
 	                                            <div class="form-group" id="menuTable">
 	                                            	<table border="1" style="border: 1px #DADADA; line-height: 2.5; width: 100%; height: 44px; padding: 6px 12px; color: #838383; box-shadow: 0px 1px 1px rgb(179 179 179 / 10%) inset;
     													transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s; text-align: center; "> 
+		                                            	<c:if test="${name.split(',')[1]!='null' && price.split(',')[1]!='null'}">
 		                                            	<tr>
 		                                            		<td><b>메뉴명</b></td>
-		                                            		<td><input type="text" name="menuName2"></td>
+		                                            		<td><input type="text" name="menuName2" value=${name.split(',')[1] }></td>
 		                                            	</tr>
 		                                            	<tr>
 		                                            		<td><b>가격</b></td>
 		                                            		<td>
-		                                            		<input type="number" name="menuPrice2">
+		                                            		<input type="number" name="menuPrice2" value=${price.split(',')[1] }>
 		                                            		</td>
 		                                            	</tr>
 		                                            	<tr>
@@ -346,19 +311,21 @@ function bussCK(){
 			                                            		<input type="file" name="mfile2"> 
 		                                            		</td>
 		                                            	</tr>
+		                                            </c:if>
 	                                            	</table>
 	                                        	</div>
 	                                            <div class="form-group" id="menuTable">
 	                                            	<table border="1" style="border: 1px #DADADA; line-height: 2.5; width: 100%; height: 44px; padding: 6px 12px; color: #838383; box-shadow: 0px 1px 1px rgb(179 179 179 / 10%) inset;
     													transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s; text-align: center; "> 
+		                                            	<c:if test="${name.split(',')[2]!='null' && price.split(',')[2]!='null'}">
 		                                            	<tr>
 		                                            		<td><b>메뉴명</b></td>
-		                                            		<td><input type="text" name="menuName3"></td>
+		                                            		<td><input type="text" name="menuName3" value=${name.split(',')[2] }></td>
 		                                            	</tr>
 		                                            	<tr>
 		                                            		<td><b>가격</b></td>
 		                                            		<td>
-		                                            		<input type="number" name="menuPrice3">
+		                                            		<input type="number" name="menuPrice3" value=${price.split(',')[2] }>
 		                                            		</td>
 		                                            	</tr>
 		                                            	<tr>
@@ -371,18 +338,20 @@ function bussCK(){
 			                                            		<input type="file" name="mfile3"> 
 		                                            		</td>
 		                                            	</tr>
+		                                            </c:if>
 	                                            	</table>
 	                                        	</div>
 	                                            <div class="form-group" id="menuTable">
 	                                            	<table border="1" style="border: 1px #DADADA; line-height: 2.5; width: 100%; height: 44px; padding: 6px 12px; color: #838383; box-shadow: 0px 1px 1px rgb(179 179 179 / 10%) inset;
     													transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s; text-align: center; "> 
+		                                            	<c:if test="${name.split(',')[3]!='null' && price.split(',')[3]!='null'}">
 		                                            	<tr>
 		                                            		<td><b>메뉴명</b></td>
-		                                            		<td><input type="text" name="menuName4"></td>
+		                                            		<td><input type="text" name="menuName4" value=${name.split(',')[3] }></td>
 		                                            	</tr>
 		                                            	<tr>
 		                                            		<td><b>가격</b></td>
-		                                            		<td><input type="number" name="menuPrice4"></td>
+		                                            		<td><input type="number" name="menuPrice4" value=${price.split(',')[3] }></td>
 		                                            	</tr>
 		                                            	<tr>
 		                                            		<td><b>메뉴설명</b></td>
@@ -394,18 +363,20 @@ function bussCK(){
 			                                            		<input type="file" name="mfile4"> 
 		                                            		</td>
 		                                            	</tr>
+		                                            </c:if>
 	                                            	</table>
 	                                        	</div>
 	                                            <div class="form-group" id="menuTable">
 	                                            	<table border="1" style="border: 1px #DADADA; line-height: 2.5; width: 100%; height: 44px; padding: 6px 12px; color: #838383; box-shadow: 0px 1px 1px rgb(179 179 179 / 10%) inset;
     													transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s; text-align: center; "> 
+		                                            	<c:if test="${name.split(',')[4]!='null' && price.split(',')[4]!='null'}">
 		                                            	<tr>
 		                                            		<td><b>메뉴명</b></td>
-		                                            		<td><input type="text" name="menuName5"></td>
+		                                            		<td><input type="text" name="menuName5" value=${name.split(',')[4] }></td>
 		                                            	</tr>
 		                                            	<tr>
 		                                            		<td><b>가격</b></td>
-		                                            		<td><input type="number" name="menuPrice5"></td>
+		                                            		<td><input type="number" name="menuPrice5" value=${price.split(',')[4] }></td>
 		                                            	</tr>
 		                                            	<tr>
 		                                            		<td><b>메뉴설명</b></td>
@@ -417,6 +388,7 @@ function bussCK(){
 			                                            		<input type="file" name="mfile5"> 
 		                                            		</td>
 		                                            	</tr>
+		                                            </c:if>
 	                                            	</table>
 	                                        	</div>
 	                                        	
@@ -440,8 +412,6 @@ function bussCK(){
                                            </div>
                                     </div> <br>
                                     <!--  End step 3 -->
-
-
                                     <!--  Start step 4 -->
                                     <div class="tab-pane" id="step4">                                        
                                         <h1 class="info-text">Fork&Knife</h1>
@@ -470,17 +440,14 @@ function bussCK(){
                                         </div>
                                     </div>
                                     <!--  End step 4 -->
-
                                 </div>
                                 <!-- End Tab Contents  -->
-
                                 <!-- <div class="pull-right" style="clear: both;"> -->
                                 <div class="wizard-footer" style="clear: both;">
                                 <div class="pull-right" style="clear: both;">
                                     <input type='button' class='btn btn-next btn-primary' name='next' value='Next' />
                                     <input type="submit" class='btn btn-finish btn-primary' name='finish' value='Finish' id='button'/>
                                 </div>
-
                                 <div class="pull-left">
                                     <input type='button' class='btn btn-previous btn-default' name='previous' value='Previous' />
                                 </div>
@@ -494,7 +461,6 @@ function bussCK(){
             </div>
         </div>
         </div>
-
     <!-- Footer area-->
 	<jsp:include page="../inc/bottom.jsp"/>
     <!-- Footer area-->
@@ -513,12 +479,10 @@ function bussCK(){
         <script src="assets/js/owl.carousel.min.js"></script>
         <script src="assets/js/wow.js"></script>
         <script src="assets/js/icheck.min.js"></script>
-
         <script src="assets/js/price-range.js"></script> 
         <script src="assets/js/jquery.bootstrap.wizard.js" type="text/javascript"></script>
         <script src="assets/js/jquery.validate.min.js"></script>
         <script src="assets/js/wizard.js"></script>
-
         <script src="assets/js/main.js"></script>
     </body>
 </html>
