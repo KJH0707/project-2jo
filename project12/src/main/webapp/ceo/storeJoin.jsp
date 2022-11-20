@@ -221,6 +221,23 @@ function bussCK(){
                                               </select>
                                            </div>
                                            <div class="form-group">
+											<label>가격대 <sup>*</sup></label>
+	                                           	<select name="priceSort" class="form-control" required>
+                                              	<option value="">선택하세요</option>
+                                              	<option value="10000">1만원대</option>
+                                              	<option value="20000">2만원대</option>
+                                              	<option value="30000">3만원대</option>
+                                              	<option value="40000">4만원대</option>
+                                              	<option value="50000">5만원대</option>
+                                              	<option value="60000">6만원대</option>
+                                              	<option value="70000">7만원대</option>
+                                              	<option value="80000">8만원대</option>
+                                              	<option value="90000">9만원대</option>
+                                              	<option value="100000">10만원대</option>
+                                              	<option value="110000">10만원이상</option>
+                                              </select>
+	                                        </div>
+                                           <div class="form-group">
 											<fieldset>
 											<label>영업시간 <sup>*</sup></label><hr style="margin-top: 5px; margin-bottom: 10px;">
                                       			<div class="col-sm-6">

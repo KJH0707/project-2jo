@@ -26,13 +26,13 @@ public class StoreJoinProAction implements Action {
 		// 정보 처리
 		HttpSession session = request.getSession();
 		String id = (String) session.getAttribute("id");
-		String c_no = (String)session.getAttribute("c_no");
+		int c_no = (Integer)session.getAttribute("c_no");
 		
-
-		System.out.println(id);
-		System.out.println(c_no);
+		String cno = String.valueOf(c_no);
+		//System.out.println(id);
+		//System.out.println(c_no);
 		ActionForward forward = new ActionForward();
-		if(id == null || c_no == null) {
+		if(id == null || cno == null) {
 			forward.setPath("./Login.us"); 
 			forward.setRedirect(true);
 			return forward;
@@ -58,6 +58,7 @@ public class StoreJoinProAction implements Action {
 		dto.setS_name(multi.getParameter("storeName"));
 		dto.setS_tel(multi.getParameter("tel"));
 		dto.setS_type(multi.getParameter("sort"));
+		dto.setS_price(Integer.parseInt(multi.getParameter("priceSort")));
 		dto.setS_content(multi.getParameter("discrition"));
 		dto.setS_number(Integer.parseInt(multi.getParameter("businessNumber")));
 		
@@ -119,25 +120,24 @@ public class StoreJoinProAction implements Action {
 						+ multi.getFilesystemName("mfile5");
 		dto.setS_menuImg(mImg);
 		
-		int cno = Integer.parseInt(c_no);
-		dto.setC_no(cno); // 점주번호
+		dto.setC_no(c_no); // 점주번호
 		System.out.println("@@@@@@@@@@@"+dto);
 		
 		// DAO - 가게 가입 메서드 
 		StoreDAO dao = new StoreDAO();
-		int result = dao.storeJoin(dto, cno); // 1대신 c_no 를 넣기
+		int result = dao.storeJoin(dto, c_no); // 1대신 c_no 를 넣기
 		
 		// 페이지 이동
 		if(result == 1) {
-			System.out.println(" M : 가게 등록 성공!"); // 
+			System.out.println(" M :"+id+" 가게 등록 성공!"); // 
 			forward.setPath("./CeoMyPage_st.us"); // 점주 마이페이지로 연결할 것
 			forward.setRedirect(true);
 		} else if(result == -1 ) {
-			System.out.println(" M : 비정상 접근이 발생했습니다.");
+			System.out.println(" M : "+id+" 비정상 접근이 발생했습니다.");
 			forward.setPath("./main.st");
 			forward.setRedirect(true);
 		} else {
-			System.out.println(" M : 가게 등록이 되지 않았습니다.");
+			System.out.println(" M : "+id+" 가게 등록이 되지 않았습니다.");
 			forward.setPath("./StoreJoin.st"); // 점주 마이페이지 또는 가게 등록 페이지로 연결할 것
 			forward.setRedirect(true); 
 		}

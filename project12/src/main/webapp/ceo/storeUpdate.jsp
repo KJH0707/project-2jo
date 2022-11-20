@@ -27,7 +27,26 @@
 		
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>		
 <script type="text/javascript">
-//alert('hello');
+//alert('dd');
+if(document.fr.Addr1.value==""){
+	var dd = document.getElementById("originAddr");
+	alert(dd);
+	console.log(dd);
+}
+document.fr.originAddr.value;
+document.getElementById("originAddr") = "${dto.s_addr}";
+var dd = document.getElementById("originAddr");
+
+alert(dd);
+console.log(dd);
+	
+// 	var addr = document.fr.Addr1.value();
+// 	alert(addr);
+// 	if (addr == ''){
+// 		document.fr.originAddr.value();
+// 		alert(addr);
+// 	}
+	
 </script>	
 <style type="text/css">
 .box {
@@ -83,7 +102,7 @@
                 <div class="clearfix" > 
                     <div class="wizard-container"> 
                         <div class="wizard-card ct-wizard-orange" id="wizardProperty" > <!-- onsubmit="return bussNo();" -->
-	                        <form action="./" method="post" id="update" enctype="multipart/form-data" name="fr" onsubmit="check();">
+	                        <form action="./StoreUpdateProAction.st" method="post" id="update" enctype="multipart/form-data" name="fr" onsubmit="check();">
                                 <div class="wizard-header">
                                     <h3>
                                         <b>Submit</b> YOUR STORE <br>
@@ -110,6 +129,7 @@
                                         	<h5><label>M A I N &nbsp; I M A G E</label></h5>
 		                                        <div class="picture23">
 		                                            <img src="upload/${dto.s_image.split(',')[0]}" class="picture-src" id="wizardPicturePreview" title="" alt="기존이미지"/>
+		                                            <input type="hidden" value="${dto.s_image.split(',')[0]}" name="originMainImg" id="originMainImg"/>
 		                                            <input type="file" id="wizard-picture" name="stfile1" > <%-- http://yangyag.tistory.com/277 --%>
 		                                        </div> 
 		                                    </div>
@@ -117,8 +137,8 @@
 		                                    <div class="form-group">
 		                                    <!-- 주소 -->
 												<label>도로명주소 <sup>*</sup></label>
-												<c:if test=""></c:if>
 												<input type="text" value="${dto.s_addr }" class="form-control" readonly="readonly" style="font-weight: 600; ">
+												<input type="hidden" name="address223" id="address223" value="${dto.s_addr }">
 												<input type="button" onclick="execDaumPostcode()" value="주소 변경" style="margin-bottom: 1%; width: 150px;float: right;"><br>
 												<div style="color:#999;display:block; border: 1px solid #DADADA;">
 			                                       	<input type="text" id="postcode" placeholder="우편번호" readonly hidden="">
@@ -145,7 +165,7 @@
                                            </div> 
                                            <div class="form-group">
                                                <label>사업자등록번호 <sup>*</sup></label>
-                                               <input name="businessNumber" type="text" class="form-control" maxlength="10" value="${dto.s_number }" required>
+                                               <input name="businessNumber" type="text" class="form-control" maxlength="10" value="${dto.s_number }" required readonly>
                                            </div>
                                            <div class="form-group">
 	                                          <label>업종 <sup>*</sup>&nbsp;</label>
@@ -179,6 +199,67 @@
                                               </select>
                                            </div>
                                            <div class="form-group">
+											<label>가격대 <sup>*</sup></label>
+	                                           	<select name="priceSort" class="form-control" required>
+                                              	<option value="">선택하세요</option>
+                                              	<option value="10000"
+                                              		<c:if test="${dto.s_price == '10000' }">
+                                              		selected
+                                              		</c:if>
+                                              	>1만원대</option>
+                                              	<option value="20000"
+                                              		<c:if test="${dto.s_price == '20000' }">
+                                              		selected
+                                              		</c:if>
+                                              	>2만원대</option>
+                                              	<option value="30000"
+                                              		<c:if test="${dto.s_price == '30000' }">
+                                              		selected
+                                              		</c:if>
+                                              	>3만원대</option>
+                                              	<option value="40000"
+                                              		<c:if test="${dto.s_price == '40000' }">
+                                              		selected
+                                              		</c:if>
+                                              	>4만원대</option>
+                                              	<option value="50000"
+                                              		<c:if test="${dto.s_price == '50000' }">
+                                              		selected
+                                              		</c:if>
+                                              	>5만원대</option>
+                                              	<option value="60000"
+                                              		<c:if test="${dto.s_price == '60000' }">
+                                              		selected
+                                              		</c:if>
+                                              	>6만원대</option>
+                                              	<option value="70000"
+                                              		<c:if test="${dto.s_price == '70000' }">
+                                              		selected
+                                              		</c:if>
+                                              	>7만원대</option>
+                                              	<option value="80000"
+                                              		<c:if test="${dto.s_price == '80000' }">
+                                              		selected
+                                              		</c:if>
+                                              	>8만원대</option>
+                                              	<option value="90000"
+                                              		<c:if test="${dto.s_price == '90000' }">
+                                              		selected
+                                              		</c:if>
+                                              	>9만원대</option>
+                                              	<option value="100000"
+                                              		<c:if test="${dto.s_price == '100000' }">
+                                              		selected
+                                              		</c:if>
+                                              	>10만원대</option>
+                                              	<option value="110000"
+                                              		<c:if test="${dto.s_price == '110000' }">
+                                              		selected
+                                              		</c:if>
+                                              	>10만원이상</option>
+                                              </select>
+	                                        </div>
+                                           <div class="form-group">
 											<fieldset>
 											<c:set var="hour" value="${dto.s_hours.split('~') }"/>
 											<%-- ${dto.s_hours.split('~')[0] }
@@ -209,9 +290,21 @@
 	                                        </div>
 	                                        <div class="col-sm-6">
 	                                        	<div class="form-group">
-	                                                <label>추가이미지 등록 :</label>
-	                                                <input type="file" id="wizard-picture" name="stfile2">
-	                                                <input type="file" id="wizard-picture" name="stfile3">
+	                                                <label>추가이미지 등록 :</label><br>
+	                                                <div class="picture23">
+		                                                <c:if test="${dto.s_image.split(',')[1]!='null'}">
+		                                                	<img src="upload/${dto.s_image.split(',')[1]}" class="picture-src" id="wizardPicturePreview" title="" alt="기존이미지"/>
+		                                                </c:if>
+		                                                <input type="hidden" value="${dto.s_image.split(',')[1]}" name="originMainImg2" id="originMainImg2"/>
+		                                                <input type="file" id="wizard-picture" name="stfile2">
+	                                                </div>
+	                                                <div class="picture23">
+		                                                <c:if test="${dto.s_image.split(',')[2]!='null'}">
+		                                                	<img src="upload/${dto.s_image.split(',')[2]}" class="picture-src" id="wizardPicturePreview" title="" alt="기존이미지"/>
+		                                                </c:if>
+		                                                <input type="hidden" value="${dto.s_image.split(',')[2]}" name="originMainImg3" id="originMainImg3"/>
+		                                                <input type="file" id="wizard-picture" name="stfile3">
+	                                                </div>
 	                                            </div> 
 		                                    </div>
 	                                        <br><br>
@@ -220,26 +313,46 @@
 	                                        </div>
 	                                        <div class="col-sm-12">
                                         		<div class="form-group">
-                                        		<c:set /> 
+                                        		<c:set var="fac" value="${dto.s_facility.split(',') }" /> 
 	                                               	<div class="checkbox padding-bottom-15">
 	                                                    <label>
-	                                                        <input type="checkbox" name="facility1" value="주차가능"> 주차 가능
+	                                                        <input type="checkbox" name="facility1" value="주차가능" 
+	                                                        <c:if test="${fac[0] == '주차가능' }">
+	                                                        checked
+	                                                        </c:if>
+	                                                        > 주차 가능
 	                                                        	<input type="text" class="form-control" name="facDisc1" >
 	                                                    </label>
 	                                                    <label>
-	                                                        <input type="checkbox" name="facility2" value="반려동물가능"> 반려동물 동반
+	                                                        <input type="checkbox" name="facility2" value="반려동물가능"
+	                                                        <c:if test="${fac[1] == '반려동물가능' }">
+	                                                        checked
+	                                                        </c:if>
+	                                                        > 반려동물 동반
 	                                                        	<input type="text" class="form-control" name="facDisc2" placeholder="상세정보(선택)">
 	                                                    </label>
 	                                                    <label>
-	                                                        <input type="checkbox" name="facility3" value="노키즈존"> 노키즈존
+	                                                        <input type="checkbox" name="facility3" value="노키즈존"
+	                                                        <c:if test="${fac[2] == '노키즈존' }">
+	                                                        checked
+	                                                        </c:if>
+	                                                        > 노키즈존
 	                                                        	<input type="text" class="form-control" name="facDisc3" placeholder="상세정보(선택)">
 	                                                    </label>
 	                                                    <label>
-	                                                        <input type="checkbox" name="facility4" value="콜키지"> 콜키지 서비스
+	                                                        <input type="checkbox" name="facility4" value="콜키지"
+	                                                        <c:if test="${fac[3] == '콜키지' }">
+	                                                        checked
+	                                                        </c:if>
+	                                                        > 콜키지 서비스
 	                                                        	<input type="text" class="form-control" name="facDisc4" placeholder="상세정보(선택)">
 	                                                    </label>
 	                                                    <label>
-	                                                        <input type="checkbox" name="facility5" value="대관"> 대관 서비스
+	                                                        <input type="checkbox" name="facility5" value="대관"
+	                                                        <c:if test="${fac[4] == '대관' }">
+	                                                        checked
+	                                                        </c:if>
+	                                                        > 대관 서비스
 	                                                        	<input type="text" class="form-control" name="facDisc4" placeholder="상세정보(선택)">
 	                                                    </label>
 	                                                </div>
@@ -256,32 +369,42 @@
                                             	<div class="pull-left">
                                             	<label>* 최대 5개까지 등록 가능합니다. </label>
                                             	</div>
-    													<c:set value="${dto.s_menuname}" var="name"/>
-    													<c:set value="${dto.s_menuprice}" var="price"/>
-    													<c:set value="${dto.s_menuImg}" var="img"/>
+												<c:set value="${dto.s_menuname}" var="name"/>
+												<c:set value="${dto.s_menuprice}" var="price"/>
+												<c:set value="${dto.s_menuImg}" var="img"/>
 	                                            <div class="form-group" id="menuTable">
 	                                            	<table border="1" style="border: 1px #DADADA; line-height: 2.5; width: 100%; height: 44px; padding: 6px 12px; color: #838383; box-shadow: 0px 1px 1px rgb(179 179 179 / 10%) inset;
     													transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s; text-align: center; "> 
     													<c:if test="${name.split(',')[0]!='null' && price.split(',')[0]!='null'}">
 		                                            	<tr>
 		                                            		<td><b>메뉴명</b></td>
-		                                            		<td><input type="text" name="menuName1" value=${name.split(',')[0] }></td>
+		                                            		<td colspan="2"><input type="text" name="menuName1" value=${name.split(',')[0] }></td>
 		                                            	</tr>
 		                                            	<tr>
 		                                            		<td><b>가격</b></td>
-		                                            		<td>
-		                                            		<input type="number" name="menuPrice1" value=${price.split(',')[0] }>
-		                                            		</td>
+		                                            		<td colspan="2"><input type="number" name="menuPrice1" value=${price.split(',')[0] }></td>
 		                                            	</tr>
 		                                            	<tr>
 		                                            		<td><b>메뉴설명</b></td>
-		                                            		<td><input type="text" name="content"></td>
+		                                            		<td colspan="2"><input type="text" name="content"></td>
 		                                            	</tr>
 		                                            	<tr>
-		                                            		<td><b>이미지</b></td>
+		                                            		<td rowspan="2"><b>이미지</b></td>
+		                                            		<td style="text-align: left;">
+			                                            		 <label>현재 이미지 :</label> 
+		                                            		</td>
 		                                            		<td>
-			                                            		<input type="file" name="mfile1" value="" >${img.split(',')[0]}
-			                                            		<a href="/upload/${img.split(',')[0]}">${img.split(',')[0]}</a>
+			                                            		<a href="./upload/${img.split(',')[0]}">${img.split(',')[0]}</a>
+				                                                <input type="hidden" value="${img.split(',')[0]}" name="originMenuImg1" id="originMainImg1"/>
+		                                            		</td>
+		                                            		
+		                                            	</tr>
+		                                            	<tr>
+		                                            		<td style="text-align: left;">
+			                                            		 <label>변경할 이미지 :</label> 
+		                                            		</td>
+		                                            		<td>
+		                                            			<input type="file" id="wizard-picture" name="mfile1">
 		                                            		</td>
 		                                            	</tr>
     													</c:if>
@@ -293,22 +416,33 @@
 		                                            	<c:if test="${name.split(',')[1]!='null' && price.split(',')[1]!='null'}">
 		                                            	<tr>
 		                                            		<td><b>메뉴명</b></td>
-		                                            		<td><input type="text" name="menuName2" value=${name.split(',')[1] }></td>
+		                                            		<td colspan="2"><input type="text" name="menuName2" value=${name.split(',')[1] }></td>
 		                                            	</tr>
 		                                            	<tr>
 		                                            		<td><b>가격</b></td>
-		                                            		<td>
-		                                            		<input type="number" name="menuPrice2" value=${price.split(',')[1] }>
-		                                            		</td>
+		                                            		<td colspan="2"><input type="number" name="menuPrice2" value=${price.split(',')[1] }></td>
 		                                            	</tr>
 		                                            	<tr>
 		                                            		<td><b>메뉴설명</b></td>
-		                                            		<td><input type="text" name="content"></td>
+		                                            		<td colspan="2"><input type="text" name="content"></td>
 		                                            	</tr>
 		                                            	<tr>
-		                                            		<td><b>이미지</b></td>
+		                                            		<td rowspan="2"><b>이미지</b></td>
+		                                            		<td style="text-align: left;">
+			                                            		 <label>현재 이미지 :</label> 
+		                                            		</td>
 		                                            		<td>
-			                                            		<input type="file" name="mfile2"> 
+			                                            		<a href="./upload/${img.split(',')[1]}">${img.split(',')[1]}</a>
+				                                                <input type="hidden" value="${img.split(',')[1]}" name="originMenuImg2" id="originMainImg2"/>
+		                                            		</td>
+		                                            		
+		                                            	</tr>
+		                                            	<tr>
+		                                            		<td style="text-align: left;">
+			                                            		 <label>변경할 이미지 :</label> 
+		                                            		</td>
+		                                            		<td>
+		                                            			<input type="file" name="mfile2" id="wizard-picture">
 		                                            		</td>
 		                                            	</tr>
 		                                            </c:if>
@@ -320,23 +454,33 @@
 		                                            	<c:if test="${name.split(',')[2]!='null' && price.split(',')[2]!='null'}">
 		                                            	<tr>
 		                                            		<td><b>메뉴명</b></td>
-		                                            		<td><input type="text" name="menuName3" value=${name.split(',')[2] }></td>
+		                                            		<td colspan="2"><input type="text" name="menuName3" value=${name.split(',')[2] }></td>
 		                                            	</tr>
 		                                            	<tr>
 		                                            		<td><b>가격</b></td>
-		                                            		<td>
-		                                            		<input type="number" name="menuPrice3" value=${price.split(',')[2] }>
-		                                            		</td>
+		                                            		<td colspan="2"><input type="number" name="menuPrice3" value=${price.split(',')[2] }></td>
 		                                            	</tr>
 		                                            	<tr>
 		                                            		<td><b>메뉴설명</b></td>
-		                                            		<td><input type="text" name="content"></td>
+		                                            		<td colspan="2"><input type="text" name="content"></td>
 		                                            	</tr>
 		                                            	<tr>
-		                                            		<td><b>이미지</b></td>
-		                                            		<td>
-			                                            		<input type="file" name="mfile3"> 
+		                                            		<td rowspan="2"><b>이미지</b></td>
+		                                            		<td style="text-align: left;">
+			                                            		 <label>현재 이미지 :</label> 
 		                                            		</td>
+		                                            		<td>
+			                                            		<a href="./upload/${img.split(',')[2]}">${img.split(',')[2]}</a>
+				                                                <input type="hidden" value="${img.split(',')[2]}" name="originMenuImg3" id="originMainImg3"/>
+		                                            		</td>
+		                                            		
+		                                            	</tr>
+		                                            	<tr>
+		                                            		<td style="text-align: left;">
+			                                            		 <label>변경할 이미지 :</label> 
+		                                            		</td>
+		                                            		<td>
+		                                            			<input type="file" name="mfile3" id="wizard-picture">
 		                                            	</tr>
 		                                            </c:if>
 	                                            	</table>
@@ -347,20 +491,33 @@
 		                                            	<c:if test="${name.split(',')[3]!='null' && price.split(',')[3]!='null'}">
 		                                            	<tr>
 		                                            		<td><b>메뉴명</b></td>
-		                                            		<td><input type="text" name="menuName4" value=${name.split(',')[3] }></td>
+		                                            		<td colspan="2"><input type="text" name="menuName4" value=${name.split(',')[3] }></td>
 		                                            	</tr>
 		                                            	<tr>
 		                                            		<td><b>가격</b></td>
-		                                            		<td><input type="number" name="menuPrice4" value=${price.split(',')[3] }></td>
+		                                            		<td colspan="2"><input type="number" name="menuPrice4" value=${price.split(',')[3] }></td>
 		                                            	</tr>
 		                                            	<tr>
 		                                            		<td><b>메뉴설명</b></td>
-		                                            		<td><input type="text" name="content"></td>
+		                                            		<td colspan="2"><input type="text" name="content"></td>
 		                                            	</tr>
 		                                            	<tr>
-		                                            		<td><b>이미지</b></td>
+		                                            		<td rowspan="2"><b>이미지</b></td>
+		                                            		<td style="text-align: left;">
+			                                            		 <label>현재 이미지 :</label> 
+		                                            		</td>
 		                                            		<td>
-			                                            		<input type="file" name="mfile4"> 
+			                                            		<a href="./upload/${img.split(',')[3]}">${img.split(',')[3]}</a>
+				                                                <input type="hidden" value="${img.split(',')[3]}" name="originMenuImg4" id="originMainImg4"/>
+		                                            		</td>
+		                                            		
+		                                            	</tr>
+		                                            	<tr>
+		                                            		<td style="text-align: left;">
+			                                            		 <label>변경할 이미지 :</label> 
+		                                            		</td>
+		                                            		<td>
+		                                            			<input type="file" name="mfile4" id="wizard-picture">
 		                                            		</td>
 		                                            	</tr>
 		                                            </c:if>
@@ -372,20 +529,33 @@
 		                                            	<c:if test="${name.split(',')[4]!='null' && price.split(',')[4]!='null'}">
 		                                            	<tr>
 		                                            		<td><b>메뉴명</b></td>
-		                                            		<td><input type="text" name="menuName5" value=${name.split(',')[4] }></td>
+		                                            		<td colspan="2"><input type="text" name="menuName5" value=${name.split(',')[4] }></td>
 		                                            	</tr>
 		                                            	<tr>
 		                                            		<td><b>가격</b></td>
-		                                            		<td><input type="number" name="menuPrice5" value=${price.split(',')[4] }></td>
+		                                            		<td colspan="2"><input type="number" name="menuPrice5" value=${price.split(',')[4] }></td>
 		                                            	</tr>
 		                                            	<tr>
 		                                            		<td><b>메뉴설명</b></td>
-		                                            		<td><input type="text" name="content"></td>
+		                                            		<td colspan="2"><input type="text" name="content"></td>
 		                                            	</tr>
 		                                            	<tr>
-		                                            		<td><b>이미지</b></td>
+		                                            		<td rowspan="2"><b>이미지</b></td>
+		                                            		<td style="text-align: left;">
+			                                            		 <label>현재 이미지 :</label> 
+		                                            		</td>
 		                                            		<td>
-			                                            		<input type="file" name="mfile5"> 
+			                                            		<a href="./upload/${img.split(',')[4]}">${img.split(',')[4]}</a>
+				                                                <input type="hidden" value="${img.split(',')[4]}" name="originMenuImg5" id="originMainImg5"/>
+		                                            		</td>
+		                                            		
+		                                            	</tr>
+		                                            	<tr>
+		                                            		<td style="text-align: left;">
+			                                            		 <label>변경할 이미지 :</label> 
+		                                            		</td>
+		                                            		<td>
+		                                            			<input type="file" name="mfile5" id="wizard-picture">
 		                                            		</td>
 		                                            	</tr>
 		                                            </c:if>
@@ -414,30 +584,16 @@
                                     <!--  End step 3 -->
                                     <!--  Start step 4 -->
                                     <div class="tab-pane" id="step4">                                        
-                                        <h1 class="info-text">Fork&Knife</h1>
-                                        <div class="row">  
-                                            <div class="col-sm-12">
-                                            <div class="checkbox"> <!-- class="terms_check_all" -->
-										        <label for="necessity" >
-											        <input type="checkbox" name="agreement" id="necessity" required="required">
-											        <strong>Fork&Knife 이용약관, 개인정보 수집 및 이용에 동의합니다. <small>(필수)</small></strong>
-										        </label>
-										     </div>
-											 <jsp:include page="../ceo/termsConditions.jsp"/>
-										        <div class="terms__box" style="height: 100px; width: 91.5%; box-sizing: border-box; margin-bottom: 2%;margin-left: 2%;">
-										          <div class="input__check">
-										            <input type="checkbox" name="agreement" id="allowPromotions" value="allowPromotions" />
-										            <label for="allowPromotions">프로모션 정보 수신 동의</label>
-										          </div>
-										          <div class="terms__content" style="height: 80px;margin-left: 2%;">
-										            Fork&Knife에서 제공하는 이벤트/혜택 등 다양한 정보를 문자, 이메일로 받아보실 수
-										            있습니다. 일부 서비스(별도 회원 체계로 운영하거나 Fork&Knife 가입 이후 추가 가입하여 이용하는 서비스 등)의
-										            경우, 개별 서비스에 대해 별도 수신 동의를 받을 수 있으며, 이때에도 수신 동의에 대해 별도로 안내하고
-										            동의를 받습니다.
-										          </div>
-										        </div>
-                                            </div>
-                                        </div>
+                                      <h1 class="info-text">가게 정보 수정을 끝까지 마쳐주세요</h1>
+                                      <div class="col-sm-12">
+								        <div class="terms__box" style="height: 100px; width: 91.5%; box-sizing: border-box; margin-bottom: 2%;margin-left: 2%;">
+								          	<div class="terms__content" style="height: 80px;margin-left: 2%;">
+								            <h4 class="info-text">가게 정보의 반영은 1~3일 가량 소요될 수 있습니다.<br>
+								            	문의사항 : 051-803-0909
+								            </h4>
+							          		</div>
+							        	</div>
+                                      </div>
                                     </div>
                                     <!--  End step 4 -->
                                 </div>
@@ -464,9 +620,9 @@
     <!-- Footer area-->
 	<jsp:include page="../inc/bottom.jsp"/>
     <!-- Footer area-->
-	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-	<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1900efb9ff28bb0a54c68c9b272a9b10&libraries=services"></script>
-		<script src="ceo/mapAPI.js"></script> <!-- 위치를 옮길 때는 반드시 주소 변경해주기  -->
+		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+		<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1900efb9ff28bb0a54c68c9b272a9b10&libraries=services"></script>
+		<script src="ceo/mapAPIUpdate.js"/> <!-- 위치를 옮길 때는 반드시 주소 변경해주기  -->
     <!-- 지도 API javascript -->
 	    <script src="assets/js/vendor/modernizr-2.6.2.min.js"></script>
         <script src="assets/js//jquery-1.10.2.min.js"></script>
