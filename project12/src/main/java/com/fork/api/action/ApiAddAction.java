@@ -51,7 +51,7 @@ public class ApiAddAction implements Action {
 					String hour = "10:00~21:00"; // defalut 값
 					
 					String corkage = null;
-					String hirable = null;
+					String group = "대관";
 					String parking = (String)data2.get("주차가능여부");
 					if(parking.equals("Y")){
 						parking = "주차가능";
@@ -68,10 +68,11 @@ public class ApiAddAction implements Action {
 					if(kids.equals("N")){
 						kids = "노키즈존";
 					}else {
-						kids = null;
+						kids = "키즈존";
 					}
-					String facility = parking+","+animal+","+kids+","+corkage+","+hirable;
-					
+					String facility = parking+","+animal+","+kids+","+corkage+","+group;
+					int price = (int)(Math.random()*10)+1;
+					//System.out.println(price*10000);
 					
 					list.add((String)data.get("식당명"));
 					list.add((String)data.get("도로명주소"));
@@ -81,12 +82,12 @@ public class ApiAddAction implements Action {
 					
 					list.add((String)data.get("음식점소개내용"));
 					list.add((String)data.get("식당대표전화번호"));
-					list.add(0);
+					list.add(price*10000);
 					list.add("준비중입니다");
 					list.add(555555555);
 					list.add("default.jsp,null,null");
-					list.add("null,null,null,null,null");
-					list.add(",,,,");
+					list.add("default.jsp,null,null,null,null");
+					list.add(price*10000+",,,,");
 					
 					if(api_hour!=null){ hour = ((String)data2.get("영업시간내용")).split(" ")[1];}
 					list.add(hour);
@@ -102,7 +103,8 @@ public class ApiAddAction implements Action {
 			StoreDAO dao = new StoreDAO();		
 			StoreDTO dto = new StoreDTO();
 			for (Integer key : map.keySet()) {
-				if(dao.APIDataCheck(key)==0){	// apiID를 이용한 중복데이터 확인
+				String tmp = String.valueOf(key);
+				if(dao.APIDataCheck(tmp)==0){	// apiID를 이용한 중복데이터 확인
 					
 					dto.setS_name((String)map.get(key).get(0));
 					dto.setS_addr((String)map.get(key).get(1));

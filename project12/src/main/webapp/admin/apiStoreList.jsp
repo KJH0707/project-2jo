@@ -116,7 +116,6 @@
                                                         <td>${dto.s_content }</td>
 <%--                                                         <td>${dto.s_menuname }</td> --%>
 <%--                                                         <td>${dto.s_menuImg }</td> --%>
-<!--                                                         <td>메뉴가격</td> -->
                                                         <%-- <td>${dto.s_meunprice }</td> --%>
                                                         <td>${dto.s_price }</td>
                                                         <td>${dto.s_regdate }</td>

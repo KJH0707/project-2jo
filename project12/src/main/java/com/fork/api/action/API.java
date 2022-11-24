@@ -23,7 +23,7 @@ public class API {
 	JSONArray getJsonObject(Resion r) throws Exception {
 		
 		try {
-			url = new URL(r.dataUrl+"?serviceKey="+ serviceKey+ "&returnType=JSON&perPage=30");
+			url = new URL(r.dataUrl+"?serviceKey="+ serviceKey+ "&returnType=JSON&perPage=40");
 			
 			BufferedReader bf;
 			

@@ -212,82 +212,6 @@ public class StoreDAO {
 		}
 		// 점주의 가게입력 메서드 - storeJoin(DTO,c_no)
 		
-		// openAPI데이터 입력 메서드 - APIstore(DTO)
-		public void APIstore(StoreDTO dto) { // 점주의 정보를 파라미터	storeDTO dto
-			int s_no = 0;
-			
-			try {
-				con = getConnection();
-				// 마지막 가게 number를 추가
-				sql="select max(s_no) from store";
-				pstmt = con.prepareStatement(sql);
-				rs = pstmt.executeQuery();
-				
-				if(rs.next()) {
-					s_no = rs.getInt(1)+1; // 첫번째 인덱스를 가져와서 +1
-				}
-				
-				sql = "insert into store(s_no,s_name,s_addr,s_tel,s_hours,s_type,s_image,s_content,s_facility,s_menuname,s_menuprice,s_menuImg,s_number,s_price,c_no,api_ID) "
-						+ "values("
-						+ "?,?,?,?,?,"
-						+ "?,?,?,?,?,"
-						+ "?,?,?,?,?,?)";
-				pstmt = con.prepareStatement(sql);
-				
-				pstmt.setInt(1, s_no);
-				pstmt.setString(2, dto.getS_name());
-				pstmt.setString(3, dto.getS_addr());
-				pstmt.setString(4, dto.getS_tel());
-				pstmt.setString(5, dto.getS_hours());
-				pstmt.setString(6, dto.getS_type());
-				pstmt.setString(7, dto.getS_image());
-				pstmt.setString(8, dto.getS_content());
-				pstmt.setString(9, dto.getS_facility());
-				pstmt.setString(10, dto.getS_menuname());
-				pstmt.setString(11, dto.getS_menuprice());
-				pstmt.setString(12, dto.getS_menuImg());
-				pstmt.setInt(13, dto.getS_number());
-				
-				pstmt.setInt(14, dto.getS_price());
-				pstmt.setInt(15, dto.getC_no()); // 기본값 입력
-				pstmt.setInt(16, dto.getApi_ID()); // 기본값 입력
-				
-				pstmt.executeUpdate(); // result = 1 / 실패시 0 
-				
-				System.out.println(" DAO : 가게입력 완료");
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-			}finally {
-				closeDB();
-			}
-		}
-		// openAPI데이터 입력 메서드 - APIstore(DTO)
-	
-		// openAPI데이터 중복 체크 - APIDataCheck(api_ID)
-		public int APIDataCheck(int api_ID) {
-			int result = 0; // 중복x - 데이터 추가(0), 중복o - 해당 map 삭제(1)
-			
-			try {
-				con = getConnection();
-				sql = "select * from store where api_ID=?";
-				pstmt = con.prepareStatement(sql);
-				pstmt.setInt(1, api_ID);
-
-				rs = pstmt.executeQuery();
-				if(rs.next()) {
-					result = 1;
-					System.out.println(" DAO : 중복 데이터 ");
-				}
-				System.out.println(" DAO : 데이터 결과 : "+ result);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}finally {
-				closeDB();
-			}
-			return result;
-		}
-		// openAPI데이터 중복 체크 - APIDataCheck(api_ID)
 	
 	// getStoreCount 가게 갯수 start
 	
@@ -354,8 +278,6 @@ public class StoreDAO {
 		
 					dto.setS_star(rs.getDouble("s_star"));
 					dto.setS_regdate(rs.getTimestamp("s_regdate"));
-					
-					
 					
 				}
 				
@@ -452,14 +374,91 @@ public class StoreDAO {
 		}
 		// 점주의 가게수정 메서드 - updateStore(s_no)
 		
+		// openAPI데이터 입력 메서드 - APIstore(DTO)
+		public void APIstore(StoreDTO dto) { // 점주의 정보를 파라미터	storeDTO dto
+			int s_no = 0;
+			
+			try {
+				con = getConnection();
+				// 마지막 가게 number를 추가
+				sql="select max(s_no) from store";
+				pstmt = con.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+				
+				if(rs.next()) {
+					s_no = rs.getInt(1)+1; // 첫번째 인덱스를 가져와서 +1
+				}
+				
+				sql = "insert into store(s_no,s_name,s_addr,s_tel,s_hours,s_type,s_image,s_content,s_facility,s_menuname,s_menuprice,s_menuImg,s_number,s_price,c_no,api_ID) "
+						+ "values("
+						+ "?,?,?,?,?,"
+						+ "?,?,?,?,?,"
+						+ "?,?,?,?,?,?)";
+				pstmt = con.prepareStatement(sql);
+				
+				pstmt.setInt(1, s_no);
+				pstmt.setString(2, dto.getS_name());
+				pstmt.setString(3, dto.getS_addr());
+				pstmt.setString(4, dto.getS_tel());
+				pstmt.setString(5, dto.getS_hours());
+				pstmt.setString(6, dto.getS_type());
+				pstmt.setString(7, dto.getS_image());
+				pstmt.setString(8, dto.getS_content());
+				pstmt.setString(9, dto.getS_facility());
+				pstmt.setString(10, dto.getS_menuname());
+				pstmt.setString(11, dto.getS_menuprice());
+				pstmt.setString(12, dto.getS_menuImg());
+				pstmt.setInt(13, dto.getS_number());
+				
+				pstmt.setInt(14, dto.getS_price());
+				pstmt.setInt(15, dto.getC_no()); // 기본값 입력
+				pstmt.setInt(16, dto.getApi_ID()); // 기본값 입력
+				
+				pstmt.executeUpdate(); // result = 1 / 실패시 0 
+				
+				System.out.println(" DAO : 가게입력 완료");
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				closeDB();
+			}
+		}
+		// openAPI데이터 입력 메서드 - APIstore(DTO)
+		
+		// openAPI데이터 중복 체크 - APIDataCheck(api_ID)
+		public int APIDataCheck(String key) {
+			int result = 0; // 중복x - 데이터 추가(0), 중복o - 해당 map 삭제(1)
+			int tmp = Integer.parseInt(key.trim());
+			try {
+				con = getConnection();
+				sql = "select * from store where api_ID=?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, tmp);
+				
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					result = 1;
+					System.out.println(" DAO : 중복 데이터 ");
+				}
+				System.out.println(" DAO : 데이터 결과 : "+ result);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				closeDB();
+			}
+			return result;
+		}
+		// openAPI데이터 중복 체크 - APIDataCheck(api_ID)
+		
 		// openAPI데이터 업데이트 - APIUpdate(dto)
 		public void APIUpdate(StoreDTO dto) {
 			
 			try {
 				con = getConnection();
 				sql = "UPDATE store "
-						+ "SET s_name=?,s_addr=?,s_hours=?,s_type=?,s_price=?,s_image=?,s_content=?,s_facility=?,s_menuname=?,s_menuprice=?,s_menuImg=?s_hours=?,s_facility=?,s_number=?,s_price=?,c_no=?"
-						+ "WHERE s_tel=?";
+						+ "SET s_name=?,s_addr=?,s_hours=?,s_type=?,s_tel=?,s_content=?,s_facility=? "
+						+ "WHERE api_ID=?";
 				
 				pstmt = con.prepareStatement(sql);
 				
@@ -468,20 +467,12 @@ public class StoreDAO {
 				pstmt.setString(2, dto.getS_addr());
 				pstmt.setString(3, dto.getS_hours());
 				pstmt.setString(4, dto.getS_type());
-				pstmt.setInt(5, dto.getS_price());
-				pstmt.setString(6, dto.getS_image());
-				pstmt.setString(7, dto.getS_content());
-				pstmt.setString(8, dto.getS_facility());
-				pstmt.setString(9, dto.getS_menuname());
-				pstmt.setString(10, dto.getS_menuprice());
-				pstmt.setString(11, dto.getS_menuImg());
-				pstmt.setString(12, dto.getS_hours());
-				pstmt.setString(13, dto.getS_facility());
-				pstmt.setInt(14, dto.getS_number());
-				pstmt.setInt(15, dto.getS_price());
-				pstmt.setInt(16, dto.getC_no());
+				pstmt.setString(5, dto.getS_tel());
+				pstmt.setString(6, dto.getS_content());
+				pstmt.setString(7, dto.getS_facility());
+				//pstmt.setInt(8, dto.getS_price());
+				pstmt.setInt(8, dto.getApi_ID());
 				
-				pstmt.setString(17, dto.getS_tel());
 				pstmt.executeUpdate();
 				
 				System.out.println(" DAO : 변경된 가게 정보 수정 완료");
@@ -491,52 +482,12 @@ public class StoreDAO {
 				closeDB();
 			}
 		}
-		// openAPI데이터 추가정보 입력 - APIdetailAdd(dto)
+		// openAPI데이터 업데이트 - APIUpdate(dto)
 		
-		// openAPI에서 추가한 가게 출력 - getStoreList()
-//		public List getStoreList() {
-//			List storelist = new ArrayList();
-//			
-//			try {
-//				con = getConnection();
-//				sql = "select * from store where c_no=0";
-//				pstmt = con.prepareStatement(sql);
-//				rs = pstmt.executeQuery();
-//				
-//				while(rs.next()) {
-//					StoreDTO dto = new StoreDTO();
-//					
-//					dto.setS_addr(rs.getString("s_addr"));
-//					dto.setS_content(rs.getString("s_content"));
-//					dto.setS_facility(rs.getString("s_facility"));
-//					dto.setS_hours(rs.getString("s_hours"));
-//					dto.setS_image(rs.getString("s_image"));
-//					dto.setS_menuImg(rs.getString("s_menuImg"));
-//					dto.setS_menuname(rs.getString("s_menuname"));
-//					dto.setS_menuprice(rs.getString("s_menuprice"));
-//					dto.setS_name(rs.getString("s_name"));
-//					dto.setS_no(rs.getInt("s_no"));
-//					dto.setS_number(rs.getInt("s_number"));
-//					dto.setS_price(rs.getInt("s_price"));
-//					dto.setS_regdate(rs.getTimestamp("s_regdate"));
-//					dto.setS_tel(rs.getString("s_tel"));
-//					dto.setS_type(rs.getString("s_type"));
-//					dto.setApi_ID(rs.getInt("api_ID"));
-//					
-//					storelist.add(dto);
-//				}
-//				System.out.println(" DAO : api에서 추가한 상점 갯수 :" + storelist.size());
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			} finally {
-//				closeDB();
-//			}
-//			return storelist;
-//		}
-		
-		public List<Map> getStoreList() {
-			List<Map> storelist = new ArrayList<Map>();
-			HashMap<String,Object> map = null;
+		// openAPI 가게 리스트- getStoreList()
+		public List<Map<String,Object>> getStoreList() {
+			List<Map<String,Object>> storelist = new ArrayList<Map<String,Object>>();
+			Map<String,Object> map = null;
 			
 			try {
 				con = getConnection();
@@ -575,5 +526,5 @@ public class StoreDAO {
 			}
 			return storelist;
 		}
-		// openAPI에서 추가한 가게 출력 - getStoreList()
+		// openAPI 가게 리스트- getStoreList()
 }

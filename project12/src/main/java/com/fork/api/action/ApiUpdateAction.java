@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,25 +24,16 @@ public class ApiUpdateAction implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		System.out.println(" M : ApiUpdateAction_execute() ");
 		StoreDAO dao = new StoreDAO();
-		List storeList = dao.getStoreList();
-//		StoreDTO dto = (StoreDTO) storeList.get(0);
-//		System.out.println("@@@@@@@@@@@@@@@@@@@@@@"+dto.getApi_ID());
-//		System.out.println("@@@@@@@@@@@@@@@@@@@@@@"+dto.getS_facility());
-		System.out.println(storeList.get(1));
+		List<Map<String,Object>> storeList = dao.getStoreList();
+		
 		API api = new API();
 		
-		//List dto = storeList.get(1);
-		//System.out.println("@@@@@@@@"+dto.);
+		JSONArray dataArr = api.getJsonObject(new Busan()); // 기본정보
+		JSONArray dataArr2 = api.getJsonObject(new Busan2()); // 상세정보
+		Map<String, List> map = new HashMap<String, List>();
+		String id;
 		
-		try {
-			
-			JSONArray dataArr = api.getJsonObject(new Busan()); // 기본정보
-			JSONArray dataArr2 = api.getJsonObject(new Busan2()); // 상세정보
-			
-			Map<Integer, List> map = new HashMap<Integer, List>();
-			
-			int id;
-//			StoreDTO dto;
+		for(int i2 = 0; i2 < storeList.size();i2++) {
 			
 			if(dataArr.size() > 0 ) {
 				for(int i=0; i < dataArr.size(); i++ ) { // 배열 사이즈만큼 반복
@@ -49,12 +41,23 @@ public class ApiUpdateAction implements Action {
 					JSONObject data2 = (JSONObject)dataArr2.get(i); // 객체로 변환 
 					List list = new ArrayList();
 					
-					String name = null;
-					String addr = null;
-					String api_type = null;
-					String contents = null;
-					String api_hour = null;
-					String hour = "10:00~21:00"; // defalut 값
+					String name = storeList.get(i2).get("s_name").toString();
+					String addr = storeList.get(i2).get("s_addr").toString();
+					String api_type = storeList.get(i2).get("s_type").toString();
+					String str = (String)data.get("영업신고증업태명");
+					if(str.equals("중국식")) {str ="중식";}
+					String contents = storeList.get(i2).get("s_content").toString();
+					String origin_hour = storeList.get(i2).get("s_hours").toString();
+					String hour = "10:00~21:00"; 
+					if((String)data2.get("영업시간내용")!=null) {
+						hour= ((String)data2.get("영업시간내용")).split(" ")[1];
+					}
+					
+					//System.out.println(((String)data2.get("영업시간내용")));
+					//if(api_hour!=null){ hour = ((String)data2.get("영업시간내용")).split(" ")[1];}
+					//if(api_hour==null){ hour = "10:00~21:00";}
+					
+					String tel = storeList.get(i2).get("s_tel").toString();
 					
 					String corkage = null;
 					String hirable = null;
@@ -76,109 +79,71 @@ public class ApiUpdateAction implements Action {
 					}else {
 						kids = null;
 					}
+					String tmp = storeList.get(i2).get("s_facility").toString();
 					String facility = parking+","+animal+","+kids+","+corkage+","+hirable;
-					String temp = null;
-					id = Long.valueOf((Long)data.get("식당(ID)")).intValue();
+					id = (Long)data.get("식당(ID)")+" ";
+					//int price = (int)(Math.random()*10)+1;
+							
+					//System.out.println(" M : api : " +id.trim()+"@@@@@@@@@@@@@");
 					
-					System.out.println("@@@@@@@@@" +id);
-					//dto = (StoreDTO) storeList.get(0);
-					
-					//System.out.println(storeList.size());
-					for(int i2 = 0; i < storeList.size();i2++) {
-						dto = (StoreDTO) storeList.get(i2);
-						//System.out.println(i2);
-						System.out.println("@@@@"+dto.getApi_ID());
+					//System.out.println(storeList.get(i2).get("api_ID").toString().equals(id.trim()));
+					//System.out.println(" M : dto : "+storeList.get(i2).get("api_ID").toString());
+					StoreDTO dto = new StoreDTO();
+					if(storeList.get(i2).get("api_ID").toString().equals(id.trim())) {
 						
-						if((Integer)dto.getApi_ID()==id) {
-							if(!dto.getS_name().equals((String)data.get("식당명"))) {
-								name = (String)data.get("식당명");
-								System.out.println(name);
-							}
-							else if(!dto.getS_addr().equals((String)data.get("도로명주소"))) {
-								addr = (String)data.get("도로명주소");
-								
-							}
-							else if(!dto.getS_type().equals((String)data.get("영업신고증업태명"))) {
-								api_type = (String)data.get("영업신고증업태명");
-							}
-							else if(!dto.getS_content().equals((String)data.get("음식점소개내용"))) {
-								contents = (String)data.get("음식점소개내용");
-							}
-							else if(!dto.getS_hours().equals((String)data2.get("영업시간내용"))) {
-								api_hour = (String)data2.get("영업시간내용");
-							}
-							else if(!dto.getS_facility().equals(facility)) {
-								temp = facility;
-							}
-							
-							System.out.println("@@@@@@@@@" +name);
-							list.add(name);
-							list.add(addr);
-							
-							if(api_type.equals("중국식")) {api_type ="중식";}
-							list.add(api_type);
-							
-							list.add(contents);
-							list.add((String)data.get("식당대표전화번호"));
-							list.add(0);
-							list.add("준비중입니다");
-							list.add(555555555);
-							list.add("default.jsp,null,null");
-							list.add("null,null,null,null,null");
-							list.add(",,,,");
-							
-							if(api_hour!=null){ hour = ((String)data2.get("영업시간내용")).split(" ")[1];}
-							list.add(hour);
-							// 편의시설
-							list.add(temp);
-							
-							map.put(id, list);
-								
+						dto.setS_name(name);
+						dto.setS_addr(addr);
+			
+						dto.setS_type(api_type);
+						dto.setS_content(contents);
+						dto.setS_tel(tel);
+						dto.setS_hours(origin_hour);
+						dto.setS_facility(tmp);
+						dto.setApi_ID(Integer.parseInt(id.trim()));
+						//dto.setS_price(price*10000);
+						
+						if(!storeList.get(i2).get("s_name").toString().equals((String)data.get("식당명"))) {
+							name = (String)data.get("식당명");
+							dto.setS_name(name);
+							//System.out.println("api :"+name);
+							//System.out.println("dto: "+storeList.get(i2).get("s_name").toString());
+						}
+						else if(!storeList.get(i2).get("s_addr").toString().equals((String)data.get("도로명주소"))) {
+							addr = (String)data.get("도로명주소");
+							dto.setS_addr(addr);
+						}
+						else if(!storeList.get(i2).get("s_type").toString().equals(str)) {
+							dto.setS_type(str);
+						}
+						else if(!storeList.get(i2).get("s_content").toString().equals((String)data.get("음식점소개내용"))) {
+							contents = (String)data.get("음식점소개내용");
+							dto.setS_content(contents);
+						}
+						else if(!storeList.get(i2).get("s_hours").toString().equals(hour)) {
+							dto.setS_hours(hour);
+						}
+						else if(!tmp.equals(facility)) {
+							tmp = facility;
+							dto.setS_facility(tmp);
+						}
+						else if(!storeList.get(i2).get("s_tel").toString().equals((String)data.get("식당대표전화번호"))) {
+							tel = (String)data.get("식당대표전화번호");
+							dto.setS_tel(tel);
 						}
 						
+						dao = new StoreDAO();
+						dao.APIUpdate(dto);
 					}
 				}
 			}
-			
-			// 저장 객체 준비 + DAO - 가게 저장 : APIstore(dto)
-			dao = new StoreDAO();		
-			dto = new StoreDTO();
-			
-			for (Integer key : map.keySet()) {
-				if(dao.APIDataCheck(key)==0){	// 중복데이터 확인
-					
-					dto.setS_name((String)map.get(key).get(0));
-					dto.setS_addr((String)map.get(key).get(1));
-					dto.setS_type((String)map.get(key).get(2));
-					dto.setS_content((String)map.get(key).get(3));
-					dto.setS_tel((String)map.get(key).get(4));
-					dto.setS_price((Integer)map.get(key).get(5)); // 가격대
-					dto.setS_menuname((String)map.get(key).get(6));
-					dto.setS_number((Integer)map.get(key).get(7)); // 기본값 - 사업자번호
-					dto.setS_image((String)map.get(key).get(8));
-					dto.setS_menuImg((String)map.get(key).get(9));
-					dto.setS_menuprice((String)map.get(key).get(10));
-					dto.setS_hours((String)map.get(key).get(11));
-					dto.setS_facility((String)map.get(key).get(12));
-				
-					dto.setC_no(0);
-					
-					//System.out.println(map.get(key).get(0));
-					//dao.APIUpdate(dto);
-				}
-			}
-			
-			
-		}catch (Exception e) {
-			e.printStackTrace();
 		}
-		
+			
 		// 페이징 처리
 		ActionForward forward = new ActionForward();
 		forward.setPath("ApiStore.ap");
 		forward.setRedirect(true);
 		
 		return forward;
-	}
 
+	}
 }
