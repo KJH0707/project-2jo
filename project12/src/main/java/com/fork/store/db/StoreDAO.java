@@ -6,8 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -263,7 +265,6 @@ public class StoreDAO {
 		// openAPI데이터 입력 메서드 - APIstore(DTO)
 	
 		// openAPI데이터 중복 체크 - APIDataCheck(api_ID)
-		// openAPI데이터 중복 체크 - APIDataCheck(api_ID)
 		public int APIDataCheck(int api_ID) {
 			int result = 0; // 중복x - 데이터 추가(0), 중복o - 해당 map 삭제(1)
 			
@@ -457,7 +458,7 @@ public class StoreDAO {
 			try {
 				con = getConnection();
 				sql = "UPDATE store "
-						+ "SET s_name=?,s_addr=?,s_hours=?,s_type=?,s_price=?,s_image=?,s_content=?,s_facility=?,s_menuname=?,s_menuprice=?,s_menuImg=?s_hours=?,s_facility=?,s_number=?,s_price=?,c_no=?,api_ID=?"
+						+ "SET s_name=?,s_addr=?,s_hours=?,s_type=?,s_price=?,s_image=?,s_content=?,s_facility=?,s_menuname=?,s_menuprice=?,s_menuImg=?s_hours=?,s_facility=?,s_number=?,s_price=?,c_no=?"
 						+ "WHERE s_tel=?";
 				
 				pstmt = con.prepareStatement(sql);
@@ -479,9 +480,8 @@ public class StoreDAO {
 				pstmt.setInt(14, dto.getS_number());
 				pstmt.setInt(15, dto.getS_price());
 				pstmt.setInt(16, dto.getC_no());
-				pstmt.setInt(17, dto.getApi_ID());
 				
-				pstmt.setString(18, dto.getS_tel());
+				pstmt.setString(17, dto.getS_tel());
 				pstmt.executeUpdate();
 				
 				System.out.println(" DAO : 변경된 가게 정보 수정 완료");
@@ -494,8 +494,49 @@ public class StoreDAO {
 		// openAPI데이터 추가정보 입력 - APIdetailAdd(dto)
 		
 		// openAPI에서 추가한 가게 출력 - getStoreList()
-		public List getStoreList() {
-			List storelist = new ArrayList();
+//		public List getStoreList() {
+//			List storelist = new ArrayList();
+//			
+//			try {
+//				con = getConnection();
+//				sql = "select * from store where c_no=0";
+//				pstmt = con.prepareStatement(sql);
+//				rs = pstmt.executeQuery();
+//				
+//				while(rs.next()) {
+//					StoreDTO dto = new StoreDTO();
+//					
+//					dto.setS_addr(rs.getString("s_addr"));
+//					dto.setS_content(rs.getString("s_content"));
+//					dto.setS_facility(rs.getString("s_facility"));
+//					dto.setS_hours(rs.getString("s_hours"));
+//					dto.setS_image(rs.getString("s_image"));
+//					dto.setS_menuImg(rs.getString("s_menuImg"));
+//					dto.setS_menuname(rs.getString("s_menuname"));
+//					dto.setS_menuprice(rs.getString("s_menuprice"));
+//					dto.setS_name(rs.getString("s_name"));
+//					dto.setS_no(rs.getInt("s_no"));
+//					dto.setS_number(rs.getInt("s_number"));
+//					dto.setS_price(rs.getInt("s_price"));
+//					dto.setS_regdate(rs.getTimestamp("s_regdate"));
+//					dto.setS_tel(rs.getString("s_tel"));
+//					dto.setS_type(rs.getString("s_type"));
+//					dto.setApi_ID(rs.getInt("api_ID"));
+//					
+//					storelist.add(dto);
+//				}
+//				System.out.println(" DAO : api에서 추가한 상점 갯수 :" + storelist.size());
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			} finally {
+//				closeDB();
+//			}
+//			return storelist;
+//		}
+		
+		public List<Map> getStoreList() {
+			List<Map> storelist = new ArrayList<Map>();
+			HashMap<String,Object> map = null;
 			
 			try {
 				con = getConnection();
@@ -504,29 +545,33 @@ public class StoreDAO {
 				rs = pstmt.executeQuery();
 				
 				while(rs.next()) {
-					StoreDTO dto = new StoreDTO();
+					map = new HashMap<String,Object>();
 					
-					dto.setS_addr(rs.getString("s_addr"));
-					dto.setS_content(rs.getString("s_content"));
-					dto.setS_facility(rs.getString("s_facility"));
-					dto.setS_hours(rs.getString("s_hours"));
-					dto.setS_image(rs.getString("s_image"));
-					dto.setS_menuImg(rs.getString("s_menuImg"));
-					dto.setS_menuname(rs.getString("s_menuname"));
-					dto.setS_menuprice(rs.getString("s_meunprice"));
-					dto.setS_name(rs.getString("s_name"));
-					dto.setS_no(rs.getInt("s_no"));
-					dto.setS_number(rs.getInt("s_number"));
-					dto.setS_price(rs.getInt("s_price"));
-					dto.setS_regdate(rs.getTimestamp("s_regdate"));
-					dto.setS_tel(rs.getString("s_tel"));
-					dto.setS_type(rs.getString("s_type"));
+					map.put("s_addr", rs.getString("s_addr"));
+					map.put("s_content", rs.getString("s_content"));
+					map.put("s_facility", rs.getString("s_facility"));
+					map.put("s_hours", rs.getString("s_hours"));
+					map.put("s_image", rs.getString("s_image"));
+					map.put("s_menuImg", rs.getString("s_menuImg"));
+					map.put("s_menuname", rs.getString("s_menuname"));
+					map.put("s_menuprice", rs.getString("s_menuprice"));
 					
-					storelist.add(dto);
+					map.put("s_name", rs.getString("s_name"));
+					map.put("s_no", rs.getInt("s_no"));
+					map.put("s_number", rs.getInt("s_number"));
+					map.put("s_price", rs.getInt("s_price"));
+					map.put("s_regdate", rs.getTimestamp("s_regdate"));
+					map.put("s_tel", rs.getString("s_tel"));
+					map.put("s_type", rs.getString("s_type"));
+					map.put("api_ID", rs.getInt("api_ID"));
+
+					storelist.add(map);
 				}
 				System.out.println(" DAO : api에서 추가한 상점 갯수 :" + storelist.size());
 			} catch (Exception e) {
 				e.printStackTrace();
+			} finally {
+				closeDB();
 			}
 			return storelist;
 		}

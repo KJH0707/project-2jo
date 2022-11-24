@@ -27,17 +27,17 @@ public class ApiAddAction implements Action {
 			
 			JSONArray dataArr = api.getJsonObject(new Busan()); // 기본정보
 			JSONArray dataArr2 = api.getJsonObject(new Busan2()); // 상세정보
-			JSONArray dataArr3 = api.getJsonObject(new Busan3()); // 상세정보
+			//JSONArray dataArr3 = api.getJsonObject(new Busan3()); // 이미지정보
 			
 			Map<Integer, List> map = new HashMap<Integer, List>();
 			
 			int id;
 			
-			if(dataArr.size() > 0 ) {
+			if(dataArr.size() > 0 || dataArr2.size() > 0) {
 				for(int i=0; i < dataArr.size(); i++ ) { // 배열 사이즈만큼 반복
 					JSONObject data = (JSONObject)dataArr.get(i); // 객체로 변환 
 					JSONObject data2 = (JSONObject)dataArr2.get(i); // 객체로 변환 
-					JSONObject data3 = (JSONObject)dataArr3.get(i); // 객체로 변환 
+					//JSONObject data3 = (JSONObject)dataArr3.get(i); // 객체로 변환 
 					List list = new ArrayList();
 					
 					
@@ -102,7 +102,7 @@ public class ApiAddAction implements Action {
 			StoreDAO dao = new StoreDAO();		
 			StoreDTO dto = new StoreDTO();
 			for (Integer key : map.keySet()) {
-				if(dao.APIDataCheck((Integer)map.==0){	// 중복데이터 확인
+				if(dao.APIDataCheck(key)==0){	// apiID를 이용한 중복데이터 확인
 					
 					dto.setS_name((String)map.get(key).get(0));
 					dto.setS_addr((String)map.get(key).get(1));
@@ -117,7 +117,8 @@ public class ApiAddAction implements Action {
 					dto.setS_menuprice((String)map.get(key).get(10));
 					dto.setS_hours((String)map.get(key).get(11));
 					dto.setS_facility((String)map.get(key).get(12));
-				
+					dto.setApi_ID(key);
+					
 					dto.setC_no(0);
 					
 					//System.out.println(map.get(key).get(0));

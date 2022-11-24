@@ -21,11 +21,17 @@ public class ApiUpdateAction implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		
+		System.out.println(" M : ApiUpdateAction_execute() ");
 		StoreDAO dao = new StoreDAO();
 		List storeList = dao.getStoreList();
-		
+//		StoreDTO dto = (StoreDTO) storeList.get(0);
+//		System.out.println("@@@@@@@@@@@@@@@@@@@@@@"+dto.getApi_ID());
+//		System.out.println("@@@@@@@@@@@@@@@@@@@@@@"+dto.getS_facility());
+		System.out.println(storeList.get(1));
 		API api = new API();
+		
+		//List dto = storeList.get(1);
+		//System.out.println("@@@@@@@@"+dto.);
 		
 		try {
 			
@@ -35,7 +41,7 @@ public class ApiUpdateAction implements Action {
 			Map<Integer, List> map = new HashMap<Integer, List>();
 			
 			int id;
-			StoreDTO dto;
+//			StoreDTO dto;
 			
 			if(dataArr.size() > 0 ) {
 				for(int i=0; i < dataArr.size(); i++ ) { // 배열 사이즈만큼 반복
@@ -72,30 +78,40 @@ public class ApiUpdateAction implements Action {
 					}
 					String facility = parking+","+animal+","+kids+","+corkage+","+hirable;
 					String temp = null;
+					id = Long.valueOf((Long)data.get("식당(ID)")).intValue();
 					
-					for(int i2 = 0; i < storeList.size(); i++) {
-						dto = (StoreDTO)storeList.get(i2);
-						if(dto.getS_tel().equals((String)data.get("식당대표전화번호"))) {
+					System.out.println("@@@@@@@@@" +id);
+					//dto = (StoreDTO) storeList.get(0);
+					
+					//System.out.println(storeList.size());
+					for(int i2 = 0; i < storeList.size();i2++) {
+						dto = (StoreDTO) storeList.get(i2);
+						//System.out.println(i2);
+						System.out.println("@@@@"+dto.getApi_ID());
+						
+						if((Integer)dto.getApi_ID()==id) {
 							if(!dto.getS_name().equals((String)data.get("식당명"))) {
 								name = (String)data.get("식당명");
+								System.out.println(name);
 							}
-							if(!dto.getS_addr().equals((String)data.get("도로명주소"))) {
+							else if(!dto.getS_addr().equals((String)data.get("도로명주소"))) {
 								addr = (String)data.get("도로명주소");
 								
 							}
-							if(!dto.getS_type().equals((String)data.get("영업신고증업태명"))) {
+							else if(!dto.getS_type().equals((String)data.get("영업신고증업태명"))) {
 								api_type = (String)data.get("영업신고증업태명");
 							}
-							if(!dto.getS_content().equals((String)data.get("음식점소개내용"))) {
+							else if(!dto.getS_content().equals((String)data.get("음식점소개내용"))) {
 								contents = (String)data.get("음식점소개내용");
 							}
-							if(!dto.getS_hours().equals((String)data2.get("영업시간내용"))) {
+							else if(!dto.getS_hours().equals((String)data2.get("영업시간내용"))) {
 								api_hour = (String)data2.get("영업시간내용");
 							}
-							if(!dto.getS_facility().equals(facility)) {
+							else if(!dto.getS_facility().equals(facility)) {
 								temp = facility;
 							}
-								
+							
+							System.out.println("@@@@@@@@@" +name);
 							list.add(name);
 							list.add(addr);
 							
@@ -116,7 +132,6 @@ public class ApiUpdateAction implements Action {
 							// 편의시설
 							list.add(temp);
 							
-							id = Long.valueOf((Long)data.get("식당(ID)")).intValue();
 							map.put(id, list);
 								
 						}
@@ -128,9 +143,9 @@ public class ApiUpdateAction implements Action {
 			// 저장 객체 준비 + DAO - 가게 저장 : APIstore(dto)
 			dao = new StoreDAO();		
 			dto = new StoreDTO();
-			Set<E> key = map.keySet();
+			
 			for (Integer key : map.keySet()) {
-				if(dao.APIDataCheck((Integer)map.keySet())==0){	// 중복데이터 확인
+				if(dao.APIDataCheck(key)==0){	// 중복데이터 확인
 					
 					dto.setS_name((String)map.get(key).get(0));
 					dto.setS_addr((String)map.get(key).get(1));
@@ -149,7 +164,7 @@ public class ApiUpdateAction implements Action {
 					dto.setC_no(0);
 					
 					//System.out.println(map.get(key).get(0));
-					dao.APIUpdate(dto);
+					//dao.APIUpdate(dto);
 				}
 			}
 			

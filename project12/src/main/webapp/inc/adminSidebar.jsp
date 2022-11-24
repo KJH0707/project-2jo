@@ -25,6 +25,9 @@
                                         <li class="nav-item">
                                             <a class="nav-link" href="./adminReportList.us">신고 목록</a>
                                         </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="./ApiStore.ap">api 가게 목록</a>
+                                        </li>
                                         
                                     </ul>
                                 </div>
