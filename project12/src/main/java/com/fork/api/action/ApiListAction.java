@@ -13,14 +13,22 @@ public class ApiListAction implements Action{
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
+		HttpSession session = request.getSession();
+		String id = (String)session.getAttribute("id");
+		
+		ActionForward forward = new ActionForward();
+		if(id==null || id!="admin") {
+			forward.setPath("./Main.st");
+			forward.setRedirect(true);
+			return forward;
+		}
+		
 		StoreDAO dao = new StoreDAO();
 		List storeList= dao.getStoreList();
 		
-		HttpSession session = request.getSession();
 		session.setAttribute("storeList", storeList);
 		
 		// 페이지 이동
-		ActionForward forward = new ActionForward();
 		forward.setPath("./ceo/apiStoreList.jsp");
 		forward.setRedirect(false);
 		
