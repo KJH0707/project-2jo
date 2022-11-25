@@ -29,8 +29,14 @@ public class CeoMypage_stAction implements Action {
 		String listType = request.getParameter("listType");
 		if(listType == null) {
 			listType = "s_regdate";
+			
 		}
 //		System.out.println("@@@@" + listType);
+		String s = request.getParameter("s");
+		if(s==null) {
+			s = "0";
+		}
+//		System.out.println("@@@@@@@"+s);
 		
 		/////// 페이징 처리 (1)
 		// 한 페이지에 보여줄 글의 개수 설정
@@ -52,7 +58,7 @@ public class CeoMypage_stAction implements Action {
 		
 		// DAO - 가게정보 가져오기(getStoreList(id))
 		UserDAO sdao = new UserDAO();
-		List storeList = sdao.getStoreList(id,listType,startRow,pageSize);
+		List storeList = sdao.getStoreList(id,listType,startRow,pageSize,s);
 		int snt = sdao.getStoreCount(id);
 		
 		System.out.println("가게 수 : "+snt);
@@ -66,7 +72,7 @@ public class CeoMypage_stAction implements Action {
 		int pageCount = (snt/pageSize)+(snt%pageSize==0? 0:1);
 		
 		// 한 화면에 보여줄 페이지수
-		int pageBlock = 3;
+		int pageBlock = 10;
 		
 		// 페이지블럭의 시작번호
 		int startPage = ((currentPage-1)/pageBlock)*pageBlock+1;
@@ -87,6 +93,7 @@ public class CeoMypage_stAction implements Action {
 		request.setAttribute("startPage", startPage);
 		request.setAttribute("endPage", endPage);
 		request.setAttribute("listType", listType);
+		request.setAttribute("s", s);
 		
 //		System.out.println(storeList);
 		

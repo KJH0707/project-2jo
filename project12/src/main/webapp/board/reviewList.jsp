@@ -1,200 +1,545 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> 
-<html class="no-js"> <!--<![endif]-->
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Fork And Knife | QnA List</title>
-        <meta name="description" content="GARO is a real-estate template">
-        <meta name="author" content="Kimarotec">
-        <meta name="keyword" content="html5, css, bootstrap, property, real-estate theme , bootstrap template">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>\
+<!doctype html>
+<html lang="en">
 
-        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700,800' rel='stylesheet' type='text/css'>
+ 
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
+    <link href="assets/vendor/fonts/circular-std/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/libs/css/style.css">
+    <link rel="stylesheet" href="assets/vendor/fonts/fontawesome/css/fontawesome-all.css">
+    <title>Fork & Knife | Itwill 2 team</title>
+</head>
 
-        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-        <link rel="icon" href="favicon.ico" type="image/x-icon">
-
-        <link rel="stylesheet" href="assets/css/normalize.css">
-        <link rel="stylesheet" href="assets/css/font-awesome.min.css">
-        <link rel="stylesheet" href="assets/css/fontello.css">
-        <link href="assets/fonts/icon-7-stroke/css/pe-icon-7-stroke.css" rel="stylesheet">
-        <link href="assets/fonts/icon-7-stroke/css/helper.css" rel="stylesheet">
-        <link href="assets/css/animate.css" rel="stylesheet" media="screen">
-        <link rel="stylesheet" href="assets/css/bootstrap-select.min.css"> 
-        <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
-        <link rel="stylesheet" href="assets/css/icheck.min_all.css">
-        <link rel="stylesheet" href="assets/css/price-range.css">
-        <link rel="stylesheet" href="assets/css/owl.carousel.css">  
-        <link rel="stylesheet" href="assets/css/owl.theme.css">
-        <link rel="stylesheet" href="assets/css/owl.transitions.css">
-        <link rel="stylesheet" href="assets/css/style.css">
-        <link rel="stylesheet" href="assets/css/responsive.css">
-    </head>
-    <body>
-
-        <div id="preloader">
-            <div id="status">&nbsp;</div>
+<body>
+    <!-- ============================================================== -->
+    <!-- main wrapper -->
+    <!-- ============================================================== -->
+    <div class="dashboard-main-wrapper">
+       <!-- ============================================================== -->
+        <!-- navbar -->
+        <!-- ============================================================== -->
+        <div class="dashboard-header">
+            <nav class="navbar navbar-expand-lg bg-white fixed-top">
+                <a class="navbar-brand" href="./main.st">  F K</a>fork&knife
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse " id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto navbar-right-top">
+                        <li class="nav-item">
+                            <div id="custom-search" class="top-search-bar">
+                                <input class="form-control" type="text" placeholder="Search..">
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown notification">
+                            <a class="nav-link nav-icons" href="#" id="navbarDropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-fw fa-bell"></i> <span class="indicator"></span></a>
+                            <ul class="dropdown-menu dropdown-menu-right notification-dropdown">
+                                <li>
+                                    <div class="notification-title"> Notification</div>
+                                    <div class="notification-list">
+                                        <div class="list-group">
+                                            <a href="#" class="list-group-item list-group-item-action active">
+                                                <div class="notification-info">
+                                                    <div class="notification-list-user-img"><img src="assets/images/avatar-2.jpg" alt="" class="user-avatar-md rounded-circle"></div>
+                                                    <div class="notification-list-user-block"><span class="notification-list-user-name">Jeremy Rakestraw</span>accepted your invitation to join the team.
+                                                        <div class="notification-date">2 min ago</div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <a href="#" class="list-group-item list-group-item-action">
+                                                <div class="notification-info">
+                                                    <div class="notification-list-user-img"><img src="assets/images/avatar-3.jpg" alt="" class="user-avatar-md rounded-circle"></div>
+                                                    <div class="notification-list-user-block"><span class="notification-list-user-name">John Abraham </span>is now following you
+                                                        <div class="notification-date">2 days ago</div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <a href="#" class="list-group-item list-group-item-action">
+                                                <div class="notification-info">
+                                                    <div class="notification-list-user-img"><img src="assets/images/avatar-4.jpg" alt="" class="user-avatar-md rounded-circle"></div>
+                                                    <div class="notification-list-user-block"><span class="notification-list-user-name">Monaan Pechi</span> is watching your main repository
+                                                        <div class="notification-date">2 min ago</div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <a href="#" class="list-group-item list-group-item-action">
+                                                <div class="notification-info">
+                                                    <div class="notification-list-user-img"><img src="assets/images/avatar-5.jpg" alt="" class="user-avatar-md rounded-circle"></div>
+                                                    <div class="notification-list-user-block"><span class="notification-list-user-name">Jessica Caruso</span>accepted your invitation to join the team.
+                                                        <div class="notification-date">2 min ago</div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="list-footer"> <a href="#">View all notifications</a></div>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown connection">
+                            <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-fw fa-th"></i> </a>
+                            <ul class="dropdown-menu dropdown-menu-right connection-dropdown">
+                                <li class="connection-list">
+                                    <div class="row">
+                                       
+                                    </div>
+                                </li>
+                                <li>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown nav-user">
+                            <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="assets/images/avatar-1.jpg" alt="" class="user-avatar-md rounded-circle"></a>
+                            <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
+                                <div class="nav-user-info">
+                                    <h5 class="mb-0 text-white nav-user-name">
+                                <c:if test="${id!=null }">
+                            	<li>${id }님 어서오세요.</li>
+                            	</c:if> </h5>
+                                    <span class="status"></span><span class="ml-2">Available</span>
+                                </div>
+                                  <c:choose>
+                                  <c:when test="${id==null }">
+                                <a class="dropdown-item" href="./Login.us"><i class="fas fa-user mr-2"></i>Login</a>
+                                <a class="dropdown-item" href="./Join.us"><i class="fas fa-power-off mr-2"></i>Join us</a>
+                                </c:when>
+                                
+                                  <c:when test="${id.equals('admin') }">
+                                 <a class="dropdown-item" href="./loginForm.st"><i class="fas fa-user mr-2"></i>(Admin)My Page</a>
+                                <a class="dropdown-item" href="./LogoutAction.us"><i class="fas fa-power-off mr-2"></i>Logout</a>
+                                </c:when>
+                                
+                                 <c:when test="${result==1 }">
+                                 <a class="dropdown-item" href="./MemberMyPage.us"><i class="fas fa-user mr-2"></i>My Page</a>
+                                <a class="dropdown-item" href="./LogoutAction.us"><i class="fas fa-power-off mr-2"></i>Logout</a>
+                                </c:when>
+                                
+                                <c:otherwise>
+                    			 <a class="dropdown-item" href="./CeoMyPage.us"><i class="fas fa-user mr-2"></i>My Page</a>
+                                <a class="dropdown-item" href="./LogoutAction.us"><i class="fas fa-power-off mr-2"></i>Logout</a>
+                  				  </c:otherwise>
+                                
+                                
+                                	</c:choose>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
         </div>
-        <!-- Body content -->
+        <!-- ============================================================== -->
+        <!-- end navbar -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- left sidebar -->
+        <!-- ============================================================== -->
+        
+        <div class="nav-left-sidebar sidebar-dark">
+        <c:forEach var="dto" items="${reviewListAll }" begin="1" end="1">
+            <div class="menu-list">
+                <nav class="navbar navbar-expand-lg navbar-light">
+                    <a class="d-xl-none d-lg-none" href="#">Dashboard</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav flex-column">
+                            <li class="nav-divider">
+                                Menu
+                            </li>
+                             
+                            <li class="nav-item ">
+                                <a class="nav-link active" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-1" aria-controls="submenu-1"><i class="fa fa-fw fa-user-circle"></i>${dto.s_name }'s Board<span class="badge badge-success">6</span></a>
+                                <div id="submenu-1" class="collapse submenu" style="">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-1-2" aria-controls="submenu-1-2">Review Board</a>
+                                            <div id="submenu-1-2" class="collapse submenu" style="">
+                                            
+                                                <ul class="nav flex-column">
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="./ReviewList.rv?s_no=${dto.s_no }&s_name=${dto.s_name }">Review List</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="./ReviewWrite.rv?s_no=${dto.s_no }&s_name=${dto.s_name }">Review Write</a>
+                                                    </li>
+                                                    
+                                                </ul>
+                                            </div>
+                                        </li>
+                                       
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-1-1" aria-controls="submenu-1-1">Q & A Board</a>
+                                            <div id="submenu-1-1" class="collapse submenu" style="">
+                                                <ul class="nav flex-column">
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="dashboard-influencer.html">Q & A List</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="influencer-finder.html">Q & A Write</a>
+                                                    </li>
+                                                   
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            
+                            
+                            
+                            
+                            <li class="nav-divider">
+                                STORE
+                            </li>
+                             
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-6" aria-controls="submenu-6"><i class="fas fa-fw fa-file"></i> Pages </a>
+                                <div id="submenu-6" class="collapse submenu" style="">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="./storeDetails.st?s_no=${dto.s_no }">Reservation</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="./storeList.st">Store List</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="./BookMarkList.bk">My BookMarkList</a>
+                                        </li>
+                                        
+                                        
+                                    </ul>
+                                </div>
+                            </li>
+                            
+                            
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-9" aria-controls="submenu-9"><i class="fas fa-fw fa-map-marker-alt"></i>Maps</a>
+                                <div id="submenu-9" class="collapse submenu" style="">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="pages/map-google.html">Google Maps</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="pages/map-vector.html">Vector Maps</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+            </c:forEach>
+            <!--끝끝끝끝끝끝 -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- end left sidebar -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- wrapper  -->
+        <!-- ============================================================== -->
+        <div class="dashboard-wrapper">
+            <div class="influence-profile">
+                <div class="container-fluid dashboard-content ">
+                    <!-- ============================================================== -->
+                    <!-- pageheader -->
+                    <!-- ============================================================== -->
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="page-header">
+                                <h3 class="mb-2">Reivew Board </h3>
+                                <p class="pageheader-text"></p>
+                                <div class="page-breadcrumb">
+                                    <nav aria-label="breadcrumb">
+                                        <ol class="breadcrumb">
+                                            <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Board</a></li>
+                                            <li class="breadcrumb-item active" aria-current="page">Review Board</li>
+                                        </ol>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ============================================================== -->
+                    <!-- end pageheader -->
+                    <!-- ============================================================== -->
+                    <!-- ============================================================== -->
+                    <!-- content -->
+                    <!-- ============================================================== -->
+                    <div class="row">
+                        <!-- ============================================================== -->
+                        <!-- profile -->
+                        <!-- ============================================================== -->
+                       
+                        <!-- ============================================================== -->
+                        <!-- end profile -->
+                        <!-- ============================================================== -->
+                        <!-- ============================================================== -->
+                        <!-- campaign data -->
+                        <!-- ============================================================== -->
+                        <div class="col-xl-9 col-lg-9 col-md-7 col-sm-12 col-12">
+                            <!-- ============================================================== -->
+                            <!-- campaign tab one -->
+                            <!-- ============================================================== -->
+                            <div class="influence-profile-content pills-regular">
+                                <ul class="nav nav-pills mb-3 nav-justified" id="pills-tab" role="tablist">
+                                    
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="pills-review-tab" data-toggle="pill" href="#pills-review" role="tab" aria-controls="pills-review" aria-selected="true">R E V I E W S</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="pills-msg-tab" data-toggle="pill" href="#pills-msg" role="tab" aria-controls="pills-msg" aria-selected="false">Send Messages</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content" id="pills-tabContent">
+                                  
+                                    ${s_no } 
+                                    <div class="tab-pane fade show active" id="pills-review" role="tabpanel" aria-labelledby="pills-review-tab">
+                                   <c:forEach var="dto" items="${reviewListAll }" begin="1" end="1">
+                                   <div class="row">
+                                         
+                                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                                <div class="section-block">
+                                                    <h3 class="section-title">${dto.s_name }'sReview Board</h3>
+                                                </div>
+                                            </div>
+                                           
+                                            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <h1 class="mb-1">${totalCnt }</h1>
+                                                        <p>Total Reviews</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <h1 class="mb-1"> 
+                                                    
+													
+<%-- 													${param.s_star.substring(0,3) }  --%>
+							<span style=color:indigo;"><fmt:formatNumber value="${dto.s_star }" pattern=".0"/></span> 
+							<span>/ 5</span> 
+													 </h1>
+                                                        <p>Ratings</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <h1 class="mb-1">${dto.s_readcount } </h1>
+                                                        <p>Views</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <h1 class="mb-1">1</h1>
+                                                        <p>??</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                       </c:forEach>
+                                        <input type="hidden" value="${param.s_no }" name="s_no">
+                      
+                                        <div class="card">
+                                         <c:forEach var="dto" items="${reviewListAll }">
+                                            <h5 class="card-header">${param.s_name } Reviews </h5>
+                                            
+                                          ${dto.rev_no }
+                                             <input type="hidden" value="${dto.rev_no }" name="rev_no">
+                                             
+                                            <div class="card-body">
+                                                <div class="review-block">
+                                               <c:if test="${img != 'null' }">
+														 <img src="./upload/${dto.rev_file }" width="100" height="100">
+													 </c:if><br>
+													
+													 <c:if test="${dto.rev_seq > 0 }"><b>ㄴ</b>
+														<!-- "./"는 webapp이다. 가상주소앞에 ./는 프로젝트명,  뒤에 실제파일 앞에 ./는 webapp -->
+														
+													</c:if>
+													
+													
+                                               	 <span class="text-dark font-weight-bold font-italic m-0">${dto.rev_subject }</span>
+                                                    <p class="review-text font-italic m-0">${dto.rev_content }</p>
+                                                    
+                                                    <!-- 관리자가 댓글달 땐 안보이게 하기  -->
+                                                    
+                                                 
+                                                    <c:choose>
+                                                    <c:when test="${!m_nickName.equals('어드민') }">
+                                                    <div class="rating-star mb-4">
+                                                       <c:forEach begin="1" end="5" var='k'>  
+														<c:if test="${k <= dto.rev_star}">
+														    <i id="star${k}" class="fa fa-star" style= color:red;></i>	<!-- 채워진 별 -->
+														</c:if>
+														<c:if test="${k > dto.rev_star}">
+														    <i id="star${k}" class="far fa-star" style= color:red;></i>	<!-- 채워진 별 -->
+														</c:if>
+													 </c:forEach>
+													  ${dto.rev_star } 점
+                                                    </div>
+                                                    </c:when>
+                                                    <c:otherwise> -
+                                                    </c:otherwise>
+                                                      </c:choose>
+                                                    
+                                                  
+                                                    
+                                                    
+                                                    <span class="text-dark font-weight-bold">${dto.m_nickName }</span>
+                                                    <small class="text-mute"> <fmt:formatDate value="${dto.rev_date }"/></small>
+                                                    
+                                                    <c:if test="${sessionScope.sessionID != null && id.equals('id') }"> 
+                               
+                                          <small class="text-mute"><a href="./ReviewUpdate.rv?rev_no=${dto.rev_no }&pageNum=${pageNum }">수정/</a></small>
+                                                       <small class="text-mute"> <a href="./ReviewDelete.rv?rev_no=${dto.rev_no }&s_no=${s_no }">삭제 / </a></small>
+                                              		                                      			
+                                              		 </c:if>	
 
-        <div class="page-head"> 
-            <div class="container">
-                <div class="row">
-                    <div class="page-head-content">
-                        <h1 class="page-title"> 리뷰 게시판</h1>               
+                                                
+                                          
+                                          <!-- 관리자 아이디 제어  -->
+                                          <c:if test="${id.equals('admin') }">
+                                          
+                                          ${dto.rev_ref } /${dto.rev_seq }
+                                            <small class="text-mute"> 
+                                            <input type="submit" value="답글"onclick="location.href='./reviewReply.rv?rev_no=${dto.rev_no}&pageNum=${pageNum }&rev_ref=${dto.rev_ref }&rev_seq=${dto.rev_seq }&rev_subject=${dto.rev_subject }&s_no=${dto.s_no }';" >
+											</small>
+											</c:if>
+											
+											</div>
+                                            </div>
+											
+                                            </c:forEach>
+                                        </div>
+                                         <c:forEach var="dto" items="${reviewListAll }" begin="1" end="1">
+                                        <nav aria-label="Page navigation example">
+                                       
+                                            <ul class="pagination">
+                                             <c:if test="${totalCnt != 0}">
+                                             
+                                             <!-- 이전 -->
+                                              <c:if test="${startPage > pageBlock }">
+
+                                                <li class="page-item"><a class="page-link" href="./ReviewList.rv?pageNum=${startPage-pageBlock }&s_no=${dto.s_no }">Previous</a></li>
+                                               </c:if> 
+                                               
+                                                 <!-- 페이지 번호(1,2,3....) -->	  
+	   										 <c:forEach var="i" begin="${startPage }" end="${endPage }" step="1">
+                                                <li class="page-item"><a class="page-link" href="./ReviewList.rv?pageNum=${i }&s_no=${dto.s_no }">${i }</a></li>
+
+                                              </c:forEach>
+                                              
+                                               <!-- 다음 -->	
+	  										  <c:if test="${endPage < pageCount }">
+                                                <li class="page-item"><a class="page-link" href="./ReviewList.rv?pageNum=${startPage+pageBlock }&s_no=${dto.s_no }">Next</a></li>
+                                               
+                                                </c:if>
+                                                </c:if>
+                                                
+                                            </ul>
+                                        </nav>
+                                        </c:forEach>
+                                    </div>
+                                    <div class="tab-pane fade" id="pills-msg" role="tabpanel" aria-labelledby="pills-msg-tab">
+                                        <div class="card">
+                                            <h5 class="card-header">Send Messages</h5>
+                                            <div class="card-body">
+                                                <form>
+                                                    <div class="row">
+                                                        <div class="offset-xl-3 col-xl-6 offset-lg-3 col-lg-3 col-md-12 col-sm-12 col-12 p-4">
+                                                            <div class="form-group">
+                                                                <label for="name">Your Name</label>
+                                                                <input type="text" class="form-control form-control-lg" id="name" placeholder="">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="email">Your Email</label>
+                                                                <input type="email" class="form-control form-control-lg" id="email" placeholder="">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="subject">Subject</label>
+                                                                <input type="text" class="form-control form-control-lg" id="subject" placeholder="">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="messages">Messgaes</label>
+                                                                <textarea class="form-control" id="messages" rows="3"></textarea>
+                                                            </div>
+                                                            <button type="submit" class="btn btn-primary float-right">Send Message</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- ============================================================== -->
+                            <!-- end campaign tab one -->
+                            <!-- ============================================================== -->
+                        </div>
+                        <!-- ============================================================== -->
+                        <!-- end campaign data -->
+                        <!-- ============================================================== -->
                     </div>
                 </div>
             </div>
+            <!-- ============================================================== -->
+            <!-- end content -->
+            <!-- ============================================================== -->
+            <div class="footer">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                            Copyright Â© 2018 Concept. All rights reserved. Dashboard by <a href="https://colorlib.com/wp/">Colorlib</a>.
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                            <div class="text-md-right footer-links d-none d-sm-block">
+                                <a href="javascript: void(0);">About</a>
+                                <a href="javascript: void(0);">Support</a>
+                                <a href="javascript: void(0);">Contact Us</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- end footer -->
+            <!-- ============================================================== -->
         </div>
-        <!-- End page header -->
-${totalCnt }
-${param.s_no }
-${dto.s_no }
-${param.rev_no }
-	<input type="hidden" value="${param.s_no }">
-
-<div class="dot-hr">
-				<h4> &nbsp; ${sdto.s_name } ${param.s_name }의 리뷰를 남겨주세요. </h4>						
-		</div>
-<div class="dealer-action pull-right">
-<h5>전체 글 개수 : ${requestScope.totalCnt } 개&nbsp; </h5>
-		</div>
-	<!-- property area -->
-	<div class="content-area recent-property"
-		style="background-color: #FFF;">
-		<div class="container">
-			<div class="row">
-
-				<div
-					class="col-md-12 pr-30 padding-top-80 properties-page user-properties">
-
-					<div class="section">
-						<div class="page-subheader sorting pl0 pr-10"></div>
-
-					</div>
-
-					<div class="section">
-						<div id="list-type" class="proerty-th-list">
-							<div class="col-md-4 p0">
-								<div class="box-two proerty-item">
-
-									<div class="form-group">
-										
-								
-										<table border="1" width="1110" >
-											<span class="col-xs-6 col-sm-4 col-md-4 add-d-title">
-											<tr> 
-												<td align="center"><b> Rev No. </b></td>
-												<td align="center"> <b>pic</b> </td>
-												<td align="center"><b> starValue  </b></td>
-												<td align="center"> <b>Subject </b></td>
-												<td align="center"> <b>Content </b></td>
-												<td align="center"> <b>Date</b> </td>
-												<td align="center"> <b>ㅇㅅㅇ </b></td>
-												
-											</tr>
-											</span>
-											</div>
-											<div class="form-group">
-											<c:forEach var="dto" items="${reviewListAll }">
-												<tr>
-													<td align="center"><b>${dto.rev_no }</b></td>
-													<td align="center">
-													 <img src="./upload/${dto.rev_file }" width="50" height="50">
-													</td>
-													<td align="center">${dto.rev_star } / 5 점</td>
-													<td align="center">${dto.rev_subject }</td>
-													<td align="center">${dto.rev_content}</td>
-													<td align="center"> <fmt:formatDate value="${dto.rev_date }"/></td>
-													<td align="center">
-												<a href="./ReviewUpdate.rv?rev_no=${dto.rev_no }&s_no=${dto.s_no }&pageNum=${pageNum }&${s_name }">수정</a>
-												/
-												<a href="./ReviewDelete.rv?rev_no=${dto.rev_no }">삭제</a>
-												</td>
-												</tr>
-											</c:forEach>
-											
-
-						
-										</table>
-										
-									</div>
-
-
-								</div>
-							</div>
-						</div>
-						<br>
-
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="form-group" align="center">
-	<a href="./ReviewWrite.rv?s_no=${param.s_no }&s_name=${param.s_name}">
-	<button type="submit" class="btn btn-primary"><i class="fa fa-envelope-o"></i> 
-                       	review 작성 하기 </button></a></div>
-                       	
-                       	<form action="./storeDetails.st?s_no=${param.s_no }&s_name=${param.s_name }"> 
-							<button type="submit" class="btn btn-primary"><i class="fa fa-envelope-o"></i> 
-                               상세 페이지로~ </button></form>
-
-	<div class="section">
-		<div class="pull-right">
-			<div class="pagination">
-				<ul>
-					
-	  <c:if test="${totalCnt != 0}">
-	    <!-- 이전 -->
-	    <c:if test="${startPage > pageBlock }">
-	    	<a href="./ReviewList.rv?pageNum=${startPage-pageBlock }">[이전]</a>
-	    </c:if>
-	    <!-- 페이지 번호(1,2,3....) -->	  
-	    <c:forEach var="i" begin="${startPage }" end="${endPage }" step="1">
-	          <a href="./ReviewList.rv?pageNum=${i }">${i }</a> 
-	    </c:forEach>  
-	    
-	    <!-- 다음 -->	
-	    <c:if test="${endPage < pageCount }">
-	        <a href="./ReviewList.rv?pageNum=${startPage+pageBlock }">[다음]</a>
-	    </c:if>
-	
-	</c:if>
-				</ul>
-			</div>
-		</div>
-	</div>
-	
-
-
-
-	<script src="assets/js/vendor/modernizr-2.6.2.min.js"></script>
-        <script src="assets/js//jquery-1.10.2.min.js"></script>
-        <script src="bootstrap/js/bootstrap.min.js"></script>
-        <script src="assets/js/bootstrap-select.min.js"></script>
-        <script src="assets/js/bootstrap-hover-dropdown.js"></script>
-        <script src="assets/js/easypiechart.min.js"></script>
-        <script src="assets/js/jquery.easypiechart.min.js"></script>
-        <script src="assets/js/owl.carousel.min.js"></script>
-        <script src="assets/js/wow.js"></script>
-        <script src="assets/js/icheck.min.js"></script>
-
-        <script src="assets/js/price-range.js"></script> 
-        <script src="assets/js/jquery.bootstrap.wizard.js" type="text/javascript"></script>
-        <script src="assets/js/jquery.validate.min.js"></script>
-        <script src="assets/js/wizard.js"></script>
-
-        <script src="assets/js/main.js"></script>
-
-    </body>
+        <!-- ============================================================== -->
+        <!-- end wrapper -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- end main wrapper -->
+    <!-- ============================================================== -->
+    <!-- Optional JavaScript -->
+    <!-- jquery 3.3.1  -->
+    <script src="assets/vendor/jquery/jquery-3.3.1.min.js"></script>
+    <!-- bootstap bundle js -->
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
+    <!-- slimscroll js -->
+    <script src="assets/vendor/slimscroll/jquery.slimscroll.js"></script>
+    <!-- main js -->
+    <script src="assets/libs/js/main-js.js"></script>
+   
+</body>
+ 
 </html>

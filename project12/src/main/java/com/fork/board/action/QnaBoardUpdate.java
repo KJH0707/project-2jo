@@ -12,11 +12,13 @@ public class QnaBoardUpdate implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		System.out.println("M : QnaBoardUpdate 폼 호출!!!");
-		//		HttpSession session = request.getSession();
-//		String m_id = session.getId();
-//		if(m_id == null) {
-//			response.sendRedirect("/Main.re");
-//		}
+		HttpSession session = request.getSession();
+		String id = (String) session.getAttribute("m_id");
+		ActionForward forward = new ActionForward();
+		if(id == null) {
+			forward.setPath("./loginAction.us");
+			forward.setRedirect(true);
+		}
 		
 		int s_no = Integer.parseInt(request.getParameter("s_no"));
 		int rev_no = Integer.parseInt(request.getParameter("rev_no"));
@@ -38,7 +40,6 @@ public class QnaBoardUpdate implements Action {
 		request.setAttribute("rev_content", rev_content);
 		request.setAttribute("qna_sort", qna_sort);
 		
-		ActionForward forward = new ActionForward();
 		forward.setPath("./qnaBoard/qnaUpdate.jsp");
 		forward.setRedirect(false);
 		

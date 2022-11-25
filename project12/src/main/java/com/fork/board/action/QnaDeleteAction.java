@@ -12,9 +12,11 @@ public class QnaDeleteAction implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		HttpSession session = request.getSession();
-		String m_id = session.getId();
-		if(m_id == null) {
-			response.sendRedirect("/Main.re");
+		String id = (String) session.getAttribute("m_id");
+		ActionForward forward = new ActionForward();
+		if(id == null) {
+			forward.setPath("./loginAction.us");
+			forward.setRedirect(true);
 		}
 		
 		String pageNum = request.getParameter("pageNum");
@@ -28,7 +30,6 @@ public class QnaDeleteAction implements Action {
 		request.setAttribute("pageNum", pageNum);
 		request.setAttribute("s_no",s_no);
 		
-		ActionForward forward = new ActionForward(); 
 	    forward.setPath("./QnaList.br");
 	    forward.setRedirect(true);
 	      

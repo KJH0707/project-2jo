@@ -34,12 +34,14 @@ public class StoreFrontController extends HttpServlet {
 				
 				// 2. 가상주소 매핑(패턴1,2,3)
 				if(command.equals("/main.st")) {
-					System.out.println("C : /main.st 호출");
-					System.out.println("C : [패턴1] DB X, view");
+					System.out.println("C :  main.st 호출");
 					
-					forward = new ActionForward();
-					forward.setPath("./main/main.jsp");
-					forward.setRedirect(false);
+					action = new MainAction();
+					try {
+						forward = action.execute(request, response);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 				}
 				
 				else if(command.equals("/loginForm.st")) {
@@ -72,9 +74,14 @@ public class StoreFrontController extends HttpServlet {
 				
 				else if(command.equals("/storeDetails.st")) {
 					
-					forward = new ActionForward();
-					forward.setPath("./board/storeDetails.jsp");
-					forward.setRedirect(false);
+					action = new StoreDetailsAction();
+					
+					try {
+						forward = action.execute(request, response);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					
 					
 				}
@@ -104,6 +111,24 @@ public class StoreFrontController extends HttpServlet {
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
+				}
+				
+				else if(command.equals("/StoreUpdate.st")) {
+					System.out.println(" C : /StoreUpdate.st 호출");
+					
+					action = new StoreUpdateAction();
+					
+					try {
+						forward = action.execute(request, response);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+				
+				else if(command.equals("/gu.st")) {
+					forward= new ActionForward();
+					forward.setPath("./board/gu.xml");
+					forward.setRedirect(false);
 					
 				}
 				

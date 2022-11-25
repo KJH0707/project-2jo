@@ -17,4 +17,6 @@ public class ReservDTO {
 	private String res_name;
 	private String res_msg;
 	private int res_status;
+	private String s_name;
+	private String res_tel;
 }

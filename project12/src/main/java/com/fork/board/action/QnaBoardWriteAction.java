@@ -13,11 +13,17 @@ public class QnaBoardWriteAction implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-//		HttpSession session = request.getSession();
-//		String m_id = session.getId();
-//		if(m_id == null) {
-//			response.sendRedirect("/Main.re");
-//		}
+		System.out.println("M : QnaBoardWriteAction_execute() 호출");
+		HttpSession session = request.getSession();
+		String id = (String) session.getAttribute("m_id");
+		ActionForward forward = new ActionForward();
+		if(id == null) {
+			forward.setPath("./loginAction.us");
+			forward.setRedirect(true);
+		}
+		
+		String s_no = request.getParameter("s_no");
+//		if(!s_no.equals()
 		
 		// 한글 처리
 		// 1) 파일 업로드
@@ -40,9 +46,13 @@ public class QnaBoardWriteAction implements Action {
 	      System.out.println(" M : 첨부파일 업로드 성공! ");
 		// 정보 저장
 		BoardDTO dto = new BoardDTO();
-		
+		System.out.println(dto);
 		// 가게 상세페이지에서 받아오는거 확인 후 수정 필요!
+		
 		 dto.setS_no(Integer.parseInt(multi.getParameter("s_no")));
+//		 dto.setS_no(2);
+		
+//		 dto.setRev_no(Integer.parseInt(multi.getParameter("rev_no")));
 		// dto.setInt(multi.getRev_category());
 		// dto.setInt(multi.getM_no())
 		dto.setQna_sort(multi.getParameter("qna_sort"));
@@ -51,14 +61,14 @@ public class QnaBoardWriteAction implements Action {
 		dto.setRev_file(multi.getParameter("rev_file"));
 		
 		//DAO
-		   BoardDAO dao = new BoardDAO();
-		      dao.insertQnaBoard(dto);
-		      
-      ActionForward forward = new ActionForward(); 
-      forward.setPath("./QnaList.br");
-      forward.setRedirect(true);
+	   BoardDAO dao = new BoardDAO();
+	   dao.insertQnaBoard(dto);
+		
+	   request.setAttribute("m_id", id);
+	   forward.setPath("./QnaList.br");
+	   forward.setRedirect(true);
       
-      return forward;
+		return forward;
 	}
 
 }

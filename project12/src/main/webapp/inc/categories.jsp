@@ -8,12 +8,12 @@
 					
 		            </div>
 		            <div class="col-sm-3">
-		                <h5><a href="./storeList.st">Category</a></h5>
+		                <h5><a href="./storeList.st?prnon=1">Category</a></h5>
 		                <ul>
-		                    <li><a href="blog.html">한 식</a>  </li>
-		                    <li><a href="single.html">양 식</a>  </li>
-		                    <li><a href="single-right.html">일 식</a>  </li>
-		                    <li><a href="single-left.html">중 식</a>  </li>
+		                    <li><a href="./storeList.st?cg=한식">한 식</a>  </li>
+		                    <li><a href="./storeList.st?cg=양식">양 식</a>  </li>
+		                    <li><a href="./storeList.st?cg=일식">일 식</a>  </li>
+		                    <li><a href="./storeList.st?cg=중식">중 식</a>  </li>
 		                    
 		                </ul>
 		            </div>

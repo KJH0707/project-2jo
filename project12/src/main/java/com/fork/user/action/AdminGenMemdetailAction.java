@@ -45,7 +45,7 @@ public class AdminGenMemdetailAction implements Action {
 		if (pageNum == null) {
 		pageNum = "1";
 		}
-		int cnt = dao.getGenMemReservCount();
+		int cnt = dao.getGenMemReservCount(m_no);
 		// 시작행 번호 계산하기 1  11  21  31  41 .....
 		int currentPage = Integer.parseInt(pageNum);
 		int startRow = (currentPage-1)*pageSize+1;

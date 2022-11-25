@@ -114,26 +114,27 @@ public class BoardFrontController extends HttpServlet{
 				e.printStackTrace();
 			}
 		} 
-		else if(command.equals("/book.br")) {
-			System.out.println(" C : /book.br 호출");
-
-			// BookAction()
-			action = new BookAction();
+		else if(command.equals("/reservation.br")) {
+			action = new UserReservAction();
+			
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		else if(command.equals("/BookCompleteAction.br")) {
-			System.out.println(" C : /BookCompleteAction.br 호출 ");
+		
+		else if (command.equals("/paymentPro.br")) {
+			action = new paymentAction();
 			
-			// BookCompleteAction
-			action = new BookCompleteAction();
 			try {
 				forward = action.execute(request, response);
-			} catch (Exception e) { e.printStackTrace(); }			
-		
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
 		
 					

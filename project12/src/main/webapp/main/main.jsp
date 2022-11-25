@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html class="no-js"> <!--<![endif]-->
     <head>
@@ -100,8 +101,8 @@
             <div class="slider">
                 <div id="bg-slider" class="owl-carousel owl-theme">
  
-                    <div class="item"><img src="assets/img/main.jpg" alt="The Last of us"></div>
-                    <div class="item"><img src="assets/img/main2.jpg" alt="GTA V"></div>
+                    <div class="item"><img src="assets/img/main.jpg" alt="The Last of us" style="background-attachment:fixed;"></div>
+                    <div class="item"><img src="assets/img/main2.jpg" alt="GTA V" style="background-attachment:fixed;"></div>
 
                 </div>
             </div>
@@ -120,64 +121,121 @@
             <div class="container">
                 <div class="col-md-12 large-search"> 
                     <div class="search-form wow pulse">
-                        <form action="./storeList.st" class=" form-inline" method="post">
+                        <form action="./storeList.st" class="form-inline" method="get">
                             <div class="col-md-12">
                                 <div class="col-md-4">
-                                    <input type="text" class="form-control" placeholder="가게 이름">
+                                    <input type="text" class="form-control" placeholder="가게 검색" name="kw" value="${kw2 }">
                                 </div>
-                                <div class="col-md-4">                                   
-                                    <select id="lunchBegins" class="selectpicker" data-live-search="true" data-live-search-style="begins" title="위치" name="place">
-                                        <option>서울경기</option>
-                                        <option>부산경남</option>
-                                        <option>대구경북</option>
-                                        <option>제주</option>
-                                        <option>충청</option>
-                                        <option>전북</option>
-                                        <option>전남</option>
-                                    </select>
+                                <div class="col-md-4">     
+                                <select id="lunchBegins" class="show-tick form-control" name="city">
+                                    <option value="busan" selected>부산</option>
+                                </select>                              
+                                
                                 </div>
                                 <div class="col-md-4">                                     
-<!--                                 <input type="text" name="test1" id="text1" value="" class="datetimepicker show-tick form-control"> -->
-									 <input type="datetime-local" class="form-control" id="time" value="time" name="time">
-<!--                                     <select id="basic" class="selectpicker show-tick form-control"> -->
-<!--                                         <option> 날짜 및 시간 </option> -->
-<!--                                         <option>Rent </option> -->
-<!--                                         <option>Boy</option> -->
-<!--                                         <option>used</option>   -->
-<!--                                     </select> -->
-<!-- 									<input type="text" id="testDatepicker"> -->
+                                 <select id="basic12" class="show-tick form-control" name="gu" >
+                                                    <option value="no">구</option>
+                                                    <option value="강서구"
+                                                    <c:if test="${gang!=null }">
+                                                    selected="selected"
+                                                    </c:if>>강서구</option>
+                                                    <option value="금정구"
+                                                    <c:if test="${gold!=null }">
+                                                    selected="selected"
+                                                    </c:if>>금정구</option>
+                                                    <option value="남구"
+                                                    <c:if test="${nam!=null }">
+                                                    selected="selected"
+                                                    </c:if>>남구</option>
+                                                    <option value="동래구"
+                                                    <c:if test="${dong!=null }">
+                                                    selected="selected"
+                                                    </c:if>>동래구</option>
+                                                    <option value="부산진구"
+                                                    <c:if test="${jin!=null }">
+                                                    selected="selected"
+                                                    </c:if>>부산진구</option>
+                                                    <option value="북구"
+                                                    <c:if test="${buk!=null }">
+                                                    selected="selected"
+                                                    </c:if>>북구</option>
+                                                    <option value="사상구"
+                                                    <c:if test="${sang!=null }">
+                                                    selected="selected"
+                                                    </c:if>>사상구</option>
+                                                    <option value="사하구"
+                                                    <c:if test="${saha!=null }">
+                                                    selected="selected"
+                                                    </c:if>>사하구</option>
+                                                    <option value="서구"
+                                                    <c:if test="${seo!=null }">
+                                                    selected="selected"
+                                                    </c:if>>서구</option>
+                                                    <option value="수영구"
+                                                    <c:if test="${swim!=null }">
+                                                    selected="selected"
+                                                    </c:if>>수영구</option>
+                                                    <option value="연제구"
+                                                    <c:if test="${yeon!=null }">
+                                                    selected="selected"
+                                                    </c:if>>연제구</option>
+                                                    <option value="영도구"
+                                                    <c:if test="${zero!=null }">
+                                                    selected="selected"
+                                                    </c:if>>영도구</option>
+                                                    <option value="중구"
+                                                    <c:if test="${middle!=null }">
+                                                    selected="selected"
+                                                    </c:if>>중구</option>
+                                                    <option value="해운대구"
+                                                    <c:if test="${sun!=null }">
+                                                    selected="selected"
+                                                    </c:if>>해운대구</option>
+													
+                                                </select>
                                 </div>
                             </div>
                <div class="col-md-12 ">
                    <div class="search-row">   
-                       <div class="col-sm-3">
-                           <label for="price-range">인원</label>
-                           <input type="number" value="total" name="total" class='span2'>
-<!--                            <input type="text" class="span2" value="people" data-slider-min="1" name="people"  -->
-<!--                                   data-slider-max="20" data-slider-step="1"  -->
-<!--                                   data-slider-value="[3,5]" id="price-range" ><br /> -->
-<!--                            <b class="pull-left color">1</b>  -->
-<!--                            <b class="pull-right color">20</b> -->
+                       <div class="col-sm-4">
+                           <label for="property-geo">인원 :</label>
+								<select id="" class="show-tick form-control" name="nums">
+	                                 <option value="0" selected>명</option>
+									<c:forEach var="i" begin="1" end="10" step="1">
+									<option value="${i}"
+	                                <c:if test="${nums==i}">
+	                                selected="selected"
+	                                </c:if>>${i}명</option>
+									</c:forEach>
+                   			</select>
+                   			
                        </div>
                        <!-- End of  -->  
 
-                       <div class="col-sm-3">
-                           <label for="property-geo">가격대</label>
-                           <input type="text" class="span2" value="cost" data-slider-min="0" name="cost" 
-                                  data-slider-max="300000" data-slider-step="10000" 
-                                  data-slider-value="[10000,100000]" id="property-geo" ><br />
-                           <b class="pull-left color">10,000</b> 
-                           <b class="pull-right color">300,000</b>
+                       <div class="col-sm-4">
+                           <label for="price-range">1인당 가격대 : </label>
+                           <input type="text" class="span2 ddkjh" data-slider-min="0" 
+                                  data-slider-max="100000" data-slider-step="5000" 
+                                  <c:if test="${pr1==null }">
+                                  data-slider-value="[0,50000]"
+                                  </c:if>
+                                  <c:if test="${pr1!=null }">
+                                   data-slider-value="[${Integer.parseInt(pr1.split(",")[0]) },${Integer.parseInt(pr1.split(",")[1]) }]"
+                                  </c:if>
+                                   id="price-range" name="pr" value="0,50000">
+                           <b class="pull-left color">0</b> 
+                           <b class="pull-right color">100000</b>  
                        </div>
                        <!-- End of  --> 
 
                        <div class="col-sm-3">
-                           <label for="price-range">거리</label>
-                           <input type="text" class="span2" value="distance" data-slider-min="0" name="distance"
-                                  data-slider-max="1000" data-slider-step="500" 
-                                  data-slider-value="[250,650]" id="min-baths" ><br />
-                           <b class="pull-left color">0m</b> 
-                           <b class="pull-right color">1km</b>
+                           <div class="checkbox">
+                                                    <br><label> <input type="checkbox" name="prnon" value="1" 
+                                                    <c:if test="${param.prnon!=null }">
+                                                    checked
+                                                    </c:if>
+                                                    ><br>상관없음</label>
+                                                </div>
                        </div>
                        <!-- End of  --> 
 
@@ -193,47 +251,56 @@
                    </div>
 
                    <div class="search-row">  
-                       <div class="col-sm-3">
+                       <div class="col-sm-2">
                            <div class="checkbox">
-                               <label>
-                                   <input type="checkbox" name="menu" value="korean"> 한식
-                               </label>
-                           </div>
+                           <label> <input type="checkbox" name="cg" value="한식"
+                           <c:if test="${ko!=null }">
+                           checked="checked"
+                           </c:if>
+                           >
+                           한식</label>
+                       </div>
                        </div>
                        <!-- End of  -->  
 
-                       <div class="col-sm-3">
+                       <div class="col-sm-2">
                            <div class="checkbox">
-                               <label>
-                                   <input type="checkbox" name="menu" value="western"> 양식
-                               </label>
+                               <div class="checkbox">
+                               <label> <input type="checkbox" name="cg" value="중식"
+                               <c:if test="${ch!=null }">
+                               checked="checked"
+                               </c:if>> 중식</label>
+                           </div>
                            </div>
                        </div>
                        <!-- End of  --> 
 
-                       <div class="col-sm-3">
-                           <div class="checkbox">
-                               <label>
-                                   <input type="checkbox" name="menu" value="japanese"> 일식
-                               </label>
-                           </div>
+                       <div class="col-sm-2">
+							<div class="checkbox">
+                            <label> <input type="checkbox" name="cg" value="일식"
+                            <c:if test="${ja!=null }">
+                            checked="checked"
+                            </c:if>> 일식</label>
+                        </div>
                        </div>
                        <!-- End of  -->  
 
-                       <div class="col-sm-3">
+                       <div class="col-sm-2">
                            <div class="checkbox">
-                               <label>
-                                   <input type="checkbox" name="menu" value="chinese"> 중식
-                               </label>
-                           </div>
+	                           <label> <input type="checkbox" name="cg" value="양식"
+	                           <c:if test="${am!=null }">
+	                           checked="checked"
+	                           </c:if>> 양식</label>
+	                       </div>
                        </div>
                        <!-- End of  -->  
 
-                       <div class="col-sm-3">
+                       <div class="col-sm-2">
                            <div class="checkbox">
-                               <label>
-                                   <input type="checkbox" name="menu" value="omakase"> 오마카세
-                               </label>
+                               <label><input type="checkbox" name="cg" value="오마카세"
+                               <c:if test="${om!=null }">
+                               checked="checked"
+                               </c:if>> 오마카세</label>
                            </div>
                        </div>
                        <!-- End of  --> 
@@ -259,76 +326,64 @@
 
 
 <!-- 메뉴 랜덤 추천 -->
+<!-- <div class="panel-body recent-property-widget"> -->
+<!--           <ul> -->
+<%--          	 <c:forEach var="rec" items="${recStore}"> --%>
+<!--           <li> -->
+<!--               <div class="col-md-3 col-sm-3 col-xs-3 blg-thumb p0"> -->
+<!--                   <a href="single.html"><img src="assets/img/demo/small-property-2.jpg"></a> -->
+<!--                   <span class="property-seeker"> -->
+<!--                       <b class="b-1"></b> -->
+<%--                       <b class="b-2">${rec.s_type }</b> --%>
+<!--                   </span> -->
+<!--               </div> -->
+<!--               <div class="col-md-8 col-sm-8 col-xs-8 blg-entry"> -->
+<%--                   <h6> <a href="single.htmlr">${rec.s_name } </a></h6> --%>
+<%--                   <span class="property-price">별점 : ${rec.s_star }</span> --%>
+<!--                 </div> -->
+<!--             </li> -->
+<%--             </c:forEach> --%>
+
+<!--         </ul> -->
+<!-- </div> -->
+
 <div class="content-area recent-property" style="background-color: #FCFCFC; padding-bottom: 55px;">
 <div class="container">
     <div class="row">
         <div class="col-md-10 col-md-offset-1 col-sm-12 text-center page-title">
             <!-- /.feature title -->
-           <h2>~~ 한식/양식/어쩌구 어떠세요? ~~</h2>
+           <h2>이런 음식점 어떠세요?</h2>
+<%--            ${recStore } --%>
        </div>
    </div>
-
    <div class="row">
-       <div class="proerty-th">
-           <div class="col-sm-6 col-md-3 p0">
-               <div class="box-two proerty-item">
-                   <div class="item-thumb">
-                       <a href="" ><img src="assets/img/demo/property-1.jpg"></a>
-                   </div>
-                   <div class="item-entry overflow">
-                       <h5><a href="" >Super nice villa </a></h5>
-                       <div class="dot-hr"></div>
-                       <span class="pull-left"><b>Area :</b> 120m </span>
-                       <span class="proerty-price pull-right">$ 300,000</span>
-                   </div>
-               </div>
-           </div>
-
-           <div class="col-sm-6 col-md-3 p0">
-               <div class="box-two proerty-item">
-                   <div class="item-thumb">
-                       <a href="" ><img src="assets/img/demo/property-2.jpg"></a>
-                   </div>
-                   <div class="item-entry overflow">
-                       <h5><a href="" >Super nice villa </a></h5>
-                       <div class="dot-hr"></div>
-                       <span class="pull-left"><b>Area :</b> 120m </span>
-                       <span class="proerty-price pull-right">$ 300,000</span>
-                   </div>
-               </div>
-           </div>
-
-           <div class="col-sm-6 col-md-3 p0">
-               <div class="box-two proerty-item">
-                   <div class="item-thumb">
-                       <a href="" ><img src="assets/img/demo/property-3.jpg"></a>
-
-                   </div>
-                   <div class="item-entry overflow">
-                       <h5><a href="" >Super nice villa </a></h5>
-                       <div class="dot-hr"></div>
-                       <span class="pull-left"><b>Area :</b> 120m </span>
-                       <span class="proerty-price pull-right">$ 300,000</span>
-                   </div>
-               </div>
-           </div>
-
-                <div class="col-sm-6 col-md-3 p0">
-                    <div class="box-tree more-proerty text-center">
-                        <div class="item-tree-icon">
-                            <i class="fa fa-th"></i>
-                        </div>
-                        <div class="more-entry overflow">
-                            <h5><a href="./storeList.st" >CAN'T DECIDE ? </a></h5>
-                            <h5 class="tree-sub-ttl">Show all restaurants</h5>
-                            <button class="btn border-btn more-black" value="All properties">더보기</button>
-                        </div>
-                    </div>
+   <div class="proerty-th">
+<%--    ${recStore } --%>
+         	 <c:forEach var="rec" items="${recStore}">
+    		<div class="col-sm-6 col-md-3 p0">
+    		<div class="box-two proerty-item">
+    		<div class="item-thumb">
+    		<a href="./storeDetails.st?s_no=${rec.s_no}"><img src="upload/${rec.s_image.split(',')[0]}"></a>
+                  <span class="property-seeker">
+                      <b class="b-1">${rec.s_no }</b>
+                      <b class="b-2">${rec.s_type }</b>
+                  </span>
+              </div>
+              <div class="item-entry overflow">
+                  <h6> <a href="./storeDetails.st?s_no=${rec.s_no}">${rec.s_name } </a></h6>
+                  <div class="dot-hr"></div>
+                  <span class="pull-left"><span class="property-price">별점 : ${rec.s_star }</span> </span>
+                   <span class="proerty-price pull-right">  </span>
                 </div>
-            </div>
-        </div>
-    </div>
+                </div>
+            </div> 
+            </c:forEach>
+				
+			</div>
+		</div>
+	</div>
 </div>
+
 
 
 <!-- 별점순 추천 -->
@@ -342,65 +397,29 @@
         </div>
 
         <div class="row">
-            <div class="proerty-th">
-                <div class="col-sm-6 col-md-3 p0">
-                    <div class="box-two proerty-item">
-                        <div class="item-thumb">
-                            <a href="property-1.html" ><img src="assets/img/demo/property-1.jpg"></a>
-                        </div>
-                        <div class="item-entry overflow">
-                            <h5><a href="property-1.html" >Super nice villa </a></h5>
-                            <div class="dot-hr"></div>
-                            <span class="pull-left"><b>Area :</b> 120m </span>
-                            <span class="proerty-price pull-right">$ 300,000</span>
-                        </div>
-                    </div>
+   <div class="proerty-th">
+         	 <c:forEach var="star" items="${starStore}">
+    		<div class="col-sm-6 col-md-3 p0">
+    		<div class="box-two proerty-item">
+    		<div class="item-thumb">
+    		<a href="./storeDetails.st?s_no=${star.s_no}"><img src="upload/${star.s_image.split(',')[0]}"></a>
+                  <span class="property-seeker">
+                      <b class="b-1">${star.s_no }</b>
+                      <b class="b-2">${star.s_type }</b>
+                  </span>
+              </div>
+              <div class="item-entry overflow">
+                  <h6> <a href="./storeDetails.st?s_no=${star.s_no}">${star.s_name } </a></h6>
+                  <div class="dot-hr"></div>
+                  <span class="pull-left"><span class="property-price">별점 : ${star.s_star }</span> </span>
+                   <span class="proerty-price pull-right">  </span>
                 </div>
-
-                <div class="col-sm-6 col-md-3 p0">
-                    <div class="box-two proerty-item">
-                        <div class="item-thumb">
-                            <a href="property-2.html" ><img src="assets/img/demo/property-2.jpg"></a>
-                        </div>
-                        <div class="item-entry overflow">
-                            <h5><a href="property-2.html" >Super nice villa </a></h5>
-                            <div class="dot-hr"></div>
-                            <span class="pull-left"><b>Area :</b> 120m </span>
-                            <span class="proerty-price pull-right">$ 300,000</span>
-                        </div>
-                    </div>
                 </div>
-
-                <div class="col-sm-6 col-md-3 p0">
-                    <div class="box-two proerty-item">
-                        <div class="item-thumb">
-                            <a href="property-3.html" ><img src="assets/img/demo/property-3.jpg"></a>
-
-                        </div>
-                        <div class="item-entry overflow">
-                            <h5><a href="property-3.html" >Super nice villa </a></h5>
-                            <div class="dot-hr"></div>
-                            <span class="pull-left"><b>Area :</b> 120m </span>
-                            <span class="proerty-price pull-right">$ 300,000</span>
-                        </div>
-                    </div>
-                </div>
-                
-				 <div class="col-sm-6 col-md-3 p0">
-                    <div class="box-tree more-proerty text-center">
-                        <div class="item-tree-icon">
-                            <i class="fa fa-th"></i>
-                        </div>
-                        <div class="more-entry overflow">
-                            <h5><a href="./storeList.st" >CAN'T DECIDE ? </a></h5>
-                            <h5 class="tree-sub-ttl">Show all restaurants</h5>
-                            <button class="btn border-btn more-black" value="All properties">더보기</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+            </div> 
+            </c:forEach>
+			</div>
+		</div>
+	</div>
 </div>
 
 
@@ -413,67 +432,60 @@
                 <h2>가격대별로 준비했어요!</h2>
             </div>
         </div>
-
-        <div class="row">
-            <div class="proerty-th">
-                <div class="col-sm-6 col-md-3 p0">
-                    <div class="box-two proerty-item">
-                        <div class="item-thumb">
-                            <a href="property-1.html" ><img src="assets/img/demo/property-1.jpg"></a>
-                        </div>
-                        <div class="item-entry overflow">
-                            <h5><a href="property-1.html" >1만원대 </a></h5>
-                            <div class="dot-hr"></div>
-                            <span class="pull-left"><b>Area :</b> 120m </span>
-                            <span class="proerty-price pull-right">$ 300,000</span>
-                        </div>
-                    </div>
+<%--         ${costStore } --%>
+<%--         @@@ ${costStore.s_price } --%>
+        <form action="./main.st" method="post">
+		<select name="price" class="">
+			<option value="0" selected disabled hidden>원하시는 가격대를 선택해주세요!</option>
+			<option value="10000">1만원대</option>
+			<option value="20000">2만원대</option>
+			<option value="30000">3만원대</option>
+			<option value="40000">4만원대</option>
+			<option value="50000">5만원대</option>
+			<option value="60000">6만원대</option>
+			<option value="70000">7만원대</option>
+			<option value="80000">8만원대</option>
+			<option value="90000">9만원대</option>
+			<option value="100000">10만원대</option>
+		</select>
+		<input type="submit" value="추천받기">
+		</form>
+         <div class="proerty-th">
+         	 <c:forEach var="cost" items="${costStore}">
+    		<div class="col-sm-6 col-md-3 p0">
+    		<div class="box-two proerty-item">
+    		<div class="item-thumb">
+    		<a href="./storeDetails.st?s_no=${cost.s_no}"><img src="upload/${cost.s_image.split(',')[0]}"></a>
+                  <span class="property-seeker">
+                      <b class="b-1">${cost.s_price }원대</b>
+                      <b class="b-2">${cost.s_type }</b>
+                  </span>
+              </div>
+              <div class="item-entry overflow">
+                  <h6> <a href="./storeDetails.st?s_no=${cost.s_no}">${cost.s_name } </a></h6>
+                  <div class="dot-hr"></div>
+                  <span class="pull-left"><span class="property-price">별점 : ${cost.s_star }</span> </span>
+                   <span class="proerty-price pull-right">  </span>
                 </div>
-
-                <div class="col-sm-6 col-md-3 p0">
-                    <div class="box-two proerty-item">
-                        <div class="item-thumb">
-                            <a href="property-2.html" ><img src="assets/img/demo/property-2.jpg"></a>
-                        </div>
-                        <div class="item-entry overflow">
-                            <h5><a href="property-2.html" >3만원대 </a></h5>
-                            <div class="dot-hr"></div>
-                            <span class="pull-left"><b>Area :</b> 120m </span>
-                            <span class="proerty-price pull-right">$ 300,000</span>
-                        </div>
-                    </div>
                 </div>
-
-                <div class="col-sm-6 col-md-3 p0">
-                    <div class="box-two proerty-item">
-                        <div class="item-thumb">
-                            <a href="property-3.html" ><img src="assets/img/demo/property-3.jpg"></a>
-
-                        </div>
-                        <div class="item-entry overflow">
-                            <h5><a href="property-3.html" >5만원대 </a></h5>
-                            <div class="dot-hr"></div>
-                            <span class="pull-left"><b>Area :</b> 120m </span>
-                            <span class="proerty-price pull-right">$ 300,000</span>
-                        </div>
-                    </div>
-                </div>
-                
-				 <div class="col-sm-6 col-md-3 p0">
+            </div> 
+            </c:forEach>
+				<div class="col-sm-6 col-md-3 p0">
                     <div class="box-tree more-proerty text-center">
                         <div class="item-tree-icon">
                             <i class="fa fa-th"></i>
                         </div>
                         <div class="more-entry overflow">
                             <h5><a href="./storeList.st" >CAN'T DECIDE ? </a></h5>
-                            <h5 class="tree-sub-ttl">Show all restaurants</h5>
-                            <button class="btn border-btn more-black" value="All properties">더보기</button>
+                            <a href="./storeList.st" ><h5 class="tree-sub-ttl">Show all restaurants</h5></a>
+                            <a href="./storeList.st" >
+                             <button class="btn border-btn more-black" value="All properties">더보기</button></a>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
+			</div>
+		</div>
+	</div>
 </div>
 
 
@@ -483,70 +495,47 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1 col-sm-12 text-center page-title">
             <!-- /.feature title -->
-                <h2>이 지역에 핫한 가게!</h2>
+                <h2>요즘 핫한 가게!</h2>
             </div>
         </div>
 
         <div class="row">
-            <div class="proerty-th">
-                <div class="col-sm-6 col-md-3 p0">
-                    <div class="box-two proerty-item">
-                        <div class="item-thumb">
-                            <a href="property-1.html" ><img src="assets/img/demo/property-1.jpg"></a>
-                        </div>
-                        <div class="item-entry overflow">
-                            <h5><a href="property-1.html" >Super nice villa </a></h5>
-                            <div class="dot-hr"></div>
-                            <span class="pull-left"><b>Area :</b> 120m </span>
-                            <span class="proerty-price pull-right">$ 300,000</span>
-                        </div>
-                    </div>
+   <div class="proerty-th">
+         	 <c:forEach var="read" items="${readStore}">
+    		<div class="col-sm-6 col-md-3 p0">
+    		<div class="box-two proerty-item">
+    		<div class="item-thumb">
+    		<a href="./storeDetails.st?s_no=${read.s_no}"><img src="upload/${read.s_image.split(',')[0]}"></a>
+                  <span class="property-seeker">
+                      <b class="b-1">${read.s_no }</b>
+                      <b class="b-2">${read.s_type }</b>
+                  </span>
+              </div>
+              <div class="item-entry overflow">
+                  <h6> <a href="./storeDetails.st?s_no=${read.s_no}">${read.s_name } </a></h6>
+                  <div class="dot-hr"></div>
+                  <span class="pull-left"><span class="property-price">별점 : ${read.s_star }</span> </span>
+                   <span class="proerty-price pull-right">  </span>
                 </div>
-
-                <div class="col-sm-6 col-md-3 p0">
-                    <div class="box-two proerty-item">
-                        <div class="item-thumb">
-                            <a href="property-2.html" ><img src="assets/img/demo/property-2.jpg"></a>
-                        </div>
-                        <div class="item-entry overflow">
-                            <h5><a href="property-2.html" >Super nice villa </a></h5>
-                            <div class="dot-hr"></div>
-                            <span class="pull-left"><b>Area :</b> 120m </span>
-                            <span class="proerty-price pull-right">$ 300,000</span>
-                        </div>
-                    </div>
                 </div>
-
-                <div class="col-sm-6 col-md-3 p0">
-                    <div class="box-two proerty-item">
-                        <div class="item-thumb">
-                            <a href="property-3.html" ><img src="assets/img/demo/property-3.jpg"></a>
-
-                        </div>
-                        <div class="item-entry overflow">
-                            <h5><a href="property-3.html" >Super nice villa </a></h5>
-                            <div class="dot-hr"></div>
-                            <span class="pull-left"><b>Area :</b> 120m </span>
-                            <span class="proerty-price pull-right">$ 300,000</span>
-                        </div>
-                    </div>
-                </div>
-                
-				 <div class="col-sm-6 col-md-3 p0">
+            </div> 
+            </c:forEach>
+				<div class="col-sm-6 col-md-3 p0">
                     <div class="box-tree more-proerty text-center">
                         <div class="item-tree-icon">
                             <i class="fa fa-th"></i>
                         </div>
                         <div class="more-entry overflow">
                             <h5><a href="./storeList.st" >CAN'T DECIDE ? </a></h5>
-                            <h5 class="tree-sub-ttl">Show all restaurants</h5>
-                            <button class="btn border-btn more-black" value="All properties">더보기</button>
+                            <a href="./storeList.st" ><h5 class="tree-sub-ttl">Show all restaurants</h5></a>
+                            <a href="./storeList.st" >
+                             <button class="btn border-btn more-black" value="All properties">더보기</button></a>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
+			</div>
+		</div>
+	</div>
 </div>
 
 
@@ -565,49 +554,63 @@
             <div class="row testimonial">
                 <div class="col-md-12">
                     <div id="testimonial-slider">
+            	 <c:forEach var="review" items="${reviewStore}">
                         <div class="item">
-                            <div class="client-text">                                
-                                <p>Nulla quis dapibus nisl. Suspendisse llam sed arcu ultried arcu ultricies !</p>
-                                <h4><strong>Ohidul Islam, </strong><i>Web Designer</i></h4>
+                            <div class="client-text" style="overflow: hidden;"> 
+<!--                             	<div class="col-md-6">                              -->
+                                <p>${review.rev_content}</p>
+                                <h4><strong>${review.s_name}, </strong><i>별점 ${review.rev_star}</i></h4>
+<!--                                 </div>   -->
+<!--                                 <div class="col-md-6"> -->
+<!--                                 <div class="client-face wow fadeInRight" data-wow-delay=".9s">  -->
+<%--                                 <img src="upload/${review.s_image.split(',')[0]}" alt="" style="background-attachment: local; height:100px; width:100px; border-radius:50%;"> --%>
+<!--                             	</div> -->
+<!--                             	</div> -->
+                            	<div class="client-face wow fadeInRight animated animated" data-wow-delay=".9s" style="visibility: visible; animation-delay: 0.9s; background-attachment: local; width: 90px; height: 100px; border-radius:50%; z-index: 100; top:55px; right:30px;"> 
+                                <img src="upload/jerry.gif" alt="">
+                            	</div>
                             </div>
-                            <div class="client-face wow fadeInRight" data-wow-delay=".9s"> 
-                                <img src="assets/img/client-face1.png" alt="">
-                            </div>
+<!--                             <div class="client-face wow fadeInRight" data-wow-delay=".9s">  -->
+<!--                             </div> -->
                         </div>
-                        <div class="item">
-                            <div class="client-text">                                
-                                <p>Nulla quis dapibus nisl. Suspendisse llam sed arcu ultried arcu ultricies !</p>
-                                <h4><strong>Ohidul Islam, </strong><i>Web Designer</i></h4>
-                            </div>
-                            <div class="client-face">
-                                <img src="assets/img/client-face2.png" alt="">
-                            </div>
+                        </c:forEach>
+                         </div>
+                        <div class="owl-controls clickable"><div class="owl-pagination"><div class="owl-page active"><span class=""></span></div><div class="owl-page"><span class=""></span></div></div></div>
+					</div>
                         </div>
-                        <div class="item">
-                            <div class="client-text">                                
-                                <p>Nulla quis dapibus nisl. Suspendisse llam sed arcu ultried arcu ultricies !</p>
-                                <h4><strong>Ohidul Islam, </strong><i>Web Designer</i></h4>
-                            </div>
-                            <div class="client-face">
-                                <img src="assets/img/client-face1.png" alt="">
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="client-text">                                
-                                <p>Nulla quis dapibus nisl. Suspendisse llam sed arcu ultried arcu ultricies !</p>
-                                <h4><strong>Ohidul Islam, </strong><i>Web Designer</i></h4>
-                            </div>
-                            <div class="client-face">
-                                <img src="assets/img/client-face2.png" alt="">
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
 
         </div>
-    </div>
-</div>
+   
+<!--                         <div class="item"> -->
+<!--                             <div class="client-text">                                 -->
+<!--                                 <p>Nulla quis dapibus nisl. Suspendisse llam sed arcu ultried arcu ultricies !</p> -->
+<!--                                 <h4><strong>Ohidul Islam, </strong><i>Web Designer</i></h4> -->
+<!--                             </div> -->
+<!--                             <div class="client-face"> -->
+<!--                                 <img src="assets/img/client-face2.png" alt=""> -->
+<!--                             </div> -->
+<!--                         </div> -->
+<!--                         <div class="item"> -->
+<!--                             <div class="client-text">                                 -->
+<!--                                 <p>Nulla quis dapibus nisl. Suspendisse llam sed arcu ultried arcu ultricies !</p> -->
+<!--                                 <h4><strong>Ohidul Islam, </strong><i>Web Designer</i></h4> -->
+<!--                             </div> -->
+<!--                             <div class="client-face"> -->
+<!--                                 <img src="assets/img/client-face1.png" alt=""> -->
+<!--                             </div> -->
+<!--                         </div> -->
+<!--                         <div class="item"> -->
+<!--                             <div class="client-text">                                 -->
+<!--                                 <p>Nulla quis dapibus nisl. Suspendisse llam sed arcu ultried arcu ultricies !</p> -->
+<!--                                 <h4><strong>Ohidul Islam, </strong><i>Web Designer</i></h4> -->
+<!--                             </div> -->
+<!--                             <div class="client-face"> -->
+<!--                                 <img src="assets/img/client-face2.png" alt=""> -->
+<!--                             </div> -->
+<!--                         </div> -->
+                    
 
 <!--Welcome area -->
 <div class="Welcome-area">
@@ -619,7 +622,8 @@
                         <div class="row">
                             <div class="col-md-10 col-md-offset-1 col-sm-12 text-center page-title">
                                 <!-- /.feature title -->
-                                <h2>Fork & Knife </h2>
+                               <h2><img alt="" src="./assets/img/111.jpg"></h2> 
+<!--                                 <h2>Fork & Knife </h2> -->
                             </div>
                         </div>
                     </div>

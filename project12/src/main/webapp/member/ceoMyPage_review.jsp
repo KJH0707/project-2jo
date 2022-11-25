@@ -5,10 +5,87 @@
 <html class="no-js"> <!--<![endif]-->
    <head>
       <title>Insert title here</title>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="GARO is a real-estate template">
+        <meta name="author" content="Kimarotec">
+        <meta name="keyword" content="html5, css, bootstrap, property, real-estate theme , bootstrap template">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 <link rel="stylesheet" href="./assets/css/myPage.css">
+
+
+<style>
+div.polaroid {
+  float:left;
+  width: 30%;
+  height: 30%;
+  background-color: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin-bottom: 25px;
+  margin:14px;
+  
+}
+
+div.poltext {
+  text-align: center;
+  padding: 0px 20px;
+}  
+  
+</style>
+
+<script type="text/javascript">
+	function storeChange(sno){
+		var sno = $("#storeList").val();
+		var listType = $("#reType").val();
+			location.href = "${pageContext.request.contextPath}/CeoMyPage_re.us?sno="+sno+"&listType="+listType+"&s=0";
+	}
+	
+	function sort() {
+		var s = $("#sor").val();
+		var sno = $("#storeList").val();
+		var listType = $("#reType").val();
+		
+		if(s==0){
+			$("#sor").attr("value",1);
+			location.href = "${pageContext.request.contextPath}/CeoMyPage_re.us?sno="+sno+"&listType="+listType+"&s=1";
+		} else if(s==1){
+			$("#sor").attr("value",0);
+			location.href = "${pageContext.request.contextPath}/CeoMyPage_re.us?sno="+sno+"&listType="+listType+"&s=0";
+		}
+	}
+	
+	function rvok(){
+// 		$('#ro').click();
+		$("#ok").load(window.location.href+ " #ok");
+	}
+
+</script>
+
+<script>
+$(function(){
+	
+// 	$("#ro").click(function(){
+		
+// 		$.ajax({
+// 			url:'${pageContext.request.contextPath}/CeoMyPage_re.us',
+// 			success:function(reList){
+// 				$("#ok").load(window.location.href+ " #ok");
+// 				console.log('성공');
+// 			},
+// 			error : function(){
+// 				alert('실패');
+// 			}
+			
+// 		});
+// 	}); 
+
+	
+});
+
+
+</script>
 
  </head>
  <body>
@@ -54,19 +131,17 @@
                              </a>
                                <div class="col-md-8 col-sm-8 col-xs-8 blg-entry" width="">
                                    <h6><a href="./CeoMyPage_st.us">가게 관리</a></h6>
-<!--                                 <span class="property-price">3000000$</span> -->
                                </div>
                              
                            </li>
                            <li>
-                           	  <a href="./CeoMyPage_book.us">
+                           	  <a href="./CeoMyPage_reserv.us">
                                <div class="col-md-3 col-sm-3 col-xs-3 blg-thumb p0">
                                    <img src="assets/img/myPage/people.png" width="20" height="20">
                                </div>
                               </a>
                                <div class="col-md-8 col-sm-8 col-xs-8 blg-entry">
-                                   <h6> <a href="./CeoMyPage_book.us">예약 관리</a></h6>
-<!--                                <span class="property-price">3000000$</span> -->
+                                   <h6> <a href="./CeoMyPage_reserv.us">예약 관리</a></h6>
                                </div>
                            </li>
                            <li>
@@ -77,18 +152,16 @@
                               </a>
                                <div class="col-md-8 col-sm-8 col-xs-8 blg-entry">
                                    <h6> <a href="./CeoMyPage_re.us">리뷰 관리</a></h6>
-<!--                                     <span class="property-price">3000000$</span> -->
                                </div>
                            </li>
                            <li>
-                           	  <a href="링크">
+                           	  <a href="./CeoMyPage_Info.us">
                                <div class="col-md-3 col-sm-3 col-xs-3 blg-thumb p0">
                                    <img src="assets/img/myPage/note.png" width="20" height="20">
                                </div>
                               </a>
                                <div class="col-md-8 col-sm-8 col-xs-8 blg-entry">
-                                   <h6> <a href="링크">회원정보 관리</a></h6>
-<!--                                      <span class="property-price">3000000$</span> -->
+                                   <h6> <a href="./CeoMyPage_Info.us">회원정보 관리</a></h6>
                                </div>
                            </li>
                        </ul>
@@ -101,228 +174,147 @@
 
 <div class="col-md-9  pr0 padding-top-40 properties-page">
   <!-- 여기 밑으로 내용 넣어야 옆 공간에 들어감 -->
-  				<div class="row">
-                            <div class="col-md-8 col-sm-12">
-                                <h3 class="tm-block-title d-inline-block">리 뷰 관 리
-                                <select style="font-size:10px">
-	                               <option>BBQ치킨</option>
-	                               <option>네네치킨</option>
-	                               <option>굽네치킨</option>
-                               </select>
-                                </h3>
-                            </div>
+  				 <div class="row" >
+                    <div class="col-md-8 col-sm-12" >
+                       <h3 class="tm-block-title d-inline-block">리 뷰 관 리
+                       <select id="storeList" name="sno" onchange="storeChange(this.value)" style="font-size:10px">
+                          <option value="0" ${sno == 0 ? 'selected="selected"' : ''}>전체보기</option>
+                       <c:forEach var="storeInfo" items="${storeInfo}">
+                       <option value=${storeInfo.s_no }  ${storeInfo.s_no == sno ? 'selected="selected"' : ''}>
+                       ${storeInfo.s_name }</option>
+                      </c:forEach>
+                      </select>
+                      </h3>
+                   </div>
 						<br>
                         <div class="text-right">
-                            <select style="font-size:10px">
-                            	<option>최신순</option>
-                            	<option>별점 높은순</option>
-                            	<option>별점 낮은순</option>
+                        <button type="button" id="sor" value="${s }" onclick="sort()"><i class="glyphicon glyphicon-sort"></i></button>
+                            <select id="reType" name="reType" onchange="storeChange(this.value)" style="font-size:10px">
+                            	<option value=rev_date ${listType == "rev_date" ? 'selected="selected"' : '' }>최신순</option>
+                            	<option value=rev_star ${listType == "rev_star" ? 'selected="selected"' : '' }>별점순</option>
                             </select>
                         </div>
                   </div>
                     
                     <hr>
 
+					<div id="ok">
                     <div class="col-md-12 clear" style="line-height:20px">
                         <div id="list-type" class="proerty-th">
-                            <div class="col-sm-6 col-md-4 p0" style="width:270px">
-                                    <div class="box-two proerty-item">
-                                        <div class="text-left">
-                                            <img src="assets/img/demo/property-3.jpg" style="width:100px; height:100px; padding:5px;">
-                                            <p class="text-right" style="margin-bottom:-10px; margin-top:-70px; margin-right:20px; line-height:0;"><b>닉네임: 배고프다</b></p><br>
-                                            <p class="text-right" style="margin-bottom:30px; line-height:0; margin-right:30px; font-size:10px;">★★★★★&nbsp;2022-11-12</p>
-                                            <p class="text-right" style="margin-bottom:10px; margin-top:-25px; line-height:0; margin-right:60px;">
-                                            <i class="glyphicon glyphicon-comment"></i>&nbsp;&nbsp;
-                                            <i class="glyphicon glyphicon-alert"></i>
-                                            </p>
-                                            <div style="">
-<!--                                             <h6 style="margin-bottom:-10px; line-height:0;">닉네임: 배고프다</h6><br> -->
-<!--                                             <h6 style="margin-bottom:-10px; line-height:0; font-size:10px;">★★★★★&nbsp;2022-11-12</h6> -->
-<!--                                             <h6 class="pull-right" style="margin-bottom:-10px; line-height:0; "><i class="glyphicon glyphicon-alert"></i></h6><br> -->
-                                            </div>
-                                        </div>
-                                        <div class="item-entry overflow">
-                                            <div>추천 받고 왔어요 직원분들 다 너무 친절하시고 맛도 미쳤습니다ㅠㅠ 다들 먹으러 오세요</div><br>
-<!--                                             <div class="text-right">[답글]</div> -->
-											<p>
-                                            <div class="dot-hr"></div>
-                                            <span class="pull-left"><b>사장님&nbsp;</b></span>
-                                            <span style="font-size:10px">2022-11-12</span>
-<!--                                             <span class="proerty-price pull-right"> $ 300,000</span> -->
-                                            <textarea id="area" rows="5" cols="32" style="background:#F6F6F6; border-radius:10px;" >저희 매장을 이용해주셔서 감사합니다^^ 손님들이 맛있게 먹어주시는게 저의 보람이랍니다^^</textarea><br>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div> 
-                         
-                                
-                            <div class="col-sm-6 col-md-4 p0" style="width:270px">
-                                    <div class="box-two proerty-item">
-                                        <div class="text-left">
-                                            <img src="assets/img/demo/property-3.jpg" style="width:100px; height:100px; padding:5px;">
-                                            <p class="text-right" style="margin-bottom:-10px; margin-top:-70px; margin-right:20px; line-height:0;"><b>닉네임: 배고프다</b></p><br>
-                                            <p class="text-right" style="margin-bottom:30px; line-height:0; margin-right:30px; font-size:10px;">★★★★★&nbsp;2022-11-12</p>
-                                            <p class="text-right" style="margin-bottom:10px; margin-top:-25px; line-height:0; margin-right:60px;">
-                                            <i class="glyphicon glyphicon-comment"></i>&nbsp;&nbsp;
-                                            <i class="glyphicon glyphicon-alert"></i>
-                                            </p>
-                                            <div style="">
-<!--                                             <h6 style="margin-bottom:-10px; line-height:0;">닉네임: 배고프다</h6><br> -->
-<!--                                             <h6 style="margin-bottom:-10px; line-height:0; font-size:10px;">★★★★★&nbsp;2022-11-12</h6> -->
-<!--                                             <h6 class="pull-right" style="margin-bottom:-10px; line-height:0; "><i class="glyphicon glyphicon-alert"></i></h6><br> -->
-                                            </div>
-                                        </div>
-                                        <div class="item-entry overflow">
-                                            <div>추천 받고 왔어요 직원분들 다 너무 친절하시고 맛도 미쳤습니다ㅠㅠ 다들 먹으러 오세요</div><br>
-<!--                                             <div class="text-right">[답글]</div> -->
-											<p>
-                                            <div class="dot-hr"></div>
-                                            <span class="pull-left"><b>사장님&nbsp;</b></span>
-                                            <span style="font-size:10px">2022-11-12</span>
-<!--                                             <span class="proerty-price pull-right"> $ 300,000</span> -->
-                                            <textarea id="area" rows="5" cols="32" style="background:#F6F6F6; border-radius:10px;" >저희 매장을 이용해주셔서 감사합니다^^ 손님들이 맛있게 먹어주시는게 저의 보람이랍니다^^</textarea><br>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                  <div class="col-sm-6 col-md-4 p0" style="width:270px">
-                                    <div class="box-two proerty-item">
-                                        <div class="text-left">
-                                            <img src="assets/img/demo/property-3.jpg" style="width:100px; height:100px; padding:5px;">
-                                            <p class="text-right" style="margin-bottom:-10px; margin-top:-70px; margin-right:20px; line-height:0;"><b>닉네임: 배고프다</b></p><br>
-                                            <p class="text-right" style="margin-bottom:30px; line-height:0; margin-right:30px; font-size:10px;">★★★★★&nbsp;2022-11-12</p>
-                                            <p class="text-right" style="margin-bottom:10px; margin-top:-25px; line-height:0; margin-right:60px;">
-                                            <i class="glyphicon glyphicon-comment"></i>&nbsp;&nbsp;
-                                            <i class="glyphicon glyphicon-alert"></i>
-                                            </p>
-                                            <div style="">
-<!--                                             <h6 style="margin-bottom:-10px; line-height:0;">닉네임: 배고프다</h6><br> -->
-<!--                                             <h6 style="margin-bottom:-10px; line-height:0; font-size:10px;">★★★★★&nbsp;2022-11-12</h6> -->
-<!--                                             <h6 class="pull-right" style="margin-bottom:-10px; line-height:0; "><i class="glyphicon glyphicon-alert"></i></h6><br> -->
-                                            </div>
-                                        </div>
-                                        <div class="item-entry overflow">
-                                            <div>추천 받고 왔어요 직원분들 다 너무 친절하시고 맛도 미쳤습니다ㅠㅠ 다들 먹으러 오세요</div><br>
-<!--                                             <div class="text-right">[답글]</div> -->
-											<p>
-                                            <div class="dot-hr"></div>
-                                            <span class="pull-left"><b>사장님&nbsp;</b></span>
-                                            <span style="font-size:10px">2022-11-12</span>
-<!--                                             <span class="proerty-price pull-right"> $ 300,000</span> -->
-                                            <textarea id="area" rows="5" cols="32" style="background:#F6F6F6; border-radius:10px;" >저희 매장을 이용해주셔서 감사합니다^^ 손님들이 맛있게 먹어주시는게 저의 보람이랍니다^^</textarea><br>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div> 
-                                
-                                 <div class="col-sm-6 col-md-4 p0" style="width:270px">
-                                    <div class="box-two proerty-item">
-                                        <div class="text-left">
-                                            <img src="assets/img/demo/property-3.jpg" style="width:100px; height:100px; padding:5px;">
-                                            <p class="text-right" style="margin-bottom:-10px; margin-top:-70px; margin-right:20px; line-height:0;"><b>닉네임: 배고프다</b></p><br>
-                                            <p class="text-right" style="margin-bottom:30px; line-height:0; margin-right:30px; font-size:10px;">★★★★★&nbsp;2022-11-12</p>
-                                            <p class="text-right" style="margin-bottom:10px; margin-top:-25px; line-height:0; margin-right:60px;">
-                                            <i class="glyphicon glyphicon-comment"></i>&nbsp;&nbsp;
-                                            <i class="glyphicon glyphicon-alert"></i>
-                                            </p>
-                                            <div style="">
-<!--                                             <h6 style="margin-bottom:-10px; line-height:0;">닉네임: 배고프다</h6><br> -->
-<!--                                             <h6 style="margin-bottom:-10px; line-height:0; font-size:10px;">★★★★★&nbsp;2022-11-12</h6> -->
-<!--                                             <h6 class="pull-right" style="margin-bottom:-10px; line-height:0; "><i class="glyphicon glyphicon-alert"></i></h6><br> -->
-                                            </div>
-                                        </div>
-                                        <div class="item-entry overflow">
-                                            <div>추천 받고 왔어요 직원분들 다 너무 친절하시고 맛도 미쳤습니다ㅠㅠ 다들 먹으러 오세요</div><br>
-<!--                                             <div class="text-right">[답글]</div> -->
-											<p>
-                                            <div class="dot-hr"></div>
-                                            <span class="pull-left"><b>사장님&nbsp;</b></span>
-                                            <span style="font-size:10px">2022-11-12</span>
-<!--                                             <span class="proerty-price pull-right"> $ 300,000</span> -->
-                                            <textarea id="area" rows="5" cols="32" style="background:#F6F6F6; border-radius:10px;" >저희 매장을 이용해주셔서 감사합니다^^ 손님들이 맛있게 먹어주시는게 저의 보람이랍니다^^</textarea><br>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div> 
-                                
-                                 <div class="col-sm-6 col-md-4 p0" style="width:270px">
-                                    <div class="box-two proerty-item">
-                                        <div class="text-left">
-                                            <img src="assets/img/demo/property-3.jpg" style="width:100px; height:100px; padding:5px;">
-                                            <p class="text-right" style="margin-bottom:-10px; margin-top:-70px; margin-right:20px; line-height:0;"><b>닉네임: 배고프다</b></p><br>
-                                            <p class="text-right" style="margin-bottom:30px; line-height:0; margin-right:30px; font-size:10px;">★★★★★&nbsp;2022-11-12</p>
-                                            <p class="text-right" style="margin-bottom:10px; margin-top:-25px; line-height:0; margin-right:60px;">
-                                            <i class="glyphicon glyphicon-comment"></i>&nbsp;&nbsp;
-                                            <i class="glyphicon glyphicon-alert"></i>
-                                            </p>
-                                            <div style="">
-<!--                                             <h6 style="margin-bottom:-10px; line-height:0;">닉네임: 배고프다</h6><br> -->
-<!--                                             <h6 style="margin-bottom:-10px; line-height:0; font-size:10px;">★★★★★&nbsp;2022-11-12</h6> -->
-<!--                                             <h6 class="pull-right" style="margin-bottom:-10px; line-height:0; "><i class="glyphicon glyphicon-alert"></i></h6><br> -->
-                                            </div>
-                                        </div>
-                                        <div class="item-entry overflow">
-                                            <div>추천 받고 왔어요 직원분들 다 너무 친절하시고 맛도 미쳤습니다ㅠㅠ 다들 먹으러 오세요</div><br>
-<!--                                             <div class="text-right">[답글]</div> -->
-											<p>
-                                            <div class="dot-hr"></div>
-                                            <span class="pull-left"><b>사장님&nbsp;</b></span>
-                                            <span style="font-size:10px">2022-11-12</span>
-<!--                                             <span class="proerty-price pull-right"> $ 300,000</span> -->
-                                            <textarea id="area" rows="5" cols="32" style="background:#F6F6F6; border-radius:10px;" >저희 매장을 이용해주셔서 감사합니다^^ 손님들이 맛있게 먹어주시는게 저의 보람이랍니다^^</textarea><br>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                 <div class="col-sm-6 col-md-4 p0" style="width:270px">
-                                    <div class="box-two proerty-item">
-                                        <div class="text-left">
-                                            <img src="assets/img/demo/property-3.jpg" style="width:100px; height:100px; padding:5px;">
-                                            <p class="text-right" style="margin-bottom:-10px; margin-top:-70px; margin-right:20px; line-height:0;"><b>닉네임: 배고프다</b></p><br>
-                                            <p class="text-right" style="margin-bottom:30px; line-height:0; margin-right:30px; font-size:10px;">★★★★★&nbsp;2022-11-12</p>
-                                            <p class="text-right" style="margin-bottom:10px; margin-top:-25px; line-height:0; margin-right:60px;">
-                                            <i class="glyphicon glyphicon-comment"></i>&nbsp;&nbsp;
-                                            <i class="glyphicon glyphicon-alert"></i>
-                                            </p>
-                                            <div style="">
-<!--                                             <h6 style="margin-bottom:-10px; line-height:0;">닉네임: 배고프다</h6><br> -->
-<!--                                             <h6 style="margin-bottom:-10px; line-height:0; font-size:10px;">★★★★★&nbsp;2022-11-12</h6> -->
-<!--                                             <h6 class="pull-right" style="margin-bottom:-10px; line-height:0; "><i class="glyphicon glyphicon-alert"></i></h6><br> -->
-                                            </div>
-                                        </div>
-                                        <div class="item-entry overflow">
-                                            <div>추천 받고 왔어요 직원분들 다 너무 친절하시고 맛도 미쳤습니다ㅠㅠ 다들 먹으러 오세요</div><br>
-<!--                                             <div class="text-right">[답글]</div> -->
-											<p>
-                                            <div class="dot-hr"></div>
-                                            <span class="pull-left"><b>사장님&nbsp;</b></span>
-                                            <span style="font-size:10px">2022-11-12</span>
-<!--                                             <span class="proerty-price pull-right"> $ 300,000</span> -->
-                                            <textarea id="area" rows="5" cols="32" style="background:#F6F6F6; border-radius:10px;" >저희 매장을 이용해주셔서 감사합니다^^ 손님들이 맛있게 먹어주시는게 저의 보람이랍니다^^</textarea><br>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div> 
+                        
+<!--                         <i class="fa-regular fa-star-half-stroke"></i> -->
+					  
+                      <c:forEach var="reList" items="${reList }">
+                        <div class="polaroid">
+                        	  <div>
+                        	  <p style="padding: 0px 10px; margin:10px 0px 0px;"><b>[${reList.s_name }]</b></p>
+                        	  </div>
+                        	  <div style="display:flex; width:100%">
+                        	  <div style="width:80%">
+                        	  <p style="padding: 0px 10px; "><small><b>${reList.m_nickname }</b></small></p>
+                        	  <p style="padding: 0px 10px; font-size:13px;"><small>
+                        	  <span style="color:#FFE400">
+                        	  <c:choose>
+                        	   <c:when test="${reList.rev_star==1}">
+                        	  	<i class="fa-sharp fa-solid fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i>
+                        	   </c:when>
+                        	   <c:when test="${reList.rev_star==2}">
+                        	   	<i class="fa-sharp fa-solid fa-star"></i><i class="fa-sharp fa-solid fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i>
+                        	   </c:when>
+                        	   <c:when test="${reList.rev_star==3}">
+                        	   	<i class="fa-sharp fa-solid fa-star"></i><i class="fa-sharp fa-solid fa-star"></i><i class="fa-sharp fa-solid fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i>
+                        	   </c:when>
+                        	   <c:when test="${reList.rev_star==4}">
+                        	   	<i class="fa-sharp fa-solid fa-star"></i><i class="fa-sharp fa-solid fa-star"></i><i class="fa-sharp fa-solid fa-star"></i><i class="fa-sharp fa-solid fa-star"></i><i class="fa-regular fa-star"></i>
+                        	   </c:when>
+                        	   <c:when test="${reList.rev_star==5}">
+                        	   	<i class="fa-sharp fa-solid fa-star"></i><i class="fa-sharp fa-solid fa-star"></i><i class="fa-sharp fa-solid fa-star"></i><i class="fa-sharp fa-solid fa-star"></i><i class="fa-sharp fa-solid fa-star"></i>
+                        	   </c:when>
+                        	  </c:choose>
+                        	  </span>
+                        	   ${reList.date }</small></p>
+                        	  </div>
+                        	  <div align="right">
+                        	  <button id="ro" style="display:none" onclick="rvok"></button>
+                        	  <c:choose>
+                        	  <c:when test="${reList.rev_c_re == null || reList.rev_c_re == '' }">
+                        	  <p style="padding: 10px 0px;font-size:13px;"><small>[답글<i class="glyphicon glyphicon-remove"></i>]</small></p>
+<!--                         	  <font id ="chok" size="2" style="padding: 10px 0px;font-size:13px;"></font> -->
+                        	  </c:when>
+                        	  <c:otherwise>
+                        	  <p style="padding: 10px 0px;font-size:13px; color:green;"><small>[답글<i class="glyphicon glyphicon-ok"></i>]</small></p>
+                        	  </c:otherwise>
+                        	  </c:choose>
+                        	  </div>
+                        	  </div>
+                        	  <div>
+                        	  <c:choose>
+                        	  	<c:when test="${reList.rev_file==null }">
+							  		<img src="assets/img/forks.jpg" alt="none" style="width:100%; height:200px" >
+							  	</c:when>
+							  	<c:otherwise>
+							  		<img src="./upload/${reList.rev_file.split(',')[0] }" alt="rev_file" style="width:100%; height:200px">
+							  	</c:otherwise>
+							  </c:choose>
+							  </div>
+							  <div class="poltext">
+							  <p style="font-size:13px; overflow:hidden; text-overflow:ellipsis; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; height:70px">
+							  <small><b>${reList.rev_content }</b></small>
+							  </p>
+							  </div>
+							  <div class="poltext">
+							  <a onclick='window.open("./CeoMyPage_reDetail.us?rev_no=${reList.rev_no}","","left=700,top=50,width=400,height=800")'>[상세보기]</a>
+							  </div>
+						</div>
+					</c:forEach>
+							
                                 
                         </div>
                     </div>
-                    
-                    <div class="col-md-12"> 
-                        <div class="pull-right">
-                            <div class="pagination">
-                                <ul>
-                                    <li><a href="#">Prev</a></li>
-                                    <li><a href="#">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">4</a></li>
-                                    <li><a href="#">Next</a></li>
-                                </ul>
-                            </div>
-                        </div>                
                     </div>
+                    
+           	<div align="center" style="font-size:20px; color:black">
+                <c:choose>
+                  <c:when test="${listType == null }">
+					<c:if test="${totalSnt != 0}" >
+						<!-- 이전 -->
+						<c:if test="${startPage > pageBlock }">
+							<a href="./CeoMyPage_re.us?sno=${sno }&s=${s }&pageNum=${startPage-pageBlock }">[이전]</a>
+						</c:if>
+						
+						<!-- 페이지 번호 -->
+						<c:forEach var="i" begin="${startPage }" end="${endPage }" step="1">
+							<a href="./CeoMyPage_re.us?sno=${sno }&s=${s }&pageNum=${i }">${i }</a>
+						</c:forEach>
+						
+						<!-- 다음 -->
+						<c:if test="${endPage < pageCount }">
+							<a href="./CeoMyPage_re.us?sno=${sno }&s=${s }&pageNum=${startPage+pageBlock }">[다음]</a>
+						</c:if>
+					</c:if>
+				  </c:when>
+				  <c:otherwise>
+				  	<c:if test="${totalSnt != 0}" >
+						<!-- 이전 -->
+						<c:if test="${startPage > pageBlock }">
+							<a href="./CeoMyPage_re.us?sno=${sno }&listType=${listType }&s=${s }&pageNum=${startPage-pageBlock }">[이전]</a>
+						</c:if>
+						
+						<!-- 페이지 번호 -->
+						<c:forEach var="i" begin="${startPage }" end="${endPage }" step="1">
+							<a href="./CeoMyPage_re.us?sno=${sno }&listType=${listType }&s=${s }&pageNum=${i }">${i }</a>
+						</c:forEach>
+						
+						<!-- 다음 -->
+						<c:if test="${endPage < pageCount }">
+							<a href="./CeoMyPage_re.us?sno=${sno }&listType=${listType }&s=${s }&s=&pageNum=${startPage+pageBlock }">[다음]</a>
+						</c:if>
+					</c:if>
+				  </c:otherwise>
+				</c:choose>
+			</div>
+                  
+                  
                 </div>  
                 </div>              
             </div>

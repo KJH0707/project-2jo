@@ -13,7 +13,7 @@
                                 Menu
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link active" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-1" aria-controls="submenu-1"><i class="fa fa-fw fa-user-circle"></i>List <span class="badge badge-success">6</span></a>
+                                <a class="nav-link active" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-1" aria-controls="submenu-1"><i class="fa fa-fw fa-user-circle"></i>Admin <span class="badge badge-success">6</span></a>
                                 <div id="submenu-1" class="collapse submenu" style="">
                                     <ul class="nav flex-column">
                                         <li class="nav-item">
@@ -37,14 +37,27 @@
                                 <div id="submenu-6" class="collapse submenu" style="">
                                     <ul class="nav flex-column">
                                         <li class="nav-item">
-                                            <a class="nav-link" href="./adminNoticeList.us">공지 목록</a>
+                                            <a class="nav-link" href="./adminReservList.us">예약 목록</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="./adminNoticeWrite.us">공지 작성</a>
-                                        </li>
+	                                        <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-11" aria-controls="submenu-11">공지 & 이벤트</a>
+	                                        <div id="submenu-11" class="collapse submenu" style="">
+	                                            <ul class="nav flex-column">
+	                                                <li class="nav-item">
+			                                            <a class="nav-link" href="./adminNoticeList.us">목록</a>
+			                                        </li>
+	                                                <li class="nav-item">
+			                                            <a class="nav-link" href="./adminNoticeWrite.us">작성</a>
+			                                        </li>
+	                                            </ul>
+	                                        </div>
+	                                    </li>
+                                        
+                                        
                                     </ul>
                                 </div>
                             </li>
+                            
                         </ul>
                     </div>
                 </nav>

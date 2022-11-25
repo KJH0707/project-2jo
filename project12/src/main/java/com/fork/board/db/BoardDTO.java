@@ -21,7 +21,8 @@ public class BoardDTO extends StoreDTO {
 	private String rev_subject;
 	private String rev_content;
 	private String rev_file;
-	
+	private int rev_seq;
+	private int rev_ref;
 	private String s_addr;
 
 	public int getRev_no() {

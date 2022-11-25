@@ -78,11 +78,11 @@
                         <button class="navbar-btn nav-button wow fadeInRight" onclick="location.href='./Join.us'" data-wow-delay="0.5s">회원가입</button>
                     </c:when>
                     <c:when test="${id.equals('admin') }">
-                    <button class="navbar-btn nav-button wow bounceInRight login" onclick="location.href='./loginForm.st'" data-wow-delay="0.4s">관리자페이지</button>
+                    <button class="navbar-btn nav-button wow bounceInRight login" onclick="location.href='./adminGenMemList.us'" data-wow-delay="0.4s">관리자페이지</button>
                         <button class="navbar-btn nav-button wow fadeInRight" onclick="location.href='./LogoutAction.us'" data-wow-delay="0.5s">로그아웃</button>
                     </c:when>
                     <c:when test="${result==1}">
-                    	<button class="navbar-btn nav-button wow bounceInRight login" onclick="location.href='./MemberMyPage.us'" data-wow-delay="0.4s">마이페이지</button>
+                    	<button class="navbar-btn nav-button wow bounceInRight login" onclick="location.href='./MemberMypageMain.us'" data-wow-delay="0.4s">마이페이지</button>
                         <button class="navbar-btn nav-button wow fadeInRight" onclick="location.href='./LogoutAction.us'" data-wow-delay="0.5s">로그아웃</button>
                     </c:when>
                     <c:otherwise>

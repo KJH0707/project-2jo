@@ -47,66 +47,68 @@ public class CouponDAO {
 	// 자원해제 메서드 - closeDB()
 	
 	// makeCoupon - 쿠폰발행하기
-	public void makeCoupon() {
-		
-		try {
-			con = getConnection();
-			sql = "insert into mem_coupon() values()";
-			pstmt = con.prepareStatement(sql);
-			pstmt.setString(0, sql);
-			
-			pstmt.executeUpdate();
-			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}finally {
-			closeDB();
-		}
-		
-	}
+
+
+//	public void makeCoupon() {
+//		
+//		try {
+//			con = getConnection();
+//			sql = "insert into mem_coupon() values()";
+//			pstmt = con.prepareStatement(sql);
+//			pstmt.setString(0, sql);
+//			
+//			pstmt.executeUpdate();
+//			
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}finally {
+//			closeDB();
+//		}
+//		
+//	}
 	// makeCoupon - 쿠폰발행하기
 
 	// 사용가능한 쿠폰 조회 - getAllCoupon()
-	public void getAllCoupon(시작일, 만료일) {
-		
-		try {
-			con = getConnection();
-			sql = 
-				"select c.c_no, c.quantity, c.c_discountRate, c.c_startDate, c.c_enddate, "
-					  + "c.c_category, c.c_name, c.c_issue_date, c.c_deleated, c.c_issue_end "
-			  + "from (select row_number() over(order by c_issue_end) number c_no "
-			  		+ " from coupon "
-			  		+ " where c_endDate > now() "
-			  		+ " and c_deleted = 'N'"
-			  		+ ") r, coupon c"
-			  + "where r.c_no = c.c_no and rn between #{beginIndex} and #{endIndex} "
-			  + "order by c_issue_end";
-			pstmt = con.prepareStatement(sql);
-			
-			rs = pstmt.executeQuery();
-			if(rs.next()) {
-				CouponDTO dto = new CouponDTO();
-				
-				dto.setC_code(rs.getString("c_code"));
-				dto.setC_name(rs.getString("c_name"));
-				dto.setC_quantity(rs.getInt("c_quantity"));
-				dto.setC_startDate(rs.getTimestamp("c_startDate"));
-				dto.setC_endDate(rs.getTimestamp("endDate"));
-				dto.setC_issue_date(rs.getTimestamp("c_issue_date"));
-				dto.setC_issue_end(rs.getTimestamp("c_issue_end"));
-				dto.setM_no(0);
-				dto.setIsUse(rs.getString("c_isUse"));
-				dto.setM_no(rs.getInt("m_no"));
-				
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}finally {
-			closeDB();
-		}
-	}
-	// 사용가능한 쿠폰 조회 - getAllCoupon()
+//	public void getAllCoupon(시작일, 만료일) {
+//		
+//		try {
+//			con = getConnection();
+//			sql = 
+//				"select c.c_no, c.quantity, c.c_discountRate, c.c_startDate, c.c_enddate, "
+//					  + "c.c_category, c.c_name, c.c_issue_date, c.c_deleated, c.c_issue_end "
+//			  + "from (select row_number() over(order by c_issue_end) number c_no "
+//			  		+ " from coupon "
+//			  		+ " where c_endDate > now() "
+//			  		+ " and c_deleted = 'N'"
+//			  		+ ") r, coupon c"
+//			  + "where r.c_no = c.c_no and rn between #{beginIndex} and #{endIndex} "
+//			  + "order by c_issue_end";
+//			pstmt = con.prepareStatement(sql);
+//			
+//			rs = pstmt.executeQuery();
+//			if(rs.next()) {
+//				CouponDTO dto = new CouponDTO();
+//				
+//				dto.setC_code(rs.getString("c_code"));
+//				dto.setC_name(rs.getString("c_name"));
+//				dto.setC_quantity(rs.getInt("c_quantity"));
+//				dto.setC_startDate(rs.getTimestamp("c_startDate"));
+//				dto.setC_endDate(rs.getTimestamp("endDate"));
+//				dto.setC_issue_date(rs.getTimestamp("c_issue_date"));
+//				dto.setC_issue_end(rs.getTimestamp("c_issue_end"));
+//				dto.setM_no(0);
+//				dto.setIsUse(rs.getString("c_isUse"));
+//				dto.setM_no(rs.getInt("m_no"));
+//				
+//			}
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}finally {
+//			closeDB();
+//		}
+//	}
+//	// 사용가능한 쿠폰 조회 - getAllCoupon()
 	
 }

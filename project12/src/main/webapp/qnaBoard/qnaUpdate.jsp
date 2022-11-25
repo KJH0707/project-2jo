@@ -10,7 +10,7 @@
     <head>
          <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Fork And Knife | QnA Write</title>
+        <title>Fork And Knife | QnA Update</title>
         <meta name="description" content="company is a real-estate template">
         <meta name="author" content="Kimarotec">
         <meta name="keyword" content="html5, css, bootstrap, property, real-estate theme , bootstrap template">
@@ -85,30 +85,37 @@
 <%-- <input type="hidden" name="rev_no" value="${rev_no}"> --%>
     <label for="firstname">문의분류</label>
         
-        <input type="radio" value="reser" name="qna_sort" <c:if test="${qna_sort eq 'reser'}">checked</c:if>>예약 문의
-        <input type="radio" name="qna_sort" value="store" <c:if test="${qna_sort eq 'store'}">checked</c:if>>식당 문의
-        <input type="radio" name="qna_sort" value="etc" <c:if test="${qna_sort eq 'etc'}">checked</c:if>>기타 문의
+         <div class="row">
+                                <div class="col-sm-12">
+        <input type="radio" name="qna_sort" value="reser" <c:if test="${dto.qna_sort eq 'reser'}">checked</c:if>  style="width: 10px">예약 문의
+        <input type="radio" name="qna_sort" value="store" <c:if test="${dto.qna_sort eq 'store'}">checked</c:if>  style="width: 10px">식당 문의
+        <input type="radio" name="qna_sort" value="etc" <c:if test="${dto.qna_sort eq 'etc'}">checked</c:if>  style="width: 10px">기타 문의
 <!--                                     </div> -->
-<!--                                 </div> -->
+                                </div>
 <br>
 <!--                                 <div class="col-sm-6"> -->
 <!--                                     <div class="form-group"> -->
+        <div class="col-sm-12">
         <label for="subject">제목</label>
         <input type="text" class="form-control" id="subject" name="rev_subject" value="${dto.rev_subject}">
-<!--                                     </div> -->
+                                    </div>
 <!--                                 </div> -->
 <!--                                 <div class="col-sm-6"> -->
 <!--                                     <div class="form-group"> -->
+       <div class="col-sm-12">
+                                    <div class="form-group">
         <label for="subject">첨부파일</label>
         <input type="file" class="form-control" id="file" name="rev_file" value="${dto.rev_file}">
-<!--                                     </div> -->
-<!--                                 </div> -->
+                                    </div>
+                                </div>
 <!--                                 <div class="col-sm-12"> -->
 <!--                                     <div class="form-group"> -->
+        <div class="col-sm-12">
+                                    <div class="form-group">
         <label for="message">내용</label>
-        <textarea id="message" class="form-control1" name="rev_content">${dto.rev_content}</textarea>
-<!--                                     </div> -->
-<!--                                 </div> -->
+        <textarea id="message" class="form-control1" name="rev_content" cols="140" rows="5">${dto.rev_content}</textarea>
+                                    </div>
+                                </div>
 <br>
 <!--                                 <div class="col-sm-12 text-center"> -->
     <button type="submit" class="btn btn-primary"><i class="fa fa-envelope-o"></i> QnA 수정하기 </button>

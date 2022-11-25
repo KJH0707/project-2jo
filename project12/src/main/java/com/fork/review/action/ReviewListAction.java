@@ -1,29 +1,29 @@
 package com.fork.review.action;
 
-import java.util.ArrayList;
-
-
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.fork.review.db.ReviewDAO;
-import com.fork.review.db.ReviewDTO;
+import com.fork.user.db.UserDAO;
 
 public class ReviewListAction implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 //		HttpSession session = request.getSession();
-//		String m_id = (String)session.getAttribute("m_id");
-//		if(m_id == null || !m_id.equals("m_id")) {
-//			response.sendRedirect("./메인으로가라");
-//			return null;
-//		}나중에 로그인하면 다시 풀어야함.
+//		String id = (String) session.getAttribute("c_id");
+//		ActionForward forward = new ActionForward();
+////		if(!id.contains("ceo") || !id.contains("store")) {
+////			forward.setPath("./loginAction.us");
+////			forward.setRedirect(true);
+////		}
 		
-
 		
+		int s_no = Integer.parseInt(request.getParameter("s_no"));
+		String pageNum = request.getParameter("pageNum");
+	
 		ReviewDAO dao = new ReviewDAO();
 		
 		int cnt = dao.getReviewCount();
@@ -36,11 +36,10 @@ public class ReviewListAction implements Action {
 //		dto.setS_no(Integer.parseInt(request.getParameter("s_no")));
 		// 	http://localhost:8088/JSP/board/boardList.jsp?pageNum=3 
 		
-		// 현 페이지가 몇 페이지 인지 확인
+		// 현 페이지가 몇 페이지 인지 확인..
 		
-		String s_name = request.getParameter("s_name");
-
-		String pageNum = request.getParameter("pageNum");
+		
+		
 		if(pageNum == null){
 			pageNum = "1";
 		}
@@ -56,7 +55,7 @@ public class ReviewListAction implements Action {
 		
 		// 디비에 전체 글 리스트 가져오기
 //		ArrayList boardListAll =  dao.getBoardList();
-		ArrayList reviewListAll = dao.getReviewList(startRow, pageSize);
+		List reviewListAll = dao.getReviewList(startRow, pageSize, s_no);
 		   /////////////////////////////////////////////////////////////////////////////////////////////////
 			// 페이징 처리 (2)
 			
@@ -87,22 +86,22 @@ public class ReviewListAction implements Action {
 //		System.out.println(" M : "+boardListAll); // 확인하고 주석처리해야 덜느려짐 보드에 모든 글이 다 나타나기 때문
 		
 		// 직접 출력 -> 위임(대신 출력) view .jsp페이지에서 출력
+		UserDAO udao = new UserDAO();
+		int result = udao.memberLogin(pageNum, pageNum);
 		
 		// Action -> jsp 페이지 정보 전달(request 영역객체 저장)
+				
 		request.setAttribute("reviewListAll", reviewListAll); // +a를 넣을경우, 추가적인 정보를 담을경우
 		request.setAttribute("totalCnt", cnt);
 		// 페이징처리 정보 저장
 		request.setAttribute("pageNum", pageNum);
-		request.setAttribute("totalCnt", cnt);
 		request.setAttribute("pageCount", pageCount);
 		request.setAttribute("pageBlock", pageBlock);
 		request.setAttribute("startPage", startPage);
 		request.setAttribute("endPage", endPage);
 		
-		request.setAttribute("endPage", endPage);
-		request.setAttribute("endPage", endPage);
-		
-//		request.setAttribute("boardListAll", dao.getBoardList()); // 디비에 있는 정보를 그대로 출력만 할 경우
+		request.setAttribute("s_no", s_no);
+//		request.setAttribute("dto", dao.getReviewList(startRow, pageSize, s_no)); // 디비에 있는 정보를 그대로 출력만 할 경우
 		
 		// 페이지 이동준비(티켓 생성)
 		ActionForward forward = new ActionForward();

@@ -1,13 +1,12 @@
 package com.fork.review.action;
 
-import java.io.PrintWriter;
-
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.fork.review.db.ReviewDAO;
 import com.fork.review.db.ReviewDTO;
+import com.fork.store.db.StoreDTO;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
@@ -35,14 +34,17 @@ public class ReviewUpdateProAction implements Action {
 		// 전달된 데이터 저장(파라미터)
 		// DTO 객체 생성
 		ReviewDTO dto = new ReviewDTO();
-//		dto.setS_no(Integer.parseInt(multi.getParameter("s_no")));
-//		dto.setRev_no(Integer.parseInt(multi.getParameter("Rev_no")));
+		dto.setS_no(Integer.parseInt(multi.getParameter("s_no")));
+		dto.setRev_no(Integer.parseInt(multi.getParameter("rev_no")));
 		dto.setRev_subject(multi.getParameter("rev_subject"));
-		dto.setRev_content(multi.getParameter("Rev_content"));
+		dto.setRev_content(multi.getParameter("rev_content"));
 		if(multi.getParameter("rev_star")!=null) {
 			dto.setRev_star(Integer.parseInt(multi.getParameter("rev_star")));
 		}
 		dto.setRev_file(multi.getFilesystemName("rev_file"));
+		
+		StoreDTO sdto = new StoreDTO();
+		sdto.setS_name(multi.getParameter("s_name"));
 		
 		String pageNum = multi.getParameter("pageNum");
 		
@@ -50,13 +52,20 @@ public class ReviewUpdateProAction implements Action {
 		ReviewDAO dao = new ReviewDAO();
 		dao.updateReview(dto);
 		
+		request.setAttribute("dto", dto);
+		request.setAttribute("sdto", sdto);
 		
+		ActionForward forward = new ActionForward();
+		forward.setPath("./ReviewList.rv?s_no="+dto.getS_no()+"&pageNum="+pageNum);
+		forward.setRedirect(true);
+		
+		return forward;
 		// 페이지 이동 (컨트롤러 X => 티켓 생성x)	
 		// JS 사용 페이지 이동
 		
-		response.setContentType("text/html; charset=UTF-8");
+//		response.setContentType("text/html; charset=UTF-8");
 		// => 응답페이지의 형태를 html 형태로 사용
-		PrintWriter out = response.getWriter();
+//		PrintWriter out = response.getWriter();
 		// => 응답페이지로 출력하는 통로를 준비
 		//out.print("<h1>안녕 테스트</h1>");
 		
@@ -84,11 +93,7 @@ public class ReviewUpdateProAction implements Action {
 //			out.print(" history.back(); ");
 //			out.print("</script>");
 //			out.close();
-		ActionForward forward = new ActionForward();
-		forward.setPath("./ReviewList.rv");
-		forward.setRedirect(true);
 		
-		return forward;
 		
 		
 	}

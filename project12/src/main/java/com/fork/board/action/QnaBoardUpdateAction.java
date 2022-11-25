@@ -13,11 +13,13 @@ public class QnaBoardUpdateAction implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-//		HttpSession session = request.getSession();
-//		String m_id = session.getId();
-//		if(m_id == null) {
-//			response.sendRedirect("/Main.re");
-//		}
+		HttpSession session = request.getSession();
+		String id = (String) session.getAttribute("m_id");
+		ActionForward forward = new ActionForward();
+		if(id == null) {
+			forward.setPath("./loginAction.us");
+			forward.setRedirect(true);
+		}
 		// 정보 저장
 		BoardDTO dto = new BoardDTO();
 		
@@ -64,7 +66,6 @@ public class QnaBoardUpdateAction implements Action {
 		request.setAttribute("pageNum", pageNum);
 		      
 		
-    ActionForward forward = new ActionForward(); 
     forward.setPath("./QnaList.br?pageNum="+pageNum);
     forward.setRedirect(true);
     

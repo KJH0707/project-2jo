@@ -36,7 +36,7 @@ public class AdminGenMemberListAction implements Action {
 		// 로그인 제어
 		String m_id = (String)request.getParameter("m_id");
 		
-		// 일반회원 페이징
+		
 		int cnt = dao.getGenMemCount();
 		int pageSize = 9;
 		
@@ -60,13 +60,16 @@ public class AdminGenMemberListAction implements Action {
 		// 디비에 전체 글 리스트 가져오기
 		//ArrayList boardListAll = dao.getBoardList();
 		List genMemList = null;
-		StringBuffer sb = new StringBuffer();
+		
 		if (m_id!=null) {
+			StringBuffer sb = new StringBuffer();
+			request.setAttribute("keyword", m_id);
 			m_id = m_id.trim();
 			sb.append(m_id);
 			sb.insert(0, "%");
 			sb.insert(m_id.length()+1, "%");
-			genMemList = dao.adminGetGenMemList(sb.toString());
+			genMemList = dao.adminGetGenMemList(startRow,pageSize,sb.toString());
+			cnt = dao.adminCntGetGenMemList(startRow,pageSize,sb.toString());
 		}
 		else {
 			genMemList = dao.adminGetGenMemList(startRow,pageSize);

@@ -56,9 +56,19 @@ public class AdminNoticeListAction implements Action {
 		
 		// 디비에 전체 글 리스트 가져오기
 		//ArrayList boardListAll = dao.getBoardList();
-		List noticeList = dao.adminGetNoticeList(startRow,pageSize);
+		List noticeList = dao.adminGetNoticeList(startRow,pageSize, 0);
 		System.out.println(noticeList);
-		
+		String keyword;
+		StringBuffer sb = new StringBuffer();
+		if (request.getParameter("keyword")!=null) {
+			keyword = (String)request.getParameter("keyword");
+			keyword.trim();
+			sb.append(keyword);
+			sb.insert(0, "%");
+			sb.insert(keyword.length()+1, "%");
+			noticeList = dao.adminGetNoticeList(startRow, pageSize, sb.toString(), 0);
+			cnt = dao.adminCntGetNoticeList(startRow, pageSize, sb.toString(), 0);
+		}
 		////////////////////////////////////////////////////////////
 		// 페이징 처리 (2)
 		

@@ -24,11 +24,15 @@ crossorigin="anonymous"/>
 <!--  eatigo -->
 <link rel="stylesheet" href="assets/css/lightslider.min.css">
 <link rel="stylesheet" href="assets/css/responsive.css">
-     
+<script src="https://kit.fontawesome.com/36255ede0b.js" crossorigin="anonymous"></script>     
       
 <script src="./board/jquery-3.6.1.js"></script>
 <script type="text/javascript">
+function bkgo() {
+    document.bf.submit();
+ }
 $(document).ready(function(){
+	
 	
 	alert('hi');
 	
@@ -131,6 +135,7 @@ $(document).ready(function(){
      
      <form action="" method="post" name="fr">
 		<input type="hidden" name="s_no"value="${dto.s_no }" >
+		
 	</form> 
 	
      <div class="content-area single-property" style="background-color: #FCFCFC;">
@@ -143,7 +148,7 @@ $(document).ready(function(){
                              <div class="clearfix">
                                 
                                 
-								
+								 <!-- 배너 이미지  -->
 								<table> 
 									<ul id="image-gallery" class="gallery list-unstyled cS-hidden">
 										<c:set var="img" value="${dto.s_image }"/>
@@ -156,7 +161,7 @@ $(document).ready(function(){
 										</c:forEach>
 									</ul>
 									</table>
-                                    <!-- 이미지  -->
+                                    <!-- 배너 이미지  -->
                              </div>
                          </div>
                      </div>
@@ -165,68 +170,75 @@ $(document).ready(function(){
                          <div class="single-property-header">   
                           <h4 class="s-property-title">		 F A C I L I T I E S 	 </h4>   
                          </div>
-						
-						
-                         <div class="property-meta entry-meta clearfix ">   
-                         
-                         <!-- 주차정보, 반려동물,키즈/노키즈/대관/콜키지
+
+
+						<div class="property-meta entry-meta clearfix ">
+
+							<!-- 주차정보, 반려동물,키즈/노키즈/대관/콜키지
 			 -->
-								<c:forEach var="i" begin="0" end="5" step="1">
+<%-- 							<c:forEach var="i" begin="0" end="4" step="1"> --%>
+
 								
+									<div class="form-group">
+<!-- 										<div class="glyphicon glyphicon-ok"></div> -->
+<%-- 										${dto.s_facility.split(',')[i]} --%>
+									</div>
+						<!--  주차 -->
+								<span>
+								<c:if test="${dto.s_facility.split(',')[0]!='null'}">
+												<i class="fa-solid fa-car-side"></i>
+												${dto.s_facility.split(',')[0]}
+												
+								</c:if></span>
 								
-							<tr>
-								<div class="form-group"><td>  ${dto.s_facility.split(',')[i]}</td></div>
-							</tr>
-														
-								
+								<c:if test="${dto.s_facility.split(',')[1]!='null'}">
+												<i class="fa-sharp fa-solid fa-paw"></i>
+												${dto.s_facility.split(',')[1]}
+												
+								</c:if>
+								<span>
+								<c:if test="${dto.s_facility.split(',')[2]!='null'}">
+												<i class="fa-solid fa-baby"></i>
+												${dto.s_facility.split(',')[2]}
+												
+								</c:if></span>
+								<span><c:if test="${dto.s_facility.split(',')[3]!='null'}">
+												<i class="fa-solid fa-wine-glass"></i>
+												${dto.s_facility.split(',')[3]}
+												
+								</c:if></span>
+								<c:if test="${dto.s_facility.split(',')[4]!='null'}">
+												<i class="fa-solid fa-hotel"></i>
+												${dto.s_facility.split(',')[4]}
+												
+								</c:if>
+<%-- 							</c:forEach> --%>
 
-<!--                              <div class="col-xs-3 col-sm-3 col-md-3 p-b-15"> -->
-<!--                                  <span class="property-info-icon icon-tag"> -->
-<!--                                      <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 48 48"> -->
-<!--                                      <path class="meta-icon" fill-rule="evenodd" clip-rule="evenodd" fill="#FFA500" d="M47.199 24.176l-23.552-23.392c-.504-.502-1.174-.778-1.897-.778l-19.087.09c-.236.003-.469.038-.696.1l-.251.1-.166.069c-.319.152-.564.321-.766.529-.497.502-.781 1.196-.778 1.907l.092 19.124c.003.711.283 1.385.795 1.901l23.549 23.389c.221.218.482.393.779.523l.224.092c.26.092.519.145.78.155l.121.009h.012c.239-.003.476-.037.693-.098l.195-.076.2-.084c.315-.145.573-.319.791-.539l18.976-19.214c.507-.511.785-1.188.781-1.908-.003-.72-.287-1.394-.795-1.899zm-35.198-9.17c-1.657 0-3-1.345-3-3 0-1.657 1.343-3 3-3 1.656 0 2.999 1.343 2.999 3 0 1.656-1.343 3-2.999 3z"></path> -->
-<!--                                      </svg> -->
-<!--                                  </span> -->
-<!--                                  <span class="property-info-entry"> -->
-<!--                                      <span class="property-info-label">주차정보</span> -->
-<!--                                      <span class="property-info-value">For Sale</span> -->
-<!--                                  </span> -->
-<!--                              </div> -->
 
-                          </c:forEach>
+						</div>
 
 
-                         </div>
-                        
-                         <!-- 가게 추가 정보 -->
+
+						<!-- 가게 추가 정보 -->
 
                          <div class="section additional-details">
 
-                             <h4 class="s-property-title">I N F O R M A T I O N</h4>
+                             <h4 class="s-property-title">     I N F O R M A T I O N   </h4>
 
                              <ul class="additional-details-list clearfix">
+                             <c:forEach var="i" begin="0" end="4" step="1">
                                  <li>
-                                     <span class="col-xs-6 col-sm-4 col-md-4 add-d-title">영업시간</span>
-                                     <span class="col-xs-6 col-sm-8 col-md-8 add-d-entry">${dto.s_hours }</span>
-                                 </li>
-
-                                 <li>
-                                     <span class="col-xs-6 col-sm-4 col-md-4 add-d-title">주차</span>
-                                     <span class="col-xs-6 col-sm-8 col-md-8 add-d-entry">2 Or More Spaces,Covered Parking,Valet Parking</span>
-                                 </li>
-
-                                 <li>
-                                     <span class="col-xs-6 col-sm-4 col-md-4 add-d-title">대관</span>
-                                     <span class="col-xs-6 col-sm-8 col-md-8 add-d-entry">Yes</span>
-                                 </li>
-
-                                 <li>
-                                     <span class="col-xs-6 col-sm-4 col-md-4 add-d-title">콜키지</span>
-                                     <span class="col-xs-6 col-sm-8 col-md-8 add-d-entry">콜키지 시 2만원 추가 금액</span>
-                                 </li>
-                                 <li>
-                                     <span class="col-xs-6 col-sm-4 col-md-4 add-d-title">노키즈/키즈</span>
-                                     <span class="col-xs-6 col-sm-8 col-md-8 add-d-entry">콜키지 시 2만원 추가 금액</span>
-                                 </li>
+                                     <span class="col-xs-6 col-sm-4 col-md-4 add-d-title">${dto.s_facility.split(',')[i]}</span>
+                                     <span class="col-xs-6 col-sm-8 col-md-8 add-d-entry"> 등록페이지에서 파라메터로 받기..?</span>
+                                     
+                                     <c:if test="${dto.s_facility.split(',')[i]=='null'}">
+                                     <span class="col-xs-6 col-sm-4 col-md-4 add-d-title">-</span>
+                                     <span class="col-xs-6 col-sm-8 col-md-8 add-d-entry">-</span>
+                                 
+									</c:if>
+										</li>	
+                               
+                              </c:forEach>
 
                              </ul>
                          </div>  
@@ -241,35 +253,44 @@ $(document).ready(function(){
 							<li class="active"><a data-toggle="tab" href="#menu">		M E N U		</a></li>
 							<li><a data-toggle="tab" href="#about">		A B O U T	 </a></li>
 							<li><a data-toggle="tab" href="#review">	R E V I E W		</a></li>
-							<li><a data-toggle="tab" href="#qna">   Q n A      </a></li>
+							<li><a data-toggle="tab" href="#qna">   Q & A      </a></li>
 						</ul>
 
 						<div class="tab-content">
 							<div id="menu" class="tab-pane fade in active">
-								<h3>M E N U</h3>
-								<p>메뉴를 고르시오</p>
+							<br><br>
+								<h3 align="center">M E N U</h3>
+								<p align="center">  Please select your menu.  </p><br>
 
-								
-								
-								<c:forEach var="i" begin="0" end="1" step="1">
-										
-										<tr>
-										 <td>메뉴 : ${dto.s_menuname.split(',')[i]}</td>
-										<td> 가격 : ${dto.s_menuprice.split(',')[i] }</td>
-										</tr><br>
-								</c:forEach>
+								<hr>
+								<%-- ${dto.s_menuname } --%>
+					<c:forEach var="i" begin="0" end="${dto.s_menuname[i]+1 }" step="1">
+							<span><img src="${dto.s_menuImg.split(',')[i]}" /> <br><br></span>
+							 <span class="glyphicon glyphicon-ok"> 메뉴 - ${dto.s_menuname.split(',')[i]} </span> <br>
+							<span class="glyphicon glyphicon-ok"> 가격 - ${dto.s_menuprice.split(',')[i] }원 </span> <br>
+							<br>
+							<hr>
+					</c:forEach>
 								
 							</div>
+							<!--  about-->
 							<div id="about" class="tab-pane fade">
-								<h3>About our restaurant</h3>
-								<p>Some content in menu 1.</p>
-
-										<p>${dto.s_content } </p>
-										
-							</div>
+							<br><br>
+								<h3 align="center"> About our restaurant </h3>
+								<p align="center">refer to below</p> <br><hr>
+								
+								<span class="glyphicon glyphicon-pencil"> ${dto.s_content } </span>
+										<br>
+										<br><br><br>
+							<span><b> - Operating hours - </b></span><br>
+							
+								everyday -	<p> ${dto.s_hours } </p>
+								</div>		
+							<!-- review-->
 							<div id="review" class="tab-pane fade">
-								<h3>review board</h3>
-								<p>please write review for our restaurant.</p>
+							<br><br>
+								<h3 align="center">review board</h3>
+								<p align="center">please write review for our restaurant.</p><br>
 								
 								
 									<!-- jsp? 가상주소? -->
@@ -277,52 +298,50 @@ $(document).ready(function(){
 								
 								<hr><!-- 상품 정보를 들고 가야함. 다시 디테일로 돌아와함 -->
 							<input type="button" value="리뷰 쓰기" class="reviewWrite"
-							onclick="location.href='./ReviewWrite.rv?s_no=${dto.s_no}&s_name=${dto.s_name}';">
+							onclick="location.href='./ReviewWrite.rv?s_no=${dto.s_no }&rev_category=1';">
 								
 								<input type="button" value="리뷰 목록" class="reviewList"
-							onclick="location.href='./ReviewList.rv?s_no=${dto.s_no}&s_name=${dto.s_name}';">
+							onclick="location.href='./ReviewList.rv?s_no=${dto.s_no}';">
 								
 						<input type="hidden" value="${dto.s_name }">
 								
 							</div>
 						<div id="qna" class="tab-pane fade">
-                        <h3>QnA board</h3>
-                        <p>please write QnA for our restaurant.</p>
+						<br><br>
+                        <h3 align="center">Q & A board</h3>
+                        <p align="center">please write QnA for our restaurant.</p><br>
                         
                         
                            <!-- jsp? 가상주소? -->
 <%--                      <jsp:include page="../board/reviewList.jsp" /> --%>
-                        
                         <hr><!-- 상품 정보를 들고 가야함. 다시 디테일로 돌아와함 -->
                      <input type="button" value="QnA 쓰기" class="qnaWrite"
-                     onclick="location.href='./QnaWrite.br?s_no=${dto.s_no}&rev_category=2';">
+                     onclick="location.href='./QnaWrite.br?s_no=${dto.s_no}&rev_category=0';">
                         
                         <input type="button" value="QnA 목록" class="qnaList"
-                     onclick="location.href='./QnaList.br?s_no=${dto.s_no}&rev_category=2';">
+                     onclick="location.href='./QnaList.br?s_no=${dto.s_no}&rev_category=0';">
 						
 						
 						</div>
 
 					</div> <br>
-                         
+                         <br><br>
                           <!-- 메뉴 리뷰/QnA 토글  -->
                          <!-- End additional-details area  -->
 
                         
                 <!-- End features area  -->
                  <h4 class="s-property-title">M A P </h4>
-                <p>위치 :  ${dto.s_addr }</p>
+                <span>address</span> <br> <p> ${dto.s_addr }</p>
 				<!--  지도 api -->
 				   <input type="hidden" id="address223" value="${dto.s_addr }">
-				<div id="map" style="width: 100%; height: 400px;"></div>
-				
-			<br>
-			
-                       
+					<div id="map" style="width: 100%; height: 400px;"></div>
+				<br>
                      </div>
-                 </div>
+                 </div> 
+               </div>
 
-                 <div class="col-md-4 p0">
+				<div class="col-md-4 p0">
                      <aside class="sidebar sidebar-property blog-asside-right">
                          <div class="dealer-widget">
                              <div class="dealer-content">
@@ -340,36 +359,61 @@ $(document).ready(function(){
                                          <div class="col-xs-8 col-sm-8 dealer-face">
                                              <a href="">
                                                  
-                                                 <img src="./upload/${dto.s_image }" class="img-circle">
+                                                 <img src="./upload/${dto.s_image.split(',')[0]}" class="img-circle">
                                              </a>
                                          </div>
                                          <br>
                                          <div class="col-xs-8 col-sm-8 ">
-                                             <h3 class="dealer-name">
-                                             
-										<b> ${dto.s_name } </b>
+                                            
+                                             <h3 class="dealer-name">  
+										<b>${dto.s_name }</b>
 										
-										 <p>${dto.s_type } 전문점</p>
-                                             </h3>
-                                           <form action="" method="post">
-											<!-- 좋아요 기능 -->
-											<div class="like-content">
-												<button class="btn-secondary like-review">
-													<i class="fa fa-heart" aria-hidden="true"></i> Like
-												</button>
-											</div>
-										</form>
-
+										 <p> ${dto.s_type } 전문점 </p> </h3>
+										 
+										<!-- 로그인 안하면 안보이게 하기 -->
+										 
+                                <form action="./BookMark.bk" method="post" name="bf">
+                                 <!-- 좋아요 기능 -->
+                                 <input type="hidden" name="s_no" value="${dto.s_no}">
+                                 <input type="hidden" name="result" value="${result}">
+                                 <input type="hidden" name="result" value="${dto}">
+                                 
+                                  <c:choose>
+                                    <c:when test="${result==1}">
+                                    
+                                 <div class="like-content">
+                                    <button type="button" onclick="bkgo()" class="btn-secondary like-review">
+                                       <i class="fa fa-heart" aria-hidden="true"></i> Like
+                                    </button>
+                                 </div>
+                                 </c:when>
+                                 <c:otherwise>
+                                 <div class="like-content">
+                                    <button type="button" onclick="bkgo()" class="btn-secondary like-review">
+                                       <i class="far fa-heart" aria-hidden="true"></i> Like
+                                    </button>
+                                 </div>
+                                 </c:otherwise>
+                                 </c:choose>
+                              </form>
+										
+										
+										
+										
+										
+										
                                          </div>
                                      </div>
 									
                                      <div class="clear">
                                          <ul class="dealer-contacts">                                       
-                                             <li><i class="pe-7s-map-marker strong pe-2x"> </i><a href="#" onclick="clip(); return false;"> MAP url ${dto.s_addr} </a></li>
-                                             <li><i class="pe-7s-call strong pe-2x"> </i> <a href="">Store Tel : ${dto.s_tel } </a></li>
-                                             <li><i class="pe-7s-star strong pe-2x"> </i>  <fmt:formatNumber value="${dto.s_star }"/></li>
+                                             <li><i class="pe-7s-map-marker strong"> </i><a href="#" onclick="clip(); return false;" data-value=" ${dto.s_addr}"> MAP url 
+                                             </a></li>
+                                             <li><i class="pe-7s-call strong"> </i> <a href="">Store Tel : ${dto.s_tel } </a></li>
+                                             <li><i class="pe-7s-star strong "> </i>  <fmt:formatNumber value="${dto.s_star }"/></li>
                                          </ul>
                                          <p> ${dto.s_content }</p>
+                                        
                                      </div>
 
                                  </div>
@@ -396,40 +440,11 @@ $(document).ready(function(){
 				How many? <br>
 				
 			<label>	예약 인원 </label> <input type="number" value="total" name="total">
-<!-- 		<div class="totalFn"> -->
-<!--     <div class="count-box"> 성인 -->
-<!--         <button type="button" class="minus">-</button> -->
-<!--         <span class="num" id="adult" >0</span> -->
-<!--         <button type="button" class="plus">+</button> -->
-<!--     </div> -->
-<!--     <div class="count-box"> 아이 -->
-<!--         <button type="button" class="minus">-</button> -->
-<!--         <span class="num" id="kids">0</span> -->
-<!--         <button type="button" class="plus">+</button> -->
-<!--     </div> -->
-   
-<!--     합계 -->
-<!--         <span id="total1">Total =</span> -->
-<!--         <strong class="count-total">0</strong> -->
-<!--     </div> -->
-<!--     // 합계 -->
-<!-- </div> -->
-<!-- 				<div>성인<input type='number'  -->
-<!-- 						id="adult" name="성인" -->
-<!-- 						value="0" -->
-<!-- 						step="1" -->
-<!-- 						min="1" -->
-<!-- 						max="7"></div> -->
-<!-- 				<div>아이<input type='number'  -->
-<!-- 						id="kids" name="아이" -->
-<!-- 						value="0" -->
-<!-- 						step="1" -->
-<!-- 						min="1" -->
-<!-- 						max="7"></div> -->
+
 					
 										<hr>
 
-				<div class="col-xs-6" style="font-family: monospace;">
+				<div class="col-xs-6" style=" font-family: monospace;">
 					<label for="property-geo">날짜</label> 
 						<input type="date"id="start" name="date"
 					       value="today"
@@ -446,7 +461,7 @@ $(document).ready(function(){
                            </div>
      	<hr>
      	
-                           <input id="input1" type="submit" value="예 약 하 기!" class="submit"> 
+                           <input id="input1" type="submit" value="reservation" class="submit"> 
 			</fieldset>
 			</form>
 		
@@ -483,24 +498,42 @@ $(document).ready(function(){
 
 
 
-<!--                            <div class="panel panel-default sidebar-menu wow fadeInRight animated"> -->
-<!--                                <div class="panel-heading"> -->
-<!--                                    <h3 class="panel-title">Ads her  </h3> -->
-<!--                                </div> -->
-<!--                                <div class="panel-body recent-property-widget"> -->
-<!--                                    <img src="assets/img/ads.jpg"> -->
-<!--                                </div> -->
-<!--                            </div> -->
+                           <div class="panel panel-default sidebar-menu wow fadeInRight animated">
+                               <div class="panel-heading">
+                                   <h3 class="panel-title">Ads her  </h3>
+                               </div>
+                               <div class="panel-body recent-property-widget">
+                                  <c:set var="img" value="${dto.s_image }"/>
+										<c:forEach var="i" begin="0" end="2" step="1" >
+											<c:if test="${img.split(',')[i]!='null'}">
+												<li data-thumb="./upload/${img.split(',')[i] }"> 
+												<img src="./upload/${img.split(',')[i] }" />
+												</li>
+											</c:if>
+										</c:forEach>
+                               </div>
+                           </div>
 
                            
                        </aside>
                    </div>
-               </div>
+
+
 
            </div>
        </div>
        
-      
+           <!-- disqus -->
+<div id="disqus_thread"></div>
+<script>
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://forknknife.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<!-- disqus -->
 
        <!-- Footer area-->
    <jsp:include page="../inc/bottom.jsp" />
@@ -527,7 +560,7 @@ $(document).ready(function(){
 
  <style type="text/css">
       /* 좋아요 버튼  */
-      body{
+      .body{
       font-family:monospace;
       }
       .like-content {
@@ -535,7 +568,7 @@ $(document).ready(function(){
           width: auto;
           margin: 2px auto;
           padding: 0;
-          font-size: 10px;
+          font-size: 12px;
           text-align: center;
       }
       .like-content .btn-secondary {
@@ -546,7 +579,8 @@ $(document).ready(function(){
           border-radius: 80px;
           box-shadow: 0 10px 20px -8px rgb(240, 75, 113);
           padding: 5px 15px;
-          font-size: 10px;
+          font-size: 12px;
+          font-weight: bold;
           cursor: pointer;
           border: none;
           outline: none;
@@ -561,7 +595,24 @@ $(document).ready(function(){
       .like-content .btn-secondary .fa {
         margin-right: 5px;
       }
+      
+      .form-inline input[type=submit] {
+     background: #aa9683;
+    color: #2b2626;
+    font-family: monospace;
+    height: 40px;
+    width: auto;
+    border-radius: 1px;
+    font-weight: bold;
+    font-size: 16px;
+    -webkit-transition: all 0.4s ease;
+    -moz-transition: all 0.4s ease;
+    -ms-transition: all 0.4s ease;
+    transition: all 0.4s ease;
+}
       </style>
       
+      
+ 
     </body>
 </html>

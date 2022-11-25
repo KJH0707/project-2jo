@@ -3,12 +3,10 @@ package com.fork.review.db;
 import java.sql.Timestamp;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 
 @Data
-@EqualsAndHashCode(callSuper=false)
-public class ReviewDTO extends MemberDTO {
+public class ReviewDTO {
 	private int rev_no;
 	private int s_no;
 	
@@ -24,6 +22,7 @@ public class ReviewDTO extends MemberDTO {
 	private String m_nickName;
 	private String m_id;
 	
-	
+	private int rev_ref;
+	private int rev_seq;
 	
 }

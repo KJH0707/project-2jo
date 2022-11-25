@@ -1,10 +1,8 @@
 package com.fork.user.action;
 
 import javax.servlet.http.HttpServletRequest;
-
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 
 public class LogoutAction implements Action {
 
@@ -19,7 +17,6 @@ public class LogoutAction implements Action {
 		forward.setRedirect(true);
 		
 		return forward;
-		
 	}
 
 }

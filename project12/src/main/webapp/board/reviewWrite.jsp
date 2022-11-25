@@ -49,8 +49,8 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	
-	
-	
+
+  
 $('#star a').click(function(){ 
 	 $(this).parent().children("a").removeClass("on");    
 	 $(this).addClass("on").prevAll("a").addClass("on");
@@ -98,14 +98,12 @@ $('#star a').click(function(){
                 <div class="col-md-9">
 
                     <div class="" id="contact1">                        
-                  
+                  ${dto }
                   <div align="center">
                         <hr>
                         <h2>리뷰 쓰세오</h2>
-                        <form action="./ReviewWriteAction.rv?s_no=${param.s_no }&?s_name=${param.s_name }" method="post" enctype="multipart/form-data">
-                      
+                        <form action="./ReviewWriteAction.rv?s_no=${param.s_no }" method="post" enctype="multipart/form-data">
                        <input type="hidden" value="${param.s_no }" name="s_no">
-                       <input type="hidden" value="${param.s_name }" name="s_name">
 <!--                             <div class="row">
 <!--                                 <div class="col-sm-6"> -->
 <!--                                     <div class="form-group"> -->
@@ -113,10 +111,11 @@ $('#star a').click(function(){
 <!--                                 </div> -->
                                 <br>
 <!--                                 <div class="col-sm-6"> -->
-<!--                                     <div class="form-group"> -->
-${param.s_name }
+<!--   
 
-의 별점은?
+                               <div class="form-group"> -->
+ 
+별점을 입력해주세요
 
 <P id="star"> <!-- 부모 -->
 <a href="#" id="starrate" data-rate="1">★</a> <!-- 자식들--> 
@@ -147,10 +146,12 @@ ${param.s_name }
 <!--                                 </div> -->
 					<br>
 <!--                                 <div class="col-sm-12 text-center"> -->
+							
                                 <button type="submit" class="btn btn-primary"><i class="fa fa-envelope-o"></i> 
                                review 등록하기 </button></form>
 							
-							<form action="./ReviewList.rv?s_no=${param.s_no }&s_name=${param.s_name }"> 
+							<form action="./ReviewList.rv"> 
+							<input type="hidden" name="s_no" value="${param.s_no }">
 							<button type="submit" class="btn btn-primary"><i class="fa fa-envelope-o"></i> 
                                review 목록으로~ </button></form>
                                
@@ -188,6 +189,28 @@ ${param.s_name }
         <script src="assets/js/gmaps.init.js"></script>
 
         <script src="assets/js/main.js"></script>
+	
+
+
+
+
+<style type="text/css">
+  #star a{
+   text-decoration: none;
+   color: gray;
+  }
+  #star a.on{
+   color: red;
+  } 
+
+@media (min-width: 992px)
+.col-md-9 {
+    width: 100%;
+}
+
+</style>
+
+
 
     </body>
 </html>

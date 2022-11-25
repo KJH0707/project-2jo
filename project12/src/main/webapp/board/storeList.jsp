@@ -20,35 +20,40 @@
 
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 		<script type="text/javascript">
-			$(document).ready(function() {
-				$('#lunchBegins').change(function() {
-					$('#basic12').children("option").remove();
-// 					
-					var city = $(this).val();
-					$.ajax({
-						url:"gu.re",
-						type:"get",
-						datatype:"xml",
-						success:function(data) {
-						var v = $(data).find(city);
-						v.find("gus").each(function() {
-							var info = "<option>"+$(this).find("gu").text()+"</option>";
-							$('#basic12').append(info);
-							});
-						},
-						error:function(request,status,error){
-				        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-				       }
+// 			$(document).ready(function() {
+// 				$('#lunchBegins').change(function() {
+// 					$('#basic12').children("option").remove();
+// // 					
+// 					var city = $(this).val();
+// 					$.ajax({
+// 						url:"gu.st",
+// 						type:"get",
+// 						datatype:"xml",
+// 						success:function(data) {
+// 						var v = $(data).find(city);
+// 						v.find("gus").each(function() {
+// 							var info = "<option>"+$(this).find("gu").text()+"</option>";
+// 							$('#basic12').append(info);
+// 							});
+// 						},
+// 						error:function(request,status,error){
+// 				        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+// 				       }
 						
-					}); // end of ajax
-				});
-			});
+// 					}); // end of ajax
+// 				});
+// 			});
+		
 		
 		</script>
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
         <jsp:include page="../inc/top.jsp"/>
+<!-- 		검색 파라미터 -->
 		
 		
+		
+		
+<!-- 		검색 파라미터 end -->
         <div class="page-head"> 
             <div class="container">
                 <div class="row">
@@ -73,11 +78,12 @@
                                 <h3 class="panel-title">가게 검색</h3>
                             </div>
                             <div class="panel-body search-widget">
-                                <form action="" class=" form-inline"> 
+                                <form action="./storeList.st" class=" form-inline" name="fr"> 
+                               
                                     <fieldset>
                                         <div class="row">
                                             <div class="col-xs-12">
-                                                <input type="text" class="form-control" placeholder="가게 검색">
+                                                <input type="text" class="form-control" placeholder="가게 검색" name="kw" value="${kw2 }">
                                             </div>
                                         </div>
                                     </fieldset>
@@ -86,20 +92,70 @@
                                         <div class="row">
                                             <div class="col-xs-6">
 
-                                                <select id="lunchBegins" class="selectpicker" data-live-search="true" data-live-search-style="begins" title="시">
-													<option selected>시</option>
-                                                    <option value="busan">부산</option>
-                                                    <option value="seoul">서울</option>
-                                                    <option value="daejeon">대전</option>
-                                                    <option value="wakanda">와칸다</option>
-                                                    <option value="forever">포에버</option>
-                                                    <option value="black">블랙팬서</option>
+                                                <select id="lunchBegins" class="show-tick form-control" name="city">
+                                                    <option value="busan" selected>부산</option>
                                                 </select>
                                             </div>
                                             <div class="col-xs-6">
-                                                <select id="basic12" class="show-tick form-control" >
-                                                     <option selected>구</option>
-
+                                                <select id="basic12" class="show-tick form-control" name="gu" >
+                                                    <option value="no">구</option>
+                                                    <option value="강서구"
+                                                    <c:if test="${gang!=null }">
+                                                    selected="selected"
+                                                    </c:if>>강서구</option>
+                                                    <option value="금정구"
+                                                    <c:if test="${gold!=null }">
+                                                    selected="selected"
+                                                    </c:if>>금정구</option>
+                                                    <option value="남구"
+                                                    <c:if test="${nam!=null }">
+                                                    selected="selected"
+                                                    </c:if>>남구</option>
+                                                    <option value="동래구"
+                                                    <c:if test="${dong!=null }">
+                                                    selected="selected"
+                                                    </c:if>>동래구</option>
+                                                    <option value="부산진구"
+                                                    <c:if test="${jin!=null }">
+                                                    selected="selected"
+                                                    </c:if>>부산진구</option>
+                                                    <option value="북구"
+                                                    <c:if test="${buk!=null }">
+                                                    selected="selected"
+                                                    </c:if>>북구</option>
+                                                    <option value="사상구"
+                                                    <c:if test="${sang!=null }">
+                                                    selected="selected"
+                                                    </c:if>>사상구</option>
+                                                    <option value="사하구"
+                                                    <c:if test="${saha!=null }">
+                                                    selected="selected"
+                                                    </c:if>>사하구</option>
+                                                    <option value="서구"
+                                                    <c:if test="${seo!=null }">
+                                                    selected="selected"
+                                                    </c:if>>서구</option>
+                                                    <option value="수영구"
+                                                    <c:if test="${swim!=null }">
+                                                    selected="selected"
+                                                    </c:if>>수영구</option>
+                                                    <option value="연제구"
+                                                    <c:if test="${yeon!=null }">
+                                                    selected="selected"
+                                                    </c:if>>연제구</option>
+                                                    <option value="영도구"
+                                                    <c:if test="${zero!=null }">
+                                                    selected="selected"
+                                                    </c:if>>영도구</option>
+                                                    <option value="중구"
+                                                    <c:if test="${middle!=null }">
+                                                    selected="selected"
+                                                    </c:if>>중구</option>
+                                                    <option value="해운대구"
+                                                    <c:if test="${sun!=null }">
+                                                    selected="selected"
+                                                    </c:if>>해운대구</option>
+													
                                                 </select>
                                             </div>
                                         </div>
@@ -108,58 +164,53 @@
                                     <fieldset class="padding-5">
                                         <div class="row">
                                             <div class="col-xs-8">
-                                                <label for="price-range">가격대 : </label>
-                                                <input type="text" class="span2 ddkjh" value="" data-slider-min="0" 
-                                                       data-slider-max="600" data-slider-step="5" 
-                                                       data-slider-value="[0,450]" id="price-range" ><br />
+                                                <label for="price-range">1인당 가격대 : </label>
+                                                <input type="text" class="span2 ddkjh" data-slider-min="0" 
+                                                       data-slider-max="100000" data-slider-step="5000" 
+                                                       <c:if test="${pr1==null }">
+                                                       data-slider-value="[0,50000]"
+                                                       </c:if>
+                                                       <c:if test="${pr1!=null }">
+                                                        data-slider-value="[${Integer.parseInt(pr1.split(",")[0]) },${Integer.parseInt(pr1.split(",")[1]) }]"
+                                                       </c:if>
+                                                        id="price-range" name="pr" value="0,50000">
                                                 <b class="pull-left color">0</b> 
                                                 <b class="pull-right color">100000</b>                                                
                                             </div>
                                             <div class="col-xs-4">
                                                 <div class="checkbox">
-                                                    <br><label> <input type="checkbox" checked><br>상관없음</label>
+                                                    <br><label> <input type="checkbox" name="prnon" value="1" 
+                                                    <c:if test="${param.prnon!=null }">
+                                                    checked
+                                                    </c:if>
+                                                    ><br>상관없음</label>
                                                 </div>
                                             </div>
                                             </div>
                                             
                                     </fieldset>    
                                     <hr>
-                                    <fieldset class="padding-5">                            
-										<div class="row">
-                                            <div class="col-xs-8">
-                                                <label for="property-geo">거리 :</label>
-                                                <input type="text" class="span2" value="" data-slider-min="0" 
-                                                       data-slider-max="600" data-slider-step="5" 
-                                                       data-slider-value="[50,450]" id="property-geo" ><br />
-                                                <b class="pull-left color">40m</b> 
-                                                <b class="pull-right color">12000m</b>
-                                                                                                
-                                            </div>
-                                           <div class="col-xs-4">
-                                                <div class="checkbox">
-                                                    <br><label> <input type="checkbox" checked><br>상관없음</label>
-                                                </div>
-                                            </div>
-                                                
-                                                                                      
-                                        </div>
-                                        
-                                         </fieldset>   
-                                         <hr>
+                                    
                                          <fieldset class="padding-5">                            
 										<div class="row">
                                             <div class="col-xs-6">
                                                 <label for="property-geo">인원 :</label>
-                								<select id="" class="show-tick form-control" >
-                                                     <option selected>명</option>
+                								<select id="" class="show-tick form-control" name="nums">
+                                                     <option value="0" selected>명</option>
 													<c:forEach var="i" begin="1" end="10" step="1">
-													<option value="${i}">${i}명</option>
+													<option value="${i}"
+                                                    <c:if test="${nums==i}">
+                                                    selected="selected"
+                                                    </c:if>>${i}명</option>
 													</c:forEach>
                                                 </select>
                                                </div>
                                             <div class="col-xs-6">
                                                 <div class="checkbox">
-                                                    <br><label> <input type="checkbox" checked> 상관없음</label>
+                                                    <br><label> <input type="checkbox" name="numsnon" value="1" 
+                                                    <c:if test="${param.numsnon!=null }">
+                                                    checked
+                                                    </c:if>> 상관없음</label>
                                                 </div>
                                             </div>
                                                                                     
@@ -170,13 +221,21 @@
                                         <div class="row">
                                             <div class="col-xs-6">
                                                 <div class="checkbox">
-                                                    <label> <input type="checkbox" checked> 한식</label>
+                                                    <label> <input type="checkbox" name="cg" value="한식"
+                                                    <c:if test="${ko!=null }">
+                                                    checked="checked"
+                                                    </c:if>
+                                                    >
+                                                    한식</label>
                                                 </div> 
                                             </div>
 
                                             <div class="col-xs-6">
                                                 <div class="checkbox">
-                                                    <label> <input type="checkbox"> 중식</label>
+                                                    <label> <input type="checkbox" name="cg" value="중식"
+                                                    <c:if test="${ch!=null }">
+                                                    checked="checked"
+                                                    </c:if>> 중식</label>
                                                 </div>
                                             </div>                                            
                                         </div>
@@ -186,12 +245,18 @@
                                         <div class="row">
                                             <div class="col-xs-6"> 
                                                 <div class="checkbox">
-                                                    <label> <input type="checkbox" checked> 일식</label>
+                                                    <label> <input type="checkbox" name="cg" value="일식"
+                                                    <c:if test="${ja!=null }">
+                                                    checked="checked"
+                                                    </c:if>> 일식</label>
                                                 </div>
                                             </div>  
                                             <div class="col-xs-6"> 
                                                 <div class="checkbox">
-                                                    <label> <input type="checkbox" checked> 양식</label>
+                                                    <label> <input type="checkbox" name="cg" value="양식"
+                                                    <c:if test="${am!=null }">
+                                                    checked="checked"
+                                                    </c:if>> 양식</label>
                                                 </div>
                                             </div>  
                                         </div>
@@ -203,7 +268,10 @@
                                         <div class="row">
                                             <div class="col-xs-6"> 
                                                 <div class="checkbox">
-                                                    <label>  <input type="checkbox" checked> 오마카세</label>
+                                                    <label>  <input type="checkbox" name="cg" value="오마카세"
+                                                    <c:if test="${om!=null }">
+                                                    checked="checked"
+                                                    </c:if>> 오마카세</label>
                                                 </div>
                                             </div>  
                                            
@@ -233,14 +301,14 @@
                                         <c:forEach var="rec" items="${recStore}">
                                         <li>
                                             <div class="col-md-3 col-sm-3 col-xs-3 blg-thumb p0">
-                                                <a href="single.html"><img src="assets/img/demo/small-property-2.jpg"></a>
+                                                <a href="./storeDetails.st?s_no=${rec.s_no }"><img src="assets/img/demo/small-property-2.jpg"></a>
                                                 <span class="property-seeker">
 <!--                                                     <b class="b-1"></b> -->
                                                     <b class="b-2">${rec.s_type }</b>
                                                 </span>
                                             </div>
                                             <div class="col-md-8 col-sm-8 col-xs-8 blg-entry">
-                                                <h6> <a href="single.html">${rec.s_name } </a></h6>
+                                                <h6> <a href="./storeDetails.st?s_no=${rec.s_no }">${rec.s_name } </a></h6>
                                                 <span class="property-price">별점 : ${rec.s_star }</span>
                                             </div>
                                         </li>
@@ -257,7 +325,20 @@
                         <div class="col-xs-10 page-subheader sorting pl0">
                             <ul class="sort-by-list">
                                 <li class="active">
-                                    <a href="javascript:void(0);" class="order_by_date" data-orderby="property_date" data-order="ASC">
+                                    <a href="./storeList.st?pageNum=${startPage+pageBlock }
+										<c:if test='${param.kw!=null }'>&kw=${param.kw }</c:if>
+										<c:if test='${param.gu!=null }'>&gu=${param.gu }</c:if>
+										<c:if test='${param.nums!=null }'>&nums=${param.nums }</c:if>
+										<c:if test='${param.numsnon!=null }'>&numsnon=${param.numsnon }</c:if>
+										<c:if test='${param.pr!=null }'>&pr=${param.pr }</c:if>
+										<c:if test='${param.prnon!=null }'>&prnon=${param.prnon }</c:if>
+										<c:if test='${param.cg!=null }'>
+										<c:forEach var='k' items='${paramValues.cg }'>
+										&cg=${k}
+										</c:forEach>
+										</c:if>
+										&dto=${boardListAll}"
+										class="order_by_date" data-orderby="property_date" data-order="ASC">
                                         Property Date <i class="fa fa-sort-amount-asc"></i>					
                                     </a>
                                 </li>
@@ -268,21 +349,16 @@
                                 </li>
                             </ul><!--/ .sort-by-list-->
 
-                            <div class="items-per-page">
-                                <label for="items_per_page"><b>Property per page :</b></label>
-                                <div class="sel">
-                                    <select id="items_per_page" name="per_page">
-                                        <option value="3">3</option>
-                                        <option value="6">6</option>
-                                        <option value="9">9</option>
-                                        <option selected="selected" value="12">12</option>
-                                        <option value="15">15</option>
-                                        <option value="30">30</option>
-                                        <option value="45">45</option>
-                                        <option value="60">60</option>
-                                    </select>
-                                </div><!--/ .sel-->
-                            </div><!--/ .items-per-page-->
+<!--                             <div class="items-per-page"> -->
+<!--                                 <label for="items_per_page"><b>Property per page :</b></label> -->
+<!--                                 <div class="sel"> -->
+<!--                                     <select id="items_per_page" name="per_page" > -->
+<!--                                         <option value="3">3</option> -->
+<!--                                         <option value="6">6</option> -->
+<!--                                         <option value="9" selected>9</option> -->
+<!--                                     </select> -->
+<!--                                 </div>/ .sel -->
+<!--                             </div>/ .items-per-page -->
                         </div>
 
                         <div class="col-xs-2 layout-switcher">
@@ -304,11 +380,11 @@
                                         </div>
 
                                         <div class="item-entry overflow">
-                                            <h5><a href="property-1.html">${dto.s_name }</a></h5>
+                                            <h5><a href="property-1.html">${dto.s_name } (${dto.s_type })</a></h5>
                                             <div class="dot-hr"></div>
                                             <span class="pull-left"><b> 별점 :</b> ${dto.s_star} </span>
 <!--                                             <span class="proerty-price pull-right"> $ 300,000</span> -->
-                                            <p style="display: none;">Suspendisse ultricies Suspendisse ultricies Nulla quis dapibus nisl. Suspendisse ultricies commodo arcu nec pretium ...</p>
+                                            <p style="display: none;">${dto.s_content }</p>
 
                                         </div>
 
@@ -324,20 +400,57 @@
                             <div class="pagination">
                                 <ul>
     <c:if test="${reqeustScope.totalCnt != 0 }">
-	
 	<!-- 이전 -->
 	<c:if test="${startPage > pageBlock }">
-		<li><a href="./storeList.re?pageNum=${startPage-pageBlock }">Prev</a></li>
+		<li><a href="./storeList.st?pageNum=${startPage-pageBlock }
+		<c:if test='${param.kw!=null }'>&kw=${param.kw }</c:if>
+		<c:if test='${param.gu!=null }'>&gu=${param.gu }</c:if>
+		<c:if test='${param.nums!=null }'>&nums=${param.nums }</c:if>
+		<c:if test='${param.numsnon!=null }'>&numsnon=${param.numsnon }</c:if>
+		<c:if test='${param.pr!=null }'>&pr=${param.pr }</c:if>
+		<c:if test='${param.prnon!=null }'>&prnon=${param.prnon }</c:if>
+		<c:if test='${param.cg!=null }'>
+		<c:forEach var='k' items='${paramValues.cg }'>
+		&cg=${k}
+		</c:forEach>
+		</c:if>
+		">Prev</a></li>
 	</c:if>
 	<!-- 페이지 번호(1,2,3....) -->
 	<c:forEach var="i" begin="${startPage }" end="${endPage }" step="1">
-		<li><a href="./storeList.re?pageNum=${i }">${i }</a><li>
+		<li><a href="./storeList.st?pageNum=${i }
+		<c:if test='${param.kw!=null }'>&kw=${param.kw }</c:if>
+		<c:if test='${param.gu!=null }'>&gu=${param.gu }</c:if>
+		<c:if test='${param.nums!=null }'>&nums=${param.nums }</c:if>
+		<c:if test='${param.numsnon!=null }'>&numsnon=${param.numsnon }</c:if>
+		<c:if test='${param.pr!=null }'>&pr=${param.pr }</c:if>
+		<c:if test='${param.prnon!=null }'>&prnon=${param.prnon }</c:if>
+		<c:if test='${param.cg!=null }'>
+		<c:forEach var='k' items='${paramValues.cg }'>
+		&cg=${k}
+		</c:forEach>
+		</c:if>
+		">${i }</a><li>
 	</c:forEach>
 	<!-- 다음 -->
 	<c:if test="${endPage < pageCount }">
-		<li><a href="./storeList.re?pageNum=${startPage+pageBlock }">[다음]</a><li>
+		<li><a href="./storeList.st?pageNum=${startPage+pageBlock }
+		<c:if test='${param.kw!=null }'>&kw=${param.kw }</c:if>
+		<c:if test='${param.gu!=null }'>&gu=${param.gu }</c:if>
+		<c:if test='${param.nums!=null }'>&nums=${param.nums }</c:if>
+		<c:if test='${param.numsnon!=null }'>&numsnon=${param.numsnon }</c:if>
+		<c:if test='${param.pr!=null }'>&pr=${param.pr }</c:if>
+		<c:if test='${param.prnon!=null }'>&prnon=${param.prnon }</c:if>
+		<c:if test='${param.cg!=null }'>
+		<c:forEach var='k' items='${paramValues.cg }'>
+		&cg=${k}
+		</c:forEach>
+		</c:if>
+		">[다음]</a><li>
 	</c:if>
 </c:if>
+
+
                                 </ul>
                             </div>
                         </div>                
@@ -346,21 +459,7 @@
                 </div>              
             </div>
         </div>
-<c:if test="${reqeustScope.totalCnt != 0 }">
-	
-	<!-- 이전 -->
-	<c:if test="${startPage > pageBlock }">
-		<li><a href="./BoardList.bo?pageNum=${startPage-pageBlock }">Prev</a></li>
-	</c:if>
-	<!-- 페이지 번호(1,2,3....) -->
-	<c:forEach var="i" begin="${startPage }" end="${endPage }" step="1">
-		<li><a href="./BoardList.bo?pageNum=${i }">${i }</a><li>
-	</c:forEach>
-	<!-- 다음 -->
-	<c:if test="${endPage < pageCount }">
-		<li><a href="./BoardList.bo?pageNum=${startPage+pageBlock }">[다음]</a><li>
-	</c:if>
-</c:if>
+
           <jsp:include page="../inc/bottom.jsp"/>
     </body>
 </html>

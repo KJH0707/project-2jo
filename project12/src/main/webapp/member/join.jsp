@@ -6,6 +6,12 @@
 <head>
 <title>Insert title here</title>
 
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="GARO is a real-estate template">
+        <meta name="author" content="Kimarotec">
+        <meta name="keyword" content="html5, css, bootstrap, property, real-estate theme , bootstrap template">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
 		
         <link rel="stylesheet" href="./assets/css/wizard.css"> 
         <link rel="stylesheet" href="./assets/css/join.css">   
@@ -23,7 +29,6 @@
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
         
-<!-- https://solbel.tistory.com/category/%EA%B0%9C%EB%B0%9C/javascript%20%26%20jquery?page=2 -->
 <!-- 데이터 유효성 검사 -->
 	<script type="text/javascript">
 	
@@ -54,12 +59,15 @@
 			let agree = $('#agree');
 			let noch = $('#noch').val();
 			
-			
-			
 			if(id.length == 0){
 				alert('아이디를 입력해주세요');
 				$('#id').focus();
 				
+			 	return;
+			}
+			
+			if(id.length < 5){
+				$('#id').focus();
 			 	return;
 			}
 			
@@ -84,8 +92,20 @@
 			 	return;
 			}
 			
+			if(nick.length < 1){
+				$('#nick').focus();
+				
+			 	return;
+			}
+			
 			if(tel.length == 0){
 				alert('연락처를 입력해주세요');
+				$('#tel').focus();
+				
+			 	return;
+			}
+			
+			if(tel.length < 12){
 				$('#tel').focus();
 				
 			 	return;
@@ -98,8 +118,27 @@
 			 	return;
 			}
 			
+			if(pw.length < 6){
+				$('#pw').focus();
+				
+			 	return;
+			}
+			
 			if(pwc.length == 0){
 				alert('비밀번호 확인을 입력해주세요');
+				$('#pwc').focus();
+				
+			 	return;
+			}
+			
+			if(pwc.length < 6){
+				$('#pwc').focus();
+				
+			 	return;
+			}
+			
+			if(pwc != pw){
+				alert('비밀번호를 다시 확인해주세요 ');
 				$('#pwc').focus();
 				
 			 	return;
@@ -331,6 +370,14 @@
 			$('#checkTel').attr('color','red');
 			$('#noch').val(1);
 		}
+		
+	 if($("#tel").val().length < 13 && $("#tel").val().length > 0){
+		if(!/^\d{3}-\d{4}-\d{4}$/.test(tel)){
+			$('#checkTel').html("연락처 형식에 맞지 않습니다.");
+			$('#checkTel').attr('color','red');
+			$('#noch').val(1);
+		}
+	  }
 
 	});
 	// 중복체크
@@ -528,11 +575,6 @@
 							  </label>
 							  <input type="password" class="form-control" id="pwc" placeholder="비밀번호를 확인하세요" name="pwc"  style="width:300px" maxlength="12">
 							</div>
-<!-- 							<div class="col-SM-2" style="padding:0 0 0 15px"> -->
-<!-- 							  <label for="tel">연락처&nbsp;&nbsp;<input type="button" value="본인인증" class="bttn" onclick="winopen();"></label> -->
-<!-- 							  <input type="tel" class="form-control" id="tel" placeholder="연락처를 입력하세요" name="tel"  style="width:300px"> -->
-<!-- 							</div> -->
-<!-- 						 </div> -->
 						</div>
 						</fieldset>
 						<br>

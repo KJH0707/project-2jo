@@ -20,7 +20,10 @@ public class AdminReportListAction implements Action {
 		
 		HttpSession session = request.getSession();
 		String id = (String)session.getAttribute("id");
-		int cnt = dao.getReportCount();
+		// 어드민
+		
+		// 어드민
+		
 		
 		if (!(id.equals("admin"))) {
 			forward.setPath("./main.st");
@@ -46,11 +49,39 @@ public class AdminReportListAction implements Action {
 		// 끝행 번호 계산하기 10  20  30  40  50 .....
 		int endRow = currentPage * pageSize;
 		////////////////////////////////////////////////////////////
-		
-		
+		int cnt =0;
+		List repList = null;
+		int m_no=0;
 		// 디비에 전체 글 리스트 가져오기
 		//ArrayList boardListAll = dao.getBoardList();
-		List repList = dao.adminGetReportList(startRow,pageSize);
+		if (request.getParameter("m")!=null) {
+			m_no = Integer.parseInt(request.getParameter("m"));
+			repList = dao.adminGetReportList(startRow,pageSize,m_no);
+			cnt = dao.getReportCount(m_no);
+			forward.setPath("./admin/adminGenMemDetailReport.jsp");
+			forward.setRedirect(false);
+		} 
+		else {
+			repList = dao.adminGetReportList(startRow,pageSize);
+			cnt = dao.getReportCount();
+			forward.setPath("./admin/adminReportList.jsp");
+			forward.setRedirect(false);
+			
+		}
+		String keyword;
+		StringBuffer sb = new StringBuffer();
+		if (request.getParameter("keyword")!=null) {
+			keyword = (String)request.getParameter("keyword");
+			keyword.trim();
+			sb.append(keyword);
+			sb.insert(0, "%");
+			sb.insert(keyword.length()+1, "%");
+			repList = dao.adminGetReportList(startRow, pageSize, sb.toString());
+			
+			
+			
+		}
+		
 		
 		
 		////////////////////////////////////////////////////////////
@@ -94,9 +125,8 @@ public class AdminReportListAction implements Action {
 		request.setAttribute("pageBlock", pageBlock);
 		request.setAttribute("startPage", startPage);
 		request.setAttribute("endPage", endPage);
+		request.setAttribute("dto", dao.adminGetGenMemDetail(m_no));
 		
-		forward.setPath("./admin/adminReportList.jsp");
-		forward.setRedirect(false);
 		return forward;
 	}
 

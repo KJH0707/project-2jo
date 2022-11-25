@@ -6,4 +6,5 @@
 // 	response.sendRedirect("StoreUpdate.st");
 	response.sendRedirect("ApiStore.ap");
 
+	response.sendRedirect("./CouponIssue.co");
 %>

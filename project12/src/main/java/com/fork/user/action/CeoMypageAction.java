@@ -1,5 +1,7 @@
 package com.fork.user.action;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -27,10 +29,12 @@ public class CeoMypageAction implements Action {
 		// DAO - 회원정보 가져오기(getCEO(id))
 		UserDAO cdao = new UserDAO();
 		CeoDTO cdto = cdao.getCEO(id);
+		List reservInfo = cdao.getCeoReservInfo(id);
 		
 		// 정보 request 에 저장
 		request.setAttribute("cdto", cdto);
 		session.setAttribute("c_no", cdto.getC_no()); 
+		request.setAttribute("reservInfo", reservInfo);
 		
 		// 페이지 이동
 		forward.setPath("./member/ceoMyPage.jsp");

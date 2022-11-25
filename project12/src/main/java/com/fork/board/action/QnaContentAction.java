@@ -12,10 +12,12 @@ public class QnaContentAction implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		HttpSession session = request.getSession();
-		String m_id = session.getId();
-		if(m_id == null) {
-			response.sendRedirect("/Main.re");
-		}
+		String id = (String) session.getAttribute("m_id");
+		ActionForward forward = new ActionForward();
+//		if(id == null) {
+//			forward.setPath("./loginAction.us");
+//			forward.setRedirect(true);
+//		}
 		
 		String pageNum = request.getParameter("pageNum");
 		int rev_no = Integer.parseInt(request.getParameter("rev_no"));
@@ -25,8 +27,8 @@ public class QnaContentAction implements Action {
 		BoardDTO dto = dao.getQnaBoard(rev_no);
 		
 		request.setAttribute("dto", dto);
+		request.setAttribute("m_id", id);
 		
-		ActionForward forward = new ActionForward(); 
 	    forward.setPath("./qnaBoard/qnaContent.jsp");
 	    forward.setRedirect(false);
 	      

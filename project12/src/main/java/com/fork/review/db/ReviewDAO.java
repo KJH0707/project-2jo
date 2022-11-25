@@ -5,6 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -70,8 +73,8 @@ public class ReviewDAO {
 				System.out.println(" DAO : rev_no : "+ rev_no);
 				//3.
 				sql = "insert into reviewcs(rev_no,s_no,rev_date,rev_star,rev_subject,"
-						+ "rev_category,m_no,rev_content,rev_file) "
-						+ "values(?,?,now(),?,?,?,?,?,?)";
+						+ "rev_category,m_no,rev_content,rev_file,rev_ref,rev_seq) "
+						+ "values(?,?,now(),?,?,?,?,?,?,?,?)";
 //				sql = "insert into reviewcs(rev_no,s_no,rev_date,rev_subject,rev_content) values(?,?,now(),?,?)";
 //						+ "values(?,now(),?,?,?,?,?,?,?,?)";
 				
@@ -87,7 +90,8 @@ public class ReviewDAO {
 				pstmt.setInt(6, dto.getM_no()); //멤버번호
 				pstmt.setString(7, dto.getRev_content());
 				pstmt.setString(8, dto.getRev_file());
-//				pstmt.setString(9, dto.getM_nickName()); //어케쓰는지모르겟음
+				pstmt.setInt(9, rev_no); //ref = rev_no
+				pstmt.setInt(10, 0); //seq 0 
 				
 				
 				// 4. 
@@ -123,29 +127,7 @@ public class ReviewDAO {
 		
 		
 		
-		//리드카운트
 		
-		
-		// 별점 평균
-//		public int getAvg(int rev_star) {
-//	        int avg = 0;
-//	        String sql = "select avg(rev_star) as avg from reviewcs where s_no=?";
-//	        
-//	        try {
-//	            pstmt = con.prepareStatement(sql);
-//	            
-//	            pstmt.setInt(1, s_no);
-//	            
-//	            rs = pstmt.executeQuery();
-//	            if(rs.next())
-//	                avg = rs.getInt("avg");
-//	        } catch (Exception e) {
-//				e.printStackTrace();
-//			}finally {
-//				closeDB();
-//			}
-//		}
-		// 별점
 		// 글 전체 개수 확인 - getReviewCount()
 		public int getReviewCount() {
 			int cnt = 0;
@@ -174,96 +156,73 @@ public class ReviewDAO {
 		}
 		// 글 전체 개수 확인 - getReviewCount()
 		
-		
-		// review정보 가져오기 - getReviewList()
-			public ArrayList getReviewList() {
-				ReviewDTO dto = new ReviewDTO();
-				System.out.println(" DAO : getBoardList() 호출 ");
-				// 글정보 모두 저장하는 배열
-				ArrayList reviewList = new ArrayList();
-				
-				try {
-					// 1.2. 디비연결
-					con = getConnection();
-					// 3. sql 작성(select) & pstmt 객체
-					sql = "select * from reviewcs asc rev_no where s_no=?";
-					pstmt = con.prepareStatement(sql);
-					// 4. sql 실행
-					pstmt.setInt(1, dto.getS_no());
-					rs = pstmt.executeQuery();
-					// 5. 데이터 처리(DB->DTO->List)
-					while(rs.next()) {
-						
-						// DB -> DTO
-						
-						dto.setRev_no(rs.getInt("rev_no"));
-						dto.setS_no(rs.getInt("s_no"));
-						dto.setRev_date(rs.getTimestamp("rev_date"));
-						dto.setRev_star(rs.getInt("rev_star"));
-						dto.setRev_subject(rs.getString("rev_subject"));
-						dto.setRev_category(rs.getInt("rev_category"));
-						dto.setM_no(rs.getInt("m_no"));
-//						dto.setQna_sort(rs.getString("qna_sort"));
-						dto.setRev_content(rs.getString("re_content"));
-						dto.setRev_file(rs.getString("rev_file"));
-						
-						// DTO -> List
-						reviewList.add(dto);
-						
-					}//while
-					
-					System.out.println(" DAO : 게시판 목록 저장완료! ");
-					
-				} catch (Exception e) {
-					e.printStackTrace();
-				} finally {
-					closeDB();
-				}
-				
-				return reviewList;
-			}
-			// 글정보 가져오기 - getReviewList()
+	
 		
 			// 글정보 가져오기 - getReviewList(int startRow,int pageSize)
-				public ArrayList getReviewList(int startRow,int pageSize) {
+				public List<Map> getReviewList(int startRow,int pageSize,int s_no) {
 					
 
 					System.out.println(" DAO : getReviewList() 호출 ");
 					// 글정보 모두 저장하는 배열
-					ArrayList reviewList = new ArrayList();
+					List<Map> reviewList = new ArrayList<Map>();
+					HashMap<String,Object> hm = null;
 					
 					try {
 						// 1.2. 디비연결
 						con = getConnection();
 						// 3. sql 작성(select) & pstmt 객체 
-						sql = "select * from reviewcs " + "limit ?,?";
+//						sql = "select * from reviewcs where s_no=? order by rev_date desc limit ?,?";
+						
+//						sql = "select * from reviewcs r, member m, store s "
+//								+ "where r.s_no = s.s_no and r.m_no=m.m_no and s.s_no=? "
+//								+ "order by rev_date desc limit ?,?";
+						
+						sql = "select s.*,r.*, "
+						  + "(select m_nickname from member m where m.m_no = r.m_no) m_nickname "
+						  + "from store s " 
+						  + "join reviewcs r on s.s_no = r.s_no "
+						  + "where s.s_no=? "             
+						 + "order by rev_ref desc, rev_seq asc limit ?,?";
 						pstmt = con.prepareStatement(sql);
 						// ?????
-						pstmt.setInt(1, startRow-1); // 시작행 - 1
-						pstmt.setInt(2, pageSize); // 개수
+						pstmt.setInt(1, s_no);
+						pstmt.setInt(2, startRow-1); // 시작행 - 1
+						pstmt.setInt(3, pageSize); // 개수
 						
 						// 4. sql 실행
 						rs = pstmt.executeQuery();
 						// 5. 데이터 처리(DB->DTO->List)
 						while(rs.next()) {
-							ReviewDTO dto = new ReviewDTO();
-							dto.setRev_no(rs.getInt("rev_no"));
-							dto.setS_no(rs.getInt("s_no"));
-							dto.setRev_date(rs.getTimestamp("rev_date"));
-							dto.setRev_star(rs.getInt("rev_star"));
-							dto.setRev_subject(rs.getString("rev_subject"));
-							dto.setRev_category(rs.getInt("rev_category"));
-							dto.setM_no(rs.getInt("m_no"));
+							hm = new HashMap<String,Object>();
+							hm.put("s_name", rs.getString("s_name"));
+							hm.put("s_readcount", rs.getInt("s_readcount"));
+							hm.put("s_star", rs.getDouble("s_star"));
+							hm.put("s_no", rs.getInt("s_no"));
+							
+							hm.put("m_nickName", rs.getString("m_nickName"));
+							hm.put("m_no", rs.getInt("m_no"));
+							
+							hm.put("rev_no", rs.getInt("rev_no"));
+							hm.put("rev_date", rs.getTimestamp("rev_date"));
+							hm.put("rev_star", rs.getInt("rev_star"));
+							hm.put("rev_subject", rs.getString("rev_subject"));
+							hm.put("rev_category", rs.getInt("rev_category"));
 //							dto.setQna_sort(rs.getString("qna_sort"));
-							dto.setRev_content(rs.getString("rev_content"));
-							dto.setRev_file(rs.getString("rev_file"));
+							hm.put("rev_content", rs.getString("rev_content"));
+							hm.put("rev_file", rs.getString("rev_file"));
+							hm.put("rev_ref", rs.getInt("rev_ref"));
+							hm.put("rev_seq", rs.getInt("rev_seq"));
+							
+//							pstmt.setInt(9, rev_no); //ref = rev_no
+//							pstmt.setInt(10, 0); //seq 0 
 							
 							// DTO -> List
-							reviewList.add(dto);
+							reviewList.add(hm);
+							
 							
 						}//while
-						
-						System.out.println(" DAO : 게시판 목록 저장완료! ");
+						System.out.println(reviewList);
+						System.out.println(" DAO : 게시판 목록 저장완료!");
 						
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -320,9 +279,9 @@ public class ReviewDAO {
 					
 					return dto;
 				}
-				// 리뷰 조회 - getBoard(bno)
+				// 리뷰 조회 - 
 				
-//				// 리뷰 수정 - updateBoard(DTO) -> 세션에 아이디값으로 구별..?
+//				// 리뷰 수정 - updateReview(DTO) -> 세션에 아이디값으로 구별..?
 				public void updateReview(ReviewDTO dto) {
 			
 				try {
@@ -342,14 +301,16 @@ public class ReviewDAO {
 								sql = "update reviewcs set rev_subject=?,rev_content=?,rev_file=?,rev_star=? where rev_no=?";
 								pstmt = con.prepareStatement(sql);
 								
+								System.out.println(dto.getRev_content());
 								//??? 
 								pstmt.setString(1, dto.getRev_subject());
 								pstmt.setString(2, dto.getRev_content());
-								pstmt.setString(3, dto.getRev_file()); //이거 아닐지도
+								pstmt.setString(3, dto.getRev_file());
 								pstmt.setInt(4, dto.getRev_star());
 								pstmt.setInt(5, dto.getRev_no());
 								
 								
+								pstmt.executeUpdate();
 						}
 						
 						
@@ -367,7 +328,7 @@ public class ReviewDAO {
 //					return null;
 //				}
 
-				// 리뷰 삭제 - deleteReview(s_no,pass)
+				// 리뷰 삭제 - deleteReview(rev_no)
 				public void deleteReview(int rev_no) {
 					
 					try {
@@ -393,4 +354,83 @@ public class ReviewDAO {
 					
 				}
 				 //게시판 글 삭제 - deleteReview(s_no,pass)
+				
+				// 답글쓰기 - replyReview(DTO)
+				public void replyReview(ReviewDTO dto) {
+					int rev_no = 0;
+					
+					try {
+						/////////////////////////////////
+						//1. 답글번호 계산하기(rev_no)
+						
+						// 1.2. 디비연결
+						con = getConnection();
+						// 3. sql 작성(select) & pstmt 객체
+						sql = "select max(rev_no) from reviewcs";
+						pstmt = con.prepareStatement(sql);
+						// 4. sql 실행
+						rs = pstmt.executeQuery();
+						// 5. 데이터 처리
+						if(rs.next()) {
+							rev_no = rs.getInt(1)+1;
+							//bno = rs.getInt("max(bno)")+1;
+						}
+						
+						System.out.println(" DAO : 답글 번호(rev_no) "+rev_no+"@@@@@@@@@@@@@@@@@@@@@@@@@");
+						
+						/////////////////////////////////
+						//2. 답글 순서 재배치
+						
+						// 3. sql 작성(update) & pstmt 객체
+						// => 같은 그룹에 있으면서, 기존의 seq 값보다 큰값이 있을때
+						sql = "update reviewcs set rev_seq = rev_seq+1 "
+								+ "where rev_ref=? and rev_seq>?";
+						pstmt = con.prepareStatement(sql);
+						// ???
+						pstmt.setInt(1, dto.getRev_ref());
+						pstmt.setInt(2, dto.getRev_seq());
+						// 4. sql 실행
+						int cnt = pstmt.executeUpdate();
+						// => cnt(update 구문이 적용된 수)
+						if(cnt > 0) {
+							System.out.println(" DAO : 답글 재정렬 완료! ");
+						}
+						
+						
+						
+						
+						sql = "insert into reviewcs(rev_no,s_no,rev_date,rev_star,rev_subject,"
+								+ "rev_category,m_no,rev_content,rev_file,rev_ref,rev_seq) "
+								+ "values(?,?,now(),?,?,?,?,?,?,?,?)";
+//						sql = "insert into reviewcs(rev_no,s_no,rev_date,rev_subject,rev_content) values(?,?,now(),?,?)";
+//								+ "values(?,now(),?,?,?,?,?,?,?,?)";
+						
+						pstmt = con.prepareStatement(sql);
+						
+						// ???
+						pstmt.setInt(1, rev_no); //리뷰번호
+						pstmt.setInt(2, dto.getS_no()); //가게 번호
+						pstmt.setInt(3, dto.getRev_star()); //리뷰별점
+						pstmt.setString(4, dto.getRev_subject()); //리뷰 제목
+//						pstmt.setString(5, dto.getQna_sort()); 
+						pstmt.setInt(5, 1); //리뷰카테고리?머고   0(문의) 1(리뷰) 
+						pstmt.setInt(6, dto.getM_no()); //멤버번호
+						pstmt.setString(7, dto.getRev_content());
+						pstmt.setString(8, dto.getRev_file());
+						pstmt.setInt(9, dto.getRev_ref()); //ref = rev_no
+						pstmt.setInt(10, dto.getRev_seq()+1); //seq 0 
+						// 4. sql 실행
+						pstmt.executeUpdate();
+						
+						System.out.println(" DAO : 답글 쓰기 완료! ");
+						/////////////////////////////////
+								
+					} catch (Exception e) {
+						e.printStackTrace();
+					} finally {
+						closeDB();
+					}
+					
+				}
+				// 답글쓰기 - replyReview(DTO)
 }

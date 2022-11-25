@@ -199,6 +199,21 @@ public class UserFrontController extends HttpServlet {
 					
 				}
 				
+				/// 관리자 페이지 (어드민 일반 회원 목록)
+				
+				else if(command.equals("/adminDeleteReservAction.us")) {
+					
+					action = new AdminDeleteReservAction();
+					
+					try {
+						forward = action.execute(request, response);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+				}
+				
 				else if(command.equals("/adminCeoMemList.us")) {
 					
 					action = new AdminCeoMemberListAction();
@@ -264,6 +279,18 @@ public class UserFrontController extends HttpServlet {
 					
 				}
 				
+				else if(command.equals("/adminEventList.us")) {
+									
+					action = new AdminEventListAction();
+					
+					try {
+						forward = action.execute(request, response);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+				}
 				
 				else if(command.equals("/adminDeleteNoticeAction.us")) {
 					
@@ -317,6 +344,18 @@ public class UserFrontController extends HttpServlet {
 				forward = new ActionForward();
 				forward.setPath("./admin/genMemReservMsg.jsp");
 				forward.setRedirect(false);
+				}
+				
+				else if(command.equals("/adminCeoMemDetail.us")) {
+					
+					action = new AdminCeoMemDetailAction();
+					
+					try {
+						forward = action.execute(request, response);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 				
 				//회원 마이 페이지(메인페이지)
@@ -439,9 +478,105 @@ public class UserFrontController extends HttpServlet {
 					forward.setRedirect(false);
 				} 
 				
+				else if(command.equals("/GenMemDetailReport.us")) {
+					
+					action = new AdminReportListAction();
+					
+					try {
+						forward = action.execute(request, response);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+				}
 				
+				else if(command.equals("/adminGenMemDetailReview.us")) {
+					
+					action = new AdminGenMemDetailReviewAction();
+					
+					try {
+						forward = action.execute(request, response);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				} 
 				
+				else if(command.equals("/ceoMemLocation.us")) {
+					forward = new ActionForward();
+					forward.setPath("./admin/ceoMemStoreLocation.jsp");
+					forward.setRedirect(false);
+				}
+
+				else if(command.equals("/adminReservList.us")) {
+					
+					action = new AdminReservListAction();
+					
+					try {
+						forward = action.execute(request, response);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
 				
+				else if(command.equals("/CeoMyPage_reDetail.us")) {
+					System.out.println(" C : /CeoMyPage_reDetail.us 호출 ");
+					System.out.println(" C : 패턴3) DB사용o, 페이지출력 ");
+					
+					action = new CeoMypage_revDetailAction();
+					
+					try {
+						forward = action.execute(request, response);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				} 
+				
+				// ceo 회원정보 관리
+				else if(command.equals("/CeoMyPage_Info.us")) {
+					System.out.println(" C : CeoMyPage_Info.us 호출");
+					System.out.println(" C : 패턴3 ");
+					
+					action = new CeoInfoUpdateAction();
+					
+					try {
+						forward = action.execute(request, response);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				} 
+				
+				// ceo 회원정보 수정
+				else if(command.equals("/CeoMyPage_InfoUpdate.us")) {
+					System.out.println(" C : /CeoMyPage_InfoUpdate.us 호출 ");
+					System.out.println(" C : 패턴2 ");
+					
+					// MemberUpdatePro 객체 생성
+					action = new CeoInfoUpdateProAction();
+					
+					try {
+						forward=action.execute(request, response);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+				
+				// ceo 회원정보 삭제
+				else if(command.equals("/CeoDeleteAction.us")) {
+					System.out.println(" C : /CeoDeleteAction 호출 ");
+					System.out.println(" C : 패턴2 ");
+					
+					// MemberUpdatePro 객체 생성
+					action = new CeoDeleteAction();
+					
+					try {
+						forward=action.execute(request, response);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
 				// 관리자페이지
 				System.out.println(" C : 2. 가상주소 매핑(패턴 1,2,3) 끝 \n");
 				

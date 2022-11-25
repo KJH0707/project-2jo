@@ -83,7 +83,6 @@ public class ReviewFrontController extends HttpServlet {
 					
 					// BoardUpdateProAction 객체 생성
 					action = new ReviewUpdateProAction();
-					
 					try {
 						forward = action.execute(request, response);
 					} catch (Exception e) {
@@ -103,8 +102,37 @@ public class ReviewFrontController extends HttpServlet {
 						e.printStackTrace();
 					}
 					
-				}
+				}else if(command.equals("/influencer.rv")) {
+
+					forward = new ActionForward();
+					forward.setPath("./board/influencer-profile.jsp");
+					forward.setRedirect(false);
+
+				}else if(command.equals("/reviewReply.rv")) {
+					System.out.println(" C : reviewReply.rv 호출 ");
+					System.out.println("C : [패턴1] DB 사용 x, view 페이지 이동");
 				
+					forward = new ActionForward();
+					forward.setPath("./board/reviewReply.jsp");
+					forward.setRedirect(false);
+					
+					
+				}else if(command.equals("/ReviewReplyAction.rv")) {
+				    System.out.println(" C : reviewReplyAction 호출 ");
+				    System.out.println(" C : [패턴2] DB 사용 O , 페이지 이동 (화면전환)");   //다른 페이지로 넘어 가게 하는 패턴 2
+
+				    //BoardReWriteAction() 객체 - execute ()
+
+				    action = new ReviewReplyAction();
+
+				    try {
+				        forward = action.execute(request, response);
+				    } catch (Exception e) {
+				        // TODO Auto-generated catch block
+				        e.printStackTrace();
+				    }
+
+				}
 				
 				
 				System.out.println(" C : 2. 가상주소 매핑 끝 \n");

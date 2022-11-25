@@ -1,3 +1,4 @@
+<%@page import="org.apache.commons.collections4.bag.SynchronizedSortedBag"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -5,14 +6,50 @@
 <html class="no-js"> <!--<![endif]-->
    <head>
       <title>Insert title here</title>
+      
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="GARO is a real-estate template">
+        <meta name="author" content="Kimarotec">
+        <meta name="keyword" content="html5, css, bootstrap, property, real-estate theme , bootstrap template">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css"/>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 <link rel="stylesheet" href="./assets/css/myPage.css">
+
+<style>
+
+</style>
+
+<script type="text/javascript">
+
+	function storeChange(sno){
+		var sno = $("#storeList").val();
+			location.href = "${pageContext.request.contextPath}/CeoMyPage_reserv.us?sno="+sno;
+	}
+	
+	function refuse(resno){
+			var res_no = resno;
+// 			alert(res_no);
+			var co = confirm("정말 거절하시겠어요?");
+			if(co == true){
+				location.href = "${pageContext.request.contextPath}/refuselReservAction.us?res_no="+res_no;
+			}
+	}
+	
+</script>
+<script>
+
+$(function(){
+	
+	
+	
+});
+
+</script>
 
  </head>
  <body>
-        
 <!-- 헤더 -->
 	<div>
        <jsp:include page="../inc/top.jsp"/>
@@ -54,19 +91,17 @@
                              </a>
                                <div class="col-md-8 col-sm-8 col-xs-8 blg-entry" width="">
                                    <h6><a href="./CeoMyPage_st.us">가게 관리</a></h6>
-<!--                                 <span class="property-price">3000000$</span> -->
                                </div>
                              
                            </li>
                            <li>
-                           	  <a href="./CeoMyPage_book.us">
+                           	  <a href="./CeoMyPage_reserv.us">
                                <div class="col-md-3 col-sm-3 col-xs-3 blg-thumb p0">
                                    <img src="./assets/img/myPage/people.png" width="20" height="20">
                                </div>
                               </a>
                                <div class="col-md-8 col-sm-8 col-xs-8 blg-entry">
-                                   <h6> <a href="./CeoMyPage_book.us">예약 관리</a></h6>
-<!--                                <span class="property-price">3000000$</span> -->
+                                   <h6> <a href="./CeoMyPage_reserv.us">예약 관리</a></h6>
                                </div>
                            </li>
                            <li>
@@ -77,18 +112,16 @@
                               </a>
                                <div class="col-md-8 col-sm-8 col-xs-8 blg-entry">
                                    <h6> <a href="./CeoMyPage_re.us">리뷰 관리</a></h6>
-<!--                                     <span class="property-price">3000000$</span> -->
                                </div>
                            </li>
                            <li>
-                           	  <a href="링크">
+                           	  <a href="./CeoMyPage_Info.us">
                                <div class="col-md-3 col-sm-3 col-xs-3 blg-thumb p0">
                                    <img src="assets/img/myPage/note.png" width="20" height="20">
                                </div>
                               </a>
                                <div class="col-md-8 col-sm-8 col-xs-8 blg-entry">
-                                   <h6> <a href="링크">회원정보 관리</a></h6>
-<!--                                      <span class="property-price">3000000$</span> -->
+                                   <h6> <a href="./CeoMyPage_Info.us">회원정보 관리</a></h6>
                                </div>
                            </li>
                        </ul>
@@ -104,131 +137,184 @@
   <div class="row tm-content-row tm-mt-big" >
   	<i class="fas fa-3x fa-tachometer-alt tm-site-icon"></i>
                 <div class="col-xl-8 col-lg-12 tm-md-12 tm-sm-12 tm-col">
-                    <div class="bg-white tm-block h-100">
+                  <div class="bg-white tm-block h-100">
+                    <form action="./CeoMyPage_reserv.us" method="get" id="fr">
                         <div class="row">
                             <div class="col-md-8 col-sm-12">
                                 <h3 class="tm-block-title d-inline-block">예 약 관 리
-                                <select style="font-size:10px">
-	                               <option>BBQ치킨</option>
-	                               <option>네네치킨</option>
-	                               <option>굽네치킨</option>
+                                <select id="storeList" name="sno" onchange="storeChange(this.value)" style="font-size:10px">
+                                   <option value="0" ${sno == 0 ? 'selected="selected"' : ''}>전체보기</option>
+                                <c:forEach var="storeInfo" items="${storeInfo}">
+	                               <option value=${storeInfo.s_no }  ${storeInfo.s_no == sno ? 'selected="selected"' : ''}>
+	                               ${storeInfo.s_name }</option>
+                               </c:forEach>
                                </select>
                                </h3>
                             </div>
                             <br>
                             <div class="text-right">
-                            <select style="font-size:10px">
-                            	<option>예약번호</option>
-                            	<option>성함</option>
-                            	<option>연락처</option>
+                            <select id="schList" name="schList" onchange="schListChange(this.value)" style="font-size:10px">
+                            	<option value=res_no ${schList == "res_no" ? 'selected="selected"' : ''}>예약번호</option>
+                            	<option value=res_name ${schList == "res_name" ? 'selected="selected"' : ''}>성함</option>
+                            	<option value=res_tel ${schList == "res_tel" ? 'selected="selected"' : ''}>연락처</option>
                             </select>
-                            <input type="search" style="width:10%;border:1px solid; padding:0px; font-size:10px;" placeholder="검색어를 입력해주세요">
-                            <button type="button"><i class="glyphicon glyphicon-search"></i></button>
+                            <input type="hidden" name="snohid" value="">
+                            <input type="search" id="search" name="search" style="width:10%;border:1px solid; padding:0px; font-size:10px;" placeholder="seach...">
+                            <button type="submit" id="ent"><i class="glyphicon glyphicon-search"></i></button>
                             </div>
                         </div>
+                    </form>
                         <hr>
                         <div class="table-responsive">
                             <table class="table table-hover table-striped tm-table-striped-even mt-3" style="table-layout:fixed">
                                 <thead>
                                     <tr class="tm-bg-gray">
+                                      <c:if test="${sno==0}">
+                                        <th scope="col" class="text-center" width="80px">상점명</th>
+                                      </c:if>
                                         <th scope="col" class="text-center" width="80px">예약번호</th>
                                         <th scope="col" class="text-center" width="100px">성함</th>
                                         <th scope="col" class="text-center" width="50px">인원</th>
                                         <th scope="col" class="text-center" width="100px">날짜 및 시간</th>
-                                        <th scope="col" class="text-center" width="200px">메뉴</th>
+                                        <th scope="col" class="text-center" width="200px">메세지</th>
                                         <th scope="col" class="text-center" width="120px">연락처</th>
-                                        <th scope="col" class="text-center" width="80px">선호 자리</th>
-                                        <th scope="col" class="text-center" width="50px">관리</th>
+                                        <th scope="col" class="text-center" width="80px">상태</th>
+                                        <!--  0이 이용 예정 1이 이용 완료 2가 노쇼 3 사업주 거절 -->
+                                        <th scope="col" class="text-center" width="50px">거절</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td class="text-center">123</td>
-                                        <td class="text-center">
-                                        홍길동</td>
-                                        <td class="text-center">2명</td>
-                                        <td class="text-center">2022-11-12<br>19:00</td>
-                                        <!-- style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;" -->
-                                        <td class="text-center">
-                                        황금올리브치킨,자메이카 소떡만나치킨, 크런치 버터치킨,페퍼로니 시카고피자L </td>
-                                        <td class="text-center">010-1234-1234</td>
-                                        <td class="text-center">창가</td>
-                                        <td align="center"><i class="glyphicon glyphicon-remove"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center">123</td>
-                                        <td class="text-center">김철수</td>
-                                        <td class="text-center">4명</td>
-                                        <td class="text-center">2022-1-12<br>13:00</td>
-                                        <td class="text-center">햄버거, 포테이토</td>
-                                        <td class="text-center">010-1111-1111</td>
-                                        <td class="text-center">야외</td>
-                                        <td align="center"><i class="glyphicon glyphicon-remove"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center">123</td>
-                                        <td class="text-center">이순신</td>
-                                        <td class="text-center">4명</td>
-                                        <td class="text-center">2022-1-12<br>13:00</td>
-                                        <td class="text-center">햄버거, 포테이토</td>
-                                        <td class="text-center">010-1111-1111</td>
-                                        <td class="text-center">야외</td>
-                                        <td align="center"><i class="glyphicon glyphicon-remove"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center">123</td>
-                                        <td class="text-center">ㅇㅇㅇ</td>
-                                        <td class="text-center">4명</td>
-                                        <td class="text-center">2022-1-12<br>13:00</td>
-                                        <td class="text-center">햄버거, 포테이토</td>
-                                        <td class="text-center">010-1111-1111</td>
-                                        <td class="text-center">야외</td>
-                                        <td align="center"><i class="glyphicon glyphicon-remove"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center">123</td>
-                                        <td class="text-center">ㅇㅇㅇ</td>
-                                        <td class="text-center">4명</td>
-                                        <td class="text-center">2022-1-12<br>13:00</td>
-                                        <td class="text-center">햄버거, 포테이토</td>
-                                        <td class="text-center">010-1111-1111</td>
-                                        <td class="text-center">야외</td>
-                                        <td align="center"><i class="glyphicon glyphicon-remove"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center">123</td>
-                                        <td class="text-center">ㅇㅇㅇ</td>
-                                        <td class="text-center">4명</td>
-                                        <td class="text-center">2022-1-12<br>13:00</td>
-                                        <td class="text-center">햄버거, 포테이토</td>
-                                        <td class="text-center">010-1111-1111</td>
-                                        <td class="text-center">야외</td>
-                                        <td align="center"><i class="glyphicon glyphicon-remove"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center">123</td>
-                                        <td class="text-center">ㅇㅇㅇ</td>
-                                        <td class="text-center">4명</td>
-                                        <td class="text-center">2022-1-12<br>13:00</td>
-                                        <td class="text-center">햄버거, 포테이토</td>
-                                        <td class="text-center">010-1111-1111</td>
-                                        <td class="text-center">야외</td>
-                                        <td align="center"><i class="glyphicon glyphicon-remove"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center">123</td>
-                                        <td class="text-center">ㅇㅇㅇ</td>
-                                        <td class="text-center">4명</td>
-                                        <td class="text-center">2022-1-12<br>13:00</td>
-                                        <td class="text-center">햄버거, 포테이토</td>
-                                        <td class="text-center">010-1111-1111</td>
-                                        <td class="text-center">야외</td>
-                                        <td align="center"><i class="glyphicon glyphicon-remove"></i></td>
-                                    </tr>
+                                <c:choose>
+                                 <c:when test="${schList==null && search==null }">
+                                   <c:forEach var="reservList" items="${reservList }">
+	                                    <tr>
+	                                       <c:if test="${sno==0}">
+	                                        <td class="text-center">${reservList.s_name }</td>
+	                                       </c:if>
+	                                        <td class="text-center">${reservList.res_no }</td>
+	                                        <td class="text-center">${reservList.res_name }</td>
+	                                        <td class="text-center">${reservList.res_num }명</td>
+	                                        <td class="text-center">${reservList.res_date }<br>${reservList.res_time }시</td>
+	                                        <td class="text-center">
+	                                        ${reservList.res_msg } </td>
+	                                        <td class="text-center">${reservList.res_tel }</td>
+	                                        <td class="text-center">
+	                                        <c:choose>
+	                                          <c:when test="${reservList.res_status==0}">
+	                                        	이용 예정
+	                                          </c:when>
+	                                          <c:when test="${reservList.res_status==1}">
+	                                        	이용 완료
+	                                          </c:when>
+	                                          <c:when test="${reservList.res_status==2}">
+	                                        	노쇼
+	                                          </c:when>
+	                                          <c:when test="${reservList.res_status==3}">
+	                                        	거절
+	                                          </c:when>
+	                                        </c:choose>
+	                                        </td>
+	                                        <td align="center">
+	                                        <c:choose>
+	                                          <c:when test="${reservList.res_status==3}">
+	                                          	<span style="color:green"><i class="glyphicon glyphicon-ok"></i></span>
+	                                          </c:when>
+	                                          <c:when test="${reservList.res_status==0}">
+	                                        	<a onclick="refuse(${reservList.res_no })"><i class="glyphicon glyphicon-remove"></i></a>
+	                                          </c:when>
+	                                        </c:choose>
+	                                        </td>
+	                                    </tr>
+                                      </c:forEach>
+                                    </c:when>
+                                    <c:when test="${schList!=null && search!=null }">
+                                      <c:forEach var="searchList" items="${searchList }">
+	                                    <tr>
+	                                       <c:if test="${sno==0}">
+	                                        <td class="text-center">${searchList.s_name }</td>
+	                                       </c:if>
+	                                    	<td class="text-center">${searchList.res_no }</td>
+	                                        <td class="text-center">${searchList.res_name }</td>
+	                                        <td class="text-center">${searchList.res_num }명</td>
+	                                        <td class="text-center">${searchList.res_date }<br>${searchList.res_time }시</td>
+	                                        <td class="text-center">
+	                                        ${searchList.res_msg } </td>
+	                                        <td class="text-center">${searchList.res_tel }</td>
+	                                        <td class="text-center">
+	                                        <c:choose>
+	                                          <c:when test="${searchList.res_status==0}">
+	                                        	이용 예정
+	                                          </c:when>
+	                                          <c:when test="${searchList.res_status==1}">
+	                                        	이용 완료
+	                                          </c:when>
+	                                          <c:when test="${searchList.res_status==2}">
+	                                        	노쇼
+	                                          </c:when>
+	                                          <c:when test="${searchList.res_status==3}">
+	                                        	거절
+	                                          </c:when>
+	                                        </c:choose>
+	                                        </td>
+	                                        <td align="center">
+	                                        <c:choose>
+	                                          <c:when test="${searchList.res_status==3}">
+	                                          	<span style="color:green"><i class="glyphicon glyphicon-ok"></i></span>
+	                                          </c:when>
+	                                          <c:when test="${searchList.res_status==0}">
+	                                        	<a onclick="refuse(${searchList.res_no })"><i class="glyphicon glyphicon-remove"></i></a>
+	                                          </c:when>
+	                                        </c:choose>
+	                                        </td>
+	                                    </tr>
+                                      </c:forEach>
+                                    </c:when>
+                                 </c:choose>
                                 </tbody>
                             </table>
                         </div>
-                        <div align="center"> <h3>< 1 2 3 ></h3></div>
+                        
+                 <div align="center" style="font-size:20px; color:black">
+                 <c:choose>
+                   <c:when test="${schList==null && search==null }">
+					<c:if test="${totalSnt != 0}" >
+						<!-- 이전 -->
+						<c:if test="${startPage > pageBlock }">
+							<a href="./CeoMyPage_reserv.us?sno=${sno }&pageNum=${startPage-pageBlock }">[이전]</a>
+						</c:if>
+						
+						<!-- 페이지 번호 -->
+						<c:forEach var="i" begin="${startPage }" end="${endPage }" step="1">
+							<a href="./CeoMyPage_reserv.us?sno=${sno }&pageNum=${i }">${i }</a>
+						</c:forEach>
+						
+						<!-- 다음 -->
+						<c:if test="${endPage < pageCount }">
+							<a href="./CeoMyPage_reserv.us?sno=${sno }&pageNum=${startPage+pageBlock }">[다음]</a>
+						</c:if>
+					</c:if>
+					</c:when>
+					<c:otherwise>
+						<c:if test="${totalSnt != 0}" >
+						<!-- 이전 -->
+						<c:if test="${startPage > pageBlock }">
+							<a href="./CeoMyPage_reserv.us?sno=${sno }&schList=${schList }&search=${search }&pageNum=${startPage-pageBlock }">[이전]</a>
+						</c:if>
+						
+						<!-- 페이지 번호 -->
+						<c:forEach var="i" begin="${startPage }" end="${endPage }" step="1">
+							<a href="./CeoMyPage_reserv.us?sno=${sno }&schList=${schList }&search=${search }&pageNum=${i }">${i }</a>
+						</c:forEach>
+						
+						<!-- 다음 -->
+						<c:if test="${endPage < pageCount }">
+							<a href="./CeoMyPage_reserv.us?sno=${sno }&schList=${schList }&search=${search }&pageNum=${startPage+pageBlock }">[다음]</a>
+						</c:if>
+					</c:if>
+					</c:otherwise>
+				 </c:choose>
+				</div> 
+                        
                         
 				  </div>
 				  </div>

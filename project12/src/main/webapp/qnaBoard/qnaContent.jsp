@@ -73,28 +73,48 @@
           	String pageNum = request.getParameter("pageNum");
           	int s_no = Integer.parseInt(request.getParameter("s_no"));
           	int rev_no = Integer.parseInt(request.getParameter("rev_no"));
+          	String m_id = request.getParameter("m_id");
           %>
            <label for="firstname">문의분류</label>
+<%--          ---${dto}------------ --%>
+          <input type="radio" name="qna_sort" value="reser" <c:if test="${dto.qna_sort eq 'reser'}">checked</c:if>>예약 문의
+          <input type="radio" name="qna_sort" value="store" <c:if test="${dto.qna_sort eq 'store'}">checked</c:if>>식당 문의
+          <input type="radio" name="qna_sort" value="etc" <c:if test="${dto.qna_sort eq 'etc'}">checked</c:if>>기타 문의
           
-          <input type="radio" name="qna_sort" value="예약문의" <c:if test="${qna_sort eq '예약문의'}">checked</c:if>>예약 문의
-          <input type="radio" name="qna_sort" value="식당문의" <c:if test="${qna_sort eq '식당문의'}">checked</c:if>>식당 문의
-          <input type="radio" name="qna_sort" value="기타문의" <c:if test="${qna_sort eq '기타문의'}">checked</c:if>>기타 문의
-          
-              <h5><a href="property-1.html">${dto.rev_subject}</a></h5>
+              <h5><a href="upload/${dto.rev_file }">${dto.rev_subject}</a></h5>
               <div class="dot-hr"></div>
-             <textarea> ${dto.rev_content } </textarea>
+             <textarea cols="55" rows="5"> ${dto.rev_content } </textarea>
               <div class="property-icon">
-                  <img src="">작성자 id|
+                  <img src="">${m_id } |
                   <img src="">${dto.rev_date}
-
-                  <div class="dealer-action pull-right">                                        
-                      <input type="button" onclick="location.href='./QnaUpdate.br?rev_no=${param.rev_no}&pageNum=${param.pageNum}&s_no=${param.s_no}'" value="edit" class="button">
-<!--                                                     <input type="button" onclick="location.href='submit-property.html'" value="edit" class="button">Edit </a> -->
-                    <input type="button" onclick="location.href='./QnaDelete.br?rev_no=${dto.rev_no}&pageNum=${param.pageNum}&s_no=${dto.s_no}'" value="delete" class="button delete_user_car">
-<!--                                                     <a href="#" class="button delete_user_car">Delete</a> -->
-                      <input type="button" onclick="location.href='./QnaList.br?pageNum=${param.pageNum}&s_no=${dto.s_no}'" value="list" class="button">
-                        </div>
+<br>
                     </div>
+<!--                   <div class="dealer-action pull-right">                                         -->
+<%-- 						<c:if test="${sessionScope.m_id.equals(m_id)}"> --%>
+                      <input type="button" onclick="location.href='./QnaUpdate.br?rev_no=${param.rev_no}&pageNum=${param.pageNum}&s_no=${param.s_no}'" value="edit" style="width:156px">
+<%--                       <input type="button" onclick="location.href='./QnaUpdate.br?rev_no=${param.rev_no}&pageNum=${param.pageNum}&s_no=${param.s_no}'" value="edit" class="button"> --%>
+<%--                       <class="button"> --%>
+<!--                                                     <input type="button" onclick="location.href='submit-property.html'" value="edit" class="button">Edit </a> -->
+                    <input type="button" onclick="location.href='./QnaDelete.br?rev_no=${dto.rev_no}&pageNum=${param.pageNum}&s_no=${dto.s_no}'" value="delete" style="width:156px">  
+<%--                     <input type="button" onclick="location.href='./QnaDelete.br?rev_no=${dto.rev_no}&pageNum=${param.pageNum}&s_no=${dto.s_no}'" value="delete" class="button">   --%>
+<%--                       <class="button"> --%>
+<!--                     delete_user_car -->
+<!--                                                     <a href="#" class="button delete_user_car">Delete</a> -->
+<%-- 						</c:if> --%>
+
+
+                      <c:if test="${id.contains('ceo')||id.contains('store')}">
+                      <input type="button" onclick="location.href='./QnaReWrite.br?rev_no=${dto.rev_no}&pageNum=${param.pageNum}&s_no=${dto.s_no}&rev_ref=${dto.rev_ref}&rev_seq=${dto.rev_seq}'" value="ReWrite" style="width:156px">
+<%--                       <input type="button" onclick="location.href='./QnaReWrite.br?rev_no=${dto.rev_no}&pageNum=${param.pageNum}&s_no=${dto.s_no}&rev_ref=${dto.rev_ref}&rev_seq=${dto.rev_seq}'" value="ReWrite" class="button"> --%>
+<%--                       <class="button"> --%>
+                        </c:if>
+                      
+                      <input type="button" onclick="location.href='./QnaList.br?pageNum=${param.pageNum}&s_no=${dto.s_no}'" value="list" style="width:156px">
+<%--                       <input type="button" onclick="location.href='./QnaList.br?pageNum=${param.pageNum}&s_no=${dto.s_no}'" value="list" class="button"> --%>
+<%--                       <class="button"> --%>
+                      
+                      
+<!--                         </div> -->
                 </div>
             </div>
         </div>                             

@@ -71,15 +71,17 @@
                         </div>
 
                         <div class="section"> 
-                        <c:forEach var="dto" items="${boardListAll }">
+<%--                         ${qnaList } --%>
+<%--                         <c:set var="mdto" value="${mListAll }" /> --%>
+                        <c:forEach var="dto" items="${qnaList }">
                             <div id="list-type" class="proerty-th-list">
                                 <div class="col-md-4 p0">
                                     <div class="box-two proerty-item">
-                                        <div class="item-entry overflow">
+                                        <div class="item-entry overflow" style="width:830px;">
                                             <h5><a href="./QnaContent.br?rev_no=${dto.rev_no}&s_no=${dto.s_no}&pageNum=${pageNum}">${dto.rev_no} ${dto.rev_subject }</a></h5>
                                             <div class="dot-hr"></div>
                                                 <div class="dealer-action pull-right">                                        
-                                                    <a href="" class="button">작성자 </a>
+                                                    <a href="" class="button">${dto.m_nickName } </a>
                                                     <a href="" class="button delete_user_car">${dto.rev_date}</a>
 <!--                                                     <a href="" class="button">조회수</a>
  -->                                                </div>
@@ -113,7 +115,7 @@
                         <div class="section"> 
                             <div class="pull-right">
                                 <div class="pagination">
-                                <c:if test="${requestScope.totalCnt !=0 }"}>
+<%--                                 <c:if test="${requestScope.totalCnt !=0 }"}> --%>
                                 <c:if test="${startPage > pageBlock }">
 								<a href="./QnaList.br?pageNum=${startPage-pageBlock }">
 								[이전]
@@ -130,7 +132,7 @@
 								<a href="./QnaList.br?pageNum=${startPage+pageBlock }">
 								[다음]
 								</a></c:if>
-							</c:if>
+<%-- 							</c:if> --%>
 <!--                                     <ul> -->
 <!--                                         <li><a href="#">Prev</a></li> -->
 <!--                                         <li><a href="#">1</a></li> -->

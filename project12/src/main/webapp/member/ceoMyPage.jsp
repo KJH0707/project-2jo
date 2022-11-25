@@ -1,11 +1,21 @@
+<%@page import="java.util.Date"%>
+<%@page import="org.apache.commons.collections4.bag.SynchronizedSortedBag"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.fork.user.db.CeoDTO" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html class="no-js"> <!--<![endif]-->
    <head>
       <title>Insert title here</title>
+      
+     	 <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="GARO is a real-estate template">
+        <meta name="author" content="Kimarotec">
+        <meta name="keyword" content="html5, css, bootstrap, property, real-estate theme , bootstrap template">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css"/>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -13,35 +23,6 @@
 <link rel="stylesheet" href="./assets/css/myPage_ceo.css">
 
 <style>
-/*    .carousel { */
-/*        margin-bottom: 0; */
-/*       padding: 0 40px 30px 40px; */
-/*    } */
-/*    /* Reposition the controls slightly */ */
-/*    .carousel-control { */
-/*       left: -12px; */
-/*    } */
-/*    .carousel-control.right { */
-/*       right: -12px; */
-/*    } */
-/*    /* Changes the position of the indicators */ */
-/*    .carousel-indicators { */
-/*       right: 50%; */
-/*       top: auto; */
-/*       bottom: 0px; */
-/*       margin-right: -19px; */
-/*    } */
-/*    /* Changes the colour of the indicators */ */
-/*    .carousel-indicators li { */
-/*       background: #c0c0c0; */
-/*    } */
-/*    .carousel-indicators .active { */
-/*       background: #333333; */
-/*    } */
-
-.textbox {
-/*   position: relative; */
-}
 
 .cent {
   position: absolute;
@@ -77,7 +58,11 @@
      });
    });
   </script>
-
+<%
+	Date d = new Date();
+	SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
+	String today = date.format(d);
+%>
 
  </head>
  <body>
@@ -122,19 +107,17 @@
                              </a>
                                <div class="col-md-8 col-sm-8 col-xs-8 blg-entry" width="">
                                    <h6><a href="./CeoMyPage_st.us">가게 관리</a></h6>
-<!--                                 <span class="property-price">3000000$</span> -->
                                </div>
                              
                            </li>
                            <li>
-                           	  <a href="./CeoMyPage_book.us">
+                           	  <a href="./CeoMyPage_reserv.us">
                                <div class="col-md-3 col-sm-3 col-xs-3 blg-thumb p0">
                                    <img src="assets/img/myPage/people.png" width="20" height="20">
                                </div>
                               </a>
                                <div class="col-md-8 col-sm-8 col-xs-8 blg-entry">
-                                   <h6> <a href="./CeoMyPage_book.us">예약 관리</a></h6>
-<!--                                <span class="property-price">3000000$</span> -->
+                                   <h6> <a href="./CeoMyPage_reserv.us">예약 관리</a></h6>
                                </div>
                            </li>
                            <li>
@@ -145,18 +128,27 @@
                               </a>
                                <div class="col-md-8 col-sm-8 col-xs-8 blg-entry">
                                    <h6> <a href="./CeoMyPage_re.us">리뷰 관리</a></h6>
-<!--                                     <span class="property-price">3000000$</span> -->
                                </div>
                            </li>
                            <li>
-                           	  <a href="링크">
+                           <li>
+                           	  <a href="./CeoMyPage_re.us">
+                               <div class="col-md-3 col-sm-3 col-xs-3 blg-thumb p0">
+                                   <img src="assets/img/myPage/review.png" width="20" height="20">
+                               </div>
+                              </a>
+                               <div class="col-md-8 col-sm-8 col-xs-8 blg-entry">
+                                   <h6> <a href="./CouponIssue.co">쿠폰 생성 관리</a></h6>
+                               </div>
+                           </li>
+                           <li>
+                           	  <a href="./CeoMyPage_Info.us">
                                <div class="col-md-3 col-sm-3 col-xs-3 blg-thumb p0">
                                    <img src="assets/img/myPage/note.png" width="20" height="20">
                                </div>
                               </a>
                                <div class="col-md-8 col-sm-8 col-xs-8 blg-entry">
-                                   <h6> <a href="링크">회원정보 관리</a></h6>
-<!--                                      <span class="property-price">3000000$</span> -->
+                                   <h6> <a href="./CeoMyPage_Info.us">회원정보 관리</a></h6>
                                </div>
                            </li>
                        </ul>
@@ -185,7 +177,7 @@
                 <div class="row">
                     <div class="col-sm-6 col-md-4">
 <!--                     /380x500 -->
-                        <img src="assets/img/myPage/cat.jpg" alt="profile" width=500 height=500 style="border-radius:50%" />
+                        <img src="assets/img/myPage/comingsoon.png" alt="profile" width=500 height=500 style="border-radius:50%" />
                     </div>
                     <div class="col-sm-6 col-md-8">
                         <h4>${cdto.c_nickName }</h4>
@@ -210,7 +202,7 @@
                         </table>
                         <!-- Split button -->
                         <div class="text-right">
-                            <a>수정</a>
+                            <a href="./CeoMyPage_Info.us">수정</a>
                         </div>
                     </div>
                 </div>
@@ -218,19 +210,9 @@
         </div>
   
         
-<!--                             <ul class="dropdown-menu" role="menu"> -->
-<!--                                 <li><a href="#">Twitter</a></li> -->
-<!--                                 <li><a href="https://plus.google.com/+Jquery2dotnet/posts">Google +</a></li> -->
-<!--                                 <li><a href="https://www.facebook.com/jquery2dotnet">Facebook</a></li> -->
-<!--                                 <li class="divider"></li> -->
-<!--                                 <li><a href="#">Github</a></li> -->
-<!--                             </ul> -->
-        
-        
-        
      	   <div class="row">
               <div class="col-md-10 col-md-offset-1 col-sm-12 text-center page-title">
-                  <h4>오늘 예약</h4> 
+                  <h4>최근 예약</h4> 
                </div>
             </div>
            
@@ -241,146 +223,147 @@
            <div class="well" style="background:white; border:0; height:500px"> 
                 <div id="carousel-example-generic" class="carousel slide">
                  
-                <ol class="carousel-indicators">
-                    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                <ol class="carousel-indicators" style="bottom:0px; margin-bottom:0px">
+                    <li data-target="#carousel-example-generic" data-slide-to="0" class="active" style="border-color:gray"></li>
+                    <li data-target="#carousel-example-generic" data-slide-to="1" style="border-color:gray"></li>
+                    <li data-target="#carousel-example-generic" data-slide-to="2" style="border-color:gray"></li>
                 </ol>
                  
                 <!-- Carousel items -->
                 <div class="carousel-inner" >
                     
-                <div class="item active" >
-                   <div class="row-fluid" style="display:flex; padding-left:50px" >
+              <div class="item active" >
+               <div class="row-fluid" style="display:flex; padding-left:50px" >
+               <c:set var="info" value="${reservInfo}" />
+                  <c:forEach var="i" begin="0" end="2" step="1">
                      <div class="shbox" style="width:30%; position: relative;">
                      <img src="assets/img/myPage/memo5.png" id="memo" style="width:100%; margin:10px;">
-                     <p class="cent" style="text-align:left; padding:0px 10px 0px 40px; width:100%; line-height:170%">
-                       <b style="font-size:15px;" >BBQ 치킨 </b><br>
-                       <b>예약번호 : 123</b> <br>
-                       <b>성함 : 홍길동</b> <br>
-                       <b>인원 : 2명</b> <br>
-                       <b>예약시간 :19:00</b>  <br>
-                       <b>메뉴 : 황금올리브치킨,자메이카 소떡만나치킨, 크런치 버터치킨,페퍼로니 시카고피자L</b> <br>
-                       <b>연락처 : 010-1111-1111</b><br>
-                       <b>선호자리 : 창가</b>
+                     <c:choose>
+                     	<c:when test="${info[i]==null}">
+                     	 <p class="cent" style="text-align:left; padding:0px 10px 0px 40px; width:100%; line-height:170%">
+                     	 <b>최근 예약 내역이 없어요ㅠㅠ</b>
+                     	 </p>
+                     	</c:when>
+                     	<c:otherwise>
+                     <p class="cent" style="font-size:0.7vw; text-align:left; padding:0px 10px 0px 40px; width:100%; height:220px; line-height:170%">
+                       <b style="font-size:0.9vw;" >[${info[i].s_name }] </b><br>
+                       <b>예약번호 : ${info[i].res_no }</b> <br>
+                       <b>성함 : ${info[i].res_name }</b> <br>
+                       <b>인원 : ${info[i].res_num }명</b> <br>
+                       <b>예약일 : ${info[i].res_date }(${info[i].res_time }시)</b>  <br>
+                       <b>메세지 : ${info[i].res_msg }</b> <br>
+                       <b>연락처 : ${info[i].res_tel }</b><br>
+                       <b>상태 : 
+                       <c:choose>
+                         <c:when test="${info[i].res_status==0}">
+                       	이용 예정
+                         </c:when>
+                         <c:when test="${info[i].res_status==1}">
+                       	이용 완료
+                         </c:when>
+                         <c:when test="${info[i].res_status==2}">
+                       	노쇼
+                         </c:when>
+                         <c:when test="${info[i].res_status==3}">
+                       	거절
+                         </c:when>
+                      </c:choose></b>
                      </p>
+                     	</c:otherwise>
+                     </c:choose>
                      </div>
-                     <div class="shbox" style="width:30%; position: relative;">
-                     <img src="assets/img/myPage/memo5.png" id="memo" style="width:100%; margin:10px;">
-                     <p class="cent" style="text-align:left; padding:0px 10px 0px 40px; width:100%; line-height:170%">
-                       <b style="font-size:15px;" >후라이드참잘하는집</b><br>
-                       <b>예약번호 : 123</b> <br>
-                       <b>성함 : 홍길동</b> <br>
-                       <b>인원 : 2명</b> <br>
-                       <b>예약시간 :19:00</b>  <br>
-                       <b>메뉴 : 황금올리브치킨,자메이카 소떡만나치킨, 크런치 버터치킨,페퍼로니 시카고피자L</b> <br>
-                       <b>연락처 : 010-1111-1111</b><br>
-                       <b>선호자리 : 창가</b>
-                     </p>
-                     </div>
-                     <div class="shbox" style="width:30%; position: relative;">
-                     <img src="assets/img/myPage/memo5.png" id="memo" style="width:100%; margin:10px;">
-                     <p class="cent" style="text-align:left; padding:0px 10px 0px 40px; width:100%; line-height:170%">
-                       <b style="font-size:15px;" >굽네 치킨 </b><br>
-                       <b>예약번호 : 123</b> <br>
-                       <b>성함 : 홍길동</b> <br>
-                       <b>인원 : 2명</b> <br>
-                       <b>예약시간 :19:00</b>  <br>
-                       <b>메뉴 : 황금올리브치킨,자메이카 소떡만나치킨, 크런치 버터치킨,페퍼로니 시카고피자L</b> <br>
-                       <b>연락처 : 010-1111-1111</b><br>
-                       <b>선호자리 : 창가</b>
-                     </p>
-                     </div>
+                    </c:forEach>
                    </div><!--/row-fluid-->
                 </div><!--/item-->
-                 
-                <div class="item" >
+                
+               <div class="item" >
                    <div class="row-fluid" style="display:flex; padding-left:50px" >
+               <c:set var="info" value="${reservInfo}" />
+                  <c:forEach var="i" begin="3" end="5" step="1">
                      <div class="shbox" style="width:30%; position: relative;">
                      <img src="assets/img/myPage/memo5.png" id="memo" style="width:100%; margin:10px;">
-                     <p class="cent" style="text-align:left; padding:0px 10px 0px 40px; width:100%; line-height:170%">
-                       <b style="font-size:15px;" >60계 치킨 </b><br>
-                       <b>예약번호 : 123</b> <br>
-                       <b>성함 : 홍길동</b> <br>
-                       <b>인원 : 2명</b> <br>
-                       <b>예약시간 :19:00</b>  <br>
-                       <b>메뉴 : 황금올리브치킨,자메이카 소떡만나치킨, 크런치 버터치킨,페퍼로니 시카고피자L</b> <br>
-                       <b>연락처 : 010-1111-1111</b><br>
-                       <b>선호자리 : 창가</b>
+                     <c:choose>
+                     	<c:when test="${info[i]==null}">
+                     	 <p class="cent" style="text-align:left; padding:0px 10px 0px 40px; width:100%; line-height:170%">
+                     	 <b>최근 예약 내역이 없어요ㅠㅠ</b>
+                     	 </p>
+                     	</c:when>
+                     	<c:otherwise>
+                     <p class="cent" style="font-size:0.7vw; text-align:left; padding:0px 10px 0px 40px; width:100%; line-height:170%">
+                       <b style="font-size:0.9vw;" >[${info[i].s_name }] </b><br>
+                       <b>예약번호 : ${info[i].res_no }</b> <br>
+                       <b>성함 : ${info[i].res_name }</b> <br>
+                       <b>인원 : ${info[i].res_num }명</b> <br>
+                       <b>예약일 : ${info[i].res_date }(${info[i].res_time }시)</b>  <br>
+                       <b>메세지 : ${info[i].res_msg }</b> <br>
+                       <b>연락처 : ${info[i].res_tel }</b><br>
+                       <b>상태 : 
+                       <c:choose>
+                         <c:when test="${info[i].res_status==0}">
+                       	이용 예정
+                         </c:when>
+                         <c:when test="${info[i].res_status==1}">
+                       	이용 완료
+                         </c:when>
+                         <c:when test="${info[i].res_status==2}">
+                       	노쇼
+                         </c:when>
+                         <c:when test="${info[i].res_status==3}">
+                       	거절
+                         </c:when>
+                      </c:choose></b>
                      </p>
+                     	</c:otherwise>
+                     </c:choose>
                      </div>
-                     <div class="shbox" style="width:30%; position: relative;">
-                     <img src="assets/img/myPage/memo5.png" id="memo" style="width:100%; margin:10px;">
-                     <p class="cent" style="text-align:left; padding:0px 10px 0px 40px; width:100%; line-height:170%">
-                       <b style="font-size:15px;" >네네치킨</b><br>
-                       <b>예약번호 : 123</b> <br>
-                       <b>성함 : 홍길동</b> <br>
-                       <b>인원 : 2명</b> <br>
-                       <b>예약시간 :19:00</b>  <br>
-                       <b>메뉴 : 황금올리브치킨,자메이카 소떡만나치킨, 크런치 버터치킨,페퍼로니 시카고피자L</b> <br>
-                       <b>연락처 : 010-1111-1111</b><br>
-                       <b>선호자리 : 창가</b>
-                     </p>
-                     </div>
-                     <div class="shbox" style="width:30%; position: relative;">
-                     <img src="assets/img/myPage/memo5.png" id="memo" style="width:100%; margin:10px;">
-                     <p class="cent" style="text-align:left; padding:0px 10px 0px 40px; width:100%; line-height:170%">
-                       <b style="font-size:15px;" >동근이두마리치킨 </b><br>
-                       <b>예약번호 : 123</b> <br>
-                       <b>성함 : 홍길동</b> <br>
-                       <b>인원 : 2명</b> <br>
-                       <b>예약시간 :19:00</b>  <br>
-                       <b>메뉴 : 황금올리브치킨,자메이카 소떡만나치킨, 크런치 버터치킨,페퍼로니 시카고피자L</b> <br>
-                       <b>연락처 : 010-1111-1111</b><br>
-                       <b>선호자리 : 창가</b>
-                     </p>
-                     </div>
+                    </c:forEach>
                    </div><!--/row-fluid-->
                 </div><!--/item-->
-                 
-                <div class="item" >
-                   <div class="row-fluid" style="display:flex; padding-left:50px" >
+                
+                 <div class="item" >
+                 <div class="row-fluid" style="display:flex; padding-left:50px" >
+               <c:set var="info" value="${reservInfo}" />
+                  <c:forEach var="i" begin="5" end="7" step="1">
                      <div class="shbox" style="width:30%; position: relative;">
                      <img src="assets/img/myPage/memo5.png" id="memo" style="width:100%; margin:10px;">
-                     <p class="cent" style="text-align:left; padding:0px 10px 0px 40px; width:100%; line-height:170%">
-                       <b style="font-size:15px;" >BBQ 치킨 </b><br>
-                       <b>예약번호 : 123</b> <br>
-                       <b>성함 : 홍길동</b> <br>
-                       <b>인원 : 2명</b> <br>
-                       <b>예약시간 :19:00</b>  <br>
-                       <b>메뉴 : 황금올리브치킨,자메이카 소떡만나치킨, 크런치 버터치킨,페퍼로니 시카고피자L</b> <br>
-                       <b>연락처 : 010-1111-1111</b><br>
-                       <b>선호자리 : 창가</b>
+                     <c:choose>
+                     	<c:when test="${info[i]==null}">
+                     	 <p class="cent" style="text-align:left; padding:0px 10px 0px 40px; width:100%; line-height:170%">
+                     	 <b>최근 예약 내역이 없어요ㅠㅠ</b>
+                     	 </p>
+                     	</c:when>
+                     	<c:otherwise>
+                     <p class="cent" style="font-size:0.7vw; text-align:left; padding:0px 10px 0px 40px; width:100%; line-height:170%">
+                       <b style="font-size:0.9vw;" >[${info[i].s_name }] </b><br>
+                       <b>예약번호 : ${info[i].res_no }</b> <br>
+                       <b>성함 : ${info[i].res_name }</b> <br>
+                       <b>인원 : ${info[i].res_num }명</b> <br>
+                       <b>예약일 : ${info[i].res_date }(${info[i].res_time }시)</b>  <br>
+                       <b>메세지 : ${info[i].res_msg }</b> <br>
+                       <b>연락처 : ${info[i].res_tel }</b><br>
+                       <b>상태 : 
+                       <c:choose>
+                         <c:when test="${info[i].res_status==0}">
+                       	이용 예정
+                         </c:when>
+                         <c:when test="${info[i].res_status==1}">
+                       	이용 완료
+                         </c:when>
+                         <c:when test="${info[i].res_status==2}">
+                       	노쇼
+                         </c:when>
+                         <c:when test="${info[i].res_status==3}">
+                       	거절
+                         </c:when>
+                      </c:choose></b>
                      </p>
+                     	</c:otherwise>
+                     </c:choose>
                      </div>
-                     <div class="shbox" style="width:30%; position: relative;">
-                     <img src="assets/img/myPage/memo5.png" id="memo" style="width:100%; margin:10px;">
-                     <p class="cent" style="text-align:left; padding:0px 10px 0px 40px; width:100%; line-height:170%">
-                       <b style="font-size:15px;" >후라이드참잘하는집</b><br>
-                       <b>예약번호 : 123</b> <br>
-                       <b>성함 : 홍길동</b> <br>
-                       <b>인원 : 2명</b> <br>
-                       <b>예약시간 :19:00</b>  <br>
-                       <b>메뉴 : 황금올리브치킨,자메이카 소떡만나치킨, 크런치 버터치킨,페퍼로니 시카고피자L</b> <br>
-                       <b>연락처 : 010-1111-1111</b><br>
-                       <b>선호자리 : 창가</b>
-                     </p>
-                     </div>
-                     <div class="shbox" style="width:30%; position: relative;">
-                     <img src="assets/img/myPage/memo5.png" id="memo" style="width:100%; margin:10px;">
-                     <p class="cent" style="text-align:left; padding:0px 10px 0px 40px; width:100%; line-height:170%">
-                       <b style="font-size:15px;" >BBQ 치킨 </b><br>
-                       <b>예약번호 : 123</b> <br>
-                       <b>성함 : 홍길동</b> <br>
-                       <b>인원 : 2명</b> <br>
-                       <b>예약시간 :19:00</b>  <br>
-                       <b>메뉴 : 황금올리브치킨,자메이카 소떡만나치킨, 크런치 버터치킨,페퍼로니 시카고피자L</b> <br>
-                       <b>연락처 : 010-1111-1111</b><br>
-                       <b>선호자리 : 창가</b>
-                     </p>
-                     </div>
+                    </c:forEach>
                    </div><!--/row-fluid-->
                 </div><!--/item-->
+               
                  
                 </div><!--/carousel-inner-->
                  

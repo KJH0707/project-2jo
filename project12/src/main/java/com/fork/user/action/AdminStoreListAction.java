@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.fork.store.db.StoreDAO;
 import com.fork.user.db.UserDAO;
 
 
@@ -36,10 +37,10 @@ public class AdminStoreListAction implements Action {
 		
 		
 		
-		com.fork.store.db.StoreDAO dao = new com.fork.store.db.StoreDAO();
+		StoreDAO dao = new StoreDAO();
 		
 		int cnt = dao.getBoardCount();
-		System.out.println(cnt);		
+		String s_name = (String)request.getParameter("keyword");
 		int pageSize = 9;
 		
 		// 	http://localhost:8088/JSP/board/boardList.jsp?pageNum=3 
@@ -61,7 +62,10 @@ public class AdminStoreListAction implements Action {
 		UserDAO udao = new UserDAO();
 		// 디비에 전체 글 리스트 가져오기
 //		ArrayList boardListAll =  dao.getBoardList();
-		List<Map> storeListAll = udao.adminGetBoardList(startRow, pageSize);
+		List<Map> storeListAll = null;
+		
+		
+		
 		   /////////////////////////////////////////////////////////////////////////////////////////////////
 			// 페이징 처리 (2)
 			
@@ -88,7 +92,20 @@ public class AdminStoreListAction implements Action {
 					endPage = pageCount;
 //				}
 			}
-		
+				StringBuffer sb = new StringBuffer();
+				if (s_name!=null) {
+					request.setAttribute("keyword",s_name );
+					s_name = s_name.trim();
+					sb.append(s_name);
+					sb.insert(0, "%");
+					sb.insert(s_name.length()+1, "%");
+					storeListAll = udao.adminGetBoardList(startRow, pageSize, sb.toString());
+					cnt = udao.adminCntGetBoardList(startRow, pageSize, sb.toString());
+					
+				}
+				else {
+					storeListAll = udao.adminGetBoardList(startRow, pageSize);
+				}
 //		System.out.println(" M : "+boardListAll); // 확인하고 주석처리해야 덜느려짐 보드에 모든 글이 다 나타나기 때문
 		
 		// 직접 출력 -> 위임(대신 출력) view .jsp페이지에서 출력

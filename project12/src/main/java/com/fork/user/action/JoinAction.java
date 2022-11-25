@@ -24,6 +24,7 @@ public class JoinAction implements Action {
 		mdto.setM_name(request.getParameter("name"));
 		mdto.setM_email(request.getParameter("email"));
 		mdto.setM_nickName(request.getParameter("nick"));
+		mdto.setM_tel(request.getParameter("tel"));
 		mdto.setM_pw(request.getParameter("pw"));
 		mdto.setM_birth(request.getParameter("birth"));
 		mdto.setM_gender(request.getParameter("gender"));
@@ -38,6 +39,7 @@ public class JoinAction implements Action {
 			cdto.setC_name(request.getParameter("name"));
 			cdto.setC_email(request.getParameter("email"));
 			cdto.setC_nickName(request.getParameter("nick"));
+			cdto.setC_tel(request.getParameter("tel"));
 			cdto.setC_pw(request.getParameter("pw"));
 			
 			UserDAO cdao = new UserDAO();

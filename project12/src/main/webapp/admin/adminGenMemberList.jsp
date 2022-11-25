@@ -72,12 +72,12 @@
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                             <div class="page-header">
                                 <h2 class="pageheader-title">관리자 Dashboard</h2>
-                                <p class="pageheader-text">Nulla euismod urna eros, sit amet scelerisque torton lectus vel mauris facilisis faucibus at enim quis massa lobortis rutrum.</p>
+                                
                                 <div class="page-breadcrumb">
                                     <nav aria-label="breadcrumb">
                                         <ol class="breadcrumb">
-                                            <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Dashboard</a></li>
-                                            <li class="breadcrumb-item active" aria-current="page">일반 회원 관리</li>
+                                            <li class="breadcrumb-item"><a class="breadcrumb-link">Dashboard</a></li>
+                                            <li class="breadcrumb-item active" aria-current="page">일반 회원 관리 (아이디 클릭시 상세 보기 가능)</li>
                                         </ol>
                                     </nav>
                                 </div>
@@ -191,7 +191,7 @@
                     		</div>
                     		<div class="col-xl-9">
                     		<form action="./adminGenMemList.us" method="post">
-                                <input class="form-controlkjh" type="text" placeholder="아이디 검색" name="m_id">
+                                <input class="form-controlkjh" type="text" placeholder="아이디 검색" name="m_id" value="${keyword }">
                                 <input type="submit" value="검색" class="btn btn-primary">
                                 <a href="./adminGenMemList.us" class="btn btn-primary">전체보기</a>
                             </form>
