@@ -3,5 +3,8 @@
 <%
 	// 	response.sendRedirect("./board.re"); 	
 // 	response.sendRedirect("main.st");
+// 	response.sendRedirect("StoreUpdate.st");
+	response.sendRedirect("ApiStore.ap");
+
 	response.sendRedirect("./CouponIssue.co");
 %>

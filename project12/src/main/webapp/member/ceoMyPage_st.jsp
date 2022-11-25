@@ -147,6 +147,23 @@
  
  <!--  //////////////////// 목록  /////////////////////// -->      
 <div class="col-md-9  pr0 padding-top-40 properties-page">
+                        <div class="row">
+                            <div class="col-md-8 col-sm-12">
+                                <h3 class="tm-block-title d-inline-block">가 게 관 리
+                                <button type=button onclick="location.href='./StoreJoin.st';" style="background:black; color:white; font-size:13px;">가게+</button>
+                               </h3>
+                            </div>
+                            <br>
+                            <div class="text-right">
+                            <button type="button" onclick="sort()"><i class="glyphicon glyphicon-sort"></i></button>
+                            <select id="stList"  onchange="stListChange(this.value)" style="font-size:10px">
+                            	<option value=s_regdate ${listType == "s_regdate" ? 'selected="selected"' : '' }>최신순</option>
+                            	<option value=bcount ${listType == "bcount" ? 'selected="selected"' : '' }>찜 많은순</option>
+                            	<option value=rcount ${listType == "rcount" ? 'selected="selected"' : '' }>리뷰 많은순</option>
+                            	<option value=s_star ${listType == "s_star" ? 'selected="selected"' : '' }>별점 높은순</option>
+                            </select>
+                        </div>
+                        </div>
     <div class="row">
         <div class="col-md-8 col-sm-12">
             <h3 class="tm-block-title d-inline-block">가 게 관 리

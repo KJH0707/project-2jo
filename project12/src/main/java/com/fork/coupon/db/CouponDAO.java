@@ -47,6 +47,8 @@ public class CouponDAO {
 	// 자원해제 메서드 - closeDB()
 	
 	// makeCoupon - 쿠폰발행하기
+
+
 //	public void makeCoupon() {
 //		
 //		try {

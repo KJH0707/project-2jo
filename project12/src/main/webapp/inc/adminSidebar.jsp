@@ -26,6 +26,17 @@
                                             <a class="nav-link" href="./adminReportList.us">신고 목록</a>
                                         </li>
                                         <li class="nav-item">
+                                            <a class="nav-link" href="./ApiStore.ap">api 가게 목록</a>
+                                        </li>
+                                        
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-6" aria-controls="submenu-6"><i class="fas fa-fw fa-table"></i>공지</a>
+                                <div id="submenu-6" class="collapse submenu" style="">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item">
                                             <a class="nav-link" href="./adminReservList.us">예약 목록</a>
                                         </li>
                                         <li class="nav-item">
