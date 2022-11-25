@@ -89,7 +89,6 @@
                                </div>
                               </a>
                                <div class="col-md-8 col-sm-8 col-xs-8 blg-entry">
-                                   <h6> <a href="./Member.us">쿠폰관리</a></h6>
                                    <h6> <a href="./CouponManage.co">쿠폰관리</a></h6>
 <!--                                     <span class="property-price">3000000$</span> -->
                                </div>

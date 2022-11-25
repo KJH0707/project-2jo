@@ -47,27 +47,25 @@ public class CouponDAO {
 	// 자원해제 메서드 - closeDB()
 	
 	// makeCoupon - 쿠폰발행하기
-
-
-//	public void makeCoupon() {
-//		
-//		try {
-//			con = getConnection();
-//			sql = "insert into mem_coupon() values()";
-//			pstmt = con.prepareStatement(sql);
-//			pstmt.setString(0, sql);
-//			
-//			pstmt.executeUpdate();
-//			
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}finally {
-//			closeDB();
-//		}
-//		
-//	}
-	// makeCoupon - 쿠폰발행하기
+	public void makeCoupon() {
+		
+		try {
+			con = getConnection();
+			sql = "insert into mem_coupon() values()";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(0, sql);
+			
+			pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			closeDB();
+		}
+		
+	}
+	 //makeCoupon - 쿠폰발행하기
 
 	// 사용가능한 쿠폰 조회 - getAllCoupon()
 //	public void getAllCoupon(시작일, 만료일) {

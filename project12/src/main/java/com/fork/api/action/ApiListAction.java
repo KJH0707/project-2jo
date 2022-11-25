@@ -17,7 +17,7 @@ public class ApiListAction implements Action{
 		String id = (String)session.getAttribute("id");
 		
 		ActionForward forward = new ActionForward();
-		if(id==null || id!="admin") {
+		if(id==null ) { //|| id!="admin"
 			forward.setPath("./Main.st");
 			forward.setRedirect(true);
 			return forward;
@@ -29,7 +29,7 @@ public class ApiListAction implements Action{
 		session.setAttribute("storeList", storeList);
 		
 		// 페이지 이동
-		forward.setPath("./ceo/apiStoreList.jsp");
+		forward.setPath("./admin/apiStoreList.jsp");
 		forward.setRedirect(false);
 		
 		return forward;

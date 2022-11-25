@@ -430,6 +430,13 @@ public class StoreDAO {
 				pstmt.executeUpdate();
 				
 				System.out.println(" DAO : 가게 정보 수정 완료");
+				
+			}catch (Exception e) {
+					// TODO: handle exception
+			}finally {
+				closeDB();
+			}
+		}
 
   public ArrayList getBoardList(int startRow, int pageSize, String price) {
 			System.out.println(" DAO : getBoardList() 호출 ");
@@ -1530,6 +1537,7 @@ public class StoreDAO {
 			}finally {
 				closeDB();
 			}
+			return cnt;
 		}
 		// 점주의 가게수정 메서드 - updateStore(s_no)
 		
@@ -1874,103 +1882,6 @@ public class StoreDAO {
 		
 		// getStoreDetails 가게 상세보기 (s_no)
 		
-	
-		
-		// 점주의 가게수정 메서드 - getStore(s_no)
-		public StoreDTO getStore(int s_no) { // 가게번호를 불러옴
-			StoreDTO dto = null;
-			
-			try {
-				con = getConnection();
-				sql = "select * from store where s_no=?";
-				pstmt = con.prepareStatement(sql);
-				pstmt.setInt(1, s_no);
-				rs = pstmt.executeQuery();
-				
-				if(rs.next()) {
-					dto = new StoreDTO();
-					
-					dto.setS_name(rs.getString("s_name"));
-					dto.setS_addr(rs.getString("s_addr"));
-					dto.setS_tel(rs.getString("s_tel"));
-					dto.setS_hours(rs.getString("s_hours"));
-					dto.setS_type(rs.getString("s_type"));
-					dto.setS_image(rs.getString("s_image"));
-					dto.setS_content(rs.getString("s_content"));
-					dto.setS_facility(rs.getString("s_facility"));
-					dto.setS_menuname(rs.getString("s_menuname"));
-					dto.setS_menuImg(rs.getString("s_menuImg"));
-					dto.setS_menuprice(rs.getString("s_menuprice"));
-					dto.setS_number(rs.getInt("s_number"));
-					
-					dto.setS_regdate(rs.getTimestamp("s_regdate"));
-				}
-				
-				System.out.println(" DAO : 가게 정보 조회완료!"+ dto);
-			} catch (Exception e) {
-				e.printStackTrace();
-			} finally {
-				closeDB();
-			}
-			
-			return dto;
-			
-		}
-				// 점주의 가게수정 메서드 - getStore(s_no)
-		// getStoreDetails 가게 상세보기 (s_no) - 추가함
-		public StoreDTO getStoreDetails(int s_no) {
-			StoreDTO dto = null;
-			try {
-				con = getConnection();
-				sql = "select * from store where s_no=?";
-				pstmt = con.prepareStatement(sql);
-				pstmt.setInt(1,s_no);
-				rs = pstmt.executeQuery();
-				
-				if(rs.next()) {
-					dto = new StoreDTO();
-					dto.setS_name(rs.getString("s_name"));
-					dto.setS_no(rs.getInt("s_no"));
-					dto.setS_name(rs.getString("s_name"));
-					dto.setS_addr(rs.getString("s_addr"));
-					dto.setS_tel(rs.getString("s_tel"));
-					dto.setS_hours(rs.getString("s_hours"));
-					dto.setS_type(rs.getString("s_type"));
-	
-					dto.setC_no(rs.getInt("c_no"));
-					dto.setS_image(rs.getString("s_image"));
-					
-					dto.setS_content(rs.getString("s_content"));
-					dto.setS_facility(rs.getString("s_facility"));
-					dto.setS_latitude(rs.getString("s_latitude"));
-					dto.setS_longtude(rs.getString("s_longtude"));
-					dto.setS_menuname(rs.getString("s_menuname"));
-					dto.setS_menuprice(rs.getString("s_menuprice"));
-					dto.setS_menuImg(rs.getString("s_menuImg"));
-					dto.setS_number(rs.getInt("s_number"));
-		
-					dto.setS_star(rs.getDouble("s_star"));
-					dto.setS_regdate(rs.getTimestamp("s_regdate"));
-					dto.setS_readcount(rs.getInt("s_readcount"));
-					
-					
-					
-				}
-				
-				
-			} catch (Exception e) {
-				
-				e.printStackTrace();
-			}finally {
-				closeDB();
-				
-			}
-			return dto;
-		}
-
-				
-				
-				// getStoreDetails 가게 상세보기 (s_no)
 				
 				// 조회수 1증가 - updateReadcount(bno)
 		public void updateReadcount(int s_no) {
@@ -2017,7 +1928,12 @@ public class StoreDAO {
 					
 					list.add(dto);
 				}
-		
+			}catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				closeDB();
+			}
+				return list;
 		}
     
     // openAPI데이터 입력 메서드 - APIstore(DTO)
@@ -2063,6 +1979,12 @@ public class StoreDAO {
 				pstmt.executeUpdate(); // result = 1 / 실패시 0 
 				
 				System.out.println(" DAO : 가게입력 완료");
+			}catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				closeDB();
+			}
+		}
 		// openAPI데이터 입력 메서드 - APIstore(DTO)
 		
 		// openAPI데이터 중복 체크 - APIDataCheck(api_ID)
@@ -2082,7 +2004,12 @@ public class StoreDAO {
 				}
 				System.out.println(" DAO : 데이터 결과 : "+ result);
     
-      return result;
+			}catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				closeDB();
+			}
+			return result;
 		}
 		// openAPI데이터 중복 체크 - APIDataCheck(api_ID)
 		
@@ -2105,8 +2032,9 @@ public class StoreDAO {
 				pstmt.setString(5, dto.getS_tel());
 				pstmt.setString(6, dto.getS_content());
 				pstmt.setString(7, dto.getS_facility());
+				pstmt.setInt(8, dto.getC_no());
 				//pstmt.setInt(8, dto.getS_price());
-				pstmt.setInt(8, dto.getApi_ID());
+				pstmt.setInt(9, dto.getApi_ID());
 				
 				pstmt.executeUpdate();
 				
@@ -2123,12 +2051,15 @@ public class StoreDAO {
 		public List<Map<String,Object>> getStoreList() {
 			List<Map<String,Object>> storelist = new ArrayList<Map<String,Object>>();
 			Map<String,Object> map = null;
+			StoreDTO dto = new StoreDTO();
 			
 			try {
 				con = getConnection();
-				sql = "select * from store where c_no=0";
+				sql = "select * from store where api_ID=?";
 				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, dto.getApi_ID());
 				rs = pstmt.executeQuery();
+				
 				
 				while(rs.next()) {
 					map = new HashMap<String,Object>();
@@ -2163,13 +2094,6 @@ public class StoreDAO {
 			return storelist;
 		}
 		// openAPI 가게 리스트- getStoreList()
-}
-			return list;
-		}
-		//Main 에서 랜덤 가게 추천 ~~ - 수지 버전 
-		
-		
-		
 		
 
 

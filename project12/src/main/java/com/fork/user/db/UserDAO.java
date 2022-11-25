@@ -2076,7 +2076,6 @@ public class UserDAO {
 						sdto.setS_addr(rs.getString("s_addr"));
 						sdto.setS_price(rs.getInt("s_price"));
 						sdto.setS_type(rs.getString("s_type"));
-						sdto.setS_readcount(rs.getInt("s_readcount"));
 						sdto.setS_star(rs.getDouble("s_star"));
 						sdto.setS_regdate(rs.getTimestamp("s_regdate"));
 						// DTO -> List

@@ -83,6 +83,7 @@ public class ApiUpdateAction implements Action {
 					String facility = parking+","+animal+","+kids+","+corkage+","+hirable;
 					id = (Long)data.get("식당(ID)")+" ";
 					//int price = (int)(Math.random()*10)+1;
+					//int ceo = (int)(Math.random()*10)+1;
 							
 					//System.out.println(" M : api : " +id.trim()+"@@@@@@@@@@@@@");
 					
@@ -101,6 +102,7 @@ public class ApiUpdateAction implements Action {
 						dto.setS_facility(tmp);
 						dto.setApi_ID(Integer.parseInt(id.trim()));
 						//dto.setS_price(price*10000);
+						//dto.setC_no(ceo);
 						
 						if(!storeList.get(i2).get("s_name").toString().equals((String)data.get("식당명"))) {
 							name = (String)data.get("식당명");
