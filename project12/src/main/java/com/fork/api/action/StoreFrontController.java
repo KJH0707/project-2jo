@@ -1,4 +1,4 @@
-package com.fork.store.action;
+package com.fork.api.action;
 
 import java.io.IOException;
 
@@ -10,12 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.fork.board.action.UserReservAction;
 
-
-
-
-@WebServlet("*.st")
+@WebServlet("*.ap")
 public class StoreFrontController extends HttpServlet {
 
 	protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -35,78 +31,10 @@ public class StoreFrontController extends HttpServlet {
 				ActionForward forward = null;
 				
 				// 2. 가상주소 매핑(패턴1,2,3)
-				if(command.equals("/main.st")) {
-					System.out.println("C :  main.st 호출");
+				if(command.equals("/ApiStore.ap")) {
 					
-					action = new MainAction();
-					try {
-						forward = action.execute(request, response);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-				
-				else if(command.equals("/loginForm.st")) {
-					
-					forward = new ActionForward();
-					forward.setPath("./main/login.jsp");
-					forward.setRedirect(false);
-				}
-				
-				else if(command.equals("/registerForm.st")) {
-					
-					forward = new ActionForward();
-					forward.setPath("./main/register.jsp");
-					forward.setRedirect(false);
-					
-				}
-				
-				else if(command.equals("/storeList.st")) {
-					
-					action = new StoreListAction();
-					
-					try {
-						forward = action.execute(request, response);
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					
-				}
-				
-				else if(command.equals("/storeDetails.st")) {
-					
-					action = new StoreDetailsAction();
-					
-					try {
-						forward = action.execute(request, response);
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					
-					
-				}
-				
-				else if(command.equals("/StoreJoinProAction.st")) {
-					System.out.println(" C : /StoreJoinProAction.st 호출");
-					System.out.println(" C : [패턴2] "); // 리다이렉션
-					
-					// StoreJoinAction()
-					action = new StoreJoinProAction();
-					
-					try {
-						forward = action.execute(request, response);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-					
-				}
-
-				else if(command.equals("/StoreJoin.st")) {
-					System.out.println(" C : /StoreJoin.st 호출");
-					
-					action = new StoreJoinAction();
+					// ApiListAction()
+					action = new ApiListAction();
 					
 					try {
 						forward = action.execute(request, response);
@@ -114,11 +42,20 @@ public class StoreFrontController extends HttpServlet {
 						e.printStackTrace();
 					}
 				}
-				
-				else if(command.equals("/StoreUpdate.st")) {
-					System.out.println(" C : /StoreUpdate.st 호출");
+				else if(command.equals("/ApiStoreAction.ap")){
 					
-					action = new StoreUpdateAction();
+					action = new ApiAddAction();
+					
+					try {
+						forward= action.execute(request, response);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+				else if(command.equals("/ApiUpdateAction.ap")) { // 버튼으로 구현
+					
+					// ApiUpdateAction()
+					action = new ApiUpdateAction();
 					
 					try {
 						forward = action.execute(request, response);
@@ -126,22 +63,6 @@ public class StoreFrontController extends HttpServlet {
 						e.printStackTrace();
 					}
 				}
-				
-				
-				else if(command.equals("/StoreUpdate.st")) {
-					System.out.println(" C : /StoreUpdate.st 호출");
-					
-					action = new StoreUpdateAction();
-					
-					try {
-						forward = action.execute(request, response);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-				
-				
-				
 				
 				
 				

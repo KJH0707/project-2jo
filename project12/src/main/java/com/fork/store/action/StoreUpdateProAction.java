@@ -156,7 +156,7 @@ public class StoreUpdateProAction implements Action {
 		
 		// dao - 수정메서드
 		StoreDAO dao = new StoreDAO();
-//		dao.updateStore(dto);
+		dao.updateStore(dto);
 		
 		// request영역에 저장
 		forward.setPath("./CeoMyPage_st.us");

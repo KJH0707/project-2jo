@@ -2,6 +2,6 @@
     pageEncoding="UTF-8"%>
 <%
 	// 	response.sendRedirect("./board.re"); 	
-	response.sendRedirect("main.st");
+ 	response.sendRedirect("main.st");
 	
 %>
