@@ -39,7 +39,7 @@ public class AdminDeleteReportAction implements Action {
 		
 		
 		forward.setPath("/adminReportList.us?pageNum="+pageNum);
-		forward.setRedirect(false);
+		forward.setRedirect(true);
 		return forward;
 	}
 

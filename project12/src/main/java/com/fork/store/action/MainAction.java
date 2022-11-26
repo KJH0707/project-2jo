@@ -2,6 +2,7 @@ package com.fork.store.action;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,7 +28,7 @@ public class MainAction implements Action {
 		int cnt = dao.getBoardCount();
 		ArrayList recStore = dao.ranStore();
 		ArrayList starStore = dao.getBoardListStar(cnt);
-		ArrayList costStore = dao.costStore(price1);
+		Vector<ArrayList> costStore = dao.costStore();
 //		if(cost != null) {
 //			  costStore = dao.costStore(cost);
 //		}
@@ -36,12 +37,14 @@ public class MainAction implements Action {
 		
 		
 		request.setAttribute("recStore", recStore);
-		request.setAttribute("starStore", starStore);
-		request.setAttribute("costStore", costStore);			
 		
-//		if(cost != null) {
-//			request.setAttribute("costStore", costStore);			
-//		}
+		
+		request.setAttribute("starStore", starStore);
+		request.setAttribute("costStore1", costStore.get(0));
+		request.setAttribute("costStore2", costStore.get(1));
+		request.setAttribute("costStore3", costStore.get(2));
+		request.setAttribute("costStore4", costStore.get(3));
+		
 		
 		request.setAttribute("readStore", readStore);
 		request.setAttribute("reviewStore", reviewStore);

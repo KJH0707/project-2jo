@@ -63,6 +63,23 @@ $('#star a').click(function(){
 	  
 });
 });
+
+function sub() {
+	if(document.frm.rev_star.value=="starValue"){
+	alert('별점을 꼭 입력하세요');
+	return false;
+	}
+	
+	if (document.frm.rev_subject.value=="") {
+		alert('제목 쓰셈 ㅋ');
+		return false;
+	}
+	if (document.frm.rev_content.value=="") {
+		alert('내용 쓰셈 ㅋ');
+		return false;
+	}
+
+}
 </script>
     </head>
     
@@ -101,9 +118,8 @@ $('#star a').click(function(){
                   <div align="center">
                         <hr>
                         <h2>리뷰 수정하기</h2>
-                        <form action="./ReviewUpdateProAction.rv?pageNum=${pageNum }&s_no=${dto.s_no }&rev_sno=${dto.rev_no }" method="post" enctype="multipart/form-data">
+                        <form action="./ReviewUpdateProAction.rv?pageNum=${pageNum }&s_no=${dto.s_no }&rev_sno=${dto.rev_no }" method="post" enctype="multipart/form-data" name="frm" onsubmit="return sub()">
                       
-                       ${pageNum } /${dto.rev_no } /${dto.s_no }
 <!--                             <div class="row">
 <!--                                 <div class="col-sm-6"> -->
 <!--                                     <div class="form-group"> -->
@@ -112,7 +128,7 @@ $('#star a').click(function(){
                                 <br>
 <!--                                 <div class="col-sm-6"> -->
 <!--                                     <div class="form-group"> -->
-
+<c:if test="${!id.equals('admin') }">
 별점을 입력해주세요.
 
 <P id="star"> <!-- 부모 -->
@@ -122,10 +138,14 @@ $('#star a').click(function(){
 <a href="#" id="starrate" data-rate="4">★</a>
 <a href="#" id="starrate" data-rate="5">★</a>
  <p>
-
-
+ 
+ 
 
 <input type="hidden" name="rev_star" value="starValue">
+</c:if>
+<c:if test="${id.equals('admin') }">
+<input type="hidden" name="rev_star" value="${param.rev_star }">
+</c:if>
  <input type="hidden" name="rev_no" value="${dto.rev_no }">
 
 									
@@ -139,8 +159,7 @@ $('#star a').click(function(){
                                   	  <input type="file" class="form-control" id="file" name="rev_file">
 
                                     <label for="message">내용</label>
-                  <textarea id="rev_content" class="form-control" name="rev_content" width="730px" placeholder="${dto.rev_content }" 
-                  								value="${dto.rev_content }">${dto.rev_content }</textarea>
+                  <textarea id="rev_content" class="form-control" name="rev_content" width="730px" placeholder="${dto.rev_content }">${dto.rev_content }</textarea>
 <!--                                     </div> -->
 <!--                                 </div> -->
 					<br>

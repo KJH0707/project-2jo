@@ -129,7 +129,7 @@
 <!--                                                         <td> -->
 <!--                                                             <div class="m-r-10"><img src="assets/images/product-pic.jpg" alt="user" class="rounded" width="45"></div> -->
 <!--                                                         </td> -->
-                                                        <td>${res.s_name }</td>
+                                                        <td><a href="./storeDetails.st?s_no=${res.s_no }">${res.s_name }</a></td>
                                                         <td>${res.res_name}(<a href="./adminGenMemDetail.us?m=${res.m_no }">${res.m_id })</a></td>
                                                         
                                                         <td>${res.res_num}</td>
@@ -197,7 +197,7 @@
                     		</div>
                     		<div class="col-xl-9">
                     		<form action="./adminReservList.us" method="post">
-                                <input class="form-controlkjh" type="text" placeholder="아이디 검색" name="keyword" value="${keyword }">
+                                <input class="form-controlkjh" type="text" placeholder="가게명 검색" name="keyword" value="${keyword }">
                                 <input type="submit" value="검색" class="btn btn-primary">
                                 <a href="./adminReservList.us" class="btn btn-primary">전체보기</a>
                             </form>

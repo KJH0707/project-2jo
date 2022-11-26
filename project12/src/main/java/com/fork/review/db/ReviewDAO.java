@@ -97,14 +97,11 @@ public class ReviewDAO {
 				// 4. 
 				pstmt.executeUpdate();
 				
-				
-				
 				sql="update store A set s_star=("
 						+ "select avg(rev_star) "
 						+ "from reviewcs B "
 						+ "where A.s_no=B.s_no) "
-						+ "where A.s_no=?";
-				
+						+ "where A.s_no=? and (s_star != 0 or s_star != null)";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1,dto.getS_no());
 				
@@ -129,16 +126,21 @@ public class ReviewDAO {
 		
 		
 		// 글 전체 개수 확인 - getReviewCount()
-		public int getReviewCount() {
+		public int getReviewCount(int s_no) {
 			int cnt = 0;
 			
 			try {
 				//1.2. 디비연결
 				con = getConnection();
 				// 3. sql
-				sql = "select count(*) from reviewcs";
+				sql = "select count(*) "
+						+ "from reviewcs A, store B, member C "
+						+ "where A.s_no = B.s_no "
+						+ "and A.m_no = C.m_no "
+						+ "and A.rev_category=1 "
+						+ "and B.s_no=?";
 				pstmt = con.prepareStatement(sql);
-				
+				pstmt.setInt(1, s_no);
 				// 4. sql 실행
 				rs = pstmt.executeQuery();
 				// 5. 데이터 처리
@@ -170,19 +172,14 @@ public class ReviewDAO {
 					try {
 						// 1.2. 디비연결
 						con = getConnection();
-						// 3. sql 작성(select) & pstmt 객체 
-//						sql = "select * from reviewcs where s_no=? order by rev_date desc limit ?,?";
 						
-//						sql = "select * from reviewcs r, member m, store s "
-//								+ "where r.s_no = s.s_no and r.m_no=m.m_no and s.s_no=? "
-//								+ "order by rev_date desc limit ?,?";
 						
-						sql = "select s.*,r.*, "
-						  + "(select m_nickname from member m where m.m_no = r.m_no) m_nickname "
-						  + "from store s " 
-						  + "join reviewcs r on s.s_no = r.s_no "
-						  + "where s.s_no=? "             
-						 + "order by rev_ref desc, rev_seq asc limit ?,?";
+						sql = "select rev_subject, rev_content, rev_star, s_name, m_nickname, s_readcount, rev_date, rev_file, rev_no, m_id "
+								+ "from reviewcs A, store B, member C "
+								+ "where A.s_no = B.s_no "
+								+ "and A.m_no = C.m_no "
+								+ "and A.rev_category=1 "
+								+ "and B.s_no=? limit ?,?";
 						pstmt = con.prepareStatement(sql);
 						// ?????
 						pstmt.setInt(1, s_no);
@@ -194,29 +191,16 @@ public class ReviewDAO {
 						// 5. 데이터 처리(DB->DTO->List)
 						while(rs.next()) {
 							hm = new HashMap<String,Object>();
-							hm.put("s_name", rs.getString("s_name"));
-							hm.put("s_readcount", rs.getInt("s_readcount"));
-							hm.put("s_star", rs.getDouble("s_star"));
-							hm.put("s_no", rs.getInt("s_no"));
-							
-							hm.put("m_nickName", rs.getString("m_nickName"));
-							hm.put("m_no", rs.getInt("m_no"));
-							
+							hm.put("rev_subject",rs.getString("rev_subject"));
+							hm.put("rev_content",rs.getString("rev_content"));
+							hm.put("rev_star",rs.getDouble("rev_star"));
+							hm.put("s_name",rs.getString("s_name"));
+							hm.put("m_nickname",rs.getString("m_nickname"));
+							hm.put("s_readcount",rs.getString("s_readcount"));
+							hm.put("rev_date",rs.getTimestamp("rev_date"));
+							hm.put("rev_file",rs.getString("rev_file"));
 							hm.put("rev_no", rs.getInt("rev_no"));
-							hm.put("rev_date", rs.getTimestamp("rev_date"));
-							hm.put("rev_star", rs.getInt("rev_star"));
-							hm.put("rev_subject", rs.getString("rev_subject"));
-							hm.put("rev_category", rs.getInt("rev_category"));
-//							dto.setQna_sort(rs.getString("qna_sort"));
-							hm.put("rev_content", rs.getString("rev_content"));
-							hm.put("rev_file", rs.getString("rev_file"));
-							hm.put("rev_ref", rs.getInt("rev_ref"));
-							hm.put("rev_seq", rs.getInt("rev_seq"));
-							
-//							pstmt.setInt(9, rev_no); //ref = rev_no
-//							pstmt.setInt(10, 0); //seq 0 
-							
-							// DTO -> List
+							hm.put("m_id",rs.getString("m_id"));
 							reviewList.add(hm);
 							
 							
@@ -311,6 +295,17 @@ public class ReviewDAO {
 								
 								
 								pstmt.executeUpdate();
+								
+								
+								sql="update store A set s_star=("
+										+ "select avg(rev_star) "
+										+ "from reviewcs B "
+										+ "where A.s_no=B.s_no) "
+										+ "where A.s_no=? and s_star != 0";
+								pstmt = con.prepareStatement(sql);
+								pstmt.setInt(1,dto.getS_no());
+								
+								pstmt.executeUpdate();
 						}
 						
 						
@@ -342,6 +337,7 @@ public class ReviewDAO {
 						// 4. sql 실행
 						pstmt.executeUpdate();
 						// 5. 데이터 처리
+						
 						
 						
 						System.out.println(" DAO : 글삭 완료");
@@ -433,4 +429,26 @@ public class ReviewDAO {
 					
 				}
 				// 답글쓰기 - replyReview(DTO)
+		public int isMine(String id, int s_no) {
+			int result=0;
+			try {
+				con=getConnection();
+				
+				sql="select s_no from store A, ceo B where A.c_no=B.c_no and B.c_id=?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, id);
+				
+				while (rs.next()) {
+					if(rs.getInt("s_no")==s_no) {
+						result=1;
+					}
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			return result;
+		}
+		
 }

@@ -199,7 +199,7 @@ font-size:15px;
 		</details>
 	</c:when>
 	<c:otherwise>
-		<p align="left"><b>사장님</b> ${rdto.c_date }
+		<p align="left"><b>사장님</b> <!-- {rdto.c_date } -->
 			<button type="button" id="update"><i class="fa-sharp fa-solid fa-pen"></i></button>
 			<button type="button" id="delete"><i class="fa-solid fa-trash"></i></button>
 		</p>

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -48,6 +49,16 @@
         <!--End top header -->
 
         <!-- End of nav bar -->
+        <%
+		HttpSession session1 = request.getSession();
+		String id = (String) session1.getAttribute("id");
+		System.out.println("id : "+id);
+		
+		if(id==null) {
+			System.out.println("Let's go!!!!!!");
+			response.sendRedirect("Login.us");
+		}
+		%>
 
         <div class="page-head"> 
             <div class="container">
@@ -67,16 +78,22 @@
 <!--                 <div class="col-md-9"> -->
 
 <!--                     <div class="" id="contact1">                         -->
-                       
+                      
+
                         <hr>
                         <h2>QnA 답변하기</h2>
-                         ${param.s_no}
-                         ${param.rev_ref}
-                         ${param.rev_seq}
+<%--                          ${param.s_no} --%>
+<%--                          ${param.rev_ref} --%>
+<%--                          ${param.rev_seq} --%>
                         <form action="./QnaBoardReWriteAction.br?pageNum=${param.pageNum}&s_no=${param.s_no}&rev_no=${param.rev_no}" method="post" enctype="multipart/form-data">
 							<input type="hidden" name="rev_ref" value="${param.rev_ref}">
 							<input type="hidden" name="rev_seq" value="${param.rev_seq}">
-
+							<input type="hidden" name="rev_category" value="0">
+<%
+          	String pageNum = request.getParameter("pageNum");
+          	int s_no = Integer.parseInt(request.getParameter("s_no"));
+          	int rev_no = Integer.parseInt(request.getParameter("rev_no"));
+          %> 
 <!--                             <div class="row"> -->
 <!--                                 <div class="col-sm-6"> -->
 <!--                                     <div class="form-group"> -->
@@ -84,35 +101,32 @@
 <!--                                     </div> -->
 <!--                                 </div> -->
 
-<%
-          	String pageNum = request.getParameter("pageNum");
-          	int s_no = Integer.parseInt(request.getParameter("s_no"));
-          	int rev_no = Integer.parseInt(request.getParameter("rev_no"));
-          %>
            <label for="firstname">문의분류</label>
-         ---${dto}------------
-          <input type="radio" name="qna_sort" value="reser" <c:if test="${dto.qna_sort eq 'reser'}">checked</c:if>>예약 문의
-          <input type="radio" name="qna_sort" value="store" <c:if test="${dto.qna_sort eq 'store'}">checked</c:if>>식당 문의
-          <input type="radio" name="qna_sort" value="etc" <c:if test="${dto.qna_sort eq 'etc'}">checked</c:if>>기타 문의
-
-<!--                                 <div class="col-sm-6"> -->
+           
+<%--            ${param.qna_sort } --%>
+           
+          <input type="radio" name="qna_sort" value="reser" style="width: 10px" <c:if test="${param.qna_sort eq 'reser'}">checked</c:if>>예약 문의
+          <input type="radio" name="qna_sort" value="store" style="width: 10px" <c:if test="${param.qna_sort eq 'store'}">checked</c:if>>식당 문의
+          <input type="radio" name="qna_sort" value="etc" style="width: 10px" <c:if test="${param.qna_sort eq 'etc'}">checked</c:if>>기타 문의
+          
+                                <div class="col-sm-12">
 <!--                                     <div class="form-group"> -->
                                          <label for="subject">제목</label>
-                                        <input type="text" class="form-control" id="subject" name="rev_subject" value="[RE]">
+                                        <input type="text" class="form-control" id="subject" name="rev_subject" value="ㄴ[RE]">
 <!--                                     </div> -->
-<!--                                 </div> -->
-<!--                                 <div class="col-sm-6"> -->
-<!--                                     <div class="form-group"> -->
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
                                         <label for="subject">첨부파일</label>
                                         <input type="file" class="form-control" id="file" name="rev_file">
-<!--                                     </div> -->
-<!--                                 </div> -->
-<!--                                 <div class="col-sm-12"> -->
-<!--                                     <div class="form-group"> -->
-                                       <label for="message">내용</label>
-                                        <textarea id="message" class="form-control1" name="rev_content"></textarea>
-<!--                                     </div> -->
-<!--                                 </div> -->
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                       <label for="message">내용</label> <br>
+                                        <textarea id="message" class="form-control1" name="rev_content" cols="145" rows="5"></textarea>
+                                    </div>
+                                </div>
 									<br>
 <!--                                 <div class="col-sm-12 text-center"> -->
                                     <button type="submit" class="btn btn-primary"><i class="fa fa-envelope-o"></i> QnA 답변하기 </button>

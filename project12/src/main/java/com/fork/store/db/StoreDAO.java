@@ -2149,7 +2149,7 @@ public class StoreDAO {
 				// 1.2. 디비 연결
 					con = getConnection();
 				// 3. sql 작성(select) & pstmt 객체
-						sql = "select * from store order by s_readcount desc limit 3";
+						sql = "select * from store order by s_readcount desc limit 4";
 						pstmt = con.prepareStatement(sql);
 						
 						rs = pstmt.executeQuery();
@@ -2176,15 +2176,19 @@ public class StoreDAO {
 				return boardList;
 			}
 			
-			public ArrayList costStore(Integer price) {
-				System.out.println("DAO : costStore !!!! " + price);
-				ArrayList list = new ArrayList();
-				if(price != null) {
+			public Vector<ArrayList> costStore() {
+				
+				Vector<ArrayList> listAll = new Vector<ArrayList>(); 
+				
+				ArrayList list1 = new ArrayList();
+				ArrayList list2 = new ArrayList();
+				ArrayList list3 = new ArrayList();
+				ArrayList list4 = new ArrayList();
+				
 				try {
 					con = getConnection();
-					sql = "select * from store where s_price=? order by rand() limit 3";
+					sql = "select * from store where s_price between 0 and 24999 order by rand() limit 3";
 					pstmt = con.prepareStatement(sql);
-					pstmt.setInt(1, price);
 					rs = pstmt.executeQuery();
 					while(rs.next()) {
 						StoreDTO dto = new StoreDTO();
@@ -2196,39 +2200,66 @@ public class StoreDAO {
 						dto.setS_type(rs.getString("s_type"));
 						dto.setS_price(rs.getInt("s_price"));
 						
-						list.add(dto);
+						list1.add(dto);
 					}
+					sql = "select * from store where s_price between 25000 and 49999 order by rand() limit 3";
+					pstmt = con.prepareStatement(sql);
+					rs = pstmt.executeQuery();
+					while(rs.next()) {
+						StoreDTO dto = new StoreDTO();
+						dto.setC_no(rs.getInt("c_no"));
+						dto.setS_image(rs.getString("s_image"));
+						dto.setS_name(rs.getString("s_name"));
+						dto.setS_star(rs.getDouble("s_star"));
+						dto.setS_no(rs.getInt("s_no"));
+						dto.setS_type(rs.getString("s_type"));
+						dto.setS_price(rs.getInt("s_price"));
+						
+						list2.add(dto);
+					}
+					sql = "select * from store where s_price between 50000 and 74999 order by rand() limit 3";
+					pstmt = con.prepareStatement(sql);
+					rs = pstmt.executeQuery();
+					while(rs.next()) {
+						StoreDTO dto = new StoreDTO();
+						dto.setC_no(rs.getInt("c_no"));
+						dto.setS_image(rs.getString("s_image"));
+						dto.setS_name(rs.getString("s_name"));
+						dto.setS_star(rs.getDouble("s_star"));
+						dto.setS_no(rs.getInt("s_no"));
+						dto.setS_type(rs.getString("s_type"));
+						dto.setS_price(rs.getInt("s_price"));
+						
+						list3.add(dto);
+					}
+					sql = "select * from store where s_price between 75000 and 100000 order by rand() limit 3";
+					pstmt = con.prepareStatement(sql);
+					rs = pstmt.executeQuery();
+					while(rs.next()) {
+						StoreDTO dto = new StoreDTO();
+						dto.setC_no(rs.getInt("c_no"));
+						dto.setS_image(rs.getString("s_image"));
+						dto.setS_name(rs.getString("s_name"));
+						dto.setS_star(rs.getDouble("s_star"));
+						dto.setS_no(rs.getInt("s_no"));
+						dto.setS_type(rs.getString("s_type"));
+						dto.setS_price(rs.getInt("s_price"));
+						
+						list4.add(dto);
+					}
+					
+					listAll.add(list1);
+					listAll.add(list2);
+					listAll.add(list3);
+					listAll.add(list4);
+					
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				} finally {
 					closeDB();
 				}
-				}
-				else {
-					try {
-						con = getConnection();
-						sql = "select * from reviewcs group by s_no order by rand()";
-						pstmt = con.prepareStatement(sql);
-						rs = pstmt.executeQuery();
-						while(rs.next()) {
-							StoreDTO dto = new StoreDTO();
-							dto.setC_no(rs.getInt("c_no"));
-							dto.setS_image(rs.getString("s_image"));
-							dto.setS_name(rs.getString("s_name"));
-							dto.setS_star(rs.getDouble("s_star"));
-							dto.setS_no(rs.getInt("s_no"));
-							dto.setS_type(rs.getString("s_type"));
-							
-							list.add(dto);
-						}
-					} catch (Exception e) {
-						e.printStackTrace();
-					} finally {
-						closeDB();
-					}
-				}
-				
-				return list;
+				return listAll;
 			}
 			
 			// main 에서 가격대별 추천 ~~~~~~

@@ -14,60 +14,7 @@
 
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700,800' rel='stylesheet' type='text/css'>
 
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
-<script type="text/javascript">
-// 	$(document).ready(function () {
-// 		alert('dd');
-// 	});
-		
-	function requestPay() {
-		var IMP = window.IMP;
-		IMP.init("imp42747186");// 가맹점 식별코드
-		
-		IMP.request_pay({ 
-          pg: "html5_inicis",
-          pay_method: "card",
-          merchant_uid: "${udto.m_no}-"+new Date().getTime(),   //주문번호
-          name: "${param.s_name}",
-          amount: 100,                         // 숫자타입
-          buyer_email: "gildong@gmail.com",
-          buyer_name: "${udto.m_name}",
-          buyer_tel: "${param.s_tel }",
-          buyer_addr: "어떤 건물 7층 아이티윌",
-          buyer_postcode: "01181"
-      }, function (rsp) { // callback
-          if (rsp.success) {
-        	  $.ajax({
-					url:"./paymentPro.br",
-					type:"post",
-					datatype:"json",
-					data:{
-					p_no:rsp.merchant_uid,
-					s_no:${param.s_no},
-					m_no:${udto.m_no},
-					res_num:${param.total},
-					res_time:${param.time.split(":")[0]},
-					res_date2:"${param.date }",
-        	  		res_name:document.fr.res_name.value,
-					res_msg:document.fr.res_msg.value,
-					res_tel:document.fr.res_tel.value,
-					s_name:"${param.s_name}",
-					s_price:${param.s_price},
-					m_id:"${udto.m_id}"
-					}
-        	  });
-	          location.href="./storeDetails.st?s_no=${param.s_no}";
-          } else {
-	              // 결제 실패 시 로직,
-			alert('결제 실패!');
-// 	           	return false;
-	             
-          }
-      
-    	});
-	}
-</script>
+
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
         <jsp:include page="../inc/top.jsp"/>
         <!-- End of nav bar -->
@@ -136,13 +83,13 @@
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <label for="lastname">예약 인원</label>
-                                            <input type="text" class="form-control" id="lastname" name="res_tel" placeholder="유사시 연락할 전화번호 입력">
+                                            <label for="lastname">예약자 전화번호</label>
+                                            <input type="tel" class="form-control" id="lastname" name="res_tel" placeholder="유사시 연락할 전화번호 입력(ex)010-1234-5678)" >
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <label for="lastname">예약 인원</label>
+                                            <label for="lastname">예약자 인원</label>
                                             <input type="text" class="form-control" id="lastname" name="res_num" value="${param.total }" readonly>
                                         </div>
                                     </div>
@@ -164,8 +111,15 @@
                                             <textarea id="message" class="form-control" name="res_msg"></textarea>
                                         </div>
                                     </div>
+                                    <div class="col-sm-12">
+                                    <b>* fork & knife는 예약금을 결제한 후에 예약이 확정됩니다! (예약금 산정기준 = 해당 가게의 1인 식사가격)</b>
+                                    <br>
+                                    <div style="text-align: center;"><b>fork&knife 결제에 관한 
+                                	<a href="#" onclick="window.open('./genMemReservMsg.us?msg=(대충 약관 내용)','예약 메세지','width=600, height=150, left=500, top=700')">약관</a> 
+                                    동의</b> <input type="checkbox" id="agree">
+                                    </div>
                                     <div class="col-sm-12 text-center">
-                                        <button type="button" onclick="requestPay()" class="btn btn-primary"><i class="fa fa-envelope-o"></i> 예약하기!</button>
+                                        <button type="button" onclick="requestPay()" class="btn btn-primary"><i class="fa fa-envelope-o"></i> 결제&예약하기!</button>
                                     </div>
                                 </div>
                                 <!-- /.row -->
@@ -335,6 +289,9 @@
         <script src="assets/js/gmaps.init.js"></script>
 
         <script src="assets/js/main.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+        
 		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fa2ed31d007cce419a977e2e07a834f5&libraries=services"></script>
 	<script>
 		var container = document.getElementById('map');
@@ -376,6 +333,58 @@
 			
 			
 		});
-	</script>
+</script>
+<script type="text/javascript">
+		function requestPay() {
+			if($('#agree')[0].checked) {
+				var IMP = window.IMP;
+				IMP.init("imp42747186");// 가맹점 식별코드
+				
+				IMP.request_pay({ 
+		          pg: "html5_inicis",
+		          pay_method: "card",
+		          merchant_uid: "${udto.m_no}-"+new Date().getTime(),   //주문번호
+		          name: "${param.s_name}",
+		          amount: 100,                         // 숫자타입
+		          buyer_email: "gildong@gmail.com",
+		          buyer_name: "${udto.m_name}",
+		          buyer_tel: "${param.s_tel }",
+		          buyer_addr: "어떤 건물 7층 아이티윌",
+		          buyer_postcode: "01181"
+		      }, function (rsp) { // callback
+		          if (rsp.success) {
+		        	  $.ajax({
+							url:"./paymentPro.br",
+							type:"post",
+							datatype:"json",
+							data:{
+							p_no:rsp.merchant_uid,
+							s_no:${param.s_no},
+							m_no:${udto.m_no},
+							res_num:${param.total},
+							res_time:${param.time.split(":")[0]},
+							res_date2:"${param.date }",
+		        	  		res_name:document.fr.res_name.value,
+							res_msg:document.fr.res_msg.value,
+							res_tel:document.fr.res_tel.value,
+							s_name:"${param.s_name}",
+							s_price:${param.s_price},
+							m_id:"${udto.m_id}"
+							}
+		        	  });
+			          location.href="./ReservationComplete.br";
+         			} else {
+	              // 결제 실패 시 로직,
+				alert('결제 실패!');
+//	 	           	return false;
+	             
+         		 }
+      
+		    	});
+			}else {
+				alert('약관에 동의하셔야합니다');
+			}
+				}
+		</script>
     </body>
 </html>

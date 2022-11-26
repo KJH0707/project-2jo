@@ -49,7 +49,7 @@
                            <li>
                            	 <a href="./StMyPage.us">
                                <div class="col-md-3 col-sm-3 col-xs-3 blg-thumb p0">
-                                   <img src="garo-estate-master/assets/img/myPage/store.png" width="20" height="20">
+                                    <img src="mypage/weekly-calendar_icon-icons.com_56749.png" width="20" height="20">
                                </div>
                              </a>
                                <div class="col-md-8 col-sm-8 col-xs-8 blg-entry" width="">
@@ -72,7 +72,7 @@
                            <li>
                            	  <a href="./StMyPage_review.us">
                                <div class="col-md-3 col-sm-3 col-xs-3 blg-thumb p0">
-                                   <img src="assets/img/myPage/review.png" width="20" height="20">
+                                   <img src="mypage/heart-icon_34407.png" width="20" height="20">
                                </div>
                               </a>
                                <div class="col-md-8 col-sm-8 col-xs-8 blg-entry">
@@ -101,191 +101,48 @@
 
 <div class="col-md-9  pr0 padding-top-40 properties-page">
   <!-- 여기 밑으로 내용 넣어야 옆 공간에 들어감 -->
-  				<div class="row">
+  				<div class="row" style="margin-left: 0px;">
                             <div class="col-md-8 col-sm-12">
                                 <h3 class="tm-block-title d-inline-block">리 뷰 관 리</h3>
+                                <a href="#">더보기</a></p>
                             </div>
 						<br>
                      
                   </div>
                     
                     <hr>
+                 
+					<input type="hidden" value="${param.m_no }">
 
                     <div class="col-md-12 clear" style="line-height:20px">
                         <div id="list-type" class="proerty-th">
+                                        <c:forEach var="dto" items="${reviewList }">
                             <div class="col-sm-6 col-md-4 p0" style="width:270px">
                                     <div class="box-two proerty-item">
                                         <div class="text-left">
-                                            <img src="assets/img/demo/property-3.jpg" style="width:100px; height:100px; padding:5px;">
-                                            <p class="text-right" style="margin-bottom:-10px; margin-top:-70px; margin-right:20px; line-height:0;"><b>닉네임: 배고프다</b></p><br>
-                                            <p class="text-right" style="margin-bottom:30px; line-height:0; margin-right:30px; font-size:10px;">★★★★★&nbsp;2022-11-12</p>
+                                            <img src=src="./upload/${dto.rev_file.split(',')[0] }"  style="width:100px; height:100px; padding:5px;">
+                                            <p class="text-right" style="margin-bottom:-10px; margin-top:-70px; margin-right:20px; line-height:0;"><b> </b></p><br>
                                             <br>
                                             <p class="text-right" style="margin-bottom:10px; margin-top:-25px; line-height:0; margin-right:60px;">
-                                            <a href="#">리뷰 수정</a></p>
+                                            
                                             <div style="">
 <!--                                             <h6 style="margin-bottom:-10px; line-height:0;">닉네임: 배고프다</h6><br> -->
 <!--                                             <h6 style="margin-bottom:-10px; line-height:0; font-size:10px;">★★★★★&nbsp;2022-11-12</h6> -->
 <!--                                             <h6 class="pull-right" style="margin-bottom:-10px; line-height:0; "><i class="glyphicon glyphicon-alert"></i></h6><br> -->
                                             </div>
                                         </div>
-                                        <div class="item-entry overflow">
-                                            <div>추천 받고 왔어요 직원분들 다 너무 친절하시고 맛도 미쳤습니다ㅠㅠ 다들 먹으러 오세요</div><br>
+                                        
+										
+                                        <div style="margin-top: 30px;" class="item-entry overflow">
+                                            <div>작성일 : ${dto.rev_date }</div>
+                                        	<div style="font-weight: bold;">평점 : ${dto.rev_star }점</div>
+                                            <div>${dto.rev_subject }</div><br>
 <!--                                             <div class="text-right">[답글]</div> -->
-											<p>
-                                            <div class="dot-hr"></div>
-                                            <span class="pull-left"><b>사장님&nbsp;</b></span>
-                                            <span style="font-size:10px">2022-11-12</span>
-                                            <div>저희 매장을 이용해주셔서 감사합니다^^ 손님들이 맛있게 먹어주시는게 저의 보람이랍니다^^</div>
-                                            </p>
+											
                                         </div>
                                     </div>
                                 </div> 
-                                
-                                 <div class="col-sm-6 col-md-4 p0" style="width:270px">
-                                    <div class="box-two proerty-item">
-                                        <div class="text-left">
-                                            <img src="assets/img/demo/property-3.jpg" style="width:100px; height:100px; padding:5px;">
-                                            <p class="text-right" style="margin-bottom:-10px; margin-top:-70px; margin-right:20px; line-height:0;"><b>닉네임: 배고프다</b></p><br>
-                                            <p class="text-right" style="margin-bottom:30px; line-height:0; margin-right:30px; font-size:10px;">★★★★★&nbsp;2022-11-12</p>
-                                            <p class="text-right" style="margin-bottom:10px; margin-top:-25px; line-height:0; margin-right:60px;">
-                                            <i class="glyphicon glyphicon-comment"></i>&nbsp;&nbsp;
-                                            <i class="glyphicon glyphicon-alert"></i>
-                                            </p>
-                                            <div style="">
-<!--                                             <h6 style="margin-bottom:-10px; line-height:0;">닉네임: 배고프다</h6><br> -->
-<!--                                             <h6 style="margin-bottom:-10px; line-height:0; font-size:10px;">★★★★★&nbsp;2022-11-12</h6> -->
-<!--                                             <h6 class="pull-right" style="margin-bottom:-10px; line-height:0; "><i class="glyphicon glyphicon-alert"></i></h6><br> -->
-                                            </div>
-                                        </div>
-                                        <div class="item-entry overflow">
-                                            <div>추천 받고 왔어요 직원분들 다 너무 친절하시고 맛도 미쳤습니다ㅠㅠ 다들 먹으러 오세요</div><br>
-<!--                                             <div class="text-right">[답글]</div> -->
-											<p>
-                                            <div class="dot-hr"></div>
-                                            <span class="pull-left"><b>사장님&nbsp;</b></span>
-                                            <span style="font-size:10px">2022-11-12</span>
-                                            <div>저희 매장을 이용해주셔서 감사합니다^^ 손님들이 맛있게 먹어주시는게 저의 보람이랍니다^^</div>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div> 
-                                
-                                 <div class="col-sm-6 col-md-4 p0" style="width:270px">
-                                    <div class="box-two proerty-item">
-                                        <div class="text-left">
-                                            <img src="assets/img/demo/property-3.jpg" style="width:100px; height:100px; padding:5px;">
-                                            <p class="text-right" style="margin-bottom:-10px; margin-top:-70px; margin-right:20px; line-height:0;"><b>닉네임: 배고프다</b></p><br>
-                                            <p class="text-right" style="margin-bottom:30px; line-height:0; margin-right:30px; font-size:10px;">★★★★★&nbsp;2022-11-12</p>
-                                            <p class="text-right" style="margin-bottom:10px; margin-top:-25px; line-height:0; margin-right:60px;">
-                                            <i class="glyphicon glyphicon-comment"></i>&nbsp;&nbsp;
-                                            <i class="glyphicon glyphicon-alert"></i>
-                                            </p>
-                                            <div style="">
-<!--                                             <h6 style="margin-bottom:-10px; line-height:0;">닉네임: 배고프다</h6><br> -->
-<!--                                             <h6 style="margin-bottom:-10px; line-height:0; font-size:10px;">★★★★★&nbsp;2022-11-12</h6> -->
-<!--                                             <h6 class="pull-right" style="margin-bottom:-10px; line-height:0; "><i class="glyphicon glyphicon-alert"></i></h6><br> -->
-                                            </div>
-                                        </div>
-                                        <div class="item-entry overflow">
-                                            <div>추천 받고 왔어요 직원분들 다 너무 친절하시고 맛도 미쳤습니다ㅠㅠ 다들 먹으러 오세요</div><br>
-<!--                                             <div class="text-right">[답글]</div> -->
-											<p>
-                                            <div class="dot-hr"></div>
-                                            <span class="pull-left"><b>사장님&nbsp;</b></span>
-                                            <span style="font-size:10px">2022-11-12</span>
-                                            <div>저희 매장을 이용해주셔서 감사합니다^^ 손님들이 맛있게 먹어주시는게 저의 보람이랍니다^^</div>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div> 
-                                
-                                 <div class="col-sm-6 col-md-4 p0" style="width:270px">
-                                    <div class="box-two proerty-item">
-                                        <div class="text-left">
-                                            <img src="assets/img/demo/property-3.jpg" style="width:100px; height:100px; padding:5px;">
-                                            <p class="text-right" style="margin-bottom:-10px; margin-top:-70px; margin-right:20px; line-height:0;"><b>닉네임: 배고프다</b></p><br>
-                                            <p class="text-right" style="margin-bottom:30px; line-height:0; margin-right:30px; font-size:10px;">★★★★★&nbsp;2022-11-12</p>
-                                            <p class="text-right" style="margin-bottom:10px; margin-top:-25px; line-height:0; margin-right:60px;">
-                                            <i class="glyphicon glyphicon-comment"></i>&nbsp;&nbsp;
-                                            <i class="glyphicon glyphicon-alert"></i>
-                                            </p>
-                                            <div style="">
-<!--                                             <h6 style="margin-bottom:-10px; line-height:0;">닉네임: 배고프다</h6><br> -->
-<!--                                             <h6 style="margin-bottom:-10px; line-height:0; font-size:10px;">★★★★★&nbsp;2022-11-12</h6> -->
-<!--                                             <h6 class="pull-right" style="margin-bottom:-10px; line-height:0; "><i class="glyphicon glyphicon-alert"></i></h6><br> -->
-                                            </div>
-                                        </div>
-                                        <div class="item-entry overflow">
-                                            <div>추천 받고 왔어요 직원분들 다 너무 친절하시고 맛도 미쳤습니다ㅠㅠ 다들 먹으러 오세요</div><br>
-<!--                                             <div class="text-right">[답글]</div> -->
-											<p>
-                                            <div class="dot-hr"></div>
-                                            <span class="pull-left"><b>사장님&nbsp;</b></span>
-                                            <span style="font-size:10px">2022-11-12</span>
-                                            <div>저희 매장을 이용해주셔서 감사합니다^^ 손님들이 맛있게 먹어주시는게 저의 보람이랍니다^^</div>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div> 
-                                
-                                 <div class="col-sm-6 col-md-4 p0" style="width:270px">
-                                    <div class="box-two proerty-item">
-                                        <div class="text-left">
-                                            <img src="assets/img/demo/property-3.jpg" style="width:100px; height:100px; padding:5px;">
-                                            <p class="text-right" style="margin-bottom:-10px; margin-top:-70px; margin-right:20px; line-height:0;"><b>닉네임: 배고프다</b></p><br>
-                                            <p class="text-right" style="margin-bottom:30px; line-height:0; margin-right:30px; font-size:10px;">★★★★★&nbsp;2022-11-12</p>
-                                            <p class="text-right" style="margin-bottom:10px; margin-top:-25px; line-height:0; margin-right:60px;">
-                                            <i class="glyphicon glyphicon-comment"></i>&nbsp;&nbsp;
-                                            <i class="glyphicon glyphicon-alert"></i>
-                                            </p>
-                                            <div style="">
-<!--                                             <h6 style="margin-bottom:-10px; line-height:0;">닉네임: 배고프다</h6><br> -->
-<!--                                             <h6 style="margin-bottom:-10px; line-height:0; font-size:10px;">★★★★★&nbsp;2022-11-12</h6> -->
-<!--                                             <h6 class="pull-right" style="margin-bottom:-10px; line-height:0; "><i class="glyphicon glyphicon-alert"></i></h6><br> -->
-                                            </div>
-                                        </div>
-                                        <div class="item-entry overflow">
-                                            <div>추천 받고 왔어요 직원분들 다 너무 친절하시고 맛도 미쳤습니다ㅠㅠ 다들 먹으러 오세요</div><br>
-<!--                                             <div class="text-right">[답글]</div> -->
-											<p>
-                                            <div class="dot-hr"></div>
-                                            <span class="pull-left"><b>사장님&nbsp;</b></span>
-                                            <span style="font-size:10px">2022-11-12</span>
-                                            <div>저희 매장을 이용해주셔서 감사합니다^^ 손님들이 맛있게 먹어주시는게 저의 보람이랍니다^^</div>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div> 
-                                
-                                 <div class="col-sm-6 col-md-4 p0" style="width:270px">
-                                    <div class="box-two proerty-item">
-                                        <div class="text-left">
-                                            <img src="assets/img/demo/property-3.jpg" style="width:100px; height:100px; padding:5px;">
-                                            <p class="text-right" style="margin-bottom:-10px; margin-top:-70px; margin-right:20px; line-height:0;"><b>닉네임: 배고프다</b></p><br>
-                                            <p class="text-right" style="margin-bottom:30px; line-height:0; margin-right:30px; font-size:10px;">★★★★★&nbsp;2022-11-12</p>
-                                            <p class="text-right" style="margin-bottom:10px; margin-top:-25px; line-height:0; margin-right:60px;">
-                                            <i class="glyphicon glyphicon-comment"></i>&nbsp;&nbsp;
-                                            <i class="glyphicon glyphicon-alert"></i>
-                                            </p>
-                                            <div style="">
-<!--                                             <h6 style="margin-bottom:-10px; line-height:0;">닉네임: 배고프다</h6><br> -->
-<!--                                             <h6 style="margin-bottom:-10px; line-height:0; font-size:10px;">★★★★★&nbsp;2022-11-12</h6> -->
-<!--                                             <h6 class="pull-right" style="margin-bottom:-10px; line-height:0; "><i class="glyphicon glyphicon-alert"></i></h6><br> -->
-                                            </div>
-                                        </div>
-                                        <div class="item-entry overflow">
-                                            <div>추천 받고 왔어요 직원분들 다 너무 친절하시고 맛도 미쳤습니다ㅠㅠ 다들 먹으러 오세요</div><br>
-<!--                                             <div class="text-right">[답글]</div> -->
-											<p>
-                                            <div class="dot-hr"></div>
-                                            <span class="pull-left"><b>사장님&nbsp;</b></span>
-                                            <span style="font-size:10px">2022-11-12</span>
-                                            <div>저희 매장을 이용해주셔서 감사합니다^^ 손님들이 맛있게 먹어주시는게 저의 보람이랍니다^^</div>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div> 
-                                
+                            </c:forEach>
                                 
               
                      
@@ -293,20 +150,7 @@
                         </div>
                     </div>
                     
-                    <div class="col-md-12"> 
-                        <div class="pull-right">
-                            <div class="pagination">
-                                <ul>
-                                    <li><a href="#">Prev</a></li>
-                                    <li><a href="#">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">4</a></li>
-                                    <li><a href="#">Next</a></li>
-                                </ul>
-                            </div>
-                        </div>                
-                    </div>
+                    
                 </div>  
                 </div>              
             </div>

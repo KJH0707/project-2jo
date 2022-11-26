@@ -33,9 +33,6 @@ function bkgo() {
  }
 $(document).ready(function(){
 	
-	
-	alert('hi');
-	
 	//좋아
 	$('.like-content').one('click','.like-review', function(e) {
 		$(this).html('<i class="fa fa-heart" aria-hidden="true"></i> You liked this');
@@ -186,29 +183,30 @@ $(document).ready(function(){
 						<!--  주차 -->
 								<span>
 								<c:if test="${dto.s_facility.split(',')[0]!='null'}">
-												<i class="fa-solid fa-car-side"></i>
+												<i class="fa-solid fa-car-side fa-3x"></i>
 												${dto.s_facility.split(',')[0]}
 												
-								</c:if></span>
-								
+								</c:if></span>&nbsp;&nbsp;
+								<span>
 								<c:if test="${dto.s_facility.split(',')[1]!='null'}">
-												<i class="fa-sharp fa-solid fa-paw"></i>
+												<i class="fa-solid fa-cat fa-3x"></i>
 												${dto.s_facility.split(',')[1]}
 												
-								</c:if>
+								</c:if></span>&nbsp;&nbsp;
 								<span>
+								
 								<c:if test="${dto.s_facility.split(',')[2]!='null'}">
-												<i class="fa-solid fa-baby"></i>
+												<i class="fa-solid fa-baby fa-3x"></i>
 												${dto.s_facility.split(',')[2]}
 												
-								</c:if></span>
+								</c:if></span>&nbsp;&nbsp;
 								<span><c:if test="${dto.s_facility.split(',')[3]!='null'}">
-												<i class="fa-solid fa-wine-glass"></i>
+												<i class="fa-solid fa-wine-glass fa-3x"></i>
 												${dto.s_facility.split(',')[3]}
 												
-								</c:if></span>
+								</c:if></span>&nbsp;&nbsp;
 								<c:if test="${dto.s_facility.split(',')[4]!='null'}">
-												<i class="fa-solid fa-hotel"></i>
+												<i class="fa-solid fa-cake-candles fa-3x"></i>
 												${dto.s_facility.split(',')[4]}
 												
 								</c:if>
@@ -216,29 +214,64 @@ $(document).ready(function(){
 
 
 						</div>
-
+						<br><br>
 
 
 						<!-- 가게 추가 정보 -->
 
                          <div class="section additional-details">
 
-                             <h4 class="s-property-title">     I N F O R M A T I O N   </h4>
-
+                             <h4 class="s-property-title">      I N F O R M A T I O N   </h4> <br>
+							
+								<span>  🍗 포크 앤 나이프  이용시 꼭 참고해주세요!</span> <br>
                              <ul class="additional-details-list clearfix">
-                             <c:forEach var="i" begin="0" end="4" step="1">
+                             <c:if test="${dto.s_facility.split(',')[0]!='null'}">
                                  <li>
-                                     <span class="col-xs-6 col-sm-4 col-md-4 add-d-title">${dto.s_facility.split(',')[i]}</span>
-                                     <span class="col-xs-6 col-sm-8 col-md-8 add-d-entry"> 등록페이지에서 파라메터로 받기..?</span>
+                                     <span class="col-xs-6 col-sm-4 col-md-4 add-d-title">🍽️ ${dto.s_facility.split(',')[0]} </span>
+                                     <span class="col-xs-6 col-sm-8 col-md-8 add-d-entry"> 가게 옆 주차장에서 주차 해주세요. </span>
+                                
+								</li>	
+							</c:if>
+							<br>
+							<c:if test="${dto.s_facility.split(',')[1]!='null'}">
+                                 <li>
+                                     <span class="col-xs-6 col-sm-4 col-md-4 add-d-title">🍽️ ${dto.s_facility.split(',')[1]} </span>
+                                     <span class="col-xs-6 col-sm-8 col-md-8 add-d-entry">
                                      
-                                     <c:if test="${dto.s_facility.split(',')[i]=='null'}">
-                                     <span class="col-xs-6 col-sm-4 col-md-4 add-d-title">-</span>
-                                     <span class="col-xs-6 col-sm-8 col-md-8 add-d-entry">-</span>
-                                 
-									</c:if>
-										</li>	
+                                     <i class="fa-sharp fa-solid fa-paw fa-1x"></i>
+                                     [반려견을 동반할 경우] <br>
+                                      반려동물과 함께 오신다면 배변패드/매너 벨트 필수 지참입니다. <br><br>
+                                     
+                                      <i class="fa-sharp fa-solid fa-paw fa-1x"></i>
+                                     [반려견을 동반하지 않은 경우] <br>
+									 털날림, 짖음등 있을수 있습니다. 참고해주세요!
+										</span>
+                                
+								</li>	
+							</c:if> <br>
+							<c:if test="${dto.s_facility.split(',')[2]!='null'}">
+                                 <li>
+                                     <span class="col-xs-6 col-sm-4 col-md-4 add-d-title"> 🍽️ ${dto.s_facility.split(',')[2]} </span>
+                                     <span class="col-xs-6 col-sm-8 col-md-8 add-d-entry"> 8세 이상부터는 코스에 포함해서 식사 진행하셔야합니다</span>
+                                
+								</li>	
+							</c:if> <br>
+							<c:if test="${dto.s_facility.split(',')[3]!='null'}">
+                                 <li>
+                                     <span class="col-xs-6 col-sm-4 col-md-4 add-d-title"> 🍽️ ${dto.s_facility.split(',')[3]}</span>
+                                     <span class="col-xs-6 col-sm-8 col-md-8 add-d-entry"> 🍷 콜키지 무료 조건 :  술 1 병 주문시 / 주문 금액 일정 금액 이상 </span>
+                                
+								</li>	
+							</c:if> <br>
+							<c:if test="${dto.s_facility.split(',')[4]!='null'}">
+                                 <li>
+                                     <span class="col-xs-6 col-sm-4 col-md-4 add-d-title"> 🍽️ ${dto.s_facility.split(',')[4]}</span>
+                                     <span class="col-xs-6 col-sm-8 col-md-8 add-d-entry"> 파티 대관 - 연말 파티, 돌잔치, 브라이덜샤워, 스몰 웨딩 등 프라이빗한 파티를 즐길 수 있는 공간!</span>
+                                
+								</li>	
+							</c:if>
                                
-                              </c:forEach>
+                             
 
                              </ul>
                          </div>  
@@ -297,9 +330,10 @@ $(document).ready(function(){
 <%-- 							<jsp:include page="../board/reviewList.jsp" /> --%>
 								
 								<hr><!-- 상품 정보를 들고 가야함. 다시 디테일로 돌아와함 -->
+							<c:if test="${!(id eq 'admin') && c==null }">
 							<input type="button" value="리뷰 쓰기" class="reviewWrite"
 							onclick="location.href='./ReviewWrite.rv?s_no=${dto.s_no }&rev_category=1';">
-								
+								</c:if>
 								<input type="button" value="리뷰 목록" class="reviewList"
 							onclick="location.href='./ReviewList.rv?s_no=${dto.s_no}';">
 								
@@ -356,7 +390,7 @@ $(document).ready(function(){
 
 
 									<div class="clear">
-                                         <div class="col-xs-8 col-sm-8 dealer-face">
+                                         <div class="hi">
                                              <a href="">
                                                  
                                                  <img src="./upload/${dto.s_image.split(',')[0]}" class="img-circle">
@@ -365,10 +399,11 @@ $(document).ready(function(){
                                          <br>
                                          <div class="col-xs-8 col-sm-8 ">
                                             
+                                           
                                              <h3 class="dealer-name">  
-										<b>${dto.s_name }</b>
+										<b>${dto.s_name }</b></h3>
 										
-										 <p> ${dto.s_type } 전문점 </p> </h3>
+										 <p> 🥢 ${dto.s_type } 전문점 </p> 
 										 
 										<!-- 로그인 안하면 안보이게 하기 -->
 										 
@@ -395,6 +430,8 @@ $(document).ready(function(){
                                  </div>
                                  </c:otherwise>
                                  </c:choose>
+                                 
+                                 ${BookCnt } 
                               </form>
 										
 										
@@ -407,10 +444,10 @@ $(document).ready(function(){
 									
                                      <div class="clear">
                                          <ul class="dealer-contacts">                                       
-                                             <li><i class="pe-7s-map-marker strong"> </i><a href="#" onclick="clip(); return false;" data-value=" ${dto.s_addr}"> MAP url 
+                                             <li>📍  <a href="#" onclick="clip(); return false;" data-value=" ${dto.s_addr}"> &nbsp; MAP url 
                                              </a></li>
-                                             <li><i class="pe-7s-call strong"> </i> <a href="">Store Tel : ${dto.s_tel } </a></li>
-                                             <li><i class="pe-7s-star strong "> </i>  <fmt:formatNumber value="${dto.s_star }"/></li>
+                                             <li>📞 <a href="">Store Tel : ${dto.s_tel } </a></li>
+                                             <li>⭐  <b style="color:black;"><fmt:formatNumber value="${dto.s_star }"/></b></li>
                                          </ul>
                                          <p> ${dto.s_content }</p>
                                         
@@ -432,8 +469,13 @@ $(document).ready(function(){
          </div>
          <div class="panel-body search-widget">
          
-             <form action="./reservation.st" class="form-inline" method="get"> 
-               
+             <form action="./reservation.br" class="form-inline" method="get"> 
+              <input type="hidden" name="s_no" value="${param.s_no }">
+             <input type="hidden" name="s_name" value="${dto.s_name }">
+             <input type="hidden" name="s_addr" value="${dto.s_addr }">
+             <input type="hidden" name="s_tel" value="${dto.s_tel }">
+             <input type="hidden" name="s_facility" value="${dto.s_facility }">
+             <input type="hidden" name="s_price" value="${dto.s_price }">
                <hr>
 			<fieldset>
 			
@@ -610,6 +652,25 @@ $(document).ready(function(){
     -ms-transition: all 0.4s ease;
     transition: all 0.4s ease;
 }
+
+.add-d-title {
+    font-weight: 600;
+    text-transform: uppercase;
+    background-color: #ffffff;
+    margin: 0px;
+    color: #564d4d;
+    text-align-last: center;
+    text-decoration-style: wavy;
+}
+
+p { 
+     padding: 20px 20px 20px 20px; 
+     margin: auto; 
+ } 
+
+ .hi { 
+    width: 80%; 
+ }
       </style>
       
       

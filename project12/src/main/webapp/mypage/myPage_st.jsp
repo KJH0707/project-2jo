@@ -37,7 +37,8 @@
 
     <!-- property area -->
  
-    <div class="properties-area recent-property" style="background-color: #FFF;">
+ 
+   <div class="properties-area recent-property" style="background-color: #FFF;">
       <div class="container">  
           <div class="row">
                
@@ -53,7 +54,7 @@
                            <li>
                            	 <a href="./StMyPage.us">
                                <div class="col-md-3 col-sm-3 col-xs-3 blg-thumb p0">
-                                   <img src="garo-estate-master/assets/img/myPage/store.png" width="20" height="20">
+                                    <img src="mypage/weekly-calendar_icon-icons.com_56749.png" width="20" height="20">
                                </div>
                              </a>
                                <div class="col-md-8 col-sm-8 col-xs-8 blg-entry" width="">
@@ -76,7 +77,7 @@
                            <li>
                            	  <a href="./StMyPage_review.us">
                                <div class="col-md-3 col-sm-3 col-xs-3 blg-thumb p0">
-                                   <img src="assets/assets/img/myPage/review.png" width="20" height="20">
+                                   <img src="mypage/heart-icon_34407.png" width="20" height="20">
                                </div>
                               </a>
                                <div class="col-md-8 col-sm-8 col-xs-8 blg-entry">
@@ -120,85 +121,42 @@
 <!------ Include the above in your HEAD tag ---------->
 
 
-
+<div style="margin-left: 0px">
 <div class="container mb-4">
     <div class="row">
+              <c:forEach var="dto" items="${wishList }">
         <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 mt-4" style="width:250px;">
             <div class="card shadow">
                 <div class="card-body text-center" >
-                    <a href="#">
-                        <img class="card-img-top" src="https://images.pexels.com/photos/1633578/pexels-photo-1633578.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="">
+                        <img class="card-img-top" src=src="./upload/${dto.s_image.split(',')[0] }">
                     </a>
                    
-                    <h3 class="text-warning" style="text-align:center;">맥도날드</h3>
-                    <h6 style="text-align:center; font-style: "><img src="mypage/star_77949.png" style="height:20px;"alt="">
-                    <span style="color:orange;">3.5</span></h6>
-                    <h6 style="text-align:center;"> 양식  </h6>
-                     <div style="text-align:center;"><a href="./MemberWishDelete.us" >
-                    <img src="mypage/trashcan_delete_remove_trash_icon_178327.png" style="height:20px;"alt=""><span style="color:gray;">삭제하기</span></a> </div>
+                    <h3 class="text-warning" style="text-align:center;">${dto.s_name}</h3>
+                    <h6 style="text-align:center; "${dto.rev_star }><img src="mypage/star_77949.png" style="height:20px;"alt="">
+                    <span style="color:orange;">평점 : ${dto.rev_star} 점</span></h6>
+                    <h6 style="text-align:center;">${dto.s_type } </h6>
+                    
+      
                 </div>
             </div>
         </div>
-        
-         <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 mt-4" style="width:250px;">
-            <div class="card shadow">
-                <div class="card-body text-center">
-                    <a href="#">
-						<img class="card-img-top" src="https://images.pexels.com/photos/1633578/pexels-photo-1633578.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="">
-                    </a>
-                    <h3 class="text-warning" style="text-align:center;">맥도날드</h3>
-                         <h6 style="text-align:center; font-style: "><img src="mypage/star_77949.png" style="height:20px;"alt="">
-                     <span style="color:orange;">3.5</span></h6>
-                    <h6 style="text-align:center;"> 양식  </h6>
-                    <div style="text-align:center;"><a href="./MemberWishDelete.us" >
-                    <img src="mypage/trashcan_delete_remove_trash_icon_178327.png" style="height:20px;"alt=""><span style="color:gray;">삭제하기</span></a> </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 mt-4" style="width:250px;">
-            <div class="card shadow">
-                <div class="card-body text-center">
-                    <a href="#">
-						<img class="card-img-top" src="https://images.pexels.com/photos/1633578/pexels-photo-1633578.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="">
-                    </a>
-                    <h3 class="text-warning" style="text-align:center;">맥도날드</h3>
-                         <h6 style="text-align:center; font-style: "><img src="mypage/star_77949.png" style="height:20px;"alt="">
-                     <span style="color:orange;">3.5</span></h6>
-                    <h6 style="text-align:center;"> 양식  </h6>
-                    <div style="text-align:center;"><a href="./MemberWishDelete.us" >
-                    <img src="mypage/trashcan_delete_remove_trash_icon_178327.png" style="height:20px;"alt=""><span style="color:gray;">삭제하기</span></a> </div>
-                </div>
-            </div>
-        </div>
-        
-        
-        
-        
-        
-        
+			  	</c:forEach>
 	</div>
-</div>
-
-
-
-
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
 <!-- ///////////////////////////////////////////////////// -->
 
 
 
-</div>
-</div>
-</div>
-</div>
-
-
-        
  <!-- 푸터 -->
-	<div>
+	<div >
 	<jsp:include page="../inc/bottom.jsp" />
 	</div>
 <!-- 푸터 끝 -->
-
 </body>
 </html>

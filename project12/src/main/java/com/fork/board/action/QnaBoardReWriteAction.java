@@ -18,11 +18,12 @@ public class QnaBoardReWriteAction implements Action {
 		HttpSession session = request.getSession();
 		String id = (String) session.getAttribute("c_id");
 		ActionForward forward = new ActionForward();
-		if(!id.contains("ceo") || !id.contains("store")) {
-			forward.setPath("./loginAction.us");
-			forward.setRedirect(true);
+		if(id!=null) {
+			if(!id.contains("ceo") || !id.contains("store")) {
+				forward.setPath("./loginAction.us");
+				forward.setRedirect(true);
+			}	
 		}
-		
 		String pageNum = request.getParameter("pageNum");
 		 String realPath = request.getRealPath("/upload");
 	      System.out.println(" M : realPath : "+realPath);
@@ -45,11 +46,12 @@ public class QnaBoardReWriteAction implements Action {
 		dto.setRev_subject(multi.getParameter("rev_subject"));
 		dto.setRev_file(multi.getParameter("rev_file"));
 		dto.setRev_content(multi.getParameter("rev_content"));
-		
+		dto.setRev_category(0);
 		BoardDAO dao = new BoardDAO();
 		dao.reInsertBoard(dto);
 		
-		forward.setPath("./QnaList.br?pageNum="+pageNum);
+		
+		forward.setPath("./QnaList.br?pageNum="+pageNum+"&rev_category=0&s_no="+Integer.parseInt(multi.getParameter("s_no")));
 		forward.setRedirect(true);
 		
 		return forward;

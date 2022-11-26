@@ -50,7 +50,7 @@
                            <li>
                            	 <a href="./StMyPage.us">
                                <div class="col-md-3 col-sm-3 col-xs-3 blg-thumb p0">
-                                   <img src="garo-estate-master/assets/img/myPage/store.png" width="20" height="20">
+                                   <img src="mypage/weekly-calendar_icon-icons.com_56749.png" width="20" height="20">
                                </div>
                              </a>
                                <div class="col-md-8 col-sm-8 col-xs-8 blg-entry" width="">
@@ -73,7 +73,7 @@
                            <li>
                            	  <a href="./StMyPage_review.us">
                                <div class="col-md-3 col-sm-3 col-xs-3 blg-thumb p0">
-                                   <img src="assets/img/myPage/review.png" width="20" height="20">
+                                   <img src="mypage/heart-icon_34407.png" width="20" height="20">
                                </div>
                               </a>
                                <div class="col-md-8 col-sm-8 col-xs-8 blg-entry">
@@ -125,33 +125,35 @@
   <hr>
   
   <div class="col-xs-12 col-sm-6 col-md-6" >
-            <div class="well well-sm" style="background:white; width:600px;">
+            <div class="well well-sm" style="background:white; width:600px; margin-bottom: 200px;">
                 <div class="row">
                     <div class="col-sm-6 col-md-4">
 <!--                     /380x500 -->
                         <img src="assets/img/myPage/cat.jpg" alt="profile" width=500 height=500 style="border-radius:50%" />
                     </div>
+                    
+                    
                     <div class="col-sm-6 col-md-8">
-                        <h4>고양이너무귀엽다</h4>
+                        <h4>${dto.m_id} 님 </h4>
                         <hr>
                         <p style="font-size:14px">
 <!--                         	<i class="glyphicon glyphicon-hand-right"></i> -->
-                        	<b>아이디</b>&nbsp;&nbsp;&nbsp;store111
+                        	<b>아이디</b>&nbsp;&nbsp;&nbsp;${dto.m_id }
                             <span style="margin-left:48px">
 <!--                             <i class="glyphicon glyphicon-envelope"></i> -->
-                            <b>이&nbsp;&nbsp;&nbsp;름</b>&nbsp;&nbsp;&nbsp;홍길동</span>
+                            <b>이&nbsp;&nbsp;&nbsp;름</b>&nbsp;&nbsp;&nbsp;${dto.m_name }</span>
                             <br />
 <!--                             <i class="glyphicon glyphicon-envelope"></i> -->
-                            <b>연락처</b>&nbsp;&nbsp;&nbsp;010-1111-1111
+                            <b>연락처</b>&nbsp;&nbsp;&nbsp;${dto.m_tel }
                             <span style="margin-left:20px">
 <!--                             <i class="glyphicon glyphicon-globe"></i> -->
-                            <b>이메일</b>&nbsp;&nbsp;&nbsp;email@example.com</span>
+                            <b>이메일</b>&nbsp;&nbsp;&nbsp;${dto.m_email }</span>
                             <br />
 <!--                             <i class="glyphicon glyphicon-envelope"></i> -->
                         </p>
                         <!-- Split button -->
                         <div class="text-right">
-                            <a href="./MemberInfoEdit.us">수정</a>
+                            <a href="./MemberInfoEdit.us">정보수정</a>
 <!--                             <ul class="dropdown-menu" role="menu"> -->
 <!--                                 <li><a href="#">Twitter</a></li> -->
 <!--                                 <li><a href="https://plus.google.com/+Jquery2dotnet/posts">Google +</a></li> -->
@@ -165,20 +167,12 @@
             </div>
         </div>
         
+        
           
-	<div class="row">
-      <div class="col-md-8 col-sm-12">
-          <h3 class="tm-block-title d-inline-block">찜한가게
-         </h3>
-      </div>
-  </div>
-  <hr>
-            
- </div>
- </div>
- </div> 
-
-
+	
+        </div>
+        </div>
+        </div>
 
         
  <!-- 푸터 -->

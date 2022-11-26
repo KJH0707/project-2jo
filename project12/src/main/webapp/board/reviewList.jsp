@@ -145,7 +145,6 @@
         <!-- ============================================================== -->
         
         <div class="nav-left-sidebar sidebar-dark">
-        <c:forEach var="dto" items="${reviewListAll }" begin="1" end="1">
             <div class="menu-list">
                 <nav class="navbar navbar-expand-lg navbar-light">
                     <a class="d-xl-none d-lg-none" href="#">Dashboard</a>
@@ -159,7 +158,7 @@
                             </li>
                              
                             <li class="nav-item ">
-                                <a class="nav-link active" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-1" aria-controls="submenu-1"><i class="fa fa-fw fa-user-circle"></i>${dto.s_name }'s Board<span class="badge badge-success">6</span></a>
+                                <a class="nav-link active" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-1" aria-controls="submenu-1"><i class="fa fa-fw fa-user-circle"></i>${st.s_name }'s Board<span class="badge badge-success">6</span></a>
                                 <div id="submenu-1" class="collapse submenu" style="">
                                     <ul class="nav flex-column">
                                         <li class="nav-item">
@@ -168,10 +167,10 @@
                                             
                                                 <ul class="nav flex-column">
                                                     <li class="nav-item">
-                                                        <a class="nav-link" href="./ReviewList.rv?s_no=${dto.s_no }&s_name=${dto.s_name }">Review List</a>
+                                                        <a class="nav-link" href="./ReviewList.rv?s_no=${st.s_no }&s_name=${st.s_name }">Review List</a>
                                                     </li>
                                                     <li class="nav-item">
-                                                        <a class="nav-link" href="./ReviewWrite.rv?s_no=${dto.s_no }&s_name=${dto.s_name }">Review Write</a>
+                                                        <a class="nav-link" href="./ReviewWrite.rv?s_no=${st.s_no }&s_name=${st.s_name }">Review Write</a>
                                                     </li>
                                                     
                                                 </ul>
@@ -183,10 +182,10 @@
                                             <div id="submenu-1-1" class="collapse submenu" style="">
                                                 <ul class="nav flex-column">
                                                     <li class="nav-item">
-                                                        <a class="nav-link" href="dashboard-influencer.html">Q & A List</a>
+                                                        <a class="nav-link" href="./QnaList.br">Q & A List</a>
                                                     </li>
                                                     <li class="nav-item">
-                                                        <a class="nav-link" href="influencer-finder.html">Q & A Write</a>
+                                                        <a class="nav-link" href="/QnaWrite.br">Q & A Write</a>
                                                     </li>
                                                    
                                                 </ul>
@@ -208,7 +207,7 @@
                                 <div id="submenu-6" class="collapse submenu" style="">
                                     <ul class="nav flex-column">
                                         <li class="nav-item">
-                                            <a class="nav-link" href="./storeDetails.st?s_no=${dto.s_no }">Reservation</a>
+                                            <a class="nav-link" href="./storeDetails.st?s_no=${st.s_no }">Reservation</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" href="./storeList.st">Store List</a>
@@ -240,7 +239,6 @@
                     </div>
                 </nav>
             </div>
-            </c:forEach>
             <!--끝끝끝끝끝끝 -->
         </div>
         <!-- ============================================================== -->
@@ -298,20 +296,19 @@
                                     <li class="nav-item">
                                         <a class="nav-link active" id="pills-review-tab" data-toggle="pill" href="#pills-review" role="tab" aria-controls="pills-review" aria-selected="true">R E V I E W S</a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="pills-msg-tab" data-toggle="pill" href="#pills-msg" role="tab" aria-controls="pills-msg" aria-selected="false">Send Messages</a>
-                                    </li>
+<!--                                     <li class="nav-item"> -->
+<!--                                         <a class="nav-link" id="pills-msg-tab" data-toggle="pill" href="#pills-msg" role="tab" aria-controls="pills-msg" aria-selected="false"> Q & A </a> -->
+<!--                                     </li> -->
                                 </ul>
                                 <div class="tab-content" id="pills-tabContent">
                                   
-                                    ${s_no } 
+                                    
                                     <div class="tab-pane fade show active" id="pills-review" role="tabpanel" aria-labelledby="pills-review-tab">
-                                   <c:forEach var="dto" items="${reviewListAll }" begin="1" end="1">
                                    <div class="row">
                                          
                                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                                 <div class="section-block">
-                                                    <h3 class="section-title">${dto.s_name }'sReview Board</h3>
+                                                    <h3 class="section-title">${st.s_name }'s Review Board</h3>
                                                 </div>
                                             </div>
                                            
@@ -330,7 +327,7 @@
                                                     
 													
 <%-- 													${param.s_star.substring(0,3) }  --%>
-							<span style=color:indigo;"><fmt:formatNumber value="${dto.s_star }" pattern=".0"/></span> 
+							<span style=color:indigo;"><fmt:formatNumber value="${st.s_star }" pattern=".0"/></span> 
 							<span>/ 5</span> 
 													 </h1>
                                                         <p>Ratings</p>
@@ -340,7 +337,7 @@
                                             <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
                                                 <div class="card">
                                                     <div class="card-body">
-                                                        <h1 class="mb-1">${dto.s_readcount } </h1>
+                                                        <h1 class="mb-1">${st.s_readcount } </h1>
                                                         <p>Views</p>
                                                     </div>
                                                 </div>
@@ -348,42 +345,41 @@
                                             <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
                                                 <div class="card">
                                                     <div class="card-body">
-                                                        <h1 class="mb-1">1</h1>
-                                                        <p>??</p>
+                                                        <h1 class="mb-1"><a href="./main.st">Main</a></h1>
+                                                        <p>메인으로 돌아가기</p>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                       </c:forEach>
                                         <input type="hidden" value="${param.s_no }" name="s_no">
-                      
+                      					
                                         <div class="card">
+                                        <h5 class="card-header">${st.s_name } Reviews </h5>
                                          <c:forEach var="dto" items="${reviewListAll }">
-                                            <h5 class="card-header">${param.s_name } Reviews </h5>
-                                            
-                                          ${dto.rev_no }
-                                             <input type="hidden" value="${dto.rev_no }" name="rev_no">
+                                            <input type="hidden" value="${dto.rev_no }" name="rev_no">
                                              
-                                            <div class="card-body">
+                                           	<div class="card-body">
                                                 <div class="review-block">
-                                               <c:if test="${img != 'null' }">
-														 <img src="./upload/${dto.rev_file }" width="100" height="100">
-													 </c:if><br>
-													
-													 <c:if test="${dto.rev_seq > 0 }"><b>ㄴ</b>
-														<!-- "./"는 webapp이다. 가상주소앞에 ./는 프로젝트명,  뒤에 실제파일 앞에 ./는 webapp -->
-														
-													</c:if>
-													
-													
+                                                
+                                                
+                                                <c:choose>
+                                         	      <c:when test="${dto.rev_file != null }">
+														 <img src="./upload/${dto.rev_file }" width="600" height="450">
+											 	</c:when>
+												<c:when test="${dto.rev_file == null}"></c:when>
+													 
+												</c:choose>
+													 <br>
+													 <c:if test="${dto.rev_seq > 0 }"><b>ㄴ</b></c:if>
                                                	 <span class="text-dark font-weight-bold font-italic m-0">${dto.rev_subject }</span>
                                                     <p class="review-text font-italic m-0">${dto.rev_content }</p>
                                                     
                                                     <!-- 관리자가 댓글달 땐 안보이게 하기  -->
                                                     
-                                                 
-                                                    <c:choose>
-                                                    <c:when test="${!m_nickName.equals('어드민') }">
+                                                  
+                                                  <c:choose>
+                                                    <c:when test="${dto.rev_star > 0}">
+                                                    
                                                     <div class="rating-star mb-4">
                                                        <c:forEach begin="1" end="5" var='k'>  
 														<c:if test="${k <= dto.rev_star}">
@@ -392,100 +388,98 @@
 														<c:if test="${k > dto.rev_star}">
 														    <i id="star${k}" class="far fa-star" style= color:red;></i>	<!-- 채워진 별 -->
 														</c:if>
+														
 													 </c:forEach>
 													  ${dto.rev_star } 점
                                                     </div>
                                                     </c:when>
-                                                    <c:otherwise> -
+                                                    
+                                                    <c:otherwise>
+                                                    -
                                                     </c:otherwise>
-                                                      </c:choose>
-                                                    
+                                                    </c:choose>
                                                   
+                                                  ${dto.m_id }
                                                     
-                                                    
-                                                    <span class="text-dark font-weight-bold">${dto.m_nickName }</span>
+                                                    <span class="text-dark font-weight-bold">${dto.m_nickname } </span>
                                                     <small class="text-mute"> <fmt:formatDate value="${dto.rev_date }"/></small>
                                                     
-                                                    <c:if test="${sessionScope.sessionID != null && id.equals('id') }"> 
-                               
-                                          <small class="text-mute"><a href="./ReviewUpdate.rv?rev_no=${dto.rev_no }&pageNum=${pageNum }">수정/</a></small>
-                                                       <small class="text-mute"> <a href="./ReviewDelete.rv?rev_no=${dto.rev_no }&s_no=${s_no }">삭제 / </a></small>
-                                              		                                      			
-                                              		 </c:if>	
+                                                    <c:if test="${id eq dto.m_id || id eq 'admin'}">
+                                          <small class="text-mute"><a href="./ReviewUpdate.rv?rev_no=${dto.rev_no }&pageNum=${pageNum }&rev_star=${dto.rev_star}">수정/</a></small>
+                                                       <small class="text-mute"> <a href="./ReviewDelete.rv?rev_no=${dto.rev_no }&s_no=${st.s_no }">삭제 </a></small> <br><br>
+                                              		       </c:if>                
 
                                                 
-                                          
+                                          &nbsp;
                                           <!-- 관리자 아이디 제어  -->
-                                          <c:if test="${id.equals('admin') }">
-                                          
-                                          ${dto.rev_ref } /${dto.rev_seq }
+                                           <c:if test="${id.equals('admin') }">
+                                           <c:if test="${dto.rev_seq < 1 }">
+                                         	
                                             <small class="text-mute"> 
-                                            <input type="submit" value="답글"onclick="location.href='./reviewReply.rv?rev_no=${dto.rev_no}&pageNum=${pageNum }&rev_ref=${dto.rev_ref }&rev_seq=${dto.rev_seq }&rev_subject=${dto.rev_subject }&s_no=${dto.s_no }';" >
+                                            <input type="button" value="답글"onclick="location.href='./reviewReply.rv?rev_no=${dto.rev_no}&pageNum=${pageNum }&rev_ref=${dto.rev_ref }&rev_seq=${dto.rev_seq }&rev_subject=${dto.rev_subject }&s_no=${dto.s_no }'" >
 											</small>
 											</c:if>
-											
+											 </c:if>
+											<c:if test="${mine!=null}">
+											<input type="button" value="답글"onclick="location.href='./reviewReply.rv?rev_no=${dto.rev_no}&pageNum=${pageNum }&rev_ref=${dto.rev_ref }&rev_seq=${dto.rev_seq }&rev_subject=${dto.rev_subject }&s_no=${dto.s_no }'" >
+											</c:if>
 											</div>
                                             </div>
 											
                                             </c:forEach>
                                         </div>
-                                         <c:forEach var="dto" items="${reviewListAll }" begin="1" end="1">
-                                        <nav aria-label="Page navigation example">
-                                       
+                                      
+                                      <!--페이지네이션 -->
+                                      
+                                      <nav aria-label="Page navigation example">
                                             <ul class="pagination">
-                                             <c:if test="${totalCnt != 0}">
-                                             
-                                             <!-- 이전 -->
-                                              <c:if test="${startPage > pageBlock }">
-
-                                                <li class="page-item"><a class="page-link" href="./ReviewList.rv?pageNum=${startPage-pageBlock }&s_no=${dto.s_no }">Previous</a></li>
-                                               </c:if> 
-                                               
-                                                 <!-- 페이지 번호(1,2,3....) -->	  
-	   										 <c:forEach var="i" begin="${startPage }" end="${endPage }" step="1">
-                                                <li class="page-item"><a class="page-link" href="./ReviewList.rv?pageNum=${i }&s_no=${dto.s_no }">${i }</a></li>
-
-                                              </c:forEach>
-                                              
-                                               <!-- 다음 -->	
-	  										  <c:if test="${endPage < pageCount }">
-                                                <li class="page-item"><a class="page-link" href="./ReviewList.rv?pageNum=${startPage+pageBlock }&s_no=${dto.s_no }">Next</a></li>
-                                               
-                                                </c:if>
-                                                </c:if>
-                                                
+                                            	<c:if test="${reqeustScope.totalCnt != 0 }">
+                                            		<c:if test="${startPage > pageBlock }">
+		                                                <li class="page-item"><a class="page-link" href="./ReviewList.rv?pageNum=${startPage-pageBlock }&s_no=${st.s_no }">Previous</a></li>
+		                                            </c:if>
+		                                            <c:forEach var="i" begin="${startPage }" end="${endPage }" step="1">
+		                                                <li class="page-item"><a class="page-link" href="./ReviewList.rv?pageNum=${i }&s_no=${st.s_no }">${i }</a></li>
+		                                            </c:forEach>   
+		                                            <c:if test="${endPage < pageCount }">
+		                                                <li class="page-item"><a class="page-link" href="./ReviewList.rv?pageNum=${startPage+pageBlock }&s_no=${st.s_no }">[Next]]</a></li>
+		                                            </c:if>
+		                                            
+		                                        </c:if>
                                             </ul>
                                         </nav>
-                                        </c:forEach>
+				                                        
+				                                        
+				                                        
                                     </div>
                                     <div class="tab-pane fade" id="pills-msg" role="tabpanel" aria-labelledby="pills-msg-tab">
                                         <div class="card">
-                                            <h5 class="card-header">Send Messages</h5>
-                                            <div class="card-body">
-                                                <form>
-                                                    <div class="row">
-                                                        <div class="offset-xl-3 col-xl-6 offset-lg-3 col-lg-3 col-md-12 col-sm-12 col-12 p-4">
-                                                            <div class="form-group">
-                                                                <label for="name">Your Name</label>
-                                                                <input type="text" class="form-control form-control-lg" id="name" placeholder="">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="email">Your Email</label>
-                                                                <input type="email" class="form-control form-control-lg" id="email" placeholder="">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="subject">Subject</label>
-                                                                <input type="text" class="form-control form-control-lg" id="subject" placeholder="">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="messages">Messgaes</label>
-                                                                <textarea class="form-control" id="messages" rows="3"></textarea>
-                                                            </div>
-                                                            <button type="submit" class="btn btn-primary float-right">Send Message</button>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>
+<!--                                             <h5 class="card-header">Send Messages</h5> -->
+<!--                                             <div class="card-body"> -->
+<!--                                                 <form> -->
+<!--                                                     <div class="row"> -->
+<!--                                                         <div class="offset-xl-3 col-xl-6 offset-lg-3 col-lg-3 col-md-12 col-sm-12 col-12 p-4"> -->
+<!--                                                             <div class="form-group"> -->
+<!--                                                                 <label for="name">Your Name</label> -->
+<!--                                                                 <input type="text" class="form-control form-control-lg" id="name" placeholder=""> -->
+<!--                                                             </div> -->
+<!--                                                             <div class="form-group"> -->
+<!--                                                                 <label for="email">Your Email</label> -->
+<!--                                                                 <input type="email" class="form-control form-control-lg" id="email" placeholder=""> -->
+<!--                                                             </div> -->
+<!--                                                             <div class="form-group"> -->
+<!--                                                                 <label for="subject">Subject</label> -->
+<!--                                                                 <input type="text" class="form-control form-control-lg" id="subject" placeholder=""> -->
+<!--                                                             </div> -->
+<!--                                                             <div class="form-group"> -->
+<!--                                                                 <label for="messages">Messgaes</label> -->
+<!--                                                                 <textarea class="form-control" id="messages" rows="3"></textarea> -->
+<!--                                                             </div> -->
+<!--                                                             <button type="submit" class="btn btn-primary float-right">Send Message</button> -->
+<!--                                                         </div> -->
+<!--                                                     </div> -->
+<!--                                                 </form> -->
+<!--                                             </div> -->
+
                                         </div>
                                     </div>
                                 </div>

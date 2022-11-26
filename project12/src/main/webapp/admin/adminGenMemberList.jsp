@@ -142,8 +142,10 @@
                                
                                                         <td>${gml.m_birth }</td>
                                                         <td>${gml.m_regdate }
+                            
+                            
                                                         <td>
-                                                        	<a href="#">수정</a> 
+<!--                                                         	<a href="#">수정</a>  -->
                                                         	
                                                         	<a href="javascript: isGenDelete(${gml.m_no },${pageNum })">삭제</a>
                                                          </td>

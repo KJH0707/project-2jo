@@ -17,6 +17,6 @@ public class PaymentDTO {
 	private String p_info;
 	private int p_status;
 	private Timestamp p_date;
-	
+	private int s_no;
 	
 }

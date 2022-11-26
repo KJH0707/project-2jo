@@ -13,6 +13,8 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import com.fork.board.db.BookDTO;
+import com.fork.review.db.ReviewDTO;
 import com.fork.store.db.StoreDTO;
 
 public class UserDAO {
@@ -84,8 +86,8 @@ public class UserDAO {
 					System.out.println(" DAO : m_no : " + m_no);
 					
 					// 회원가입
-					sql = "insert into member(m_no,m_id,m_name,m_email,m_nickname,m_pw) "
-							+ "values(?,?,?,?,?,?)";
+					sql = "insert into member "
+							+ "values(?,?,?,?,?,?,?,?,?,now())";
 					pstmt = con.prepareStatement(sql);
 					
 					// ??
@@ -95,6 +97,10 @@ public class UserDAO {
 					pstmt.setString(4, dto.getM_email());
 					pstmt.setString(5, dto.getM_nickName());
 					pstmt.setString(6, dto.getM_pw());
+					pstmt.setString(7, dto.getM_birth());
+					pstmt.setString(8, dto.getM_gender());
+					pstmt.setString(9, dto.getM_tel());
+					
 					
 					int result = pstmt.executeUpdate();
 					
@@ -868,6 +874,38 @@ public class UserDAO {
 			}
 			// 어드민 점주 삭제
 			
+			public void adminDeletePayment(String p_no) {			
+				try {
+					con = getConnection();
+					
+					sql = "select * from payment where p_no=?";
+					pstmt = con.prepareStatement(sql);
+					
+					pstmt.setString(1, p_no);
+					pstmt.executeQuery();
+					rs = pstmt.executeQuery();
+					
+					if(rs.next()) {
+						sql = "delete from payment where p_no=?";
+						pstmt = con.prepareStatement(sql);
+						
+						pstmt.setString(1, p_no);
+						pstmt.executeUpdate();
+					}
+					
+					
+					System.out.println(" DAO : 회원삭제 완료");
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				} finally {
+					closeDB();
+				}
+				
+			
+			}
+			// 어드민 점주 삭제
+			
 			// 어드민 신고 갯수 조회
 			public int getReportCount() {
 				int cnt = 0;
@@ -1293,16 +1331,16 @@ public class UserDAO {
 			// 어드민 공지 목록
 			
 			// 어드민 공지 갯수 조회
-			public int getNoticeCount() {
+			public int getNoticeCount(int isE) {
 				int cnt = 0;
 				
 				// 1.2. 디비연결
 				try {
 					con = getConnection();
 					// 3. sql
-					sql = "select count(*) from notice";
+					sql = "select count(*) from notice where n_isEvent=?";
 					pstmt = con.prepareStatement(sql);
-					
+					pstmt.setInt(1, isE);
 					// 4. sql 실행
 					rs = pstmt.executeQuery();
 					// 5. 데이터처리
@@ -1450,7 +1488,7 @@ public class UserDAO {
 				
 				try {
 					con=getConnection();
-					sql = "select (select count(*) from reviewcs where m_no=?) A,"
+					sql = "select (select count(*) from reviewcs where m_no=? and rev_category=1) A,"
 							+ "(select count(*) from report where m_no=?) B,"
 							+ "(select count(*) from reservation where m_no=?) C,"
 							+ "(select count(*) from payment where m_no=?) D";
@@ -1784,40 +1822,6 @@ public class UserDAO {
 				return cdto;
 			} // 사업자 회원정보 가져오기 - getCEO(id)
 			
-			/** 업자 가지고 있는 가게 수 확인 - getStoreCount(id)
-			 * 사업자가 가지고 있는 가게 수 확인 메서드. id 받음
-			 * 리턴값 o , 카운트 리턴
-			 * @param id
-			 * @return
-			 */
-			public int getStoreCount(String id) {
-				int snt=0;
-				
-				try {
-					con = getConnection();
-					
-					sql = "select count(s.s_no) from store s "
-							+ "join ceo c on s.c_no=c.c_no "
-							+ "where c.c_id=?";
-					pstmt = con.prepareStatement(sql);
-					
-					pstmt.setString(1, id);
-					
-					rs=pstmt.executeQuery();
-					
-					// 데이터처리
-					if(rs.next()) {
-						snt = rs.getInt("count(*)");
-					}
-					
-				} catch (Exception e) {
-					e.printStackTrace();
-				} finally {
-					closeDB();
-				}
-				
-				return snt;
-			}
 			
 			
 			
@@ -1894,28 +1898,6 @@ public class UserDAO {
 			}
 			
 			
-			/** 등록한 가게 삭제 - deleteStore(s_no)
-			 *  ceo 마이페이지에서 등록 가게 삭제 메서드. s_no 받음
-			 *  리턴값 x
-			 * @param s_no
-			 */
-			public void deleteStore(int s_no) {
-				try {
-					con = getConnection();
-					
-					sql = "delete from store where s_no=?";
-					pstmt = con.prepareStatement(sql);
-					
-					pstmt.setInt(1, s_no);
-					
-					pstmt.executeUpdate();
-					
-				} catch (Exception e) {
-					e.printStackTrace();
-				} finally {
-					closeDB();
-				}
-			}
 			
 			
 			// 사업자 가게 총 예약 개수
@@ -2330,22 +2312,23 @@ public class UserDAO {
 					// 1.2. 디비 연결
 						con = getConnection();
 					// 3. sql 작성(select) & pstmt 객체
-						sql = "select B.p_no, C.m_id, A.s_name, B.p_price, B.p_info, B.p_date, B.p_status, A.s_no, C.m_no"
+						sql = "select B.p_no, C.m_id, A.s_name, B.p_price, B.p_info, B.p_date, B.p_status, A.s_no, C.m_no, C.m_nickname "
 								+ "from store A, payment B, member C "
-								+ "where A.s_no=B.s_no and C.m_no=B.m_no and (A.s_name Like ? or C.m_id ?) limit ?,?;";
+								+ "where A.s_no=B.s_no and C.m_no=B.m_no and (A.s_name Like ? or C.m_id Like ? or C.m_nickname Like ?) limit ?,?";
 						pstmt = con.prepareStatement(sql);
 					// ?????
 						pstmt.setString(1, keyword);
 						pstmt.setString(2, keyword);
-						pstmt.setInt(3, startRow-1); // 시작행-1
-						pstmt.setInt(4, pageSize); // 개수
+						pstmt.setString(3, keyword);
+						pstmt.setInt(4, startRow-1); // 시작행-1
+						pstmt.setInt(5, pageSize); // 개수
 					// 4. sql 실행
 						rs = pstmt.executeQuery();
 					// 5. 데이터 처리 (DB -> DTO -> List)
 						while(rs.next()) {
 							// DB -> DTO
 							hm = new HashMap<String,Object>();
-							hm.put("p_no", rs.getInt("p_no"));
+							hm.put("p_no", rs.getString("p_no"));
 							hm.put("m_id", rs.getString("m_id"));
 							hm.put("s_name", rs.getString("s_name"));
 							hm.put("p_price", rs.getInt("p_price"));
@@ -2354,6 +2337,7 @@ public class UserDAO {
 							hm.put("p_status",rs.getInt("p_status"));
 							hm.put("s_no",rs.getInt("s_no"));
 							hm.put("m_no",rs.getInt("m_no"));
+							hm.put("m_nickname", rs.getString("m_nickname"));
 							paymentList.add(hm);
 						}//while
 						
@@ -2381,7 +2365,7 @@ public class UserDAO {
 					// 1.2. 디비 연결
 						con = getConnection();
 					// 3. sql 작성(select) & pstmt 객체
-						sql = "select B.p_no, C.m_id, A.s_name, B.p_price, B.p_info, B.p_date, B.p_status,A.s_no, C.m_no"
+						sql = "select B.p_no, C.m_id, A.s_name, B.p_price, B.p_info, B.p_date, B.p_status,A.s_no, C.m_no,C.m_nickname "
 								+ "from store A, payment B, member C "
 								+ "where A.s_no=B.s_no and C.m_no=B.m_no limit ?,?";
 						pstmt = con.prepareStatement(sql);
@@ -2395,7 +2379,7 @@ public class UserDAO {
 						while(rs.next()) {
 							// DB -> DTO
 							hm = new HashMap<String,Object>();
-							hm.put("p_no", rs.getInt("p_no"));
+							hm.put("p_no", rs.getString("p_no"));
 							hm.put("m_id", rs.getString("m_id"));
 							hm.put("s_name", rs.getString("s_name"));
 							hm.put("p_price", rs.getInt("p_price"));
@@ -2404,6 +2388,7 @@ public class UserDAO {
 							hm.put("p_status",rs.getInt("p_status"));
 							hm.put("s_no",rs.getInt("s_no"));
 							hm.put("m_no",rs.getInt("m_no"));
+							hm.put("m_nickname", rs.getString("m_nickname"));
 							
 							paymentList.add(hm);
 						}//while
@@ -2430,10 +2415,10 @@ public class UserDAO {
 					// 1.2. 디비 연결
 						con = getConnection();
 					// 3. sql 작성(select) & pstmt 객체
-						sql = "select count(*) from reservation";
+						sql = "select count(*) from reservation where s_name Like ?";
 						pstmt = con.prepareStatement(sql);
 					// ?????
-						
+						pstmt.setString(1, s_name);
 						
 					// 4. sql 실행
 						rs = pstmt.executeQuery();
@@ -2456,183 +2441,939 @@ public class UserDAO {
 					return cnt;
 				}
 				
-				/** 가게 정보 저장 - getStoreInfo(id)
-				 * 가게 정보 저장하는 메서드. id 값 받아서 사용
-				 * 리턴값 List
-				 * @param id
-				 * @return
-				 */
-				public List getStoreInfo(String id) {
-					List storeInfo = new ArrayList();
+				
+				public int adminCntGetPaymentList(int startRow, int pageSize, String keyword) {
+					System.out.println(" DAO : getBoardList() 호출 ");
+					// 글정보 모두 저장하는 배열
+					int cnt = 0;
 					
 					
 					try {
+					// 1.2. 디비 연결
 						con = getConnection();
-						sql = "select s.* from store s "
-								+ "join ceo c on c.c_no = s.c_no "
-								+ "where c_id=?";
+					// 3. sql 작성(select) & pstmt 객체
+						sql = "select count(*) "
+								+ "from store A, payment B, member C "
+								+ "where A.s_no=B.s_no and C.m_no=B.m_no and (A.s_name Like ? or C.m_id Like ? or C.m_nickname Like ? )";;
 						pstmt = con.prepareStatement(sql);
-						
-						pstmt.setString(1, id);
+					// ?????
+						pstmt.setString(1, keyword);
+						pstmt.setString(2, keyword);
+						pstmt.setString(3, keyword);
+					// 4. sql 실행
 						rs = pstmt.executeQuery();
+					// 5. 데이터 처리 (DB -> DTO -> List)
+						if(rs.next()) {
+							// DB -> DTO
+							cnt = rs.getInt(1);
+							
+							
+						}//while
 						
-						while(rs.next()) {
-							StoreDTO sdto = new StoreDTO();
-							
-							sdto.setS_no(rs.getInt("s_no"));
-							sdto.setS_name(rs.getString("s_name"));
-							sdto.setS_addr(rs.getString("s_addr"));
-							sdto.setS_tel(rs.getString("s_tel"));
-							sdto.setS_hours(rs.getString("s_hours"));
-							sdto.setS_type(rs.getString("s_type"));
-							sdto.setS_image(rs.getString("s_image"));
-							sdto.setS_content(rs.getString("s_content"));
-							sdto.setS_facility(rs.getString("s_facility"));
-							sdto.setS_latitude(rs.getString("s_latitude"));
-							sdto.setS_longtude(rs.getString("s_longtude"));
-							sdto.setS_menuname(rs.getString("s_menuname"));
-							sdto.setS_menuprice(rs.getString("s_menuprice"));
-							sdto.setS_menuImg(rs.getString("s_menuImg"));
-							sdto.setS_number(rs.getInt("s_number"));
-							sdto.setC_no(rs.getInt("c_no"));
-							sdto.setS_star(rs.getDouble("s_star"));
-							sdto.setS_regdate(rs.getTimestamp("s_regdate"));
-							
-							storeInfo.add(sdto);
-						}
+						
 						
 					} catch (Exception e) {
 						e.printStackTrace();
-					} finally {
+					}finally {
 						closeDB();
 					}
 					
-					return storeInfo;
-				} // 가게 정보 저장 - getStoreInfo(id)
+					return cnt;
+				}
 				
-				
-				// 사업자 예약 정보 전체 조회  - getCeoReservInfo(id)
-				public List getCeoReservInfo(String id) {
-					List reservInfo = new ArrayList();
-					String s_name="";
 					
 					
-					try {
-						con = getConnection();
-						sql = "select s.s_name, v.* from store s "
-								+ "join ceo c on s.c_no = c.c_no "
-								+ "join reservation v on s.s_no = v.s_no "
-								+ "where c.c_id=? "
-								+ "order by v.res_time desc";
-						pstmt = con.prepareStatement(sql);
-						
-						pstmt.setString(1, id);
-						rs = pstmt.executeQuery();
-						
-						while(rs.next()) {
-							ReservDTO vdto = new ReservDTO();
+					public MemberDTO getMember(String id){
+					    MemberDTO dto = null;
+					    try {
+					        con = getConnection();
+					        sql = "select * from member where m_id=?";
+					        pstmt = con.prepareStatement(sql);
+					        
+					        pstmt.setString(1, id);
+					        rs = pstmt.executeQuery();
+					        
+					        if(rs.next()) {
+					            dto = new MemberDTO();
+					            
+					            dto.setM_no(rs.getInt("m_no"));
+					            dto.setM_id(rs.getString("m_id"));
+					            dto.setM_nickName(rs.getString("m_nickname"));
+					            dto.setM_email(rs.getString("m_email"));
+					            dto.setM_gender(rs.getString("m_gender"));
+					            dto.setM_tel(rs.getString("m_tel"));
+					            dto.setM_birth(rs.getString("m_birth"));
+					            dto.setM_regdate(rs.getTimestamp("m_regdate"));
+					            dto.setM_name(rs.getString("m_name"));
+					        }
+					        System.out.println(" DAO : 회원 정보 저장완료! ");
+					        
+					    } catch (Exception e) {
+					        e.printStackTrace();
+					    } finally {
+					        closeDB();
+					    }
+					    
+					    return dto;
+					}
+					// 회원정보 조회 - getMember(id)
+					
+					// 회원정보 수정 - updateMember(dto)
+					public int updateMember(MemberDTO dto) {
+					    int result = -1;
+					    
+					    try {
+					        con = getConnection();
+					        sql = "select m_pw from member where m_id = ?";
+					        pstmt = con.prepareStatement(sql);
+					        pstmt.setString(1, dto.getM_id());
+					        rs = pstmt.executeQuery();
+					        
+					        if(rs.next()) {
+					            if(dto.getM_pw().equals(rs.getString("m_pw"))) {
+					                sql = "update member set m_name=?,m_email=?,m_nickName=?,m_birth=?,m_gender=?,m_tel=? "
+					                        + " where m_id=?";
+					                pstmt = con.prepareStatement(sql);
+					                pstmt.setString(1, dto.getM_name());
+					                pstmt.setString(2, dto.getM_email());
+					                pstmt.setString(3, dto.getM_nickName());
+					                pstmt.setString(4, dto.getM_birth());
+					                pstmt.setString(5, dto.getM_gender());
+					                pstmt.setString(6, dto.getM_tel());
+					                pstmt.setString(7, dto.getM_id());
+					                
+					                result = pstmt.executeUpdate();
+					            }else {
+					                result = 0;
+					            }               
+					        }else {
+					            result = -1;
+					        }
+					        
+					        System.out.println(" DAO : 회원수정 완료("+result+")");
+					        
+					    } catch (Exception e) {
+					        e.printStackTrace();
+					    } finally {
+					        closeDB();
+					    }
+					    
+					    return result;
+					}
+					// 회원정보 수정 - updateMember(dto)
+					
+					
+					// 회원정보 삭제 - deleteMember(id,pw)
+					public int deleteMember(String id,String pw) {
+					    int result = -1;
+					    
+					    try {
+					        con = getConnection();
+					        sql = "select m_pw from member where m_id = ?";
+					        pstmt = con.prepareStatement(sql);
+					        pstmt.setString(1, id);
+					        rs = pstmt.executeQuery();
+					        
+					        if(rs.next()) {
+					            if(pw.equals(rs.getString("m_pw"))) {
+					                sql = "delete from member "
+					                        + "where m_id = ?";
+					                pstmt = con.prepareStatement(sql);
+					                pstmt.setString(1, id);
+					                result = pstmt.executeUpdate();             
+					            }else {
+					                result = 0;
+					            }               
+					        }else {
+					            result = -1;
+					        }
+					        System.out.println(" DAO : 회원삭제 완료("+result+")");
+					        
+					    } catch (Exception e) {
+					        e.printStackTrace();
+					    } finally {
+					        closeDB();
+					    }
+					    
+					    return result;
+					}
+					// 회원정보 삭제 - deleteMember(id,pw)
+					
+					// 예약목록 조회 - getReserveList
+					public List getReserveList(String id) {
+					    // 예약목록 저장 List
+					    List reserveList = new ArrayList();
+					    
+					    try {
+					        con = getConnection();
+					        sql = "select * from reservation r join member m on r.m_no = m.m_no  where m_id = ?";
+					        pstmt = con.prepareStatement(sql);
+					        pstmt.setString(1, id);
+					        
+					        rs = pstmt.executeQuery();
+					        
+					        while(rs.next()) {
+					            // DC -> DTO -> List
+					            BookDTO dto= new BookDTO();
+					        
+					            int cnt = 0;
+					            dto.setRes_no(rs.getInt(++cnt));
+					            dto.setS_no(rs.getInt(2));
+					            dto.setM_no(rs.getInt(3));
+					            dto.setRes_num(rs.getInt(4));
+					            dto.setRes_date(rs.getString(5));
+					            dto.setRes_name(rs.getString(6));
+					            dto.setRes_msg(rs.getString(7));
+					            dto.setRes_status(rs.getInt(8));
+					            dto.setRes_time(rs.getInt(9));
+					            dto.setRes_tel(rs.getString(10));
+					            
+					            //DTO -> List
+					            reserveList.add(dto);
+					            
+					            
+					        }//while
+					        
+					        System.out.println(" DAO : "+reserveList);
+					        System.out.println(" DAO : 예약수 : "+reserveList.size());
+					        
+					    }catch (Exception e) {
+					        e.printStackTrace();
+					    }finally {
+					        closeDB();
+					    }
+					    return reserveList;
+					    }
+					//// 예약목록 조회 - getReserveList
+					
 							
-							vdto.setRes_no(rs.getInt("res_no"));
-							vdto.setS_no(rs.getInt("s_no"));
-							vdto.setM_no(rs.getInt("m_no"));
-							vdto.setRes_num(rs.getInt("res_num"));
-							vdto.setRes_time(rs.getInt("res_time"));
-							vdto.setRes_date(rs.getString("res_date"));
-							vdto.setRes_name(rs.getString("res_name"));
-							vdto.setRes_msg(rs.getString("res_msg"));
-							vdto.setRes_status(rs.getInt("res_status"));
-							vdto.setS_name(rs.getString("s_name"));
-							vdto.setRes_tel(rs.getString("res_tel"));
+
+					//리뷰목록 조회 - getReviewList
+					public List getReviewList(String id) {
+					    // 리뷰목록 저장 List
+					    List reviewList = new ArrayList();
+					    
+					    try {
+					        con = getConnection();
+					        sql = "select * from reviewcs join member on reviewcs.m_no = member.m_no  where m_id = ? and rev_category=1";
+					        pstmt = con.prepareStatement(sql);
+					        pstmt.setString(1, id);
+					        
+					        rs = pstmt.executeQuery();
+					        
+					        while(rs.next()) {
+					            // DC -> DTO -> List
+					            ReviewDTO dto= new ReviewDTO();
+					        
+					      
+					            dto.setRev_no(rs.getInt("rev_no"));
+								dto.setS_no(rs.getInt("s_no"));
+								dto.setRev_date(rs.getTimestamp("rev_date"));
+								dto.setRev_star(rs.getInt("rev_star"));
+								dto.setRev_subject(rs.getString("rev_subject"));
+								dto.setRev_category(rs.getInt("rev_category"));
+								dto.setM_no(rs.getInt("m_no"));
+//								dto.setQna_sort(rs.getString("qna_sort"));
+								dto.setRev_content(rs.getString("rev_content"));
+								dto.setRev_file(rs.getString("rev_file"));
+					            
+					            //DTO -> List
+					            reviewList.add(dto);
+					            
+					            
+					        }//while
+					        
+					        System.out.println(" DAO : "+reviewList);
+					        System.out.println(" DAO : 리뷰수 : "+reviewList.size());
+					        
+					    }catch (Exception e) {
+					        e.printStackTrace();
+					    }finally {
+					        closeDB();
+					    }
+					    return reviewList;
+					    }
+					//// 리뷰목록 조회 - getReviewList
+					
 							
-							reservInfo.add(vdto);
+					// 북마크 목록불러오기 getWishList()
+					public List<Map> getWishList(String id) {
+						System.out.println(" DAO : getWishList() 호출 ");
+						// 북마크정보 저장하는 배열
+						List<Map> wishList = new ArrayList<Map>();
+						HashMap<String,Object> book = null;
+						
+						try {
+						// 1.2. 디비 연결
+							con = getConnection();    //id랑, 북마크 멤버 조인
+					           sql = "select * from bookmark b join store s on s.s_no = b.s_no "
+					                 +"join member m on b.m_no = m.m_no where m.m_id=?";
+					           pstmt = con.prepareStatement(sql);
+					        pstmt.setString(1, id);
+					       
+					        rs = pstmt.executeQuery();
+						// 5. 데이터 처리 (DB -> DTO -> List)
+							while(rs.next()) {
+								// DB -> DTO
+								book = new HashMap<String,Object>();
+								book.put("m_no", rs.getInt("m_no"));
+								book.put("s_no", rs.getLong("s_no"));
+								book.put("s_image", rs.getString("s_image"));
+								book.put("s_name", rs.getString("s_name"));
+								book.put("s_type", rs.getString("s_type"));
+								book.put("s_star", rs.getString("s_star"));
+								//DTO -> List
+								
+								wishList.add(book);
+							}//while
+							System.out.println(wishList);
+							System.out.println(" DAO : 북마크 목록 저장완료!");
+							
+						} catch (Exception e) {
+							e.printStackTrace();
+						}finally {
+							closeDB();
 						}
 						
-					} catch (Exception e) {
-						e.printStackTrace();
-					} finally {
-						closeDB();
+						return wishList;
 					}
 					
-					return reservInfo;
-				} // 사업자 예약 정보 저장 - getCeoReservInfo(id)
+					// 북마크 목록 불러오기 getWishList()
+									
+									
+		/** 업자 가지고 있는 가게 수 확인 - getStoreCount(id)
+		 * 사업자가 가지고 있는 가게 수 확인 메서드. id 받음
+		 * 리턴값 o , 카운트 리턴
+		 * @param id
+		 * @return
+		 */
+		public int getStoreCount(String id) {
+			int snt=0;
+			
+			try {
+				con = getConnection();
 				
+				sql = "select count(s.s_no) from store s "
+						+ "join ceo c on s.c_no=c.c_no "
+						+ "where c.c_id=?";
+				pstmt = con.prepareStatement(sql);
 				
-				// 사업자 가게 총 예약 개수 - getCeoReservCount
-				public int CeoReservCount(String id, String sno,String schList,String search) {
-					int vnt=0;
-					int sno2 = Integer.parseInt(sno);
+				pstmt.setString(1, id);
+				
+				rs=pstmt.executeQuery();
+				
+				// 데이터처리
+				if(rs.next()) {
+					snt = rs.getInt(1);
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				closeDB();
+			}
+			
+			return snt;
+		}
+		
+		
+		
+		/** 가게 목록 가져오기 - getStoreList(id, listType, startRow,pageSize)
+		 *  가게 조회와 정렬, 페이징 처리하는 메서드. id, listType, startRowm pageSize
+		 *  리턴값 o, List 배열
+		 * @param id
+		 * @param listType
+		 * @param startRowm
+		 * @param pageSize
+		 * @return
+		 */
+		public List getStoreList(String id,String listType,int startRow,int pageSize,String s) {
+			// 가게 목록 저장 List
+			List storeList = new ArrayList();
+			
+			
+			try {
+				con = getConnection();
+				
+				if(s.equals("0")) {
+				sql = "select c.c_id, s.*, "
+						+ "(select count(*) from bookmark b where s.s_no = b.s_no) bcount, "
+						+ "(select count(*) from reviewcs r where s.s_no = r.s_no) rcount "
+						+ "from store s Join ceo c "
+						+ "on c.c_no = s.c_no where c.c_id=? "
+						+ "order by " + listType + " desc, s.s_no desc limit ?,?";
+				pstmt = con.prepareStatement(sql);
+				
+				pstmt.setString(1, id);
+				pstmt.setInt(2, startRow-1); // 시작행 -1
+				pstmt.setInt(3, pageSize); // 개수
+				
+				rs = pstmt.executeQuery();
+				
+				while(rs.next()) {
+					// DB -> DTO -> List
+					StoreDTO sdto = new StoreDTO();
+					
+					sdto.setS_no(rs.getInt("s_no"));
+					sdto.setS_name(rs.getString("s_name"));
+					sdto.setS_addr(rs.getString("s_addr"));
+					sdto.setS_tel(rs.getString("s_tel"));
+					sdto.setS_hours(rs.getString("s_hours"));
+					sdto.setS_type(rs.getString("s_type"));
+					sdto.setS_image(rs.getString("s_image"));
+					sdto.setS_content(rs.getString("s_content"));
+					sdto.setS_facility(rs.getString("s_facility"));
+					sdto.setS_latitude(rs.getString("s_latitude"));
+					sdto.setS_longtude(rs.getString("s_longtude"));
+					sdto.setS_menuname(rs.getString("s_menuname"));
+					sdto.setS_menuprice(rs.getString("s_menuprice"));
+					sdto.setS_menuImg(rs.getString("s_menuImg"));
+					sdto.setS_number(rs.getInt("s_number"));
+					sdto.setC_no(rs.getInt("c_no"));
+					sdto.setS_star(rs.getDouble("s_star"));
+					sdto.setS_regdate(rs.getTimestamp("s_regdate"));
+					sdto.setBcount(rs.getInt("bcount"));
+					sdto.setRcount(rs.getInt("rcount"));
+					
+					// DTO -> List
+					storeList.add(sdto);
+					
+				} // while
+				
+//											System.out.println(" DAO : 가지고 있는 가게 수 : "+storeList.size());
+				} else if(s.equals("1")) {
+					sql = "select c.c_id, s.*, "
+							+ "(select count(*) from bookmark b where s.s_no = b.s_no) bcount, "
+							+ "(select count(*) from reviewcs r where s.s_no = r.s_no) rcount "
+							+ "from store s Join ceo c "
+							+ "on c.c_no = s.c_no where c.c_id=? "
+							+ "order by " + listType + " asc, s.s_no desc limit ?,?";
+					pstmt = con.prepareStatement(sql);
+					
+					pstmt.setString(1, id);
+					pstmt.setInt(2, startRow-1); // 시작행 -1
+					pstmt.setInt(3, pageSize); // 개수
+					
+					rs = pstmt.executeQuery();
+					
+					while(rs.next()) {
+						// DB -> DTO -> List
+						StoreDTO sdto = new StoreDTO();
+						
+						sdto.setS_no(rs.getInt("s_no"));
+						sdto.setS_name(rs.getString("s_name"));
+						sdto.setS_addr(rs.getString("s_addr"));
+						sdto.setS_tel(rs.getString("s_tel"));
+						sdto.setS_hours(rs.getString("s_hours"));
+						sdto.setS_type(rs.getString("s_type"));
+						sdto.setS_image(rs.getString("s_image"));
+						sdto.setS_content(rs.getString("s_content"));
+						sdto.setS_facility(rs.getString("s_facility"));
+						sdto.setS_latitude(rs.getString("s_latitude"));
+						sdto.setS_longtude(rs.getString("s_longtude"));
+						sdto.setS_menuname(rs.getString("s_menuname"));
+						sdto.setS_menuprice(rs.getString("s_menuprice"));
+						sdto.setS_menuImg(rs.getString("s_menuImg"));
+						sdto.setS_number(rs.getInt("s_number"));
+						sdto.setC_no(rs.getInt("c_no"));
+						sdto.setS_star(rs.getDouble("s_star"));
+						sdto.setS_regdate(rs.getTimestamp("s_regdate"));
+						sdto.setBcount(rs.getInt("bcount"));
+						sdto.setRcount(rs.getInt("rcount"));
+						
+						// DTO -> List
+						storeList.add(sdto);
+				}
+					
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				closeDB();
+			}
+			
+			return storeList;
+		}
+		
+		
+		/** 등록한 가게 삭제 - deleteStore(s_no)
+		 *  ceo 마이페이지에서 등록 가게 삭제 메서드. s_no 받음
+		 *  리턴값 x
+		 * @param s_no
+		 */
+		public void deleteStore(int s_no) {
+			try {
+				con = getConnection();
+				
+				sql = "delete from store where s_no=?";
+				pstmt = con.prepareStatement(sql);
+				
+				pstmt.setInt(1, s_no);
+				
+				pstmt.executeUpdate();
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				closeDB();
+			}
+		}
+		
+		/** 가게 정보 저장 - getStoreInfo(id)
+		 * 가게 정보 저장하는 메서드. id 값 받아서 사용
+		 * 리턴값 List
+		 * @param id
+		 * @return
+		 */
+		public List getStoreInfo(String id) {
+			List storeInfo = new ArrayList();
+			
+			
+			try {
+				con = getConnection();
+				sql = "select s.* from store s "
+						+ "join ceo c on c.c_no = s.c_no "
+						+ "where c_id=?";
+				pstmt = con.prepareStatement(sql);
+				
+				pstmt.setString(1, id);
+				rs = pstmt.executeQuery();
+				
+				while(rs.next()) {
+					StoreDTO sdto = new StoreDTO();
+					
+					sdto.setS_no(rs.getInt("s_no"));
+					sdto.setS_name(rs.getString("s_name"));
+					sdto.setS_addr(rs.getString("s_addr"));
+					sdto.setS_tel(rs.getString("s_tel"));
+					sdto.setS_hours(rs.getString("s_hours"));
+					sdto.setS_type(rs.getString("s_type"));
+					sdto.setS_image(rs.getString("s_image"));
+					sdto.setS_content(rs.getString("s_content"));
+					sdto.setS_facility(rs.getString("s_facility"));
+					sdto.setS_latitude(rs.getString("s_latitude"));
+					sdto.setS_longtude(rs.getString("s_longtude"));
+					sdto.setS_menuname(rs.getString("s_menuname"));
+					sdto.setS_menuprice(rs.getString("s_menuprice"));
+					sdto.setS_menuImg(rs.getString("s_menuImg"));
+					sdto.setS_number(rs.getInt("s_number"));
+					sdto.setC_no(rs.getInt("c_no"));
+					sdto.setS_star(rs.getDouble("s_star"));
+					sdto.setS_regdate(rs.getTimestamp("s_regdate"));
+					
+					storeInfo.add(sdto);
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				closeDB();
+			}
+			
+			return storeInfo;
+		} // 가게 정보 저장 - getStoreInfo(id)
+		
+		
+		// 사업자 예약 정보 전체 조회  - getCeoReservInfo(id)
+		public List getCeoReservInfo(String id) {
+			List reservInfo = new ArrayList();
+			String s_name="";
+			
+			
+			try {
+				con = getConnection();
+				sql = "select s.s_name, v.* from store s "
+						+ "join ceo c on s.c_no = c.c_no "
+						+ "join reservation v on s.s_no = v.s_no "
+						+ "where c.c_id=? "
+						+ "order by v.res_date desc,v.res_time desc";
+				pstmt = con.prepareStatement(sql);
+				
+				pstmt.setString(1, id);
+				rs = pstmt.executeQuery();
+				
+				while(rs.next()) {
+					ReservDTO vdto = new ReservDTO();
+					
+					vdto.setRes_no(rs.getInt("res_no"));
+					vdto.setS_no(rs.getInt("s_no"));
+					vdto.setM_no(rs.getInt("m_no"));
+					vdto.setRes_num(rs.getInt("res_num"));
+					vdto.setRes_time(rs.getInt("res_time"));
+					vdto.setRes_date(rs.getString("res_date"));
+					vdto.setRes_name(rs.getString("res_name"));
+					vdto.setRes_msg(rs.getString("res_msg"));
+					vdto.setRes_status(rs.getInt("res_status"));
+					vdto.setS_name(rs.getString("s_name"));
+					vdto.setRes_tel(rs.getString("res_tel"));
+					
+					reservInfo.add(vdto);
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				closeDB();
+			}
+			
+			return reservInfo;
+		} // 사업자 예약 정보 저장 - getCeoReservInfo(id)
+		
+		
+		// 사업자 가게 총 예약 개수 - getCeoReservCount
+		public int CeoReservCount(String id, String sno,String schList,String search) {
+			int vnt=0;
+			int sno2 = Integer.parseInt(sno);
+			if(schList == null) {
+				schList = "res_no";
+			}
+		
+			if(search == null) {
+			search = "";
+			}
+			
+			try {
+				con = getConnection();
+				
+				if(sno2==0) {
+					sql = "select count(v.s_no) from store s "
+							+ "join ceo c on s.c_no = c.c_no "
+							+ "join reservation v on s.s_no = v.s_no "
+							+ "where c.c_id=? && "+schList+" like '%"+search+"%' ";
+					pstmt = con.prepareStatement(sql);
+					
+					pstmt.setString(1, id);
+					
+					rs=pstmt.executeQuery();
+					
+					
+					// 데이터처리
+					if(rs.next()) {
+						vnt = rs.getInt(1);
+						
+					}
+				} else {
+					sql = "select count(v.s_no) from store s "
+							+ "join ceo c on s.c_no = c.c_no "
+							+ "join reservation v on s.s_no = v.s_no "
+							+ "where c.c_id=? && s.s_no=? && "+schList+" like '%"+search+"%' "
+							+ "group by s.s_no";
+					pstmt = con.prepareStatement(sql);
+					
+					pstmt.setString(1, id);
+					pstmt.setInt(2, sno2);
+					
+					rs=pstmt.executeQuery();
+					
+					// 데이터처리
+					if(rs.next()) {
+						vnt = rs.getInt(1);
+					}
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				closeDB();
+			}
+			
+			return vnt;
+		}
+		
+		
+		// 사업자 가게별 예약 정보 조회 - getCeoReservList
+		public List getCeoReservList(String id, String sno,int startRow,int pageSize) {
+			List reservList = new ArrayList();
+			int sno2 = Integer.parseInt(sno);
+			
+			try {
+				con = getConnection();
+
+				
+				if(sno2 == 0) {
+					sql =  "select s.s_name,v.* from store s "
+							+ "join ceo c on s.c_no = c.c_no "
+							+ "join reservation v on s.s_no = v.s_no "
+							+ "where c.c_id=? "
+							+ "order by v.res_date desc, v.res_time desc limit ?,?";
+					pstmt = con.prepareStatement(sql);
+					
+					pstmt.setString(1, id);
+					pstmt.setInt(2, startRow-1); // 시작행 -1
+					pstmt.setInt(3, pageSize); // 개수
+					
+					rs = pstmt.executeQuery();
+					
+					// 데이터 처리
+					while(rs.next()) {
+						ReservDTO vdto = new ReservDTO();
+						
+						vdto.setRes_no(rs.getInt("res_no"));
+						vdto.setS_no(rs.getInt("s_no"));
+						vdto.setM_no(rs.getInt("m_no"));
+						vdto.setRes_num(rs.getInt("res_num"));
+						vdto.setRes_time(rs.getInt("res_time"));
+						vdto.setRes_date(rs.getString("res_date"));
+						vdto.setRes_name(rs.getString("res_name"));
+						vdto.setRes_msg(rs.getString("res_msg"));
+						vdto.setRes_status(rs.getInt("res_status"));
+						vdto.setS_name(rs.getString("s_name"));
+						vdto.setRes_tel(rs.getString("res_tel"));
+						
+						reservList.add(vdto);
+					}
+				} else {
+					
+					sql =  "select v.* from store s "
+							+ "join ceo c on s.c_no = c.c_no "
+							+ "join reservation v on s.s_no = v.s_no "
+							+ "where c.c_id=? && v.s_no=? "
+							+ "order by v.res_date desc, v.res_time desc limit ?,?";
+					pstmt = con.prepareStatement(sql);
+					
+					pstmt.setString(1, id);
+					pstmt.setInt(2, sno2);
+					pstmt.setInt(3, startRow-1); // 시작행 -1
+					pstmt.setInt(4, pageSize); // 개수
+					
+					rs = pstmt.executeQuery();
+					
+					// 데이터처리
+					while(rs.next()) {
+						ReservDTO vdto = new ReservDTO();
+						
+						vdto.setRes_no(rs.getInt("res_no"));
+						vdto.setS_no(rs.getInt("s_no"));
+						vdto.setM_no(rs.getInt("m_no"));
+						vdto.setRes_num(rs.getInt("res_num"));
+						vdto.setRes_time(rs.getInt("res_time"));
+						vdto.setRes_date(rs.getString("res_date"));
+						vdto.setRes_name(rs.getString("res_name"));
+						vdto.setRes_msg(rs.getString("res_msg"));
+						vdto.setRes_status(rs.getInt("res_status"));
+						vdto.setRes_tel(rs.getString("res_tel"));
+						
+						reservList.add(vdto);
+						
+					} // while 끝
+					
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				closeDB();
+			}
+			
+			return reservList;
+		} // 사업자 가게별 예약 리스트 - getCeoReservList
+		
+		
+		// 사업자 가게 검색별 예약 정보 조회 - getCeoReservSearch
+			public List getCeoReservSearch(String id, String sno,String schList,String search,int startRow,int pageSize) {
+				List searchList = new ArrayList();
+				int sno2 = Integer.parseInt(sno);
 					if(schList == null) {
 						schList = "res_no";
 					}
 				
 					if(search == null) {
 					search = "";
-					}
-					
-					try {
-						con = getConnection();
-						
-						if(sno2==0) {
-							sql = "select count(v.s_no) from store s "
-									+ "join ceo c on s.c_no = c.c_no "
-									+ "join reservation v on s.s_no = v.s_no "
-									+ "where c.c_id=? && "+schList+" like '%"+search+"%' ";
-							pstmt = con.prepareStatement(sql);
-							
-							pstmt.setString(1, id);
-							
-							rs=pstmt.executeQuery();
-							
-							
-							// 데이터처리
-							if(rs.next()) {
-								vnt = rs.getInt(1);
-								
-							}
-						} else {
-							sql = "select count(v.s_no) from store s "
-									+ "join ceo c on s.c_no = c.c_no "
-									+ "join reservation v on s.s_no = v.s_no "
-									+ "where c.c_id=? && s.s_no=? && "+schList+" like '%"+search+"%' "
-									+ "group by s.s_no";
-							pstmt = con.prepareStatement(sql);
-							
-							pstmt.setString(1, id);
-							pstmt.setInt(2, sno2);
-							
-							rs=pstmt.executeQuery();
-							
-							// 데이터처리
-							if(rs.next()) {
-								vnt = rs.getInt(1);
-							}
-						}
-						
-					} catch (Exception e) {
-						e.printStackTrace();
-					} finally {
-						closeDB();
-					}
-					
-					return vnt;
 				}
 				
-				
-				// 사업자 가게별 예약 정보 조회 - getCeoReservList
-				public List getCeoReservList(String id, String sno,int startRow,int pageSize) {
-					List reservList = new ArrayList();
-					int sno2 = Integer.parseInt(sno);
+				try {
+					con = getConnection();
 					
-					try {
-						con = getConnection();
-
+					if(sno2 == 0) {
+						sql =  "select s.s_name, v.* from store s "
+								+ "join ceo c on s.c_no = c.c_no "
+								+ "join reservation v on s.s_no = v.s_no "
+								+ "where c.c_id=? && "+schList+" like '%"+search+"%' "
+								+ "order by v.res_date desc, v.res_time desc limit ?,?";
+						pstmt = con.prepareStatement(sql);
 						
-						if(sno2 == 0) {
-							sql =  "select s.s_name,v.* from store s "
-									+ "join ceo c on s.c_no = c.c_no "
-									+ "join reservation v on s.s_no = v.s_no "
+						pstmt.setString(1, id);
+						pstmt.setInt(2, startRow-1); // 시작행 -1
+						pstmt.setInt(3, pageSize); // 개수
+						
+						rs = pstmt.executeQuery();
+						
+						// 데이터 처리
+						while(rs.next()) {
+							ReservDTO vsdto = new ReservDTO();
+							
+							vsdto.setRes_no(rs.getInt("res_no"));
+							vsdto.setS_no(rs.getInt("s_no"));
+							vsdto.setM_no(rs.getInt("m_no"));
+							vsdto.setRes_num(rs.getInt("res_num"));
+							vsdto.setRes_time(rs.getInt("res_time"));
+							vsdto.setRes_date(rs.getString("res_date"));
+							vsdto.setRes_name(rs.getString("res_name"));
+							vsdto.setRes_msg(rs.getString("res_msg"));
+							vsdto.setRes_status(rs.getInt("res_status"));
+							vsdto.setS_name(rs.getString("s_name"));
+							vsdto.setRes_tel(rs.getString("res_tel"));
+							
+							searchList.add(vsdto);
+						}
+					} else {
+						
+						sql =  "select v.* from store s "
+								+ "join ceo c on s.c_no = c.c_no "
+								+ "join reservation v on s.s_no = v.s_no "
+								+ "where c.c_id=? && v.s_no=? && "+schList+" like '%"+search+"%' "
+								+ "order by v.res_date desc, v.res_time desc limit ?,?";
+						pstmt = con.prepareStatement(sql);
+						
+						pstmt.setString(1, id);
+						pstmt.setInt(2, sno2);
+						pstmt.setInt(3, startRow-1); // 시작행 -1
+						pstmt.setInt(4, pageSize); // 개수
+						
+						rs = pstmt.executeQuery();
+						
+						// 데이터처리
+						while(rs.next()) {
+							ReservDTO vsdto = new ReservDTO();
+							
+							vsdto.setRes_no(rs.getInt("res_no"));
+							vsdto.setS_no(rs.getInt("s_no"));
+							vsdto.setM_no(rs.getInt("m_no"));
+							vsdto.setRes_num(rs.getInt("res_num"));
+							vsdto.setRes_time(rs.getInt("res_time"));
+							vsdto.setRes_date(rs.getString("res_date"));
+							vsdto.setRes_name(rs.getString("res_name"));
+							vsdto.setRes_msg(rs.getString("res_msg"));
+							vsdto.setRes_status(rs.getInt("res_status"));
+							vsdto.setRes_tel(rs.getString("res_tel"));
+							
+							searchList.add(vsdto);
+							
+						} // while 끝
+						
+					}
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				} finally {
+					closeDB();
+				}
+				
+				return searchList;
+			} // 사업자 가게별 예약 리스트 - getCeoReservList
+			
+			
+			// 사업자 예약 거절 - RefuseReserv(res_no)
+			public int RefuseReserv(int res_no) {
+				int result=0;
+				
+				try {
+					con = getConnection();
+					
+					sql = "select * from reservation where res_no=?";
+					pstmt = con.prepareStatement(sql);
+					
+					pstmt.setInt(1, res_no);
+					
+					rs = pstmt.executeQuery();
+					
+					// 데이터처리
+					if(rs.next()) {
+						sql = "update reservation set res_status=? "
+								+ "where res_no=? ";
+						pstmt = con.prepareStatement(sql);
+						
+						pstmt.setInt(1, 3);
+						pstmt.setInt(2, res_no);
+						
+						pstmt.executeUpdate();
+						
+						result=1;
+						
+					}
+					
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				} finally {
+					closeDB();
+				}
+				
+				return result;
+			}
+			
+			
+			// 사업자 리뷰 수 - ceoReCount
+			public int CeoReCount(String id, String sno) {
+				int rnt=0;
+				int sno2 = Integer.parseInt(sno);
+				
+				try {
+					con = getConnection();
+					
+					if(sno2==0) {
+						sql = "select count(r.s_no) from store s "
+								+ "join ceo c on s.c_no = c.c_no "
+								+ "join reviewcs r on s.s_no = r.s_no "
+								+ "where c.c_id=? ";
+						pstmt = con.prepareStatement(sql);
+						
+						pstmt.setString(1, id);
+						
+						rs=pstmt.executeQuery();
+						
+						
+						// 데이터처리
+						if(rs.next()) {
+							rnt = rs.getInt(1);
+							
+						}
+					} else {
+						sql = "select count(r.s_no) from store s "
+								+ "join ceo c on s.c_no = c.c_no "
+								+ "join reviewcs r on s.s_no = r.s_no "
+								+ "where c.c_id=? && s.s_no=? "
+								+ "group by s.s_no";
+						pstmt = con.prepareStatement(sql);
+						
+						pstmt.setString(1, id);
+						pstmt.setInt(2, sno2);
+						
+						rs=pstmt.executeQuery();
+						
+						// 데이터처리
+						if(rs.next()) {
+							rnt = rs.getInt(1);
+						}
+					}
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				} finally {
+					closeDB();
+				}
+				
+				return rnt;
+			}
+			
+			
+			
+			// 사업자 가게별 리뷰 리스트 - getCeoRevList
+			public List getCeoRevList(String id, String sno, String listType,String s, int startRow,int pageSize) {
+				List reList = new ArrayList();
+				int sno2 = Integer.parseInt(sno);
+				
+				try {
+					con = getConnection();
+					
+					if(sno2 == 0) {
+						if(s.equals("0")) {
+							sql =  "select s.s_name, m.m_nickname ,r.*, date_format(r.rev_date,'%Y-%m-%d') as date "
+									+ "from store s join ceo c on s.c_no = c.c_no "
+									+ "join reviewcs r on s.s_no = r.s_no "
+									+ "join member m on r.m_no = m.m_no "
 									+ "where c.c_id=? "
-									+ "order by v.res_date desc, v.res_time desc limit ?,?";
+									+ "order by " + listType + " desc limit ?,?";
 							pstmt = con.prepareStatement(sql);
 							
 							pstmt.setString(1, id);
@@ -2641,459 +3382,10 @@ public class UserDAO {
 							
 							rs = pstmt.executeQuery();
 							
+							System.out.println("sql 완료오로올오오");
 							// 데이터 처리
 							while(rs.next()) {
-								ReservDTO vdto = new ReservDTO();
-								
-								vdto.setRes_no(rs.getInt("res_no"));
-								vdto.setS_no(rs.getInt("s_no"));
-								vdto.setM_no(rs.getInt("m_no"));
-								vdto.setRes_num(rs.getInt("res_num"));
-								vdto.setRes_time(rs.getInt("res_time"));
-								vdto.setRes_date(rs.getString("res_date"));
-								vdto.setRes_name(rs.getString("res_name"));
-								vdto.setRes_msg(rs.getString("res_msg"));
-								vdto.setRes_status(rs.getInt("res_status"));
-								vdto.setS_name(rs.getString("s_name"));
-								vdto.setRes_tel(rs.getString("res_tel"));
-								
-								reservList.add(vdto);
-							}
-						} else {
-							
-							sql =  "select v.* from store s "
-									+ "join ceo c on s.c_no = c.c_no "
-									+ "join reservation v on s.s_no = v.s_no "
-									+ "where c.c_id=? && v.s_no=? "
-									+ "order by v.res_date desc, v.res_time desc limit ?,?";
-							pstmt = con.prepareStatement(sql);
-							
-							pstmt.setString(1, id);
-							pstmt.setInt(2, sno2);
-							pstmt.setInt(3, startRow-1); // 시작행 -1
-							pstmt.setInt(4, pageSize); // 개수
-							
-							rs = pstmt.executeQuery();
-							
-							// 데이터처리
-							while(rs.next()) {
-								ReservDTO vdto = new ReservDTO();
-								
-								vdto.setRes_no(rs.getInt("res_no"));
-								vdto.setS_no(rs.getInt("s_no"));
-								vdto.setM_no(rs.getInt("m_no"));
-								vdto.setRes_num(rs.getInt("res_num"));
-								vdto.setRes_time(rs.getInt("res_time"));
-								vdto.setRes_date(rs.getString("res_date"));
-								vdto.setRes_name(rs.getString("res_name"));
-								vdto.setRes_msg(rs.getString("res_msg"));
-								vdto.setRes_status(rs.getInt("res_status"));
-								vdto.setRes_tel(rs.getString("res_tel"));
-								
-								reservList.add(vdto);
-								
-							} // while 끝
-							
-						}
-						
-					} catch (Exception e) {
-						e.printStackTrace();
-					} finally {
-						closeDB();
-					}
-					
-					return reservList;
-				} // 사업자 가게별 예약 리스트 - getCeoReservList
-				
-				
-				// 사업자 가게 검색별 예약 정보 조회 - getCeoReservSearch
-					public List getCeoReservSearch(String id, String sno,String schList,String search,int startRow,int pageSize) {
-						List searchList = new ArrayList();
-						int sno2 = Integer.parseInt(sno);
-							if(schList == null) {
-								schList = "res_no";
-							}
-						
-							if(search == null) {
-							search = "";
-						}
-						
-						try {
-							con = getConnection();
-							
-							if(sno2 == 0) {
-								sql =  "select s.s_name, v.* from store s "
-										+ "join ceo c on s.c_no = c.c_no "
-										+ "join reservation v on s.s_no = v.s_no "
-										+ "where c.c_id=? && "+schList+" like '%"+search+"%' "
-										+ "order by v.res_date desc, v.res_time desc limit ?,?";
-								pstmt = con.prepareStatement(sql);
-								
-								pstmt.setString(1, id);
-								pstmt.setInt(2, startRow-1); // 시작행 -1
-								pstmt.setInt(3, pageSize); // 개수
-								
-								rs = pstmt.executeQuery();
-								
-								// 데이터 처리
-								while(rs.next()) {
-									ReservDTO vsdto = new ReservDTO();
-									
-									vsdto.setRes_no(rs.getInt("res_no"));
-									vsdto.setS_no(rs.getInt("s_no"));
-									vsdto.setM_no(rs.getInt("m_no"));
-									vsdto.setRes_num(rs.getInt("res_num"));
-									vsdto.setRes_time(rs.getInt("res_time"));
-									vsdto.setRes_date(rs.getString("res_date"));
-									vsdto.setRes_name(rs.getString("res_name"));
-									vsdto.setRes_msg(rs.getString("res_msg"));
-									vsdto.setRes_status(rs.getInt("res_status"));
-									vsdto.setS_name(rs.getString("s_name"));
-									vsdto.setRes_tel(rs.getString("res_tel"));
-									
-									searchList.add(vsdto);
-								}
-							} else {
-								
-								sql =  "select v.* from store s "
-										+ "join ceo c on s.c_no = c.c_no "
-										+ "join reservation v on s.s_no = v.s_no "
-										+ "where c.c_id=? && v.s_no=? && "+schList+" like '%"+search+"%' "
-										+ "order by v.res_date desc, v.res_time desc limit ?,?";
-								pstmt = con.prepareStatement(sql);
-								
-								pstmt.setString(1, id);
-								pstmt.setInt(2, sno2);
-								pstmt.setInt(3, startRow-1); // 시작행 -1
-								pstmt.setInt(4, pageSize); // 개수
-								
-								rs = pstmt.executeQuery();
-								
-								// 데이터처리
-								while(rs.next()) {
-									ReservDTO vsdto = new ReservDTO();
-									
-									vsdto.setRes_no(rs.getInt("res_no"));
-									vsdto.setS_no(rs.getInt("s_no"));
-									vsdto.setM_no(rs.getInt("m_no"));
-									vsdto.setRes_num(rs.getInt("res_num"));
-									vsdto.setRes_time(rs.getInt("res_time"));
-									vsdto.setRes_date(rs.getString("res_date"));
-									vsdto.setRes_name(rs.getString("res_name"));
-									vsdto.setRes_msg(rs.getString("res_msg"));
-									vsdto.setRes_status(rs.getInt("res_status"));
-									vsdto.setRes_tel(rs.getString("res_tel"));
-									
-									searchList.add(vsdto);
-									
-								} // while 끝
-								
-							}
-							
-						} catch (Exception e) {
-							e.printStackTrace();
-						} finally {
-							closeDB();
-						}
-						
-						return searchList;
-					} // 사업자 가게별 예약 리스트 - getCeoReservList
-					
-					
-					// 사업자 예약 거절 - RefuseReserv(res_no)
-					public int RefuseReserv(int res_no) {
-						int result=0;
-						
-						try {
-							con = getConnection();
-							
-							sql = "select * from reservation where res_no=?";
-							pstmt = con.prepareStatement(sql);
-							
-							pstmt.setInt(1, res_no);
-							
-							rs = pstmt.executeQuery();
-							
-							// 데이터처리
-							if(rs.next()) {
-								sql = "update reservation set res_status=? "
-										+ "where res_no=? ";
-								pstmt = con.prepareStatement(sql);
-								
-								pstmt.setInt(1, 3);
-								pstmt.setInt(2, res_no);
-								
-								pstmt.executeUpdate();
-								
-								result=1;
-								
-							}
-							
-							
-						} catch (Exception e) {
-							e.printStackTrace();
-						} finally {
-							closeDB();
-						}
-						
-						return result;
-					}
-					
-					
-					// 사업자 리뷰 수 - ceoReCount
-					public int CeoReCount(String id, String sno) {
-						int rnt=0;
-						int sno2 = Integer.parseInt(sno);
-						
-						try {
-							con = getConnection();
-							
-							if(sno2==0) {
-								sql = "select count(r.s_no) from store s "
-										+ "join ceo c on s.c_no = c.c_no "
-										+ "join reviewcs r on s.s_no = r.s_no "
-										+ "where c.c_id=? ";
-								pstmt = con.prepareStatement(sql);
-								
-								pstmt.setString(1, id);
-								
-								rs=pstmt.executeQuery();
-								
-								
-								// 데이터처리
-								if(rs.next()) {
-									rnt = rs.getInt(1);
-									
-								}
-							} else {
-								sql = "select count(r.s_no) from store s "
-										+ "join ceo c on s.c_no = c.c_no "
-										+ "join reviewcs r on s.s_no = r.s_no "
-										+ "where c.c_id=? && s.s_no=? "
-										+ "group by s.s_no";
-								pstmt = con.prepareStatement(sql);
-								
-								pstmt.setString(1, id);
-								pstmt.setInt(2, sno2);
-								
-								rs=pstmt.executeQuery();
-								
-								// 데이터처리
-								if(rs.next()) {
-									rnt = rs.getInt(1);
-								}
-							}
-							
-						} catch (Exception e) {
-							e.printStackTrace();
-						} finally {
-							closeDB();
-						}
-						
-						return rnt;
-					}
-					
-					
-					
-					// 사업자 가게별 리뷰 리스트 - getCeoRevList
-					public List getCeoRevList(String id, String sno, String listType,String s, int startRow,int pageSize) {
-						List reList = new ArrayList();
-						int sno2 = Integer.parseInt(sno);
-						
-						try {
-							con = getConnection();
-							
-							if(sno2 == 0) {
-								if(s.equals("0")) {
-									sql =  "select s.s_name, m.m_nickname ,r.*, date_format(r.rev_date,'%Y-%m-%d') as date "
-											+ "from store s join ceo c on s.c_no = c.c_no "
-											+ "join reviewcs r on s.s_no = r.s_no "
-											+ "join member m on r.m_no = m.m_no "
-											+ "where c.c_id=? "
-											+ "order by " + listType + " desc limit ?,?";
-									pstmt = con.prepareStatement(sql);
-									
-									pstmt.setString(1, id);
-									pstmt.setInt(2, startRow-1); // 시작행 -1
-									pstmt.setInt(3, pageSize); // 개수
-									
-									rs = pstmt.executeQuery();
-									
-									System.out.println("sql 완료오로올오오");
-									// 데이터 처리
-									while(rs.next()) {
-										ReviewcsDTO rdto = new ReviewcsDTO();
-										
-										rdto.setRev_no(rs.getInt("rev_no"));
-										rdto.setS_no(rs.getInt("s_no"));
-										rdto.setM_no(rs.getInt("m_no"));
-										rdto.setRev_subject(rs.getString("rev_subject"));
-										rdto.setRev_content(rs.getString("rev_content"));
-										rdto.setRev_date(rs.getTimestamp("rev_date"));
-										rdto.setRev_star(rs.getInt("rev_star"));
-										rdto.setRev_category(rs.getInt("rev_category"));
-										rdto.setRev_file(rs.getString("rev_file"));
-										rdto.setRev_c_re(rs.getString("rev_c_re"));
-										rdto.setRev_c_date(rs.getTimestamp("rev_c_date"));	
-										rdto.setS_name(rs.getString("s_name"));
-										rdto.setM_nickname(rs.getString("m_nickname"));
-										rdto.setDate(rs.getString("date"));
-										
-										reList.add(rdto);
-										
-										System.out.println("반복문 들와따아아아ㅏ");
-									}
-									
-								} else if(s.equals("1")) {
-									sql =  "select s.s_name, m.m_nickname ,r.*, date_format(r.rev_date,'%Y-%m-%d') as date "
-											+ "from store s join ceo c on s.c_no = c.c_no "
-											+ "join reviewcs r on s.s_no = r.s_no "
-											+ "join member m on r.m_no = m.m_no "
-											+ "where c.c_id=? "
-											+ "order by " + listType + " asc limit ?,?";
-									pstmt = con.prepareStatement(sql);
-									
-									pstmt.setString(1, id);
-									pstmt.setInt(2, startRow-1); // 시작행 -1
-									pstmt.setInt(3, pageSize); // 개수
-									
-									rs = pstmt.executeQuery();
-									
-									// 데이터 처리
-									while(rs.next()) {
-										ReviewcsDTO rdto = new ReviewcsDTO();
-										
-										rdto.setRev_no(rs.getInt("rev_no"));
-										rdto.setS_no(rs.getInt("s_no"));
-										rdto.setM_no(rs.getInt("m_no"));
-										rdto.setRev_subject(rs.getString("rev_subject"));
-										rdto.setRev_content(rs.getString("rev_content"));
-										rdto.setRev_date(rs.getTimestamp("rev_date"));
-										rdto.setRev_star(rs.getInt("rev_star"));
-										rdto.setRev_category(rs.getInt("rev_category"));
-										rdto.setRev_file(rs.getString("rev_file"));
-										rdto.setRev_c_re(rs.getString("rev_c_re"));
-										rdto.setRev_c_date(rs.getTimestamp("rev_c_date"));	
-										rdto.setS_name(rs.getString("s_name"));
-										rdto.setM_nickname(rs.getString("m_nickname"));
-										rdto.setDate(rs.getString("date"));
-										
-										reList.add(rdto);
-									}
-								}
-							} else {
-								if(s.equals("0")){
-									sql =  "select s.s_name,m.m_nickname , r.*, date_format(r.rev_date,'%Y-%m-%d') as date "
-											+ "from store s join ceo c on s.c_no = c.c_no "
-											+ "join reviewcs r on s.s_no = r.s_no "
-											+ "join member m on r.m_no = m.m_no "
-											+ "where c.c_id=? && r.s_no=? "
-											+ "order by " + listType + " desc limit ?,?";
-									pstmt = con.prepareStatement(sql);
-									
-									pstmt.setString(1, id);
-									pstmt.setInt(2, sno2);
-									pstmt.setInt(3, startRow-1); // 시작행 -1
-									pstmt.setInt(4, pageSize); // 개수
-									
-									rs = pstmt.executeQuery();
-									
-									// 데이터처리
-									while(rs.next()) {
-										ReviewcsDTO rdto = new ReviewcsDTO();
-										
-										rdto.setRev_no(rs.getInt("rev_no"));
-										rdto.setS_no(rs.getInt("s_no"));
-										rdto.setM_no(rs.getInt("m_no"));
-										rdto.setRev_subject(rs.getString("rev_subject"));
-										rdto.setRev_content(rs.getString("rev_content"));
-										rdto.setRev_date(rs.getTimestamp("rev_date"));
-										rdto.setRev_star(rs.getInt("rev_star"));
-										rdto.setRev_category(rs.getInt("rev_category"));
-										rdto.setRev_file(rs.getString("rev_file"));
-										rdto.setRev_c_re(rs.getString("rev_c_re"));
-										rdto.setRev_c_date(rs.getTimestamp("rev_c_date"));							
-										rdto.setS_name(rs.getString("s_name"));
-										rdto.setM_nickname(rs.getString("m_nickname"));
-										rdto.setDate(rs.getString("date"));
-										
-										reList.add(rdto);
-										
-									} // while 끝
-								} else if(s.equals("1")) {
-								
-									sql =  "select s.s_name,m.m_nickname , r.*, date_format(r.rev_date,'%Y-%m-%d') as date "
-											+ "from store s join ceo c on s.c_no = c.c_no "
-											+ "join reviewcs r on s.s_no = r.s_no "
-											+ "join member m on r.m_no = m.m_no "
-											+ "where c.c_id=? && r.s_no=? "
-											+ "order by " + listType + " asc limit ?,?";
-									pstmt = con.prepareStatement(sql);
-									
-									pstmt.setString(1, id);
-									pstmt.setInt(2, sno2);
-									pstmt.setInt(3, startRow-1); // 시작행 -1
-									pstmt.setInt(4, pageSize); // 개수
-									
-									rs = pstmt.executeQuery();
-									
-									// 데이터처리
-									while(rs.next()) {
-										ReviewcsDTO rdto = new ReviewcsDTO();
-										
-										rdto.setRev_no(rs.getInt("rev_no"));
-										rdto.setS_no(rs.getInt("s_no"));
-										rdto.setM_no(rs.getInt("m_no"));
-										rdto.setRev_subject(rs.getString("rev_subject"));
-										rdto.setRev_content(rs.getString("rev_content"));
-										rdto.setRev_date(rs.getTimestamp("rev_date"));
-										rdto.setRev_star(rs.getInt("rev_star"));
-										rdto.setRev_category(rs.getInt("rev_category"));
-										rdto.setRev_file(rs.getString("rev_file"));
-										rdto.setRev_c_re(rs.getString("rev_c_re"));
-										rdto.setRev_c_date(rs.getTimestamp("rev_c_date"));							
-										rdto.setS_name(rs.getString("s_name"));
-										rdto.setM_nickname(rs.getString("m_nickname"));
-										rdto.setDate(rs.getString("date"));
-										
-										reList.add(rdto);
-										
-									} // while 끝
-								}
-								
-							}
-							
-						} catch (Exception e) {
-							e.printStackTrace();
-						} finally {
-							closeDB();
-						}
-						
-						return reList;
-					} // 사업자 가게별 리뷰 리스트 - getCeoRevList
-					
-					
-					// 리뷰 1개 정보 조회 - reviewInfo(res_no)
-					public ReviewcsDTO reviewInfo(int res_no) {
-						ReviewcsDTO rdto = null;
-						
-						try {
-							con = getConnection();
-							
-							sql = "select m_nickname, r.*, date_format(r.rev_date,'%Y-%m-%d') as date, "
-									+ "date_format(r.rev_c_date,'%Y-%m-%d') as c_date "
-									+ "from reviewcs r "
-									+ "join member m on r.m_no = m.m_no "
-									+ "where r.rev_no=? ";
-							pstmt=con.prepareStatement(sql);
-							
-							pstmt.setInt(1, res_no);
-							
-							rs = pstmt.executeQuery();
-							
-							// 데이터 처리
-							if(rs.next()) {
-								rdto = new ReviewcsDTO();
+								ReviewcsDTO rdto = new ReviewcsDTO();
 								
 								rdto.setRev_no(rs.getInt("rev_no"));
 								rdto.setS_no(rs.getInt("s_no"));
@@ -3105,179 +3397,23 @@ public class UserDAO {
 								rdto.setRev_category(rs.getInt("rev_category"));
 								rdto.setRev_file(rs.getString("rev_file"));
 								rdto.setRev_c_re(rs.getString("rev_c_re"));
-								rdto.setRev_c_date(rs.getTimestamp("rev_c_date"));
+//															rdto.setRev_c_date(rs.getTimestamp("rev_c_date"));	
+								rdto.setS_name(rs.getString("s_name"));
 								rdto.setM_nickname(rs.getString("m_nickname"));
 								rdto.setDate(rs.getString("date"));
-//								rdto.setC_date(rs.getString("c_date"));
 								
+								reList.add(rdto);
+								
+								System.out.println("반복문 들와따아아아ㅏ");
 							}
 							
-						} catch (Exception e) {
-							e.printStackTrace();
-						} finally {
-							closeDB();
-						}
-						
-						return rdto;
-					}
-					
-					
-					// ceo 답글 쓰기/수정 - ceoReply()
-					public int ceoReply(int rev_no,String reply) {
-						int result=0;
-						try {
-							con = getConnection();
-							
-							sql = "update reviewcs set rev_c_re=?, "
-									+ "rev_c_date=now() "
-									+ "where rev_no=?";
-							pstmt = con.prepareStatement(sql);
-							
-							pstmt.setString(1, reply);
-							pstmt.setInt(2, rev_no);
-								
-							pstmt.executeUpdate();
-							
-							result=1;
-							
-						} catch (Exception e) {
-							e.printStackTrace();
-						} finally {
-							closeDB();
-						}
-						
-						return result;
-					} // ceo 답글 쓰기/수정 - ceoReply()
-					
-					
-					// ceo 답글 삭제 - ceoReDelete()
-					public int ceoReDelete(int rev_no) {
-						int result=0;
-						
-						try {
-							con = getConnection();
-							
-							sql = "update reviewcs set rev_c_re=null, "
-									+ "rev_c_date=null "
-									+ "where rev_no=?";
-							pstmt = con.prepareStatement(sql);
-							
-							pstmt.setInt(1, rev_no);
-							
-							pstmt.executeUpdate();
-							
-							result=1;
-							
-						} catch (Exception e) {
-							e.printStackTrace();
-						} finally {
-							closeDB();
-						}
-						
-						
-						return result;
-					}
-					
-					// ceo 회원정보 수정 - ceoInfoUpdate(dto)
-					public int ceoInfoUpdate(CeoDTO dto) {
-						int result=-1;
-						
-						try {
-							con = getConnection();
-							
-							sql = "update ceo set c_name=?, c_nickname=?, c_tel=?, c_pw=? "
-									+ "where c_no=?";
-							pstmt = con.prepareStatement(sql);
-							
-							pstmt.setString(1, dto.getC_name());
-							pstmt.setString(2, dto.getC_nickName());
-							pstmt.setString(3, dto.getC_tel());
-							pstmt.setString(4, dto.getC_pw());
-							pstmt.setInt(5, dto.getC_no());
-							
-							pstmt.executeUpdate();
-									
-							result = 1;
-							System.out.println(" DAO : 회원수정 완료 ");
-							
-						} catch (Exception e) {
-							e.printStackTrace();
-						} finally {
-							closeDB();
-						}
-						
-						return result;
-						
-					}
-					
-					// ceo 회원정보 삭제 - ceoDelete(c_no,pw)
-					public int ceoDelete(int c_no,String pw) {
-						int result = -1;
-						
-						try {
-							con = getConnection();
-
-							sql = "select c_pw from ceo where c_no=? ";
-							pstmt = con.prepareStatement(sql);
-							
-							pstmt.setInt(1, c_no);
-							
-							rs = pstmt.executeQuery();
-							
-							// 데이터 처리
-							if(rs.next()) {
-								if(pw.equals(rs.getString("c_pw"))) {
-								sql = "delete from ceo where c_no=?";
-								pstmt = con.prepareStatement(sql);
-							
-								pstmt.setInt(1, c_no);
-							
-								pstmt.executeUpdate();
-								
-								result =1;
-								
-								} else {
-									result = 0;
-								}
-							} else {
-								result=-1;
-							}
-							
-							System.out.println(" DAO : ceo 회원탈퇴 완료 ");
-							
-						} catch (Exception e) {
-							e.printStackTrace();
-						} finally {
-							closeDB();
-						}
-						return result;
-					}		
-							// 어드민 점주 회원리스트 받기
-					
-					/** 가게 목록 가져오기 - getStoreList(id, listType, startRow,pageSize)
-					 *  가게 조회와 정렬, 페이징 처리하는 메서드. id, listType, startRowm pageSize
-					 *  리턴값 o, List 배열
-					 * @param id
-					 * @param listType
-					 * @param startRowm
-					 * @param pageSize
-					 * @return
-					 */
-					public List getStoreList(String id,String listType,int startRow,int pageSize,String s) {
-						// 가게 목록 저장 List
-						List storeList = new ArrayList();
-						
-						
-						try {
-							con = getConnection();
-							
-							if(s.equals("0")) {
-							sql = "select c.c_id, s.*, "
-									+ "(select count(*) from bookmark b where s.s_no = b.s_no) bcount, "
-									+ "(select count(*) from reviewcs r where s.s_no = r.s_no) rcount "
-									+ "from store s Join ceo c "
-									+ "on c.c_no = s.c_no where c.c_id=? "
-									+ "order by " + listType + " desc, s.s_no desc limit ?,?";
+						} else if(s.equals("1")) {
+							sql =  "select s.s_name, m.m_nickname ,r.*, date_format(r.rev_date,'%Y-%m-%d') as date "
+									+ "from store s join ceo c on s.c_no = c.c_no "
+									+ "join reviewcs r on s.s_no = r.s_no "
+									+ "join member m on r.m_no = m.m_no "
+									+ "where c.c_id=? "
+									+ "order by " + listType + " asc limit ?,?";
 							pstmt = con.prepareStatement(sql);
 							
 							pstmt.setString(1, id);
@@ -3286,88 +3422,300 @@ public class UserDAO {
 							
 							rs = pstmt.executeQuery();
 							
+							// 데이터 처리
 							while(rs.next()) {
-								// DB -> DTO -> List
-								StoreDTO sdto = new StoreDTO();
+								ReviewcsDTO rdto = new ReviewcsDTO();
 								
-								sdto.setS_no(rs.getInt("s_no"));
-								sdto.setS_name(rs.getString("s_name"));
-								sdto.setS_addr(rs.getString("s_addr"));
-								sdto.setS_tel(rs.getString("s_tel"));
-								sdto.setS_hours(rs.getString("s_hours"));
-								sdto.setS_type(rs.getString("s_type"));
-								sdto.setS_image(rs.getString("s_image"));
-								sdto.setS_content(rs.getString("s_content"));
-								sdto.setS_facility(rs.getString("s_facility"));
-								sdto.setS_latitude(rs.getString("s_latitude"));
-								sdto.setS_longtude(rs.getString("s_longtude"));
-								sdto.setS_menuname(rs.getString("s_menuname"));
-								sdto.setS_menuprice(rs.getString("s_menuprice"));
-								sdto.setS_menuImg(rs.getString("s_menuImg"));
-								sdto.setS_number(rs.getInt("s_number"));
-								sdto.setC_no(rs.getInt("c_no"));
-								sdto.setS_star(rs.getDouble("s_star"));
-								sdto.setS_regdate(rs.getTimestamp("s_regdate"));
-								sdto.setBcount(rs.getInt("bcount"));
-								sdto.setRcount(rs.getInt("rcount"));
+								rdto.setRev_no(rs.getInt("rev_no"));
+								rdto.setS_no(rs.getInt("s_no"));
+								rdto.setM_no(rs.getInt("m_no"));
+								rdto.setRev_subject(rs.getString("rev_subject"));
+								rdto.setRev_content(rs.getString("rev_content"));
+								rdto.setRev_date(rs.getTimestamp("rev_date"));
+								rdto.setRev_star(rs.getInt("rev_star"));
+								rdto.setRev_category(rs.getInt("rev_category"));
+								rdto.setRev_file(rs.getString("rev_file"));
+								rdto.setRev_c_re(rs.getString("rev_c_re"));
+//															rdto.setRev_c_date(rs.getTimestamp("rev_c_date"));	
+								rdto.setS_name(rs.getString("s_name"));
+								rdto.setM_nickname(rs.getString("m_nickname"));
+								rdto.setDate(rs.getString("date"));
 								
-								// DTO -> List
-								storeList.add(sdto);
-								
-							} // while
+								reList.add(rdto);
+							}
+						}
+					} else {
+						if(s.equals("0")){
+							sql =  "select s.s_name,m.m_nickname , r.*, date_format(r.rev_date,'%Y-%m-%d') as date "
+									+ "from store s join ceo c on s.c_no = c.c_no "
+									+ "join reviewcs r on s.s_no = r.s_no "
+									+ "join member m on r.m_no = m.m_no "
+									+ "where c.c_id=? && r.s_no=? "
+									+ "order by " + listType + " desc limit ?,?";
+							pstmt = con.prepareStatement(sql);
 							
-//							System.out.println(" DAO : 가지고 있는 가게 수 : "+storeList.size());
-							} else if(s.equals("1")) {
-								sql = "select c.c_id, s.*, "
-										+ "(select count(*) from bookmark b where s.s_no = b.s_no) bcount, "
-										+ "(select count(*) from reviewcs r where s.s_no = r.s_no) rcount "
-										+ "from store s Join ceo c "
-										+ "on c.c_no = s.c_no where c.c_id=? "
-										+ "order by " + listType + " asc, s.s_no desc limit ?,?";
-								pstmt = con.prepareStatement(sql);
+							pstmt.setString(1, id);
+							pstmt.setInt(2, sno2);
+							pstmt.setInt(3, startRow-1); // 시작행 -1
+							pstmt.setInt(4, pageSize); // 개수
+							
+							rs = pstmt.executeQuery();
+							
+							// 데이터처리
+							while(rs.next()) {
+								ReviewcsDTO rdto = new ReviewcsDTO();
 								
-								pstmt.setString(1, id);
-								pstmt.setInt(2, startRow-1); // 시작행 -1
-								pstmt.setInt(3, pageSize); // 개수
+								rdto.setRev_no(rs.getInt("rev_no"));
+								rdto.setS_no(rs.getInt("s_no"));
+								rdto.setM_no(rs.getInt("m_no"));
+								rdto.setRev_subject(rs.getString("rev_subject"));
+								rdto.setRev_content(rs.getString("rev_content"));
+								rdto.setRev_date(rs.getTimestamp("rev_date"));
+								rdto.setRev_star(rs.getInt("rev_star"));
+								rdto.setRev_category(rs.getInt("rev_category"));
+								rdto.setRev_file(rs.getString("rev_file"));
+								rdto.setRev_c_re(rs.getString("rev_c_re"));
+//															rdto.setRev_c_date(rs.getTimestamp("rev_c_date"));							
+								rdto.setS_name(rs.getString("s_name"));
+								rdto.setM_nickname(rs.getString("m_nickname"));
+								rdto.setDate(rs.getString("date"));
 								
-								rs = pstmt.executeQuery();
+								reList.add(rdto);
 								
-								while(rs.next()) {
-									// DB -> DTO -> List
-									StoreDTO sdto = new StoreDTO();
-									
-									sdto.setS_no(rs.getInt("s_no"));
-									sdto.setS_name(rs.getString("s_name"));
-									sdto.setS_addr(rs.getString("s_addr"));
-									sdto.setS_tel(rs.getString("s_tel"));
-									sdto.setS_hours(rs.getString("s_hours"));
-									sdto.setS_type(rs.getString("s_type"));
-									sdto.setS_image(rs.getString("s_image"));
-									sdto.setS_content(rs.getString("s_content"));
-									sdto.setS_facility(rs.getString("s_facility"));
-									sdto.setS_latitude(rs.getString("s_latitude"));
-									sdto.setS_longtude(rs.getString("s_longtude"));
-									sdto.setS_menuname(rs.getString("s_menuname"));
-									sdto.setS_menuprice(rs.getString("s_menuprice"));
-									sdto.setS_menuImg(rs.getString("s_menuImg"));
-									sdto.setS_number(rs.getInt("s_number"));
-									sdto.setC_no(rs.getInt("c_no"));
-									sdto.setS_star(rs.getDouble("s_star"));
-									sdto.setS_regdate(rs.getTimestamp("s_regdate"));
-									sdto.setBcount(rs.getInt("bcount"));
-									sdto.setRcount(rs.getInt("rcount"));
-									
-									// DTO -> List
-									storeList.add(sdto);
-							}
+							} // while 끝
+						} else if(s.equals("1")) {
+						
+							sql =  "select s.s_name,m.m_nickname , r.*, date_format(r.rev_date,'%Y-%m-%d') as date "
+									+ "from store s join ceo c on s.c_no = c.c_no "
+									+ "join reviewcs r on s.s_no = r.s_no "
+									+ "join member m on r.m_no = m.m_no "
+									+ "where c.c_id=? && r.s_no=? "
+									+ "order by " + listType + " asc limit ?,?";
+							pstmt = con.prepareStatement(sql);
+							
+							pstmt.setString(1, id);
+							pstmt.setInt(2, sno2);
+							pstmt.setInt(3, startRow-1); // 시작행 -1
+							pstmt.setInt(4, pageSize); // 개수
+							
+							rs = pstmt.executeQuery();
+							
+							// 데이터처리
+							while(rs.next()) {
+								ReviewcsDTO rdto = new ReviewcsDTO();
 								
-							}
+								rdto.setRev_no(rs.getInt("rev_no"));
+								rdto.setS_no(rs.getInt("s_no"));
+								rdto.setM_no(rs.getInt("m_no"));
+								rdto.setRev_subject(rs.getString("rev_subject"));
+								rdto.setRev_content(rs.getString("rev_content"));
+								rdto.setRev_date(rs.getTimestamp("rev_date"));
+								rdto.setRev_star(rs.getInt("rev_star"));
+								rdto.setRev_category(rs.getInt("rev_category"));
+								rdto.setRev_file(rs.getString("rev_file"));
+								rdto.setRev_c_re(rs.getString("rev_c_re"));
+//															rdto.setRev_c_date(rs.getTimestamp("rev_c_date"));							
+								rdto.setS_name(rs.getString("s_name"));
+								rdto.setM_nickname(rs.getString("m_nickname"));
+								rdto.setDate(rs.getString("date"));
+								
+								reList.add(rdto);
+								
+							} // while 끝
+						}
+						
+					}
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				} finally {
+					closeDB();
+				}
+				
+				return reList;
+			} // 사업자 가게별 리뷰 리스트 - getCeoRevList
+			
+			
+			// 리뷰 1개 정보 조회 - reviewInfo(res_no)
+			public ReviewcsDTO reviewInfo(int res_no) {
+				ReviewcsDTO rdto = null;
+				
+				try {
+					con = getConnection();
+					
+					sql = "select m_nickname, r.*, date_format(r.rev_date,'%Y-%m-%d') as date "
+//														+ "date_format(r.rev_c_date,'%Y-%m-%d') as c_date "
+							+ "from reviewcs r "
+							+ "join member m on r.m_no = m.m_no "
+							+ "where r.rev_no=? ";
+					pstmt=con.prepareStatement(sql);
+					
+					pstmt.setInt(1, res_no);
+					
+					rs = pstmt.executeQuery();
+					
+					// 데이터 처리
+					if(rs.next()) {
+						rdto = new ReviewcsDTO();
+						
+						rdto.setRev_no(rs.getInt("rev_no"));
+						rdto.setS_no(rs.getInt("s_no"));
+						rdto.setM_no(rs.getInt("m_no"));
+						rdto.setRev_subject(rs.getString("rev_subject"));
+						rdto.setRev_content(rs.getString("rev_content"));
+						rdto.setRev_date(rs.getTimestamp("rev_date"));
+						rdto.setRev_star(rs.getInt("rev_star"));
+						rdto.setRev_category(rs.getInt("rev_category"));
+						rdto.setRev_file(rs.getString("rev_file"));
+						rdto.setRev_c_re(rs.getString("rev_c_re"));
+//													rdto.setRev_c_date(rs.getTimestamp("rev_c_date"));
+						rdto.setM_nickname(rs.getString("m_nickname"));
+						rdto.setDate(rs.getString("date"));
+//													rdto.setC_date(rs.getString("c_date"));
+						
+					}
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				} finally {
+					closeDB();
+				}
+				
+				return rdto;
+			}
+			
+			
+			// ceo 답글 쓰기/수정 - ceoReply()
+			public int ceoReply(int rev_no,String reply) {
+				int result=0;
+				try {
+					con = getConnection();
+					
+					sql = "update reviewcs set rev_c_re=? "
+//														+ "rev_c_date=now() "
+							+ "where rev_no=?";
+					pstmt = con.prepareStatement(sql);
+					
+					pstmt.setString(1, reply);
+					pstmt.setInt(2, rev_no);
+						
+					pstmt.executeUpdate();
+					
+					result=1;
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				} finally {
+					closeDB();
+				}
+				
+				return result;
+			} // ceo 답글 쓰기/수정 - ceoReply()
+			
+			
+			// ceo 답글 삭제 - ceoReDelete()
+			public int ceoReDelete(int rev_no) {
+				int result=0;
+				
+				try {
+					con = getConnection();
+					
+					sql = "update reviewcs set rev_c_re=null "
+//														+ "rev_c_date=null "
+							+ "where rev_no=?";
+					pstmt = con.prepareStatement(sql);
+					
+					pstmt.setInt(1, rev_no);
+					
+					pstmt.executeUpdate();
+					
+					result=1;
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				} finally {
+					closeDB();
+				}
+				
+				
+				return result;
+			}
+			
+			// ceo 회원정보 수정 - ceoInfoUpdate(dto)
+			public int ceoInfoUpdate(CeoDTO dto) {
+				int result=-1;
+				
+				try {
+					con = getConnection();
+					
+					sql = "update ceo set c_name=?, c_nickname=?, c_tel=?, c_pw=? "
+							+ "where c_no=?";
+					pstmt = con.prepareStatement(sql);
+					
+					pstmt.setString(1, dto.getC_name());
+					pstmt.setString(2, dto.getC_nickName());
+					pstmt.setString(3, dto.getC_tel());
+					pstmt.setString(4, dto.getC_pw());
+					pstmt.setInt(5, dto.getC_no());
+					
+					pstmt.executeUpdate();
+							
+					result = 1;
+					System.out.println(" DAO : 회원수정 완료 ");
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				} finally {
+					closeDB();
+				}
+				
+				return result;
+				
+			}
+			
+			// ceo 회원정보 삭제 - ceoDelete(c_no,pw)
+			public int ceoDelete(int c_no,String pw) {
+				int result = -1;
+				
+				try {
+					con = getConnection();
+
+					sql = "select c_pw from ceo where c_no=? ";
+					pstmt = con.prepareStatement(sql);
+					
+					pstmt.setInt(1, c_no);
+					
+					rs = pstmt.executeQuery();
+					
+					// 데이터 처리
+					if(rs.next()) {
+						if(pw.equals(rs.getString("c_pw"))) {
+						sql = "delete from ceo where c_no=?";
+						pstmt = con.prepareStatement(sql);
+					
+						pstmt.setInt(1, c_no);
+					
+						pstmt.executeUpdate();
+						
+						result =1;
+						
+						} else {
+							result = 0;
+						}
+					} else {
+						result=-1;
+					}
+					
+					System.out.println(" DAO : ceo 회원탈퇴 완료 ");
+							
 						} catch (Exception e) {
 							e.printStackTrace();
 						} finally {
 							closeDB();
 						}
-						
-						return storeList;
+						return result;
 					}
+		
 }
+
+

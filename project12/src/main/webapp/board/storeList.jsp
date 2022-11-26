@@ -79,7 +79,7 @@
                             </div>
                             <div class="panel-body search-widget">
                                 <form action="./storeList.st" class=" form-inline" name="fr"> 
-                               
+                                <input type="hidden" class="hid" value="">
                                     <fieldset>
                                         <div class="row">
                                             <div class="col-xs-12">

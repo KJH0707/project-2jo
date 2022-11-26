@@ -32,6 +32,7 @@
         <link rel="stylesheet" href="assets/css/owl.theme.css">
         <link rel="stylesheet" href="assets/css/owl.transitions.css">
         <link rel="stylesheet" href="assets/css/style.css">
+        <link rel="stylesheet" href="assets/css/wizard.css">
         <link rel="stylesheet" href="assets/css/responsive.css">
         
 <!--         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script> -->
@@ -85,7 +86,7 @@
     } else {
       window.addEventListener('DOMContentLoaded', l, false);
       window.addEventListener('load', l, false);
-    }
+    
   })();
   ChannelIO('boot', {
     "pluginKey": "11a959e9-32da-4bfa-baab-2259838a8261"
@@ -101,9 +102,17 @@
             <div class="slider">
                 <div id="bg-slider" class="owl-carousel owl-theme">
  
-                    <div class="item"><img src="assets/img/main.jpg" alt="The Last of us" style="background-attachment:fixed;"></div>
-                    <div class="item"><img src="assets/img/main2.jpg" alt="GTA V" style="background-attachment:fixed;"></div>
-
+                    <div class="item"><img src="assets/img/chef.jpg" alt="banner" style="background-attachment:fixed;"></div>
+                    <div class="item"><img src="assets/img/banner2.jpg" alt="banner2" style="background-attachment:fixed;"></div>
+					<div class="item"><img src="assets/img/banner3.jpg" alt="banner3" style="background-attachment:fixed;"></div>
+					<div class="item"><img src="assets/img/banner4.jpg" alt="banner4" style="background-attachment:fixed;"></div>
+					<div class="item"><img src="assets/img/banner5.jpg" alt="banner5" style="background-attachment:fixed;"></div>
+					<div class="item"><img src="assets/img/banner6.jpg" alt="banner6" style="background-attachment:fixed;"></div>
+					<div class="item"><img src="assets/img/banner7.jpg" alt="banner7" style="background-attachment:fixed;"></div>
+					<div class="item"><img src="assets/img/banner8.jpeg" alt="banner8" style="background-attachment:fixed;"></div>
+					<div class="item"><img src="assets/img/banner9.jpeg" alt="banner9" style="background-attachment:fixed;"></div>
+					<div class="item"><img src="assets/img/banner10.jpeg" alt="banner10" style="background-attachment:fixed;"></div>
+					<div class="item"><img src="assets/img/banner11.jpeg" alt="banner11" style="background-attachment:fixed;"></div>
                 </div>
             </div>
             <div class="container slider-content">
@@ -122,6 +131,7 @@
                 <div class="col-md-12 large-search"> 
                     <div class="search-form wow pulse">
                         <form action="./storeList.st" class="form-inline" method="get">
+                        <input type="hidden" name="prnon" value="1">
                             <div class="col-md-12">
                                 <div class="col-md-4">
                                     <input type="text" class="form-control" placeholder="가게 검색" name="kw" value="${kw2 }">
@@ -386,6 +396,180 @@
 
 
 
+
+<div class="content-area recent-property" style="background-color: #FCFCFC; padding-bottom: 55px;">
+
+<div class="container">
+	
+    <div class="row">
+    
+        <div class="col-md-10 col-md-offset-1 col-sm-12 text-center page-title">
+            <!-- /.feature title -->
+                <h2>가격대별로 준비했어요!</h2>
+                
+            </div>
+             <div class="wizard-container">
+             <div class="wizard-card ct-wizard-orange" id="wizardProperty">
+             
+         <ul class="nav nav-pills">
+          <li style="width: 25%;" class="active"><a href="#step1" data-toggle="tab">0-25000원</a></li>
+ 	<li style="width: 25%;"><a href="#step2" data-toggle="tab">25000-50000원</a></li>
+	<li style="width: 25%;"><a href="#step3" data-toggle="tab">50000-75000원</a></li>
+	<li style="width: 25%;"><a href="#step4" data-toggle="tab">75000-100000원</a></li>
+      </ul>
+        
+        </div>
+        </div>
+        
+         <div class="proerty-th">
+         <div class="tab-content">
+
+             <div class="tab-pane active" id="step1">
+            <c:forEach var="cost" items="${costStore1}">
+    		<div class="col-sm-6 col-md-3 p0">
+    		<div class="box-two proerty-item">
+    		<div class="item-thumb">
+    		<a href="./storeDetails.st?s_no=${cost.s_no}"><img src="upload/${cost.s_image.split(',')[0]}"></a>
+                  <span class="property-seeker">
+                      <b class="b-1">${cost.s_price }원대</b>
+                      <b class="b-2">${cost.s_type }</b>
+                  </span>
+              </div>
+              <div class="item-entry overflow">
+                  <h6> <a href="./storeDetails.st?s_no=${cost.s_no}">${cost.s_name } </a></h6>
+                  <div class="dot-hr"></div>
+                  <span class="pull-left"><span class="property-price">별점 : ${cost.s_star }</span> </span>
+                   <span class="proerty-price pull-right">  </span>
+                </div>
+                </div>
+            </div> 
+            </c:forEach>
+				<div class="col-sm-6 col-md-3 p0">
+                    <div class="box-tree more-proerty text-center">
+                        <div class="item-tree-icon">
+                            <i class="fa fa-th"></i>
+                        </div>
+                        <div class="more-entry overflow">
+                            <h5>못고르셨나요?</h5>
+                            <h5 class="tree-sub-ttl">다른 가게들도 준비되어있어요!</h5>
+                            <a href="./storeList.st?pr=0,25000" >
+                             <button class="btn border-btn more-black" value="All properties">더보기</button></a>
+                        </div>
+                    </div>
+                </div>
+             </div>
+             <!--  step 1  -->
+         	<div class="tab-pane" id="step2">
+            <c:forEach var="cost" items="${costStore2}">
+    		<div class="col-sm-6 col-md-3 p0">
+    		<div class="box-two proerty-item">
+    		<div class="item-thumb">
+    		<a href="./storeDetails.st?s_no=${cost.s_no}"><img src="upload/${cost.s_image.split(',')[0]}"></a>
+                  <span class="property-seeker">
+                      <b class="b-1">${cost.s_price }원대</b>
+                      <b class="b-2">${cost.s_type }</b>
+                  </span>
+              </div>
+              <div class="item-entry overflow">
+                  <h6> <a href="./storeDetails.st?s_no=${cost.s_no}">${cost.s_name } </a></h6>
+                  <div class="dot-hr"></div>
+                  <span class="pull-left"><span class="property-price">별점 : ${cost.s_star }</span> </span>
+                   <span class="proerty-price pull-right">  </span>
+                </div>
+                </div>
+            </div> 
+            </c:forEach>
+				<div class="col-sm-6 col-md-3 p0">
+                    <div class="box-tree more-proerty text-center">
+                        <div class="item-tree-icon">
+                            <i class="fa fa-th"></i>
+                        </div>
+                        <div class="more-entry overflow">
+                            <h5>못고르셨나요?</h5>
+                            <h5 class="tree-sub-ttl">다른 가게들도 준비되어있어요!</h5>
+                            <a href="./storeList.st?pr=25000,50000" >
+                             <button class="btn border-btn more-black" value="All properties">더보기</button></a>
+                        </div>
+                    </div>
+                </div>
+             </div>
+             <!--  step 2  -->
+             
+             <div class="tab-pane" id="step3">
+            <c:forEach var="cost" items="${costStore3}">
+    		<div class="col-sm-6 col-md-3 p0">
+    		<div class="box-two proerty-item">
+    		<div class="item-thumb">
+    		<a href="./storeDetails.st?s_no=${cost.s_no}"><img src="upload/${cost.s_image.split(',')[0]}"></a>
+                  <span class="property-seeker">
+                      <b class="b-1">${cost.s_price }원대</b>
+                      <b class="b-2">${cost.s_type }</b>
+                  </span>
+              </div>
+              <div class="item-entry overflow">
+                  <h6> <a href="./storeDetails.st?s_no=${cost.s_no}">${cost.s_name } </a></h6>
+                  <div class="dot-hr"></div>
+                  <span class="pull-left"><span class="property-price">별점 : ${cost.s_star }</span> </span>
+                   <span class="proerty-price pull-right">  </span>
+                </div>
+                </div>
+            </div> 
+            </c:forEach>
+				<div class="col-sm-6 col-md-3 p0">
+                    <div class="box-tree more-proerty text-center">
+                        <div class="item-tree-icon">
+                            <i class="fa fa-th"></i>
+                        </div>
+                        <div class="more-entry overflow">
+                            <h5>못고르셨나요?</h5>
+                            <h5 class="tree-sub-ttl">다른 가게들도 준비되어있어요!</h5>
+                            <a href="./storeList.st?pr=50000,75000" >
+                             <button class="btn border-btn more-black" value="All properties">더보기</button></a>
+                        </div>
+                    </div>
+                </div>
+             </div>
+             <!--  step 3  -->
+             
+             <div class="tab-pane" id="step4">
+            <c:forEach var="cost" items="${costStore4}">
+    		<div class="col-sm-6 col-md-3 p0">
+    		<div class="box-two proerty-item">
+    		<div class="item-thumb">
+    		<a href="./storeDetails.st?s_no=${cost.s_no}"><img src="upload/${cost.s_image.split(',')[0]}"></a>
+                  <span class="property-seeker">
+                      <b class="b-1">${cost.s_price }ㅇㅇ</b>
+                      <b class="b-2">${cost.s_type }</b>
+                  </span>
+              </div>
+              <div class="item-entry overflow">
+                  <h6> <a href="./storeDetails.st?s_no=${cost.s_no}">${cost.s_name } </a></h6>
+                  <div class="dot-hr"></div>
+                  <span class="pull-left"><span class="property-price">별점 : ${cost.s_star }</span> </span>
+                   <span class="proerty-price pull-right">  </span>
+                </div>
+                </div>
+            </div> 
+            </c:forEach>
+				<div class="col-sm-6 col-md-3 p0">
+                    <div class="box-tree more-proerty text-center">
+                        <div class="item-tree-icon">
+                            <i class="fa fa-th"></i>
+                        </div>
+                        <div class="more-entry overflow">
+                            <h5>못고르셨나요?</h5>
+                            <h5 class="tree-sub-ttl">다른 가게들도 준비되어있어요!</h5>
+                            <a href="./storeList.st?pr=75000,100000" >
+                             <button class="btn border-btn more-black" value="All properties">더보기</button></a>
+                        </div>
+                    </div>
+                </div>
+             </div>
+         	 <!--  step 4  -->
+			</div>
+		</div>
+	</div>
+</div>
 <!-- 별점순 추천 -->
 <div class="content-area recent-property" style="background-color: #FCFCFC; padding-bottom: 55px;">
 <div class="container">
@@ -424,70 +608,6 @@
 
 
  <!-- 가격대별 추천 -->
-<div class="content-area recent-property" style="background-color: #FCFCFC; padding-bottom: 55px;">
-<div class="container">
-    <div class="row">
-        <div class="col-md-10 col-md-offset-1 col-sm-12 text-center page-title">
-            <!-- /.feature title -->
-                <h2>가격대별로 준비했어요!</h2>
-            </div>
-        </div>
-<%--         ${costStore } --%>
-<%--         @@@ ${costStore.s_price } --%>
-        <form action="./main.st" method="post">
-		<select name="price" class="">
-			<option value="0" selected disabled hidden>원하시는 가격대를 선택해주세요!</option>
-			<option value="10000">1만원대</option>
-			<option value="20000">2만원대</option>
-			<option value="30000">3만원대</option>
-			<option value="40000">4만원대</option>
-			<option value="50000">5만원대</option>
-			<option value="60000">6만원대</option>
-			<option value="70000">7만원대</option>
-			<option value="80000">8만원대</option>
-			<option value="90000">9만원대</option>
-			<option value="100000">10만원대</option>
-		</select>
-		<input type="submit" value="추천받기">
-		</form>
-         <div class="proerty-th">
-         	 <c:forEach var="cost" items="${costStore}">
-    		<div class="col-sm-6 col-md-3 p0">
-    		<div class="box-two proerty-item">
-    		<div class="item-thumb">
-    		<a href="./storeDetails.st?s_no=${cost.s_no}"><img src="upload/${cost.s_image.split(',')[0]}"></a>
-                  <span class="property-seeker">
-                      <b class="b-1">${cost.s_price }원대</b>
-                      <b class="b-2">${cost.s_type }</b>
-                  </span>
-              </div>
-              <div class="item-entry overflow">
-                  <h6> <a href="./storeDetails.st?s_no=${cost.s_no}">${cost.s_name } </a></h6>
-                  <div class="dot-hr"></div>
-                  <span class="pull-left"><span class="property-price">별점 : ${cost.s_star }</span> </span>
-                   <span class="proerty-price pull-right">  </span>
-                </div>
-                </div>
-            </div> 
-            </c:forEach>
-				<div class="col-sm-6 col-md-3 p0">
-                    <div class="box-tree more-proerty text-center">
-                        <div class="item-tree-icon">
-                            <i class="fa fa-th"></i>
-                        </div>
-                        <div class="more-entry overflow">
-                            <h5><a href="./storeList.st" >CAN'T DECIDE ? </a></h5>
-                            <a href="./storeList.st" ><h5 class="tree-sub-ttl">Show all restaurants</h5></a>
-                            <a href="./storeList.st" >
-                             <button class="btn border-btn more-black" value="All properties">더보기</button></a>
-                        </div>
-                    </div>
-                </div>
-			</div>
-		</div>
-	</div>
-</div>
-
 
  <!-- 지역별 추천 -->
 <div class="content-area recent-property" style="background-color: #FCFCFC; padding-bottom: 55px;">
@@ -520,19 +640,7 @@
                 </div>
             </div> 
             </c:forEach>
-				<div class="col-sm-6 col-md-3 p0">
-                    <div class="box-tree more-proerty text-center">
-                        <div class="item-tree-icon">
-                            <i class="fa fa-th"></i>
-                        </div>
-                        <div class="more-entry overflow">
-                            <h5><a href="./storeList.st" >CAN'T DECIDE ? </a></h5>
-                            <a href="./storeList.st" ><h5 class="tree-sub-ttl">Show all restaurants</h5></a>
-                            <a href="./storeList.st" >
-                             <button class="btn border-btn more-black" value="All properties">더보기</button></a>
-                        </div>
-                    </div>
-                </div>
+				
 			</div>
 		</div>
 	</div>

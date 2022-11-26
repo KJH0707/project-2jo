@@ -39,7 +39,7 @@ public class AdminDelCeoMemberAction implements Action {
 		
 		
 		forward.setPath("/adminCeoMemList.us?pageNum="+pageNum);
-		forward.setRedirect(false);
+		forward.setRedirect(true);
 		return forward;
 	}
 

@@ -30,13 +30,13 @@
     
     
     
-    function isGenDelete(x,y){
+    function isPayDelete(z,x,y){
     
     var isMove = confirm("진짜 삭제하실?");
 	
 	if(isMove){
 		// 장바구니 페이지 이동
-		location.href="./adminDeleteCeoMemAction.us?c_no="+x+"&pageNum="+y;
+		location.href="./adminDeletePaymentAction.us?p_no="+z+"-"+x+"&pageNum="+y;
 	}
 	
 	}
@@ -77,7 +77,7 @@
                                     <nav aria-label="breadcrumb">
                                         <ol class="breadcrumb">
                                             <li class="breadcrumb-item"><a class="breadcrumb-link">Dashboard</a></li>
-                                            <li class="breadcrumb-item active" aria-current="page">점주 회원 관리 (아이디 클릭시 상세 보기 가능)</li>
+                                            <li class="breadcrumb-item active" aria-current="page">결제 목록 (아이디 클릭시 상세 보기 가능)</li>
                                         </ol>
                                     </nav>
                                 </div>
@@ -112,7 +112,7 @@
                                                 <thead class="bg-light">
                                                     <tr class="border-0">
                                                         <th class="border-0">No.</th>
-                                                        <th class="border-0">결제자 ID</th>
+                                                        <th class="border-0">결제자 닉네임(ID)</th>
                                                         <th class="border-0">예약 가게</th>
                                                         <th class="border-0">결제 금액</th>
                                                         <th class="border-0">결제 정보</th>
@@ -124,24 +124,31 @@
                                                 </thead>
                                                 <!-- 가게 정보입력 -->
                                                 <tbody>
-                                                    <c:forEach var="cml" items="${ceoMemList }">
+                                                    <c:forEach var="pl" items="${paymentList }">
                                                     <tr>
                                                     
-                                                        <td>${cml.c_no}</td>
+                                                        <td>${pl.p_no}</td>
 <!--                                                         <td> -->
 <!--                                                             <div class="m-r-10"><img src="assets/images/product-pic.jpg" alt="user" class="rounded" width="45"></div> -->
 <!--                                                         </td> -->
-                                                        <td><a href="./adminCeoMemDetail.us?c=${cml.c_no }">${cml.c_id }</a></td>
-                                                        <td>${cml.c_name }</td>
-                                                        <td>${cml.c_email }
-                                                        <td>${cml.c_nickName }</td>
-                                                        <td>${cml.c_tel }</td>
-                                                        <td>${cml.c_regdate }</td>
+                                                        <td>${pl.m_nickname }<a href="./adminCeoMemDetail.us?c=${pl.m_no }">(${pl.m_id })</a></td>
+                                                        <td>${pl.s_name }</td>
+                                                        <td>${pl.p_price }
+                                                        <td>${pl.p_info}</td>
+                                                        <td>${pl.p_date}</td>
+                                                        <td>
+                                                        <c:if test='${pl.p_status==0 }'>
+                                                      	결제 완료
+                                                        </c:if>
+                                                        <c:if test='${pl.p_status==1 }'>
+                                                      	결제 취소
+                                                        </c:if>
+                                                        </td>
                                                         
                                                         <td>
-                                                        	<a href="#">수정</a> 
                                                         	
-                                                        	<a href="javascript: isDelete(${cml.c_no },${pageNum })">삭제</a>
+                                                        	
+                                                        	<a href="javascript: isPayDelete(${pl.p_no.split('-')[0] },${pl.p_no.split('-')[1] },${pageNum })">삭제</a>
                                                          </td>
                                                     </tr>
                                                    </c:forEach>
@@ -177,10 +184,10 @@
                         		</div>
                     		</div>
                     		<div class="col-xl-9">
-                    		<form action="./adminCeoMemList.us" method="post">
-                                <input class="form-controlkjh" type="text" placeholder="아이디 검색" name="c_id" value="${keyword }">
+                    		<form action="./adminPaymentList.us" method="post">
+                                <input class="form-controlkjh" type="text" placeholder="가게명이나 아이디 검색" name="keyword" value="${keyword }">
                                 <input type="submit" value="검색" class="btn btn-primary">
-                                <a href="./adminCeoMemList.us" class="btn btn-primary">전체보기</a>
+                                <a href="./adminPaymentList.us" class="btn btn-primary">전체보기</a>
                             </form>
                             	
                     		</div>

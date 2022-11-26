@@ -90,10 +90,11 @@ $(document).ready(function(){
                         <hr>
                         <h2>답글 달기</h2>
                         <form action="./ReviewReplyAction.rv?pageNum=${param.pageNum }&s_no=${param.s_no }" method="post">
-                     ${param.s_no } / ${param.pageNum }
+                      ${sdto }
 
                                 <br>
-${param.rev_no}/
+                              
+${sdto.s_name }
 	<input type="hidden" name="rev_no" value="${param.rev_no }">
 	<input type="hidden" name="rev_ref" value="${param.rev_ref }">
 	<input type="hidden" name="rev_seq" value="${param.rev_seq }">
@@ -102,7 +103,7 @@ ${param.rev_no}/
 		
 									
                    <label for="subject">제목</label>
-                 <input type="text" class="form-control" id="subject" name="rev_subject" value="${param.rev_no } -[관리자 답글] ${param.rev_subject }">
+                 <input type="text" class="form-control" id="subject" name="rev_subject" value="[CEO 답글] ${param.rev_subject }">
 
 
                                     <label for="message">내용</label>

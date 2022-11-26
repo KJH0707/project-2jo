@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fork.board.action.UserReservAction;
+
 
 
 
@@ -125,12 +127,6 @@ public class StoreFrontController extends HttpServlet {
 					}
 				}
 				
-				else if(command.equals("/gu.st")) {
-					forward= new ActionForward();
-					forward.setPath("./board/gu.xml");
-					forward.setRedirect(false);
-					
-				}
 				
 				else if(command.equals("/StoreUpdate.st")) {
 					System.out.println(" C : /StoreUpdate.st 호출");

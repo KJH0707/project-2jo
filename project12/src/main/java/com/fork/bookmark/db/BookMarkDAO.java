@@ -155,5 +155,33 @@ public class BookMarkDAO {
     }
 //    찜 해제 - delete
 			
+    //찜 카운트 
+    public int countBookMark() {
+    	BookMarkDTO bkdto = new BookMarkDTO();
+    	int count = 0;
+    	
+    	try {
+			con = getConnection();
+			sql = "select count(*) from bookmark where s_no=?";
+			
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1,bkdto.getS_no());
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				count = rs.getInt("count(*)");
+			}
+   
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			closeDB();
+		}
+    	
+    		return count;
+    }
+    //찜 카운트 
 			
 }

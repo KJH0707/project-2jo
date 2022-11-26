@@ -97,7 +97,7 @@
                                                         <th class="border-0">점주 이름</th>
                                                         <th class="border-0">신고자 ID</th>
                                                         <th class="border-0">신고자명</th>
-                                                        <th class="border-0">신고 사유</th>
+                                                        <th class="border-0" colspan="4">신고 사유</th>
                                                         <th class="border-0">신고 횟수</th>
                                                         <th class="border-0">신고일자</th>
                                                         <th class="border-0">관리</th>
@@ -118,7 +118,8 @@
                                                         <td>${rep.m_id}</td>
                                                         
                                                         <td>${rep.m_name }</td>
-                                                        <td>${rep.rep_reason }</td>
+                                                        <td colspan="4"><h4 class="mb-0"><a href="#" onclick="window.open('./genMemReservMsg.us?msg=${rep.rep_reason}','예약 메세지','width=600, height=150, left=700, top=400')">
+                                                    보기</a></h4></td>
                                                         <td>${rep.rep_howmany }</td>
                                                       
                                                         <td>${rep.rep_date}</td>

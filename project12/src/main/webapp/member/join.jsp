@@ -71,6 +71,11 @@
 			 	return;
 			}
 			
+			if(!/^[a-zA-Z0-9]*$/.test(id)){
+				$('#id').focus();
+			 	return;
+			}
+			
 			if(name.length == 0){
 				alert('이름을 입력해주세요');
 				$('#name').focus();
@@ -98,6 +103,12 @@
 			 	return;
 			}
 			
+			if(!/^[ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z0-9]*$/.test(nick)){
+				$('#nick').focus();
+				
+			 	return;
+			}
+			
 			if(tel.length == 0){
 				alert('연락처를 입력해주세요');
 				$('#tel').focus();
@@ -119,6 +130,18 @@
 			}
 			
 			if(pw.length < 6){
+				$('#pw').focus();
+				
+			 	return;
+			}
+			
+			if(pw == id) {
+				$('#pw').focus();
+				
+			 	return;
+			}
+			
+			if(!/^(?=.*[a-zA-Z])(?=.*[0-9]).{0,}$/.test(pw)){ 
 				$('#pw').focus();
 				
 			 	return;
@@ -584,8 +607,8 @@
 						<legend class="scheduler-border">선택 입력</legend>
 						<div class="row">
 							<div class="col-SM-2" style="padding:0 0 0 15px">
-							  <label for="date">생년월일</label>
-							  <input type="date" class="form-control" id="date" name="date"  style="width:200px">
+							  <label for="birth">생년월일</label>
+							  <input type="date" class="form-control" id="birth" name="birth"  style="width:200px">
 							</div>
 							<div class="col-SM-2" style="padding:15px 0 0 15px">
 							  <label for="gender">성별</label>

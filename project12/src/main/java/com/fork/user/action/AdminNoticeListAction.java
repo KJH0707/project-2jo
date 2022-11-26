@@ -20,7 +20,7 @@ public class AdminNoticeListAction implements Action {
 		
 		HttpSession session = request.getSession();
 		String id = (String)session.getAttribute("id");
-		int cnt = dao.getNoticeCount();
+		int cnt = dao.getNoticeCount(0);
 		
 		if(id!=null) {
 			if (!(id.equals("admin"))) {

@@ -21,6 +21,7 @@
 <script>
 		// 회원정보 수정 제어(유효성 체크)
 		function send(){
+			let id = $('#id').val();
 			let name = $('#name').val();
 			let nick = $('#nick').val();
 			let tel = $('#tel').val();
@@ -48,6 +49,12 @@
 			 	return;
 			}
 			
+			if(!/^[ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z0-9]*$/.test(nick)){
+				$('#nick').focus();
+				
+			 	return;
+			}
+			
 			if(tel.length == 0){
 				alert('연락처를 입력해주세요');
 				$('#tel').focus();
@@ -69,6 +76,18 @@
 			}
 			
 			if(pw.length < 6){
+				$('#pw').focus();
+				
+			 	return;
+			}
+			
+			if(pw == id) {
+				$('#pw').focus();
+				
+			 	return;
+			}
+			
+			if(!/^(?=.*[a-zA-Z])(?=.*[0-9]).{0,}$/.test(pw)){ 
 				$('#pw').focus();
 				
 			 	return;
@@ -468,43 +487,43 @@
 								  <font id = "checkId" size="2"></font>
 							  </label>
 							  <input type="hidden" id="c_no" name="c_no" value="${cdto.c_no }" >
-							  <input type="text" class="form-control" id="id" name="id"  value="${cdto.c_id }" style="width:300px" readonly>
+							  <input type="text" class="form-control" id="id" name="id"  value="${cdto.c_id }" style="width:90%" readonly>
 							</div>
 							<div class="col-SM-2" style="padding:0 0 0 15px">
 							  <label for="name">이름&nbsp;&nbsp;
 							   	<font id = "checkName" size="2"></font>
 							  </label>
-							  <input type="text" class="form-control" id="name" value="${cdto.c_name}" name="name"  style="width:300px" maxlength="20">
+							  <input type="text" class="form-control" id="name" value="${cdto.c_name}" name="name"  style="width:90%" maxlength="20">
 							</div>
 							<div class="col-SM-2" style="padding:0 0 0 15px">
 							  <label for="email" >이메일&nbsp;&nbsp;
 							  	<font id = "checkEmail" size="2"></font>
 							  </label>
-							  <input type="email" class="form-control" id="email" name="email" value="${cdto.c_email }" style="width:300px" readonly>
+							  <input type="email" class="form-control" id="email" name="email" value="${cdto.c_email }" style="width:90%" readonly>
 							</div>
 							<div class="col-SM-2" style="padding:0 0 0 15px">
 							  <label for="nick">닉네임&nbsp;&nbsp;
 							  <font id = "checkNick" size = "2"></font>
 							  </label>
-							  <input type="text" class="form-control" id="nick" name="nick" placeholder="2~8자 한글,영문자로 입력하세요" value="${cdto.c_nickName }"  style="width:300px" maxlength="8">
+							  <input type="text" class="form-control" id="nick" name="nick" placeholder="2~8자 한글,영문자로 입력하세요" value="${cdto.c_nickName }"  style="width:90%" maxlength="8">
 							</div>
 							<div class="col-SM-2" style="padding:0 0 0 15px">
 							  <label for="tel">전화번호( - 포함)&nbsp;&nbsp;
 							  <font id = "checkTel" size = "2"></font>
 							  </label>
-							  <input type="tel" class="form-control" id="tel" name="tel" placeholder="(-)를 포함하여 입력하세요" value="${cdto.c_tel }" style="width:300px" maxlength="13">
+							  <input type="tel" class="form-control" id="tel" name="tel" placeholder="(-)를 포함하여 입력하세요" value="${cdto.c_tel }" style="width:90%" maxlength="13">
 							</div>
 							<div class="col-SM-2" style="padding:0 0 0 15px">
 							  <label for="pw">비밀번호&nbsp;&nbsp;
-							  	 <font id = "checkPw" size= "2"></font>
+							  	 <font id = "checkPw" size= "1"></font>
 							  </label>
-							  <input type="password" class="form-control" id="pw" placeholder="영문자,숫자 포함 6~12자를 입력하세요" name="pw"  style="width:300px" maxlength="12">
+							  <input type="password" class="form-control" id="pw" placeholder="영문자,숫자 포함 6~12자를 입력하세요" name="pw"  style="width:90%" maxlength="12">
 							</div>
 							<div class="col-SM-2" style="padding:0 0 0 15px">
 							  <label for="pwc">비밀번호 확인&nbsp;&nbsp;
 							  	 <font id = "checkPwc" size= "2"></font>
 							  </label>
-							  <input type="password" class="form-control" id="pwc" placeholder="비밀번호를 확인하세요" name="pwc"  style="width:300px" maxlength="12">
+							  <input type="password" class="form-control" id="pwc" placeholder="비밀번호를 확인하세요" name="pwc"  style="width:90%" maxlength="12">
 							</div>
 						</div>
 						</fieldset>

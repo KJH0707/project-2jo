@@ -110,7 +110,7 @@ public class BoardDAO {
 					// 1.2. DB connect
 					con = getConnection();
 					// 3 . sql
-					sql = "select count(*) from reviewcs";
+					sql = "select count(*) from reviewcs where rev_category=0";
 					pstmt = con.prepareStatement(sql);
 					// 4. execute
 					rs = pstmt.executeQuery();
@@ -148,7 +148,7 @@ public class BoardDAO {
 				
 				// 3. sql 작성(select) & pstmt 객체
 //								sql = "select * from itwill_board";
-				sql = "select * from reviewcs r join member m on r.m_no=m.m_no where s_no=? order by rev_no desc, rev_ref desc, rev_seq asc limit ?,?";
+				sql = "select * from reviewcs r join member m on r.m_no=m.m_no where rev_category=0 and s_no=? order by rev_no desc, rev_ref desc, rev_seq asc limit ?,?";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1, s_no);
 				pstmt.setInt(2, startRow-1);
@@ -246,30 +246,48 @@ public class BoardDAO {
 		// 글 삭제하기 - deleteQnaBoard()
 	
 		// 글 확인 - getQnaBoard()
-		public BoardDTO getQnaBoard(int rev_no) {
-			BoardDTO dto = null;
+		public HashMap<String,Object> getQnaBoard(int rev_no) {
+			System.out.println(" DAO : getQnaBoardList() 호출 ");
+			// 글정보 모두 저장하는 배열
+			HashMap<String,Object> hm = new HashMap<String,Object>();
+			
+//			ArrayList boardList = new ArrayList();
+//			ArrayList list = new ArrayList();
+//			ArrayList totalList = new ArrayList();
 			try {
+				// 1.2. 디비연결
 				con = getConnection();
-				sql = "select * from reviewcs where rev_no=?";
+				
+				// 3. sql 작성(select) & pstmt 객체
+//								sql = "select * from itwill_board";
+				sql = "select * from reviewcs r join member m on r.m_no=m.m_no where r.rev_category=0 and r.rev_no=?";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1, rev_no);
+				// 4. sql 실행
 				rs = pstmt.executeQuery();
 				
-				if(rs.next()) {
-					dto = new BoardDTO();
+				// 5. 데이터 처리(select가 가져오는 데이터 : DB의 데이터 -> DTO에 저장 -> List에 저장)
+				while(rs.next()) {
+					// DB 데이터를 꺼내어 DTO에 저장 (현재는 rs에 저장되어있기에 get, dto에 데이터 넣는거니까 set)
 					
-					dto.setM_no(rs.getInt("m_no"));
-					dto.setQna_sort(rs.getString("qna_sort"));
-					dto.setRev_category(rs.getInt("rev_category"));
-					dto.setRev_content(rs.getString("rev_content"));
-					dto.setRev_file(rs.getString("rev_file"));
-					dto.setRev_no(rs.getInt("rev_no"));
-					dto.setRev_subject(rs.getString("rev_subject"));
-					dto.setS_no(rs.getInt("s_no"));
-					dto.setRev_ref(rs.getInt("rev_ref"));
-					dto.setRev_seq(rs.getInt("rev_seq"));
 					
-				}
+					hm.put("rev_no", rs.getInt("rev_no"));
+					hm.put("s_no", rs.getInt("s_no"));
+					hm.put("rev_subject", rs.getString("rev_subject"));
+					hm.put("rev_category", rs.getInt("rev_category"));
+					hm.put("m_no", rs.getInt("m_no"));
+					hm.put("qna_sort", rs.getString("qna_sort"));
+					hm.put("rev_content", rs.getString("rev_content"));
+					hm.put("rev_file", rs.getString("rev_file"));
+					hm.put("rev_date", rs.getDate("rev_date"));
+					hm.put("rev_ref", rs.getInt("rev_ref"));
+					hm.put("rev_seq", rs.getInt("rev_seq"));
+					hm.put("m_nickName", rs.getString("m_nickName"));
+					
+					// DTO에 넣은 정보 -> List 배열에 저장
+					
+				}//while
+				System.out.println(" DAO : 게시판 목록 저장 완료 ");
 				
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -277,8 +295,9 @@ public class BoardDAO {
 				closeDB();
 			}
 			
-			return dto;
+			return hm;
 		}
+		// 글 정보 가져오기 -getBoardList(int startRow, int pageSize)
 		// 글 확인 - getQnaBoard()
 	
 		// 답글 쓰기 - reInsertBoard(dto)
@@ -392,10 +411,136 @@ public class BoardDAO {
 		}
 //		// main 에서 review 별점순 추천
 	
+		public List<Map> getQnaBoardList(int startRow, int pageSize,String s_no, int rev_category) {
+			System.out.println(" DAO : getQnaBoardList() 호출 ");
+			// 글정보 모두 저장하는 배열
+			List<Map> qnaList = new ArrayList<Map>();
+			HashMap<String,Object> hm = null;
+			
+	//						ArrayList boardList = new ArrayList();
+	//						ArrayList list = new ArrayList();
+	//						ArrayList totalList = new ArrayList();
+			try {
+				// 1.2. 디비연결
+				con = getConnection();
+				
+				// 3. sql 작성(select) & pstmt 객체
+	//											sql = "select * from itwill_board";
+				sql = "select s.*,r.*, "
+						  + "(select m_nickname from member m where m.m_no = r.m_no) m_nickname "
+						  + "from store s " 
+						  + "join reviewcs r on s.s_no = r.s_no "
+						  + "where s.s_no=? and rev_category=0 "             
+						 + "order by rev_ref desc, rev_seq asc limit ?,?";
+						pstmt = con.prepareStatement(sql);
+						// ?????
+						pstmt.setString(1, s_no);
+						pstmt.setInt(2, startRow-1); // 시작행 - 1
+						pstmt.setInt(3, pageSize); // 개수
+				// 4. sql 실행
+				rs = pstmt.executeQuery();
+				
+				// 5. 데이터 처리(select가 가져오는 데이터 : DB의 데이터 -> DTO에 저장 -> List에 저장)
+				while(rs.next()) {
+					// DB 데이터를 꺼내어 DTO에 저장 (현재는 rs에 저장되어있기에 get, dto에 데이터 넣는거니까 set)
+					hm = new HashMap<String,Object>();
+					
+					hm.put("s_name", rs.getString("s_name"));
+					hm.put("s_readcount", rs.getInt("s_readcount"));
+					hm.put("s_star", rs.getDouble("s_star"));
+					hm.put("s_no", rs.getInt("s_no"));
+					
+					hm.put("m_nickName", rs.getString("m_nickName"));
+					hm.put("m_no", rs.getInt("m_no"));
+					
+					hm.put("rev_no", rs.getInt("rev_no"));
+					hm.put("rev_date", rs.getTimestamp("rev_date"));
+					hm.put("rev_star", rs.getInt("rev_star"));
+					hm.put("rev_subject", rs.getString("rev_subject"));
+					hm.put("rev_category", rs.getInt("rev_category"));
+	//								dto.setQna_sort(rs.getString("qna_sort"));
+					hm.put("rev_content", rs.getString("rev_content"));
+					hm.put("rev_file", rs.getString("rev_file"));
+					hm.put("rev_ref", rs.getInt("rev_ref"));
+					hm.put("rev_seq", rs.getInt("rev_seq"));
+					
+					
+					// DTO에 넣은 정보 -> List 배열에 저장
+					qnaList.add(hm);
+					
+	//								System.out.println("@@@@@qnaList : @@@ "+qnaList);
+				}//while
+				System.out.println(" DAO : 게시판 목록 저장 완료 ");
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				closeDB();
+			}
+			
+			return qnaList;
+		}		
+		
+		
+	public int insertReserv(BookDTO dto) {
+		
+		int res_no=0;
+		try {
+			con = getConnection();
+			sql = "select max(res_no) from reservation";
+			pstmt = con.prepareStatement(sql);
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()) {
+				res_no=rs.getInt(1)+1;
+			}
+			
+			
+			sql = "insert into reservation values(?,?,?,?,?,?,?,?,?,?)";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, res_no);
+			pstmt.setInt(2, dto.getS_no());
+			pstmt.setInt(3, dto.getM_no());
+			pstmt.setInt(4, dto.getRes_num());
+			pstmt.setString(5, dto.getRes_date());
+			pstmt.setString(6, dto.getRes_name());
+			pstmt.setString(7, dto.getRes_msg());
+			pstmt.setInt(8, 0);
+			pstmt.setInt(9,dto.getRes_time());
+			pstmt.setString(10, dto.getRes_tel());
+			
+			pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return res_no;
+	}
 	
-	
-	
-	
-	
+public void insertPayment(PaymentDTO dto) {
+		
+		try {
+			con = getConnection();
+			
+			sql = "insert into payment values(?,?,?,?,?,?,now(),?)";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, dto.getP_no());
+			pstmt.setInt(2, dto.getM_no());
+			pstmt.setInt(3, dto.getRes_no());
+			pstmt.setInt(4, dto.getP_price());
+			pstmt.setString(5, dto.getP_info());
+			pstmt.setInt(6, 0);
+			pstmt.setInt(7, dto.getS_no());
+			
+			pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 }

@@ -39,7 +39,7 @@ public class AdminDeleteNoticeAction implements Action {
 		
 		
 		forward.setPath("/adminNoticeList.us?pageNum="+pageNum);
-		forward.setRedirect(false);
+		forward.setRedirect(true);
 		return forward;
 	}
 

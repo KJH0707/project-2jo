@@ -4,21 +4,28 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.fork.review.db.ReviewDAO;
+import com.fork.store.db.StoreDAO;
 import com.fork.user.db.UserDAO;
 
 public class ReviewListAction implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-//		HttpSession session = request.getSession();
-//		String id = (String) session.getAttribute("c_id");
-//		ActionForward forward = new ActionForward();
-////		if(!id.contains("ceo") || !id.contains("store")) {
-////			forward.setPath("./loginAction.us");
-////			forward.setRedirect(true);
-////		}
+		HttpSession session = request.getSession();
+		
+		String id=null;
+		int c=0;
+		if(session.getAttribute("m_id")!=null) {
+			id = (String) session.getAttribute("m_id");
+		}
+		
+		if (session.getAttribute("c")!=null) {
+			c = (int) session.getAttribute("c");
+		}
+		//모두가 리뷰 게시판은 볼수잇어야됨
 		
 		
 		int s_no = Integer.parseInt(request.getParameter("s_no"));
@@ -26,11 +33,16 @@ public class ReviewListAction implements Action {
 	
 		ReviewDAO dao = new ReviewDAO();
 		
-		int cnt = dao.getReviewCount();
+		int cnt = dao.getReviewCount(s_no);
 		System.out.println(cnt);		
-		int pageSize = 9;
+		int pageSize =9;
 		
-		
+		if (id!=null & c!=0) {
+			int result = dao.isMine(id, s_no);
+			if (result==1) {
+				session.setAttribute("mine", 1);
+			}
+		}
 //		ReviewDTO dto = new ReviewDTO();
 		
 //		dto.setS_no(Integer.parseInt(request.getParameter("s_no")));
@@ -70,7 +82,7 @@ public class ReviewListAction implements Action {
 				int pageCount = (cnt/pageSize)+(cnt%pageSize==0? 0:1); // 삼항연산자
 				
 				// 한 화면에 보여줄 페이지 수
-				int pageBlock = 2;
+				int pageBlock = 10;
 				
 				// 페이지블럭의 시작번호		1~10 => 1, 11~20 => 11, 21~30 => 21
 				int startPage = ((currentPage-1)/pageBlock)*pageBlock+1;
@@ -85,9 +97,9 @@ public class ReviewListAction implements Action {
 		
 //		System.out.println(" M : "+boardListAll); // 확인하고 주석처리해야 덜느려짐 보드에 모든 글이 다 나타나기 때문
 		
-		// 직접 출력 -> 위임(대신 출력) view .jsp페이지에서 출력
-		UserDAO udao = new UserDAO();
-		int result = udao.memberLogin(pageNum, pageNum);
+//		// 직접 출력 -> 위임(대신 출력) view .jsp페이지에서 출력
+//		UserDAO udao = new UserDAO();
+//		int result = udao.memberLogin(id,id);
 		
 		// Action -> jsp 페이지 정보 전달(request 영역객체 저장)
 				
@@ -100,8 +112,10 @@ public class ReviewListAction implements Action {
 		request.setAttribute("startPage", startPage);
 		request.setAttribute("endPage", endPage);
 		
-		request.setAttribute("s_no", s_no);
-//		request.setAttribute("dto", dao.getReviewList(startRow, pageSize, s_no)); // 디비에 있는 정보를 그대로 출력만 할 경우
+//		request.setAttribute("result", result);
+		StoreDAO sdao = new StoreDAO();
+		request.setAttribute("st",sdao.getStoreDetails(s_no));
+		request.setAttribute("dto", dao.getReviewList(startRow, pageSize, s_no)); // 디비에 있는 정보를 그대로 출력만 할 경우
 		
 		// 페이지 이동준비(티켓 생성)
 		ActionForward forward = new ActionForward();

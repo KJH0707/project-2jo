@@ -1,5 +1,9 @@
 package com.fork.board.action;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -24,7 +28,7 @@ public class QnaContentAction implements Action {
 		int s_no = Integer.parseInt(request.getParameter("s_no"));
 		
 		BoardDAO dao = new BoardDAO();
-		BoardDTO dto = dao.getQnaBoard(rev_no);
+		HashMap<String,Object> dto = dao.getQnaBoard(rev_no);
 		
 		request.setAttribute("dto", dto);
 		request.setAttribute("m_id", id);

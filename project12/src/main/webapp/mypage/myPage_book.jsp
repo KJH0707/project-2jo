@@ -49,7 +49,7 @@
                            <li>
                            	 <a href="./StMyPage.us">
                                <div class="col-md-3 col-sm-3 col-xs-3 blg-thumb p0">
-                                   <img src="garo-estate-master/assets/img/myPage/store.png" width="20" height="20">
+                                    <img src="mypage/weekly-calendar_icon-icons.com_56749.png" width="20" height="20">
                                </div>
                              </a>
                                <div class="col-md-8 col-sm-8 col-xs-8 blg-entry" width="">
@@ -72,7 +72,7 @@
                            <li>
                            	  <a href="./StMyPage_review.us">
                                <div class="col-md-3 col-sm-3 col-xs-3 blg-thumb p0">
-                                   <img src="assets/img/myPage/review.png" width="20" height="20">
+                                   <img src="mypage/heart-icon_34407.png" width="20" height="20">
                                </div>
                               </a>
                                <div class="col-md-8 col-sm-8 col-xs-8 blg-entry">
@@ -97,8 +97,6 @@
               </div>
           </div>
 
-       
-
 <div class="col-md-9  pr0 padding-top-40 properties-page">
   <!-- 여기 밑으로 내용 넣어야 옆 공간에 들어감 -->
   <div class="row tm-content-row tm-mt-big" >
@@ -113,7 +111,7 @@
                      
                         </div>
                         <hr>
-                        <div class="table-responsive">
+                        <div class="table-responsive" style="margin-top:50px;margin-bottom: 50px;">
                             <table class="table table-hover table-striped tm-table-striped-even mt-3" style="table-layout:fixed">
                                 <thead>
                                     <tr class="tm-bg-gray">
@@ -121,91 +119,45 @@
                                         <th scope="col" class="text-center" width="100px">가게이름</th>
                                         <th scope="col" class="text-center" width="50px">인원</th>
                                         <th scope="col" class="text-center" width="100px">날짜 및 시간</th>
-                                        <th scope="col" class="text-center" width="200px">메뉴</th>
+                                        <th scope="col" class="text-center" width="200px">메세지</th>
                                         <th scope="col" class="text-center" width="120px">연락처</th>
-                                        <th scope="col" class="text-center" width="80px">선호 자리</th>
+                                        <th scope="col" class="text-center" width="80px">예약상태</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                               		<c:set var="status" value="이용예정" />
+                                    <c:forEach var="dto" items="${reserveList }">
+										<!-- status 상태 계산하기 -->
+										<c:choose>
+											<c:when test="${dto.res_status == 0 }">
+											 	<c:set var="status" value="이용예정" />
+											</c:when>
+											<c:when test="${dto.res_status == 1 }">
+											 	<c:set var="status" value="이용완료" />
+											</c:when>
+											<c:when test="${dto.res_status == 2 }">
+											 	<c:set var="status" value="노쇼" />
+											</c:when>
+											<c:when test="${dto.res_status == 3 }">
+											 	<c:set var="status" value="사업주거절" />
+											</c:when>
+										</c:choose>
                                     <tr>
-                                        <td class="text-center">123</td>
+                                      <td class="text-center">${dto.res_no }</td>
                                         <td class="text-center">
-                                        맥도날드</td>
-                                        <td class="text-center">2명</td>
-                                        <td class="text-center">2022-11-12<br>19:00</td>
+                                        ${dto.res_name }</td>
+                                        <td class="text-center">${dto.res_num }</td>
+                                        <td class="text-center">${dto.res_date }<br>${dto.res_time }</td>
                                         <!-- style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;" -->
                                         <td class="text-center">
-                                        황금올리브치킨,자메이카 소떡만나치킨, 크런치 버터치킨,페퍼로니 시카고피자L </td>
-                                        <td class="text-center">010-1234-1234</td>
-                                        <td class="text-center">창가</td>
+                                        ${dto.res_msg }</td>
+                                        <td class="text-center">${dto.res_tel }</td>
+                                        <td class="text-center">${status }</td>
                                     </tr>
-                                    <tr>
-                                        <td class="text-center">123</td>
-                                        <td class="text-center">비비큐</td>
-                                        <td class="text-center">4명</td>
-                                        <td class="text-center">2022-1-12<br>13:00</td>
-                                        <td class="text-center">햄버거, 포테이토</td>
-                                        <td class="text-center">010-1111-1111</td>
-                                        <td class="text-center">야외</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center">123</td>
-                                        <td class="text-center">김밥천국</td>
-                                        <td class="text-center">4명</td>
-                                        <td class="text-center">2022-1-12<br>13:00</td>
-                                        <td class="text-center">햄버거, 포테이토</td>
-                                        <td class="text-center">010-1111-1111</td>
-                                        <td class="text-center">야외</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center">123</td>
-                                        <td class="text-center">마녀김밥</td>
-                                        <td class="text-center">4명</td>
-                                        <td class="text-center">2022-1-12<br>13:00</td>
-                                        <td class="text-center">햄버거, 포테이토</td>
-                                        <td class="text-center">010-1111-1111</td>
-                                        <td class="text-center">야외</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center">123</td>
-                                        <td class="text-center">가게이름</td>
-                                        <td class="text-center">4명</td>
-                                        <td class="text-center">2022-1-12<br>13:00</td>
-                                        <td class="text-center">햄버거, 포테이토</td>
-                                        <td class="text-center">010-1111-1111</td>
-                                        <td class="text-center">야외</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center">123</td>
-                                        <td class="text-center">ㅇㅇㅇ</td>
-                                        <td class="text-center">4명</td>
-                                        <td class="text-center">2022-1-12<br>13:00</td>
-                                        <td class="text-center">햄버거, 포테이토</td>
-                                        <td class="text-center">010-1111-1111</td>
-                                        <td class="text-center">야외</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center">123</td>
-                                        <td class="text-center">ㅇㅇㅇ</td>
-                                        <td class="text-center">4명</td>
-                                        <td class="text-center">2022-1-12<br>13:00</td>
-                                        <td class="text-center">햄버거, 포테이토</td>
-                                        <td class="text-center">010-1111-1111</td>
-                                        <td class="text-center">야외</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center">123</td>
-                                        <td class="text-center">ㅇㅇㅇ</td>
-                                        <td class="text-center">4명</td>
-                                        <td class="text-center">2022-1-12<br>13:00</td>
-                                        <td class="text-center">햄버거, 포테이토</td>
-                                        <td class="text-center">010-1111-1111</td>
-                                        <td class="text-center">야외</td>
-                                    </tr>
+                                </c:forEach>
                                 </tbody>
                             </table>
                         </div>
-                        <div align="center"> <h3>< 1 2 3 ></h3></div>
                         
 				  </div>
 				  </div>

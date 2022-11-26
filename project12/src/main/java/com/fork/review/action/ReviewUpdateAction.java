@@ -12,11 +12,14 @@ public class ReviewUpdateAction implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		HttpSession session = request.getSession();
-		String m_id = (String)session.getAttribute("m_id");
-		if(m_id == null || !m_id.equals("m_id")) {
-			response.sendRedirect("./메인으로가라");
-			return null;
+		String id = (String)session.getAttribute("id");
+		ActionForward forward = new ActionForward();
+		if(id == null) {
+			forward.setPath("./Login.us");
+			forward.setRedirect(true);
+			return forward;			
 		}
+		
 		
 		System.out.println(" M : reviewupdateAction_execute() 호출  ");
 		// BoardUpdate.bo?bno=91&pageNum=1
@@ -48,11 +51,11 @@ public class ReviewUpdateAction implements Action {
 		
 		// view 출력 (./board/updateForm.jsp)
 		// 페이지 이동(티켓)
-		ActionForward forward = new ActionForward();
-		forward.setPath("./board/reviewUpdate.jsp");
-		forward.setRedirect(false);
+		ActionForward forward2 = new ActionForward();
+		forward2.setPath("./board/reviewUpdate.jsp");
+		forward2.setRedirect(false);
 		
-		return forward;
+		return forward2;
 	}
 
 }

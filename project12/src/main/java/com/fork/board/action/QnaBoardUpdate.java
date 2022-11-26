@@ -1,5 +1,7 @@
 package com.fork.board.action;
 
+import java.util.HashMap;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -29,7 +31,7 @@ public class QnaBoardUpdate implements Action {
 		String qna_sort = request.getParameter("qna_sort");
 		
 		BoardDAO dao = new BoardDAO();
-		BoardDTO dto = dao.getQnaBoard(rev_no);
+		HashMap<String, Object> dto = dao.getQnaBoard(rev_no);
 		
 		request.setAttribute("dto", dto);
 		request.setAttribute("pageNum", pageNum);

@@ -27,11 +27,12 @@ public class UserReservAction implements Action {
 			return forward;
 		}
 		
-		BoardDAO dao = new BoardDAO();
+		UserDAO dao = new UserDAO();
+	
 		
 		
 		
-//		request.setAttribute("udto", dao.getUserInfo(id));
+		request.setAttribute("udto", dao.getMember(id));
 		
 		
 		forward.setPath("./board/reservation.jsp");

@@ -30,7 +30,7 @@ public class QnaDeleteAction implements Action {
 		request.setAttribute("pageNum", pageNum);
 		request.setAttribute("s_no",s_no);
 		
-	    forward.setPath("./QnaList.br");
+	    forward.setPath("./QnaList.br?pageNum="+pageNum+"&s_no="+s_no+"&rev_category=0");
 	    forward.setRedirect(true);
 	      
 	    return forward;

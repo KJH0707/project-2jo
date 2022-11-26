@@ -9,7 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import com.fork.user.db.UserDAO;
 
-public class AdminPaymentList implements Action {
+public class AdminPaymentListAction implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -71,11 +71,11 @@ public class AdminPaymentList implements Action {
 			sb.append(keyword);
 			sb.insert(0, "%");
 			sb.insert(keyword.length()+1, "%");
-			paymentList = dao.adminGetReservList(startRow, pageSize, sb.toString());
-			cnt = dao.adminCntGetReservList(startRow, pageSize, sb.toString());
+			paymentList = dao.adminGetPaymentList(startRow, pageSize, sb.toString());
+			cnt = dao.adminCntGetPaymentList(startRow, pageSize, sb.toString());
 		}
 		else {
-			paymentList = dao.adminGetReservList(startRow,pageSize);
+			paymentList = dao.adminGetPaymentList(startRow,pageSize);
 		}
 		
 		
@@ -110,7 +110,7 @@ public class AdminPaymentList implements Action {
 		// 직접출력 -> 위임(대신출력) view.jsp페이지에서 출력
 		// Action -> jsp 페이지 정보 전달(request 영역객체 저장)
 		
-//		request.setAttribute("reservList", reservList);
+		request.setAttribute("paymentList", paymentList);
 		//request.setAttribute("boardListAll", dao.getBoardList());
 		
 		// 페이징처리 정보 저장
@@ -121,7 +121,7 @@ public class AdminPaymentList implements Action {
 		request.setAttribute("startPage", startPage);
 		request.setAttribute("endPage", endPage);
 		
-		forward.setPath("./admin/adminReservList.jsp");
+		forward.setPath("./admin/adminPaymentList.jsp");
 		forward.setRedirect(false);
 		return forward;
 	}

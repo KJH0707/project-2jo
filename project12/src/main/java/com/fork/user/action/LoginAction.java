@@ -44,12 +44,15 @@ public class LoginAction implements Action {
 			out.close();
 			return null;
 		}
-		
+		HttpSession session = request.getSession();
+		if (result ==2) {
+			session.setAttribute("c", 1);
+		}
 //		if(result == 1) {
 		// 로그인 성공 -> 아이디 세션영역에 저장
 //		}
 			
-		HttpSession session = request.getSession();
+		
 		session.setAttribute("id", id);
 		session.setAttribute("result", result);
 		

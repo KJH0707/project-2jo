@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.fork.bookmark.db.BookMarkDAO;
+import com.fork.bookmark.db.BookMarkDTO;
 import com.fork.store.db.StoreDAO;
 
 public class StoreDetailsAction implements Action {
@@ -24,8 +25,15 @@ public class StoreDetailsAction implements Action {
 		BookMarkDAO bdao = new BookMarkDAO();
 		int result = bdao.checkBookMark(id, s_no);
 		
+		int count = bdao.countBookMark();
+		
+		
+		
+		
+		
 		StoreDAO dao = new StoreDAO();
 		dao.updateReadcount(s_no);
+		
 		System.out.println(" M : 조회수 1증가 완료! ");
 		
 		int cnt = dao.getBoardCount();
@@ -37,7 +45,7 @@ public class StoreDetailsAction implements Action {
 		
 		
 		request.setAttribute("s_name", s_name);
-		
+		request.setAttribute("BookCnt", count);
 		request.setAttribute("result",result);
 		
 		//이동하라

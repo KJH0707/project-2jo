@@ -1,3 +1,5 @@
+<%@page import="org.apache.commons.collections4.bag.SynchronizedSortedBag"%>
+<%@page import="com.fork.board.action.ActionForward"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <!DOCTYPE html>
@@ -48,7 +50,18 @@
         <!--End top header -->
 
         <!-- End of nav bar -->
-
+	
+		<%
+		HttpSession session1 = request.getSession();
+		String id = (String) session1.getAttribute("id");
+		System.out.println("id : "+id);
+		
+		if(id==null) {
+			System.out.println("Let's go!!!!!!");
+			response.sendRedirect("Login.us");
+		}
+		%>
+		
         <div class="page-head"> 
             <div class="container">
                 <div class="row">
@@ -73,13 +86,13 @@
                         <br>
                         <br>
                        
-                        <form action="./QnaBoardWriteAction.br" method="post" enctype="multipart/form-data">
+                        <form action="./QnaBoardWriteAction.br?s_no=${param.s_no}&rev_category=0" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="s_no" value="${param.s_no}">
                         
                             <div class="row">
                                 <div class="col-sm-12">
 <!--                                     <div class="form-group"> -->
-${param.s_no}
+<%-- ${param.s_no} --%>
                                         <label for="firstname">문의분류</label>
                                         <input type="radio" name="qna_sort" value="reser" checked style="width: 10px">예약 문의
                                         <input type="radio" name="qna_sort" value="store" style="width: 10px">식당 문의

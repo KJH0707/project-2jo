@@ -49,6 +49,16 @@
         <!--End top header -->
 
         <!-- End of nav bar -->
+        <%
+		HttpSession session1 = request.getSession();
+		String id = (String) session1.getAttribute("id");
+		System.out.println("id : "+id);
+		
+		if(id==null) {
+			System.out.println("Let's go!!!!!!");
+			response.sendRedirect("Login.us");
+		}
+		%>
 
         <div class="page-head"> 
             <div class="container">

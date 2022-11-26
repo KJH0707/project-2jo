@@ -139,7 +139,7 @@
                                                         <td>${cml.c_regdate }</td>
                                                         
                                                         <td>
-                                                        	<a href="#">수정</a> 
+<!--                                                         	<a href="#">수정</a>  -->
                                                         	
                                                         	<a href="javascript: isDelete(${cml.c_no },${pageNum })">삭제</a>
                                                          </td>

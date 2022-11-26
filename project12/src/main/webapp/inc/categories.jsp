@@ -18,16 +18,12 @@
 		                </ul>
 		            </div>
 		            <div class="col-sm-3">
-		                <h5>notice</h5>
+		                <h5><a href="./notice.br">notice</a></h5>
 		                <ul>
-		                    <li><a href="property-1.html">공지사항</a> </li>
+		                    <li><a href="./notice.br">공지사항</a> </li>
 		                    <li><a href="property-2.html">회사소개</a> </li>
 		                    <li><a href="property-3.html">직원소개</a> </li>
-		                </ul>
-		
-		                <h5>event</h5>
-		                <ul>
-		                    <li><a href="properties.html">현재 진행중인 이벤트</a> </li> 
+		                    <li><a href="properties.html">자주 묻는 질문/FAQ</a> </li> 
 		                    <li><a href="properties-2.html">종료된 이벤트</a> </li> 
 		                    <li><a href="properties-3.html">이벤트3</a> </li> 
 		                </ul>                                               
