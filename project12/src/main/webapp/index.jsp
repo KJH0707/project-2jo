@@ -3,4 +3,5 @@
 <%
 	// 	response.sendRedirect("./board.re"); 	
 	response.sendRedirect("main.st");
+	
 %>
