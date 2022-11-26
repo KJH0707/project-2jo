@@ -12,7 +12,7 @@
                                 <h4>About us </h4>
                                 <div class="footer-title-line"></div>
 
-                                <img src="assets/img/footer-logo.png" alt="" class="wow pulse" data-wow-delay="1s">
+                                <img src="assets/img/forks.jpg" alt="" class="wow pulse" data-wow-delay="1s">
                                 <p>Lorem ipsum dolor cum necessitatibus su quisquam molestias. Vel unde, blanditiis.</p>
                                 <ul class="footer-adress">
                                     <li><i class="pe-7s-map-marker strong"> </i> 9089 your adress her</li>
@@ -147,7 +147,6 @@
 
         <script src="assets/js/easypiechart.min.js"></script>
         <script src="assets/js/jquery.easypiechart.min.js"></script>
-
         <script src="assets/js/owl.carousel.min.js"></script>        
 
         <script src="assets/js/wow.js"></script>

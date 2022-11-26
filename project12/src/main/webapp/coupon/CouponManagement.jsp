@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -9,7 +10,7 @@
     <head>
          <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>GARO ESTATE | Home page</title>
+        <title>FORK & KNIFE</title>
         <meta name="description" content="company is a real-estate template">
         <meta name="author" content="Kimarotec">
         <meta name="keyword" content="html5, css, bootstrap, property, real-estate theme , bootstrap template">
@@ -42,8 +43,18 @@
         <link rel="stylesheet" href="assets/css/responsive.css">
 
 <script language="javascript">
-  function showPopup() { window.open("./CouponIssue.co", "asdfffffff", "width=620, height=550 resizable=no"); }
-  </script>
+	function showPopup() { window.open("./CouponIssue.co", "", "width=510, height=410, resizable=no, left=100, top=100"); }
+// 	function showModifyPopup() { window.open("./CouponModify.co", "", "width=510, height=410, resizable=no, left=100, top=100"); }
+// 	function showModifyPopup() { 
+// 		var c_code = document.getElementById('c_code').innerText;
+// 		window.open("./CouponModify.co?c_code="+c_code, "", "width=510, height=410, resizable=no, left=100, top=100"); }
+	
+// 	function Del(){
+// 		if(confirm("삭제하면 복구할 수 없습니다. 정말 삭제하시겠습니까?")){
+// 			return false;
+// 		}
+// 	}
+</script>
 
 
     </head>
@@ -56,14 +67,14 @@
             <div class="container">
                 <div class="row">
                     <div class="page-head-content">
-                        <h1 class="page-title">Contact page 3</h1>               
+                        <h1 class="page-title">CEO MYPAGE</h1>               
                     </div>
                 </div>
             </div>
         </div>
         <!-- End page header -->
 
-		    <div class="properties-area recent-property" style="background-color: #FFF;">
+	<div class="properties-area recent-property" style="background-color: #FFF;">
       <div class="container">  
           <div class="row">
                
@@ -108,13 +119,13 @@
                                </div>
                            </li>
                            <li>
-                           	  <a href="./CouponIssue.co">
+                           	  <a href="./CouponManage.co">
                                <div class="col-md-3 col-sm-3 col-xs-3 blg-thumb p0">
                                    <img src="assets/img/myPage/coupon.png" width="20" height="20">
                                </div>
                               </a>
                                <div class="col-md-8 col-sm-8 col-xs-8 blg-entry">
-                                   <h6> <a href="./CouponIssue.co">쿠폰 생성 관리</a></h6>
+                                   <h6> <a href="./CouponManage.co">쿠폰 관리</a></h6>
                                </div>
                            </li>
                            <li>
@@ -132,74 +143,105 @@
                   </div>
               </div>
           </div>
-
-
-
-
-        <!-- property area -->
+<div class="col-md-9 p0 padding-top-40 properties-page">
+        <!-- main area -->
         <div class="content-area recent-property padding-top-40" style="background-color: #FFF;">
             <div class="container">  
+		<%-- ${couponList } --%>
+					<div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+                        <div class="card">
+                            <h3 class="card-header">쿠폰현황
+                            <button type="button" onclick="showPopup()" style="background:black; color:white; font-size:13px;">신규 쿠폰 발행</button>
+                            </h3>
+                            <div class="card-body">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" >번호</th>
+                                            <th scope="col">쿠폰이름</th>
+                                            <th scope="col">사용처</th>
+                                            <th scope="col">잔여량</th>
+                                            <th scope="col">사용기간</th>
+                                            <th scope="col">관리</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <c:forEach var="dto" items="${couponListAll }">                                        
+                                        <tr>
+                                            <th scope="row" id="c_code">${dto.c_code }</th>
+                                            <td>${dto.c_name }</td>
+                                            <td>${dto.c_place }</td>
+                                            <td>${dto.c_quantity }</td>
+                                            <td>${dto.c_sdate} ~ ${dto.c_edate}</td>
+                                            <td>
+								 	<a href="./CouponModify.co?c_code=${dto.c_code }" onclick="window.open(this.href, '_blank', 'width=510, height=410, resizable=no, left=100, top=100'); return false;">수정 </a>   
+								 	&nbsp;&nbsp;/
+								 	<a href="./CouponDeleteAction.co?c_code=${dto.c_code }" onclick="return confirm('삭제하면 복구할 수 없습니다. 정말 삭제하시겠습니까?')">삭제</a>
+								</td>
+                                        </tr>
+                                    </c:forEach>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <c:if test="${totalCnt != 0}" >  <!-- ${requestScope.totalCnt} -->
 
-                <div class="col-md-9">
-                <h2>쿠폰 관리</h2>
-					<input type="button" value="신규 쿠폰 발급" onclick="showPopup();"/>
-					
-					<h3>쿠폰현황</h3>
-					<table>
-					<tr>
-						<th>번호</th>
-						<th>쿠폰 이름</th>
-						<th>사용처</th>
-						<th>잔여량</th>
-						<th>배포기간</th>
-						<th>사용기간기간</th>
-						<th>사용기간기간</th>
-					</tr>
-					<tr>
-						<td>번호</td>
-						<td>쿠폰이름</td>
-						<td>사용처</td>
-						<td>잔여량</td>
-						<td>배포기간</td>
-						<td>사용기간기간</td>
-						<td>사용기간기간</td>
-					</tr>
-					
-					
-					
-					</table>
-					<h3>만료된 쿠폰</h3>
-                </div>
-                <!-- /.col-md-9 -->   
-
-          </div>
+						<!-- 이전 -->
+						<c:if test="${startPage > pageBlock}">
+								<a href="./CouponManage.co?pageNum=${startPage-pageBlock }">[이전]</a> 
+							</c:if>
+							<!-- 페이지 번호(1,2,3,4 ...)  -->		
+							<c:forEach var="i" begin="${startPage}" end="${endPage }" step="1">
+								<a href="./CouponManage.co?pageNum=${i }">${i }</a>
+							</c:forEach>
+							<!-- 다음 -->
+							<c:if test="${endPage < pageCount}">
+							<a href="./CouponManage.co?pageNum=${startPage+pageBlock }">[다음]</a>
+							</c:if>
+							
+						</c:if>
+                	</div>
+					<div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+                        <div class="card">
+                            <h3 class="card-header">만료된 쿠폰 <small>(삭제/재고없음/기간만료)</small></h3>
+                            <div class="card-body">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">번호</th>
+                                            <th scope="col">쿠폰이름</th>
+                                            <th scope="col">사용처</th>
+                                            <th scope="col">잔여량</th>
+                                            <th scope="col">배포기간</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <c:forEach var="Invaild" items="${InvaildCoupon }">                
+                                        <tr>
+                                            <th scope="row">${Invaild.c_code }</th>
+                                            <td>${Invaild.c_name }</td>
+                                            <td>${Invaild.c_place }</td>
+                                            <td>${Invaild.c_quantity }</td>
+                                            <td>${Invaild.c_sdate} ~ ${Invaild.c_edate}</td>
+                                        </tr>
+                                    </c:forEach>                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+             </div>
        </div>
     </div>
-         <div id="map" style="height: 400px;"></div>
-         <!-- Footer area-->
+  </div>
+  </div>
+  </div>
 
-		<jsp:include page="../inc/bottom.jsp"/>
+ <!-- 푸터 -->
+	<div>
+	<jsp:include page="../inc/bottom.jsp" />
+	</div>
+<!-- 푸터 끝 -->
 
-        <script src="assets/js/modernizr-2.6.2.min.js"></script>
-        <script src="assets/js/jquery-1.10.2.min.js"></script> 
-        <script src="bootstrap/js/bootstrap.min.js"></script>
-        <script src="assets/js/bootstrap-select.min.js"></script>
-        <script src="assets/js/bootstrap-hover-dropdown.js"></script>
-
-        <script src="assets/js/easypiechart.min.js"></script>
-        <script src="assets/js/jquery.easypiechart.min.js"></script>
-
-        <script src="assets/js/owl.carousel.min.js"></script>
-        <script src="assets/js/wow.js"></script>
-
-        <script src="assets/js/icheck.min.js"></script>
-        <script src="assets/js/price-range.js"></script>
-        
-        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=false"></script>
-        <script src="assets/js/gmaps.js"></script>        
-        <script src="assets/js/gmaps.init.js"></script>
-
-        <script src="assets/js/main.js"></script>
-
-    </body>
+</body>
 </html>
