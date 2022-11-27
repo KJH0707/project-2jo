@@ -183,6 +183,7 @@ font-size:15px;
   </c:choose>
   </div>
   <div class="poltext">
+  <p>${rdto.rev_subject }</p>
   <p>
   <small>${rdto.rev_content }</small>
   </p>
