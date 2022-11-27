@@ -10,7 +10,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>GARO ESTATE | User properties Page</title>
+        <title>FORK&KNIFE</title>
         <meta name="description" content="GARO is a real-estate template">
         <meta name="author" content="Kimarotec">
         <meta name="keyword" content="html5, css, bootstrap, property, real-estate theme , bootstrap template">
@@ -31,7 +31,6 @@
 
                     <div class="col-md-12 pr-30 padding-top-40 properties-page user-properties">
 
-                        
                             <div class="page-subheader sorting pl0 pr-10">
 								<div class="wizard-container">
          						 <div class="wizard-card ct-wizard-orange" id="wizardProperty">
@@ -45,9 +44,10 @@
                         
 						<div class="tab-content">
 
-            				 <div class="tab-pane active" id="step1">
+            				 <div class="tab-pane  active" id="step1">
             				 <div class="section"> 
                             <div id="list-type" class="proerty-th-list">
+      
                                	<c:forEach var="n" items="${noticeList }">
                                 <div class="col-md-4 p0">
                                     <div class="box-two proerty-item">
@@ -98,75 +98,68 @@
             				 
             			</div>
             			
+						<!--  이벤트  -->
+						<!--  이벤트 콘텐츠  -->
             			<div class="tab-pane" id="step2">
             				 <div class="section"> 
-                            <div id="list-type" class="proerty-th-list">
-                               	<c:forEach var="n" items="${noticeList2 }">
-                                <div class="col-md-4 p0">
-                                    <div class="box-two proerty-item">
-                                        <div class="item-thumb">
-                                            <a href="property-1.html" ><img src="assets/img/demo/property-3.jpg"></a>
-                                        </div>
-                                        <div class="item-entry overflow">
-                                            <h5><a href="property-1.html">${n.n_title }</a></h5>
-                                            <div class="dot-hr"></div>
-                                            <span class="pull-left"><b> 작성일 :</b> ${n.n_date.toString().substring(0,10) } </span>
-                                            <p style="display: none;">이벤트 입니다
-                                            <c:if test="${id.equals('admin')}">
-                                            <br><a href="#">수정하기</a>
-                                            </c:if>
-                                            </p>
-											
-
-
-                                        </div>
-                                    </div>
-                                </div>                             
-								<!--  공지사항 1개 끝  -->
-								</c:forEach>
-								<div class="section"> 
-                            <div class="pull-right">
+            				  <div class="properties-area recent-property clear" style="background-color: #FFF;">
+            				  <div class="clear"></div>
+               					<div class="row  pr0 padding-top-40 properties-page">
+			                        <div id="list-type" class="proerty-th">
+			                        <c:forEach var="n" items="${noticeList2 }">
+			                        <c:set var="img" value="${n.n_img.split(',')[0] }"/>
+			                            <div class="col-sm-6" style="overflow: hidden;">
+			                                <div class="box-two proerty-item" style="height:500px; width: 500px; margin: auto 5px auto 10px;">
+		                                        <a href="./eventDetail.co?n_no=${n.n_no }" ><img src="assets/img/event/${img}" style=""></a>
+		                                     </div>
+		                                     <div style="text-align: center; font-size: 18px;">
+	                                            <c:if test="${id.equals('admin')}">
+	                                            <br><button onclick="location.href='#';" >수정하기</button>
+	                                            </c:if>
+		                                    </div>
+	                                    </div>
+		                            </c:forEach>
+			                        </div>
+			                    </div>
+			                  </div>
+						<!--  이벤트 콘텐츠  -->
+						<!--  이벤트 페이지 nav  -->
+							<div class="section"> 
+                            	<div class="pull-right">
                                 
                                     <ul class="pagination">
                                        	<c:if test="${reqeustScope.totalCnt != 0 }">
                                    		
                                    		
                                    		<c:if test="${startPage > pageBlock }">
-                                           <li class="page-item"><a class="page-link" href="./noticeList.us?pageNum=${startPage-pageBlock }">Previous</a></li>
+                                           <li class="page-item"><a class="page-link" href="./notice.br?pageNum=${startPage-pageBlock }#step2">Previous</a></li>
                                           </c:if>
                                           <c:forEach var="i" begin="${startPage }" end="${endPage }" step="1">
-                                              <li class="page-item"><a class="page-link"  href="./noticeList.us?pageNum=${i }">${i }</a></li>
+                                              <li class="page-item"><a class="page-link"  href="./notice.br?pageNum=${i }#step2">${i }</a></li>
                                           </c:forEach>   
                                           <c:if test="${endPage < pageCount }">
-                                              <li class="page-item"><a class="page-link"  href="./noticeList.us?pageNum=${startPage+pageBlock }">[Next]]</a></li>
+                                              <li class="page-item"><a class="page-link"  href="./notice.br?pageNum=${startPage+pageBlock }#step2">[Next]]</a></li>
                                           </c:if>
                                           
                                       </c:if>
                                         </ul>
+						<!--  이벤트 페이지 nav  -->
                                 
-                            </div>                
-                        </div>
+                           		</div>                
+                        	</div>
 							</div>
 						</div>
+						<!--  이벤트  -->
+					</div>
+					<!-- 탭 영역  -->
             				 
             				 
-            				 
-            				 
-            			</div>
-            				 
-            				</div>
-            			
-            				</div>
-                            </div>
-
-                        </div>
-						
-
-                        
-
                     </div>       
 
                   
+                </div>
+            </div>
+        </div>
                 </div>
             </div>
         </div>
