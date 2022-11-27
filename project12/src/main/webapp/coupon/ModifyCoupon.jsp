@@ -51,14 +51,14 @@
                         <hr>
                         <form>
                         <input type="hidden" value="${c_code }" id="code"> 
-                        ${c_code }
+                       <%--  ${c_code } --%>
                         <c:set var="cdto" value="${coupondetail }"/>
                         <%-- ${cdto } --%>
                             <div class="row" style="background-color: #f7f7f7;">
                                 <div class="col-sm-10 " style="padding-left: 30px;">
                                     <div class="form-group">
                                         <label for="coupon_name">쿠폰명</label>
-                                        <input type="text" class="form-control" id="coupon_name" placeholder="20자이내로 입력하세요" value="${cdto.c_name }" readonly="readonly">
+                                        <input type="text" class="form-control" id="coupon_name" placeholder="20자이내로 입력하세요" value="${cdto.c_name }" >
                                     </div>
                                 </div>
                                 <div class="col-sm-11 ">
@@ -104,8 +104,8 @@
                                 <c:set var="dto" value="${storeList }"/>
                                 <c:set var="sto_name" value="${cdto.c_place}"/>
                                     <div class="form-group">
-                                        <label for="sto_name">사용처</label>
-                                        <select name="sto_name" class="form-control" id="sto_name"  disabled="disabled" required>
+                                        <label for="sto_name">사용처</label> <!-- disabled="disabled" --> 
+                                        <select name="sto_name" class="form-control" id="sto_name"  required>
 	                                		<c:forEach var="i" begin="0" end="${storeList.size()-1 }" step="1">
 	                                		<c:set var="dto" value="${storeList[i] }"/>
                                     <%-- ${fn:trim(sto_name) == dto.s_name} --%>
@@ -120,18 +120,6 @@
                                     </div>
                                 </div>
                                </div>
-                               <!--  <div class="col-sm-5" style="padding-left: 30px;">
-                                    <div class="form-group">
-                                        <label for="issue_start_date">배포시작일</label>
-                                        <input type="date" class="form-control" id="issue_start_date" name="issue_start_date">
-                                    </div>
-                                </div>
-                                <div class="col-sm-5" >
-                                    <div class="form-group">
-                                        <label for="issue_end_date">배포종료일</label>
-                                        <input type="date" class="form-control" id="issue_end_date" name="issue_end_date">
-                                    </div>
-                                </div> -->
                                 <c:set var="start" value="${cdto.c_sdate }" />
                                 <c:set var="end" value="${cdto.c_edate }" />
                                <%--  ${fn:split(start,' ')[0] } --%>
@@ -181,6 +169,8 @@
 		 var cou_message = document.getElementById('message').value;
 		 var c_code = document.getElementById('code').value;
 		 //alert(c_code);
+		 alert(coupon_name);
+		 alert(sto_name);
 		 
         const request = new XMLHttpRequest();
 
