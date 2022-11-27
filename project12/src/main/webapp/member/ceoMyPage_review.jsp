@@ -63,30 +63,6 @@ div.poltext {
 
 </script>
 
-<script>
-$(function(){
-	
-// 	$("#ro").click(function(){
-		
-// 		$.ajax({
-// 			url:'${pageContext.request.contextPath}/CeoMyPage_re.us',
-// 			success:function(reList){
-// 				$("#ok").load(window.location.href+ " #ok");
-// 				console.log('성공');
-// 			},
-// 			error : function(){
-// 				alert('실패');
-// 			}
-			
-// 		});
-// 	}); 
-
-	
-});
-
-
-</script>
-
  </head>
  <body>
         
