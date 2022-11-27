@@ -2055,7 +2055,7 @@ public class StoreDAO {
 			
 			try {
 				con = getConnection();
-				sql = "select * from store where api_ID=?";
+				sql = "SELECT * FROM store WHERE api_ID IS NOT NULL";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1, dto.getApi_ID());
 				rs = pstmt.executeQuery();
