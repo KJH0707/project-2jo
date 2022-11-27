@@ -28,7 +28,7 @@ public class CouponFrontController extends HttpServlet {
 			ActionForward forward = null;
 					
 			// 2. 가상주소 매핑
-			if(command.equals("/CouponManage.co")) {
+			if(command.equals("/CouponManage.co")) { // 점주용
 				System.out.println(" C : /CouponManage.co 호출 ");
 				
 				action = new ManagementListAction();
@@ -53,17 +53,6 @@ public class CouponFrontController extends HttpServlet {
 				System.out.println(" C : /issueCouponAction.co 호출 ");
 				
 				action = new IssueCouponAction();
-				
-				try {
-					forward = action.execute(request, response);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-			else if(command.equals("/Coupon.co")) { // 수정하기??? 회원이 쿠폰가져가는 서블릿
-				System.out.println(" C : /Coupon.co 호출 ");
-				
-				action = new GetCouponAction();
 				
 				try {
 					forward = action.execute(request, response);
@@ -98,6 +87,53 @@ public class CouponFrontController extends HttpServlet {
 				
 				// 쿠폰 삭제 - CouponDeleteAction
 				action = new CouponDeleteAction();
+				
+				try {
+					forward = action.execute(request, response);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			else if(command.equals("/MemberCoupon.co")) { // 회원 쿠폰 정보 가져오기
+				System.out.println(" C : /MemberCoupon.co 호출 ");
+				
+				action = new GetCouponAction();
+				
+				try {
+					forward = action.execute(request, response);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			else if(command.equals("/eventDetail.co")) { // 이벤트페이지
+				System.out.println(" C : /eventDetail.co 호출 ");
+				
+				// 이벤트 정보 가져오기 - eventDetailAction
+				action = new eventDetailAction();
+				
+				try {
+					forward = action.execute(request, response);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			else if(command.equals("/getCouponAction.co")) { // 쿠폰발급하기
+				System.out.println(" C : /getCouponAction.co 호출 ");
+				
+				// getCouponProAction
+				action = new GetCouponProAction();
+				
+				try {
+					forward = action.execute(request, response);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			else if(command.equals("/UseCoupon.co")) { // 쿠폰사용하기
+				System.out.println(" C : /UseCoupon.co 호출 ");
+				
+				// UseCouponAction
+				action = new UseCouponAction();
 				
 				try {
 					forward = action.execute(request, response);

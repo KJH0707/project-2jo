@@ -85,7 +85,7 @@ public class CouponDAO {
 		
 		try {
 			con = getConnection();
-			sql = "select * from mem_coupon m, ceo c where c.c_id=? and substr(c.c_code,21)=? ";
+			sql = "select * from mem_coupon m, ceo c where c.c_id=? and substr(c.c_code,15,1)=? ";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, id);
 			pstmt.setInt(2, c_no);
@@ -121,7 +121,7 @@ public class CouponDAO {
 			// 1.2. 디비연결
 			con = getConnection();
 			// 3.  sql
-			sql = "select count(*) from mem_coupon m, ceo c where c.c_id=? and substr(m.c_code,21)=?  ";
+			sql = "select count(*) from mem_coupon m, ceo c where c.c_id=? and substr(c.c_code,15,1)=?  ";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, id);
 			pstmt.setInt(2, c_no);
@@ -154,7 +154,7 @@ public class CouponDAO {
 				+ "	  where c_edate > now() "
 				+ "	  and c_deleted = 'N' "
 				+ "	  )r, mem_coupon c , ceo s "
-				+ "where r.c_code = c.c_code and s.c_id=? and substr(c.c_code,21)=? "
+				+ "where r.c_code = c.c_code and s.c_id=? and substr(c.c_code,15,1)=? "
 				+ "order by c.c_edate";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, id);
@@ -195,12 +195,12 @@ public class CouponDAO {
 			con = getConnection();
 			sql = 
 					"select c.c_code, c.c_quantity, c.c_sdate, c.c_edate, c.c_place, c.c_name, c_deleted, s.c_id "
-							+ "from (select row_number() over(order by c_edate) sort, c_code "
+							+ "from (select row_number() over(order by c_code desc) sort, c_code "
 							+ "	  from mem_coupon "
 							+ "	  where c_edate > now() "
 							+ "	  and c_deleted = 'N' "
 							+ "	  )r, mem_coupon c , ceo s "
-							+ "where r.c_code = c.c_code and s.c_id=? and substr(c.c_code,21)=? "
+							+ "where r.c_code = c.c_code and s.c_id=? and substr(c.c_code,15,1)=? "
 							+ "order by c.c_edate "
 							+ "limit ?, ? ";
 			pstmt = con.prepareStatement(sql);
@@ -250,7 +250,7 @@ public class CouponDAO {
 				+ "		OR c_quantity = 0 "
 				+ "		OR c_deleted = 'Y' "
 				+ "		) r, mem_coupon c, ceo s "
-				+ "WHERE r.c_code = c.c_code and s.c_id=? and substr(c.c_code,21)=? "
+				+ "WHERE r.c_code = c.c_code and s.c_id=? and substr(c.c_code,15,1)=? "
 				+ "ORDER BY c_code desc";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, id);
@@ -304,6 +304,7 @@ public class CouponDAO {
 				coupon.setC_place(rs.getString("c_place"));
 				coupon.setDeleted(rs.getString("c_deleted"));
 				coupon.setMessage(rs.getString("c_message"));
+				coupon.setM_no(rs.getInt("m_no"));
 				
 			}
 			System.out.println(" DAO : 수정 작업 메서드 호출");
@@ -321,14 +322,18 @@ public class CouponDAO {
 		
 		try {
 			con = getConnection();
-			sql = "UPDATE mem_coupon SET c_sdate=?,c_edate=?,c_quantity=?,c_message=? "
+			sql = "UPDATE mem_coupon SET c_sdate=?,c_edate=?,c_quantity=?,c_message=?,c_name=?,c_place=?,m_no=?,isUse=? "
 				+ " WHERE c_code=?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1,dto.getC_sdate());
 			pstmt.setString(2, dto.getC_edate());
 			pstmt.setInt(3, dto.getC_quantity());
 			pstmt.setString(4, dto.getMessage());
-			pstmt.setString(5, c_code);
+			pstmt.setString(5, dto.getC_name());
+			pstmt.setString(6, dto.getC_place());
+			pstmt.setInt(7, dto.getM_no());
+			pstmt.setInt(8, dto.getIsUse());
+			pstmt.setString(9, c_code);
 			
 			int result = pstmt.executeUpdate();
 			
@@ -360,5 +365,170 @@ public class CouponDAO {
 		}
 	}
 	// 쿠폰 삭제하기 - deleteCoupon(c_code)
+	
+	// 받은 쿠폰 조회 - getCouponList()
+	public List getCouponList(int m_no) {
+		List membercoupon = new ArrayList();
+		
+		try {
+			con = getConnection();
+			sql = "SELECT * FROM mem_coupon WHERE m_no=? AND c_edate > now() AND c_deleted = 'N' AND isUse = 1 ";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, m_no);
+			rs =pstmt.executeQuery();
+			while(rs.next()) {
+				CouponDTO dto = new CouponDTO();
+				
+				dto.setC_code(rs.getString("c_code"));
+				dto.setC_edate(rs.getString("c_edate"));
+				dto.setC_name(rs.getString("c_name"));
+				dto.setC_place(rs.getString("c_place"));
+				dto.setC_sdate(rs.getString("c_sdate"));
+				dto.setIsUse(0);
+				dto.setM_no(rs.getInt("m_no"));
+				dto.setMessage(rs.getString("c_message"));
+				
+				membercoupon.add(dto);
+				System.out.println(" DAO : 발급받은 쿠폰 수 :"+membercoupon.size());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeDB();
+		}
+		return membercoupon;
+	}
+	// 받은 쿠폰 조회 - getCouponList()
+	
+	// 만료된 쿠폰 조회 - getMemInvaildCoupon()
+		public List getMemInvaildCoupon(int m_no, String c_no) {
+			List InvaildCoupon = new ArrayList();
+			
+			try {                      // c.c_deleted   " where c.c_edate > now() and c_deleted = 'N' "
+				con = getConnection();
+				sql = 
+					"SELECT c.c_code, c.c_quantity, c.c_sdate, c.c_edate, c.c_deleted, c.c_place, c.c_name, c.m_no, c.isUse "
+					+ "FROM (SELECT row_number() over(order by c_edate desc) sort, c_code "
+					+ "		FROM mem_coupon "
+					+ "		WHERE c_edate < now() "
+					+ "		OR isUse = 1 "
+					+ "		OR c_deleted = 'Y' "
+					+ "		) r, mem_coupon c "
+					+ "WHERE r.c_code = c.c_code and c.m_no=? " //and c.c_code=? 
+					+ "ORDER BY c_code desc";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, m_no);
+				//pstmt.setString(2, c_no);
+				rs = pstmt.executeQuery();
+				
+				while(rs.next()) {
+					CouponDTO dto = new CouponDTO();
+					
+					dto.setC_code(rs.getString("c_code"));
+					dto.setC_name(rs.getString("c_name"));
+					dto.setC_sdate(rs.getString("c_sdate"));
+					dto.setC_edate(rs.getString("c_edate"));
+					dto.setC_quantity(rs.getInt("c_quantity"));
+					dto.setC_place(rs.getString("c_place"));
+					dto.setDeleted(rs.getString("c_deleted"));
+					
+					//dto.setIsUse(rs.getString("c_isUse"));
+					//dto.setM_no(rs.getInt("m_no"));
+					
+					InvaildCoupon.add(dto);
+				}
+				System.out.println(" DAO : 만료된 쿠폰 조회 :"+InvaildCoupon);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				closeDB();
+			}
+			return InvaildCoupon;
+		}
+		// 만료된 쿠폰 조회 - getInvaildCoupon()
+	
+	// 쿠폰 발급하기 - getCoupon(m_no, c_code)
+	public int getCoupon(int m_no, CouponDTO dto, String c_code) {
+		int quantity = 0;
+		int result = -1;
+		String code = "N";
+		try {
+			con = getConnection();
+			sql = "select c_quantity from mem_coupon where c_code=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, c_code);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				quantity = rs.getInt(1)-1; // 발급가능한 쿠폰 갯수 -1
+				code = c_code+quantity;
+				
+			}
+			
+				sql = "insert into mem_coupon(c_code,isUse,m_no,c_name,c_sdate,c_edate,c_quantity,c_place,c_message) values(?,?,?,?,?,?,?,?,?)";
+				pstmt = con.prepareStatement(sql);
+				
+				pstmt.setString(1, code);
+				pstmt.setInt(2, 0);
+				pstmt.setInt(3, m_no);
+				pstmt.setString(4, dto.getC_name());
+				pstmt.setString(5, dto.getC_sdate());
+				pstmt.setString(6, dto.getC_edate());
+				pstmt.setInt(7, 1);
+				pstmt.setString(8, dto.getC_place());
+				pstmt.setString(9, dto.getMessage());
+
+				result = pstmt.executeUpdate();
+				
+				System.out.println(" DAO : 회원 쿠폰발급 완료 : "+result );
+				
+				sql = "UPDATE mem_coupon SET c_quantity=? WHERE c_code=?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, quantity);
+				pstmt.setString(2, dto.getC_code());
+
+				result = pstmt.executeUpdate();
+				
+				System.out.println(" DAO : 쿠폰 갯수 업데이트 완료 : "+result );
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeDB();
+		}
+		
+		return result;
+	}
+	// 쿠폰 발급하기 - getCoupon(m_no, c_code)
+	
+	// 쿠폰 발급 중복 체크 - duplCoupon()
+	public int duplCoupon(int m_no) {
+		int result = 0;
+		try {
+			con = getConnection();
+			sql = "SELECT * FROM mem_coupon WHERE m_no IS NOT Null AND m_no=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, m_no);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				result = 1;
+				System.out.println(" DAO : 이미 발급한 쿠폰 : "+result );
+				
+			}
+			
+			System.out.println(" DAO : 쿠폰 발급여부(중복-1/신규-0) : "+result );
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeDB();
+		}
+		return result;
+	}
+	// 쿠폰 발급 중복 체크 - duplCoupon()
+
+	
 	
 }
