@@ -37,10 +37,10 @@ public class StoreDetailsAction implements Action {
 		System.out.println(" M : 조회수 1증가 완료! ");
 		
 		int cnt = dao.getBoardCount();
-//		ArrayList recStore = dao.getBoardList(cnt);
+		ArrayList recStore = dao.getRecStoreList();
 		//request저장
 		
-//		request.setAttribute("recStore", recStore);
+		request.setAttribute("recStore", recStore);
 		request.setAttribute("dto",dao.getStoreDetails(s_no));
 		
 		

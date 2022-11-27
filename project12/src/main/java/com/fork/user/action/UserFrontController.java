@@ -723,8 +723,26 @@ public class UserFrontController extends HttpServlet {
             
         } 
         //회원 마이 페이지(찜한매장)
-				
-				
+		
+        else if(command.equals("/adminSanction.us")) {
+        	forward = new ActionForward();
+			forward.setPath("./admin/adminSanction.jsp");
+			forward.setRedirect(false);
+            
+            
+        } 
+        
+        else if(command.equals("/adminSanctionPro.us")) {
+        	
+        	action = new AdminSanctionProAction();
+            
+            try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        } 		
 				
 				System.out.println(" C : 2. 가상주소 매핑(패턴 1,2,3) 끝 \n");
 				

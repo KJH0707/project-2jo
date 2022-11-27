@@ -165,13 +165,12 @@
                                             <table class="table">
                                                 <thead class="bg-light">
                                                     <tr class="border-0">
-                                                        <th class="border-0">No.</th>
-                                                        <th class="border-0">가게 이름</th>
-                                                        <th class="border-0">점주 이름</th>
-                                                        <th class="border-0">신고자 ID</th>
-                                                        <th class="border-0">신고자명</th>
-                                                        <th class="border-0">신고 사유</th>
+                                                        <th class="border-0">신고 No.</th>
+                                                        <th class="border-0">가게 No.</th>
+                                                        <th class="border-0">피신고자 No.</th>
+                                                        <th class="border-0">신고 제목</th>
                                                         <th class="border-0">신고 횟수</th>
+                                                        <th class="border-0">신고 내용</th>
                                                         <th class="border-0">신고일자</th>
                                                         <th class="border-0">관리</th>
                                                         
@@ -186,18 +185,17 @@
 <!--                                                         <td> -->
 <!--                                                             <div class="m-r-10"><img src="assets/images/product-pic.jpg" alt="user" class="rounded" width="45"></div> -->
 <!--                                                         </td> -->
-                                                        <td>${rep.s_name }</td>
-                                                        <td>${rep.c_name }</td>
-                                                        <td>${rep.m_id}</td>
+                                                        <td>${rep.s_no }</td>
+                                                        <td>${rep.rep_m_no }</td>
+                                                        <td>${rep.rep_subject}</td>
                                                         
-                                                        <td>${rep.m_name }</td>
-                                                        <td>${rep.rep_reason }</td>
                                                         <td>${rep.rep_howmany }</td>
+                                                        <td><a href="#">상세 보기</a></td>
+                                                        <td>${rep.rep_date }</td>
                                                       
-                                                        <td>${rep.rep_date}</td>
+                                                       
                                                        
                                                         <td>
-                                                        	<a href="#">수정</a> 
                                                         	
                                                         	<a href="javascript: isDelete(${rep.rep_no },${pageNum })">삭제</a>
                                                          </td>

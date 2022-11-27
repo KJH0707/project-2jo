@@ -448,6 +448,7 @@ $(document).ready(function(){
                                              </a></li>
                                              <li>📞 <a href="">Store Tel : ${dto.s_tel } </a></li>
                                              <li>⭐  <b style="color:black;"><fmt:formatNumber value="${dto.s_star }"/></b></li>
+                                             <li>♨ <b style="color:black;"><a href="./storeReport.st?s_no=${param.s_no }">신고</a></b></li>
                                          </ul>
                                          <p> ${dto.s_content }</p>
                                         

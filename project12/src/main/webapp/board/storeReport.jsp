@@ -17,7 +17,7 @@
 
          <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Fork And Knife | Review Write</title>
+        <title>Fork And Knife | Report Write</title>
         <meta name="description" content="company is a real-estate template">
         <meta name="author" content="Kimarotec">
         <meta name="keyword" content="html5, css, bootstrap, property, real-estate theme , bootstrap template">
@@ -44,38 +44,11 @@
         <link rel="stylesheet" href="assets/css/owl.transitions.css">
         <link rel="stylesheet" href="assets/css/style.css">
         <link rel="stylesheet" href="assets/css/responsive.css">
-        
+        <jsp:include page="../inc/top.jsp"></jsp:include>
 <script src="./board/jquery-3.6.1.js"></script>
 <script type="text/javascript">
 
-
-$(document).ready(function(){
-	
-$('#star a').click(function(){ 
-	 $(this).parent().children("a").removeClass("on");    
-	 $(this).addClass("on").prevAll("a").addClass("on");
-	 var starValue = $(this).attr("data-rate");
-// 	$('.star p').append('<input type = "hidden" name="star" />');
-	
-	  alert(starValue +'점을 주셨네요');
-	  $('input[name=rev_star]').attr('value',starValue);
-	  return starValue;
-	  
-	  
-});
-
-
-
-
-// var starValue ;
-	
-	
-});
 function sub() {
-	if(document.frm.rev_star.value=="starValue"){
-	alert('별점을 꼭 입력하세요');
-	return false;
-	}
 	
 	if (document.frm.rev_subject.value=="") {
 		alert('제목을 입력하세요.');
@@ -108,7 +81,7 @@ function sub() {
             <div class="container">
                 <div class="row">
                     <div class="page-head-content">
-                        <h1 class="page-title">리뷰게시판</h1>               
+                        <h1 class="page-title">신고 페이지</h1>               
                     </div>
                 </div>
             </div>
@@ -124,67 +97,21 @@ function sub() {
                     <div class="" id="contact1">                        
                   <div align="center">
                         <hr>
-                        <h2>리뷰 쓰세오</h2>
-                        <form action="./ReviewWriteAction.rv?s_no=${param.s_no }" method="post" enctype="multipart/form-data" name="frm" onsubmit="return sub()">
+                        <h2>가게 신고</h2>
+                        <form action="./storeReportPro.st" method="post" enctype="multipart/form-data" name="frm" onsubmit="return sub()">
                        <input type="hidden" value="${param.s_no }" name="s_no">
-                       
-<!--                             <div class="row">
-<!--                                 <div class="col-sm-6"> -->
-<!--                                     <div class="form-group"> -->
-<!--                                     </div> -->
-<!--                                 </div> -->
-                                <br>
-<!--                                 <div class="col-sm-6"> -->
-<!--   
-
-                               <div class="form-group"> -->
- 
-가게는 어떠셨나요?
-
-<P id="star"> <!-- 부모 -->
-<a href="#" id="starrate" data-rate="1">★</a> <!-- 자식들--> 
-<a href="#" id="starrate" data-rate="2">★</a> 
-<a href="#" id="starrate" data-rate="3">★</a>
-<a href="#" id="starrate" data-rate="4">★</a>
-<a href="#" id="starrate" data-rate="5">★</a>
- <p>
-
-<input type="hidden" name="rev_star" value="starValue">
-
+						<input type="hidden" value="1" name="s">
 								
                                     <label for="subject">제목</label>
-                                  	  <input type="text" class="form-control" id="subject" name="rev_subject" placeholder="제목을 적으세요">
-<!--                                     </div> -->
-<!--                                 </div> -->
-<!--                                 <div class="col-sm-6"> -->
-<!--                                     <div class="form-group"> -->
+                                  	  <input type="text" class="form-control" id="subject" name="rep_subject" placeholder="제목을 적으세요">
                                     <label for="subject">첨부파일</label>
-                                  	  <input type="file" class="form-control" id="file" name="rev_file">
-<!--                                     </div> -->
-<!--                                 </div> -->
-<!--                                 <div class="col-sm-12"> -->
-<!--                                     <div class="form-group"> -->
-
-                                    <label for="message">어떤 점이 좋았나요?</label>
-                                    <textarea id="message" class="form-control" name="rev_content" width="730px" placeholder="간단한 리뷰를 적어주세요"></textarea>
-<!--                                     </div> -->
-<!--                                 </div> -->
+                                  	  <input type="file" class="form-control" id="file" name="rep_file">
+                                    <label for="message">어떤 점이 아쉬우셨나요?</label>
+                                    <textarea id="message" class="form-control" name="rep_reason" rows="10" placeholder="신고 내용을 적어주세요"></textarea>
 					<br>
-<!--                                 <div class="col-sm-12 text-center"> -->
 							
                                 <button type="submit" class="btn btn-primary"><i class="fa fa-envelope-o"></i> 
-                               등록 </button></form>
-							
-							<form action="./ReviewList.rv"> 
-							<input type="hidden" name="s_no" value="${param.s_no }">
-							<button type="submit" class="btn btn-primary"><i class="fa fa-envelope-o"></i> 
-                              목록 </button></form>
-                               
-                              
-							 
-<!--                                 </div> -->
-<!--                             </div> -->
-                            <!-- /.row -->
+                               신고 </button></form>
                         
                     </div>
                 </div>

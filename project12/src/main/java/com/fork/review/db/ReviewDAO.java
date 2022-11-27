@@ -174,7 +174,7 @@ public class ReviewDAO {
 						con = getConnection();
 						
 						
-						sql = "select rev_subject, rev_content, rev_star, s_name, m_nickname, s_readcount, rev_date, rev_file, rev_no, m_id "
+						sql = "select rev_subject, rev_content, rev_star, s_name, m_nickname, s_readcount, rev_date, rev_file, rev_no, m_id, C.m_no "
 								+ "from reviewcs A, store B, member C "
 								+ "where A.s_no = B.s_no "
 								+ "and A.m_no = C.m_no "
@@ -200,6 +200,7 @@ public class ReviewDAO {
 							hm.put("rev_date",rs.getTimestamp("rev_date"));
 							hm.put("rev_file",rs.getString("rev_file"));
 							hm.put("rev_no", rs.getInt("rev_no"));
+							hm.put("m_no", rs.getInt("m_no"));
 							hm.put("m_id",rs.getString("m_id"));
 							reviewList.add(hm);
 							

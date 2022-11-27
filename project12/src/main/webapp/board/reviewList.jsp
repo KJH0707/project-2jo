@@ -407,7 +407,8 @@
                                                     <c:if test="${id eq dto.m_id || id eq 'admin'}">
                                           <small class="text-mute"><a href="./ReviewUpdate.rv?rev_no=${dto.rev_no }&pageNum=${pageNum }&rev_star=${dto.rev_star}">수정/</a></small>
                                                        <small class="text-mute"> <a href="./ReviewDelete.rv?rev_no=${dto.rev_no }&s_no=${st.s_no }">삭제 </a></small> <br><br>
-                                              		       </c:if>                
+                                              		       </c:if>
+                                              		       ♨ <b style="color:black;"><a href="./userReport.st?m_no=${dto.m_no }&s_no=${st.s_no }">신고</a></b>                
 
                                                 
                                           &nbsp;

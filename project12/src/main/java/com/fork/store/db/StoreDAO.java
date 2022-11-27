@@ -2077,5 +2077,85 @@ public class StoreDAO {
 			}
 			
 			// main 에서 가격대별 추천 ~~~~~~
-	
+		public int insertStoreReport(HashMap<String,Object> hm) {
+			int result=0;
+			int rep_no=1;
+			int rep_howmany=1;
+			try {
+				con = getConnection();
+				sql = "select max(rep_no) from report";
+				pstmt = con.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+				if (rs.next()) {
+					rep_no = rs.getInt(1)+1;
+				}
+				
+				sql = "select max(rep_howmany) from report where s_no=? and rep_sort=1";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, Integer.parseInt(hm.get("s_no").toString()));
+				rs = pstmt.executeQuery();
+				if (rs.next()) {
+					rep_howmany=rs.getInt(1)+1;
+				}
+				
+				sql = "insert into report values (?,?,?,?,?,?,now(),?,?,1,?)";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, rep_no);
+				pstmt.setInt(2, Integer.parseInt(hm.get("s_no").toString()));
+				pstmt.setInt(3, Integer.parseInt(hm.get("m_no").toString()));
+				pstmt.setString(4, (String)hm.get("rep_subject"));
+				pstmt.setString(5, (String)hm.get("rep_reason"));
+				pstmt.setString(6,"-");
+				pstmt.setInt(7, rep_howmany);
+				pstmt.setString(8, (String)hm.get("rep_file"));
+				pstmt.setString(9, null);
+				result = pstmt.executeUpdate();
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return result;
+		}
+		
+		public int insertUserReport(HashMap<String,Object> hm) {
+			int result=0;
+			int rep_no=1;
+			int rep_howmany=1;
+			try {
+				con = getConnection();
+				sql = "select max(rep_no) from report";
+				pstmt = con.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+				if (rs.next()) {
+					rep_no = rs.getInt(1)+1;
+				}
+				
+				sql = "select max(rep_howmany) from report where rep_m_no=? and rep_sort=0";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, Integer.parseInt(hm.get("rep_m_no").toString()));
+				rs = pstmt.executeQuery();
+				if (rs.next()) {
+					rep_howmany=rs.getInt(1)+1;
+				}
+				
+				sql = "insert into report values (?,?,?,?,?,?,now(),?,?,0,?)";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, rep_no);
+				pstmt.setInt(2, 0);
+				pstmt.setInt(3, Integer.parseInt(hm.get("m_no").toString()));
+				pstmt.setString(4, (String)hm.get("rep_subject"));
+				pstmt.setString(5, (String)hm.get("rep_reason"));
+				pstmt.setString(6,"-");
+				pstmt.setInt(7, rep_howmany);
+				pstmt.setString(8, (String)hm.get("rep_file"));
+				pstmt.setInt(9, Integer.parseInt(hm.get("rep_m_no").toString()));
+				result = pstmt.executeUpdate();
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return result;
+		}
 }

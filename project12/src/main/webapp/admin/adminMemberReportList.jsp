@@ -63,6 +63,7 @@
                     <!-- ============================================================== -->
                     <div class="row">
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        
                             <div class="page-header">
                                 <h2 class="pageheader-title">관리자 Dashboard</h2>
                                 <p class="pageheader-text">Nulla euismod urna eros, sit amet scelerisque torton lectus vel mauris facilisis faucibus at enim quis massa lobortis rutrum.</p>
@@ -85,6 +86,16 @@
                             <!-- 가게 목록  -->
                             <!-- ============================================================== -->
                             <div class="col-xl-9 col-lg-12 col-md-6 col-sm-12 col-12">
+                            <div class="influence-profile-content pills-regular">
+                                <ul class="nav nav-pills mb-3 nav-justified" id="pills-tab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="./adminReportList.us?s=1">가게 신고 목록</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link active" href="#">일반 회원 신고 목록</a>
+                                    </li>
+                                </ul>
+                                </div>
                                 <div class="card">
                                     <h5 class="card-header">General Member List</h5>
                                     <div class="card-body p-0">
@@ -93,13 +104,11 @@
                                                 <thead class="bg-light">
                                                     <tr class="border-0">
                                                         <th class="border-0">No.</th>
-                                                        <th class="border-0">가게 이름</th>
-                                                        <th class="border-0">점주 이름</th>
-                                                        <th class="border-0">신고자 ID</th>
-                                                        <th class="border-0">신고자명</th>
-                                                        <th class="border-0" colspan="4">신고 사유</th>
+                                                        <th class="border-0">신고자 닉네임(ID)</th>
                                                         <th class="border-0">신고 횟수</th>
-                                                        <th class="border-0">신고일자</th>
+                                                        <th class="border-0">피신고자 닉네임(ID)</th>
+                                                        <th class="border-0">신고 상세보기</th>
+                                                        <th class="border-0">신고 일자</th>
                                                         <th class="border-0">관리</th>
                                                         
                                                     </tr>
@@ -113,19 +122,16 @@
 <!--                                                         <td> -->
 <!--                                                             <div class="m-r-10"><img src="assets/images/product-pic.jpg" alt="user" class="rounded" width="45"></div> -->
 <!--                                                         </td> -->
-                                                        <td>${rep.s_name }</td>
-                                                        <td>${rep.c_name }</td>
-                                                        <td>${rep.m_id}</td>
-                                                        
-                                                        <td>${rep.m_name }</td>
-                                                        <td colspan="4"><h4 class="mb-0"><a href="#" onclick="window.open('./genMemReservMsg.us?msg=${rep.rep_reason}','예약 메세지','width=600, height=150, left=700, top=400')">
-                                                    보기</a></h4></td>
+                                                        <td>${rep.m_nickname }(${rep.m_id })</td>
                                                         <td>${rep.rep_howmany }</td>
-                                                      
+                                                        <td>${rep.rep_m_nickname }(${rep.rep_m_id })</td>
+                                                        <td><a href="./reportDetails.us?rep_no=${rep.rep_no }&u=1"><b>상세 보기</b></a></td>
+                                                        
                                                         <td>${rep.rep_date}</td>
                                                        
                                                         <td>
-                                                        	<a href="#">수정</a> 
+                                                        	<a href="#" onclick="window.open('./adminSanction.us?s=${rep.s_no}&m_email=${rep.m_email }&rep_m=${rep.rep_m_no }','예약 메세지','width=420, height=360, left=700, top=400')">
+                                                    제재</a>
                                                         	
                                                         	<a href="javascript: isDelete(${rep.rep_no },${pageNum })">삭제</a>
                                                          </td>
@@ -159,10 +165,10 @@
                                 </div>
                             </div>
                             <div class="col-xl-9">
-                    		<form action="./adminReportList.us" method="post">
-                                <input class="form-controlkjh" type="text" placeholder="가게 이름이나 신고자 명 검색" name="keyword" value="${keyword }">
+                    		<form action="./adminReportList.us?u=1" method="post">
+                                <input class="form-controlkjh" type="text" placeholder="신고자 닉네임 검색" name="keyword" value="${keyword }">
                                 <input type="submit" value="검색" class="btn btn-primary">
-                                <a href="./adminReportList.us" class="btn btn-primary">전체보기</a>
+                                <a href="./adminReportList.us?u=1" class="btn btn-primary">전체보기</a>
                             </form>
                             	
                     		</div>
