@@ -150,9 +150,9 @@
 		 var cou_startDate = document.getElementById('cou_startDate').value;
 		 var cou_endDate = document.getElementById('cou_endDate').value;
 		 var cou_message = document.getElementById('message').value;
-		 var date = new Date().toISOString().substring(2,10).replace(/-/g,'');
+		 //var date = new Date().toISOString().substring(2,10).replace(/-/g,'');
 		 var time = new Date().getTime();
-		 var cou_code = date + time;
+		 var cou_code = time;
 		 
 		 if(coupon_name==""){
 			 alert('쿠폰명을 입력하세요');
@@ -196,30 +196,10 @@
         window.close();
 
 	 });
-	 //alert(name);
-	 //alert(coupon_name);
-	 
-	 
 
 	function closeTab() {
 	    window.close();
 	}
-
-//  function infoPost(url, params){
-// 	 var form = document.createElement('form');
-// 	 form.setAttribute('method','post');
-// 	 form.setAttribute('action', './issueCouponAction.co');
-// 	 for(var key in params){
-// 		 var sendvalue = document.createElement('input');
-// 		 sendvalue.setAttribute('type','hidden');
-// 		 sendvalue.setAttribute('coupon_name',document.getElementById('coupon_name').value);
-// 		 //sendvalue.setAttribute('value','params[key]');
-// 		 form.appendChild(sendvalue);
-// 	 }
-// 	 document.body.appendChild(form);
-// 	 form.submit();
-//  }
-
 </script>
 </body>
 </html>

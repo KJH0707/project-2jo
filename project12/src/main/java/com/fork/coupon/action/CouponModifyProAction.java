@@ -31,11 +31,13 @@ public class CouponModifyProAction implements Action {
 		//System.out.println("M : c_code : "+c_code);
 		UserDAO udao = new UserDAO();
 		CeoDTO cdto = udao.getCEO(id);
-		int c_no = cdto.getC_no();
+		//int c_no = cdto.getC_no();
 		
 		CouponDTO dto = new CouponDTO();
 		dto.setIsUse(0);						// 사용여부
 		dto.setC_sdate(request.getParameter("cou_startDate"));				// 사용시작일
+		dto.setC_name(request.getParameter("coupon_name"));				// 쿠폰명
+		dto.setC_place(request.getParameter("sto_name"));				// 사용처
 		dto.setC_edate(request.getParameter("cou_endDate")); 				// 만료일
 		dto.setC_quantity(Integer.parseInt(request.getParameter("coupon_amount")));
 		dto.setC_place(request.getParameter("sto_name"));

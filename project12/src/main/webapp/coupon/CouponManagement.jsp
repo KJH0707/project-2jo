@@ -44,16 +44,6 @@
 
 <script language="javascript">
 	function showPopup() { window.open("./CouponIssue.co", "", "width=510, height=410, resizable=no, left=100, top=100"); }
-// 	function showModifyPopup() { window.open("./CouponModify.co", "", "width=510, height=410, resizable=no, left=100, top=100"); }
-// 	function showModifyPopup() { 
-// 		var c_code = document.getElementById('c_code').innerText;
-// 		window.open("./CouponModify.co?c_code="+c_code, "", "width=510, height=410, resizable=no, left=100, top=100"); }
-	
-// 	function Del(){
-// 		if(confirm("삭제하면 복구할 수 없습니다. 정말 삭제하시겠습니까?")){
-// 			return false;
-// 		}
-// 	}
 </script>
 
 
@@ -143,7 +133,8 @@
                   </div>
               </div>
           </div>
-<div class="col-md-9 p0 padding-top-40 properties-page">
+<!-- ////////////////////// 목록 //////////////////// -->
+	<div class="col-md-9 p0 padding-top-40 properties-page">
         <!-- main area -->
         <div class="content-area recent-property padding-top-40" style="background-color: #FFF;">
             <div class="container">  
@@ -233,6 +224,7 @@
              </div>
        </div>
     </div>
+    <!-- ////////////////////// 목록 //////////////////// -->
   </div>
   </div>
   </div>
