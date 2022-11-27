@@ -128,19 +128,6 @@ public class StoreFrontController extends HttpServlet {
 				}
 				
 				
-				else if(command.equals("/StoreUpdate.st")) {
-					System.out.println(" C : /StoreUpdate.st 호출");
-					
-					action = new StoreUpdateAction();
-					
-					try {
-						forward = action.execute(request, response);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-				
-				
 				
 				
 				

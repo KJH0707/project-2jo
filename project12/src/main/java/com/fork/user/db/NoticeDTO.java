@@ -20,6 +20,7 @@ public class NoticeDTO {
 	private String n_eventSdate;
 	private String n_eventEdate;
 	private Timestamp n_date;
+	private String c_code;
 	
 	
 	
