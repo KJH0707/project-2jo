@@ -169,8 +169,8 @@
 		 var cou_message = document.getElementById('message').value;
 		 var c_code = document.getElementById('code').value;
 		 //alert(c_code);
-		 alert(coupon_name);
-		 alert(sto_name);
+		 //alert(coupon_name);
+		 //alert(sto_name);
 		 
         const request = new XMLHttpRequest();
 
