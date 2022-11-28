@@ -96,7 +96,7 @@ public class NoticeListAction implements Action {
 		request.setAttribute("noticeList", noticeList);
 		request.setAttribute("noticeList2", noticeList2);
 		//request.setAttribute("boardListAll", dao.getBoardList());
-		
+
 		// 페이징처리 정보 저장
 		request.setAttribute("pageNum", pageNum);
 		request.setAttribute("totalCnt", cnt);

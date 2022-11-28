@@ -138,7 +138,7 @@
                                                         <td>${ntL.n_eventSdate } ~ ${ntL.n_eventEdate }</td>
                                                         
                                                         <td>
-                                                        	<a href="#">수정</a> 
+                                                        	<a href="./GetNoticeDetail.us?n_no=${ntL.n_no }">수정</a> 
                                                         	
                                                         	<a href="javascript: isDelete(${ntL.n_no },${pageNum })">삭제</a>
                                                          </td>

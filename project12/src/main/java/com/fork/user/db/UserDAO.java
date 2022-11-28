@@ -1203,7 +1203,6 @@ public class UserDAO {
 			// 어드민 신고 삭제
 			
 			// 어드민 공지 목록
-			
 			public ArrayList adminGetNoticeList(int startRow, int pageSize, int isE) {
 				System.out.println(" DAO : getBoardList() 호출 ");
 				// 글정보 모두 저장하는 배열
@@ -1233,6 +1232,7 @@ public class UserDAO {
 						dto.setN_date(rs.getTimestamp("n_date"));
 						dto.setN_eventSdate(rs.getString("n_eventSdate"));
 						dto.setN_eventEdate(rs.getString("n_eventEdate"));
+						dto.setN_img(rs.getString("n_img"));
 						
 						noticeList.add(dto);
 					}//while
@@ -1413,7 +1413,7 @@ public class UserDAO {
 					}
 					
 					
-					sql = "insert into notice values (?,?,now(),?,?,?,?,?,?)";
+					sql = "insert into notice values (?,?,now(),?,?,?,?,?,?,?,?)";
 					
 					pstmt = con.prepareStatement(sql);
 					
@@ -1426,11 +1426,11 @@ public class UserDAO {
 					pstmt.setString(6, dto.getN_content());
 					pstmt.setString(7, dto.getN_eventSdate());
 					pstmt.setString(8, dto.getN_eventEdate());
+					pstmt.setString(9, dto.getN_content());
 					
 					pstmt.executeUpdate();
 					
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} finally {
 					closeDB();
@@ -1438,6 +1438,91 @@ public class UserDAO {
 				
 			}
 			// 어드민 공지 등록
+			
+			
+			// 어드민 공지 정보 가져오기@@@@@@@
+			public NoticeDTO getNotice(String n_no) {
+				NoticeDTO dto = null;
+				int no = Integer.parseInt(n_no);
+				//System.out.println("@@@@@@@@@@@@@@@@2");
+				try {
+					
+					con = getConnection();
+					sql = "select * from notice where n_no=? ";
+					pstmt = con.prepareStatement(sql);
+					pstmt.setInt(1, no);
+					rs = pstmt.executeQuery();
+					
+					if(rs.next()) {
+						dto = new NoticeDTO();
+					
+						dto.setC_code(rs.getString("c_code"));
+						dto.setN_content(rs.getString("n_content"));
+						dto.setN_date(rs.getTimestamp("n_date"));
+						dto.setN_eventEdate(rs.getString("n_eventEdate"));
+						dto.setN_eventSdate(rs.getString("n_eventSdate"));
+						dto.setN_img(rs.getString("n_img"));
+						dto.setN_isevent(rs.getInt("n_isevent"));
+						dto.setN_no(no);
+						dto.setN_readcount(rs.getInt("n_readcount"));
+						dto.setN_title(rs.getString("n_title"));
+						
+						System.out.println(" DAO : 공지 정보 가져오기! ");
+					
+					}
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				} finally {
+					closeDB();
+				}
+				return dto;
+			}
+			// 어드민 공지 정보가져오기
+			
+			
+			// 어드민 공지 수정
+			public void modifyNotice(NoticeDTO dto) {
+				int result = -1;
+			    
+			    try {
+			        con = getConnection();
+			        sql = "select * from notice where n_no=? ";
+			        pstmt = con.prepareStatement(sql);
+			        pstmt.setInt(1, dto.getN_no());
+			        rs = pstmt.executeQuery();
+			        
+			        if(rs.next()) {
+			                sql = "update notice set n_title=?,n_isevent=?,n_img=?,n_content=?,n_eventSdate=?,n_eventEdate=?,c_code=? "
+									+ "where n_no=?";
+							
+							pstmt = con.prepareStatement(sql);
+							
+							pstmt.setString(1, dto.getN_title());
+							pstmt.setInt(2, dto.getN_isevent());
+							pstmt.setString(3, dto.getN_img());
+							pstmt.setString(4, dto.getN_content());
+							pstmt.setString(5, dto.getN_eventSdate());
+							pstmt.setString(6, dto.getN_eventEdate());
+							pstmt.setString(7, dto.getC_code());
+							
+							pstmt.setInt(8, dto.getN_no());
+							
+							pstmt.executeUpdate();
+			                
+			            }
+			        
+			        System.out.println(" DAO : 공지수정 완료("+result+")");
+			        
+			    } catch (Exception e) {
+			        e.printStackTrace();
+			    } finally {
+			        closeDB();
+			    }
+				
+			}
+			// 어드민 공지 수정
+			
 			
 			// 어드민 회원 상세 정보
 			public MemberDTO adminGetGenMemDetail(int m_no) {			

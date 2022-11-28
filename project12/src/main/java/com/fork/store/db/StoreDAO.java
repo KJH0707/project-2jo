@@ -1291,8 +1291,8 @@ public class StoreDAO {
 					s_no = rs.getInt(1)+1; // 첫번째 인덱스를 가져와서 +1
 				}
 
-				sql = "insert into store(s_no,s_name,s_addr,s_tel,s_hours,s_type,s_image,s_content,s_facility,s_menuname,s_menuprice,s_menuImg,s_number,c_no) "
-						+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+				sql = "insert into store(s_no,s_name,s_addr,s_tel,s_hours,s_type,s_image,s_content,s_facility,s_menuname,s_menuprice,s_menuImg,s_number,c_no,s_price) "
+						+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
 				pstmt = con.prepareStatement(sql);
 
 				pstmt.setInt(1, s_no);
@@ -1310,6 +1310,7 @@ public class StoreDAO {
 				pstmt.setInt(13, dto.getS_number());
 
 				pstmt.setInt(14, c_no);
+				pstmt.setInt(15, dto.getS_price());
 
 				result = pstmt.executeUpdate(); // result = 1 / 실패시 0 
 
@@ -2057,7 +2058,6 @@ public class StoreDAO {
 				con = getConnection();
 				sql = "SELECT * FROM store WHERE api_ID IS NOT NULL";
 				pstmt = con.prepareStatement(sql);
-				pstmt.setInt(1, dto.getApi_ID());
 				rs = pstmt.executeQuery();
 				
 				

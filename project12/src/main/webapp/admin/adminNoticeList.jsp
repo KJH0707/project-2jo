@@ -136,9 +136,8 @@
                                                         <td>${ntL.n_readcount }</td>
                                                         <td>${ntL.n_date }</td>
                                                         <td>${ntL.n_eventSdate } ~ ${ntL.n_eventEdate }</td>
-                                                        
                                                         <td>
-                                                        	<a href="#">수정</a> 
+                                                        	<a href="./GetNoticeDetail.us?n_no=${ntL.n_no }">수정</a> 
                                                         	
                                                         	<a href="javascript: isDelete(${ntL.n_no },${pageNum })">삭제</a>
                                                          </td>
@@ -180,6 +179,7 @@
                                 <input class="form-controlkjh" type="text" placeholder="제목 검색" name="keyword" value="${keyword }">
                                 <input type="submit" value="검색" class="btn btn-primary">
                                 <a href="./adminNoticeList.us" class="btn btn-primary">전체보기</a>
+                                
                             </form>
                             	
                     		</div>

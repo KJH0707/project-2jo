@@ -731,6 +731,32 @@ public class UserFrontController extends HttpServlet {
         } 
         //회원 마이 페이지(찜한매장)
 				
+        else if(command.equals("/GetNoticeDetail.us")) { // 수정할 데이터 호출
+        	System.out.println(" C : /GetNoticeDetail.us 호출 ");
+        	
+        	// AdminNoticeModifyAction
+        	action = new AdminNoticeModifyAction();
+        	
+        	try {
+                forward = action.execute(request, response);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        else if(command.equals("/NoticeModify.us")) {
+        	System.out.println(" C : /NoticeModify.us 호출");
+        	
+        	// AdminNoticeModifyProAction
+        	action = new AdminNoticeModifyProAction();
+        	
+        	try {
+                forward = action.execute(request, response);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        			
+        }
+				
 				
 				
 				System.out.println(" C : 2. 가상주소 매핑(패턴 1,2,3) 끝 \n");
