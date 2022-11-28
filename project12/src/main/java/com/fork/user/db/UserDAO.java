@@ -3096,7 +3096,8 @@ public class UserDAO {
 							+ "join ceo c on s.c_no = c.c_no "
 							+ "join reservation v on s.s_no = v.s_no "
 							+ "where c.c_id=? "
-							+ "order by v.res_date desc, v.res_time desc limit ?,?";
+//							+ "order by v.res_date desc, v.res_time desc limit ?,?";
+							+ "order by v.res_no desc limit ?,?";
 					pstmt = con.prepareStatement(sql);
 					
 					pstmt.setString(1, id);
@@ -3129,7 +3130,8 @@ public class UserDAO {
 							+ "join ceo c on s.c_no = c.c_no "
 							+ "join reservation v on s.s_no = v.s_no "
 							+ "where c.c_id=? && v.s_no=? "
-							+ "order by v.res_date desc, v.res_time desc limit ?,?";
+//							+ "order by v.res_date desc, v.res_time desc limit ?,?";
+							+ "order by v.res_no desc limit ?,?";
 					pstmt = con.prepareStatement(sql);
 					
 					pstmt.setString(1, id);
@@ -3190,7 +3192,8 @@ public class UserDAO {
 								+ "join ceo c on s.c_no = c.c_no "
 								+ "join reservation v on s.s_no = v.s_no "
 								+ "where c.c_id=? && "+schList+" like '%"+search+"%' "
-								+ "order by v.res_date desc, v.res_time desc limit ?,?";
+//								+ "order by v.res_date desc, v.res_time desc limit ?,?";
+								+ "order by v.res_no desc limit ?,?";
 						pstmt = con.prepareStatement(sql);
 						
 						pstmt.setString(1, id);
@@ -3223,7 +3226,8 @@ public class UserDAO {
 								+ "join ceo c on s.c_no = c.c_no "
 								+ "join reservation v on s.s_no = v.s_no "
 								+ "where c.c_id=? && v.s_no=? && "+schList+" like '%"+search+"%' "
-								+ "order by v.res_date desc, v.res_time desc limit ?,?";
+//								+ "order by v.res_date desc, v.res_time desc limit ?,?";
+								+ "order by v.res_no desc limit ?,?";
 						pstmt = con.prepareStatement(sql);
 						
 						pstmt.setString(1, id);
@@ -3265,7 +3269,7 @@ public class UserDAO {
 			
 			
 			// 사업자 예약 거절 - RefuseReserv(res_no)
-			public int RefuseReserv(int res_no) {
+			public int refuseReserv(int res_no,int stat) {
 				int result=0;
 				
 				try {
@@ -3284,7 +3288,7 @@ public class UserDAO {
 								+ "where res_no=? ";
 						pstmt = con.prepareStatement(sql);
 						
-						pstmt.setInt(1, 3);
+						pstmt.setInt(1, stat);
 						pstmt.setInt(2, res_no);
 						
 						pstmt.executeUpdate();

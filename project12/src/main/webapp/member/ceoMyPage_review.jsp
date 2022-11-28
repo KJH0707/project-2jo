@@ -63,30 +63,6 @@ div.poltext {
 
 </script>
 
-<script>
-$(function(){
-	
-// 	$("#ro").click(function(){
-		
-// 		$.ajax({
-// 			url:'${pageContext.request.contextPath}/CeoMyPage_re.us',
-// 			success:function(reList){
-// 				$("#ok").load(window.location.href+ " #ok");
-// 				console.log('성공');
-// 			},
-// 			error : function(){
-// 				alert('실패');
-// 			}
-			
-// 		});
-// 	}); 
-
-	
-});
-
-
-</script>
-
  </head>
  <body>
         
@@ -192,6 +168,7 @@ $(function(){
                             <select id="reType" name="reType" onchange="storeChange(this.value)" style="font-size:10px">
                             	<option value=rev_date ${listType == "rev_date" ? 'selected="selected"' : '' }>최신순</option>
                             	<option value=rev_star ${listType == "rev_star" ? 'selected="selected"' : '' }>별점순</option>
+                            	<option value=rev_c_re ${listType == "rev_c_re" ? 'selected="selected"' : '' }>답글순</option>
                             </select>
                         </div>
                   </div>
@@ -247,7 +224,7 @@ $(function(){
                         	  </c:choose>
                         	  </div>
                         	  </div>
-                        	  <div>
+                        	  <div style="width:100%; height:200px">
                         	  <c:choose>
                         	  	<c:when test="${reList.rev_file==null }">
 							  		<img src="assets/img/forks.jpg" alt="none" style="width:100%; height:200px" >
@@ -259,6 +236,7 @@ $(function(){
 							  </div>
 							  <div class="poltext">
 							  <p style="font-size:13px; overflow:hidden; text-overflow:ellipsis; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; height:70px">
+							  <b>${reList.rev_subject }</b><br>
 							  <small><b>${reList.rev_content }</b></small>
 							  </p>
 							  </div>

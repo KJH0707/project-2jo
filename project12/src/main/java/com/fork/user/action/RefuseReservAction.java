@@ -13,15 +13,19 @@ public class RefuseReservAction implements Action {
 		
 		// 정보 저장
 		int res_no = Integer.parseInt(request.getParameter("res_no"));
+		int stat = Integer.parseInt(request.getParameter("stat"));
+		
+//		System.out.println("@@@@@@@@@@"+ res_no);
+//		System.out.println("!!!!!!!!!!"+stat);
 		
 		// 수정
 		UserDAO dao = new UserDAO();
-		int result=dao.RefuseReserv(res_no);
+		int result=dao.refuseReserv(res_no,stat);
 		
 		if(result == 1) {
-			System.out.println("예약 거절 완료");
+			System.out.println("상태 변경 완료");
 		} else {
-			System.out.println("예약 거절 실패");
+			System.out.println("상태 변경 실패");
 		}
 		
 		// 페이지이동
