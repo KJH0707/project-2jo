@@ -742,7 +742,29 @@ public class UserFrontController extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-        } 		
+        }
+				
+        else if(command.equals("/MemberDelete.us")) {
+			System.out.println(" C : /MemberDelete.us 호출 ");
+			System.out.println(" C : 패턴1) DB사용X, view페이지이동");
+			
+			forward = new ActionForward();
+			forward.setPath("./member/delete.jsp");
+			forward.setRedirect(false);
+		}
+		else if(command.equals("/MemberDeleteAction.us")) {
+			System.out.println(" C : /MemberDeleteAction.us 호출 ");
+			System.out.println(" C : 패턴2) DB사용o, 페이지 이동");
+			
+			// MemberDeleteAction()
+			action = new MemberDeleteAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 				
 				System.out.println(" C : 2. 가상주소 매핑(패턴 1,2,3) 끝 \n");
 				

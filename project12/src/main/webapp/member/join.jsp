@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Fork and Knife | Join page</title>
+<title>Insert title here</title>
 
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="description" content="GARO is a real-estate template">
@@ -28,6 +28,23 @@
 		<!-- Include Date Range Picker -->
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+
+<style>
+#mem {
+	background-color:black;
+	color:white;
+}
+
+#mem:hover{
+	background-color:black;
+	color:white;
+}
+
+#st:hover{
+	background-color:black;
+	color:white;
+}
+</style>
         
 <!-- 데이터 유효성 검사 -->
 	<script type="text/javascript">
@@ -210,10 +227,19 @@
 		 }	
 		
 		
-	//////////// 유효성 체크 이벤트 ///////////////
 	$(function(){
-	
+
+		$("#st").click(function(){
+			$("#st").css({"background-color":"black", "color":"white"});
+			$("#mem").css({"background-color":"#EAEAEA", "color":"black"});
+		});
 		
+		$("#mem").click(function(){
+			$("#mem").css({"background-color":"black", "color":"white"});
+			$("#st").css({"background-color":"#EAEAEA", "color":"black"});
+		});
+		
+	//////////// 유효성 체크 이벤트 ///////////////
 	//////// 아이디 //////////////
 	$("#id").on("blur", function(){
 		if($("#id").val().trim() == "" ){

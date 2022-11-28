@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html class="no-js"> <!--<![endif]-->
    <head>
-      <title>Fork and Knife | My page</title>
+      <title>Insert title here</title>
 
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css"/>
 
@@ -116,12 +116,16 @@
                                 <thead>
                                     <tr class="tm-bg-gray">
                                         <th scope="col" class="text-center" width="80px">예약번호</th>
-                                        <th scope="col" class="text-center" width="100px">가게이름</th>
+                                        <th scope="col" class="text-center" width="100px">예약자 이름</th>
                                         <th scope="col" class="text-center" width="50px">인원</th>
                                         <th scope="col" class="text-center" width="100px">날짜 및 시간</th>
                                         <th scope="col" class="text-center" width="200px">메세지</th>
                                         <th scope="col" class="text-center" width="120px">연락처</th>
                                         <th scope="col" class="text-center" width="80px">예약상태</th>
+                                        <th scope="col" class="text-center" width="80px">가게보기</th>
+                                        
+                                        
+                                     
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -153,6 +157,7 @@
                                         ${dto.res_msg }</td>
                                         <td class="text-center">${dto.res_tel }</td>
                                         <td class="text-center">${status }</td>
+                                        <td class="text-center"><small class="text-mute"><a href="./storeDetails.st?s_no=${dto.s_no }">보기</a></small></td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>

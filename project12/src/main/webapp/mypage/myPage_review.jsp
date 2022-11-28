@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html class="no-js"> <!--<![endif]-->
    <head>
-      <title>Fork and Knife | My page</title>
+      <title>Insert title here</title>
 
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css"/>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
@@ -65,7 +65,7 @@
                                </div>
                               </a>
                                <div class="col-md-8 col-sm-8 col-xs-8 blg-entry">
-                                   <h6> <a href="./MemberReviewEdit.us">리뷰 관리</a></h6>
+                                   <h6> <a href="./MemberReviewEdit.us">리뷰관리</a></h6>
 <!--                                <span class="property-price">3000000$</span> -->
                                </div>
                            </li>
@@ -103,8 +103,7 @@
   <!-- 여기 밑으로 내용 넣어야 옆 공간에 들어감 -->
   				<div class="row" style="margin-left: 0px;">
                             <div class="col-md-8 col-sm-12">
-                                <h3 class="tm-block-title d-inline-block">리 뷰 관 리</h3>
-                                <a href="#">더보기</a></p>
+                                <h3 class="tm-block-title d-inline-block">나 의 리 뷰</h3>
                             </div>
 						<br>
                      
@@ -135,8 +134,11 @@
 										
                                         <div style="margin-top: 30px;" class="item-entry overflow">
                                             <div>작성일 : ${dto.rev_date }</div>
-                                        	<div style="font-weight: bold;">평점 : ${dto.rev_star }점</div>
-                                            <div>${dto.rev_subject }</div><br>
+                                            <div>제목 : ${dto.rev_subject }</div>
+                                        	<div style="font-weight: bold;">평점 : ${dto.rev_star }점</div><br>
+                                            <div>${dto.rev_content }</div><br>
+                                          <small class="text-mute"><a href="./ReviewUpdate.rv?rev_no=${dto.rev_no }&pageNum=${pageNum }&rev_star=${dto.rev_star}">수정/</a></small>
+                                                       <small class="text-mute"> <a href="./ReviewDelete.rv?rev_no=${dto.rev_no }&s_no=${st.s_no }">삭제 </a></small> <br><br>
 <!--                                             <div class="text-right">[답글]</div> -->
 											
                                         </div>

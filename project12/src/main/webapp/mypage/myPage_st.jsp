@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html class="no-js"> <!--<![endif]-->
    <head>
-      <title>Fork and Knife | My page</title>
+      <title>Insert title here</title>
 
 
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -128,12 +128,13 @@
         <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 mt-4" style="width:250px;">
             <div class="card shadow">
                 <div class="card-body text-center" >
+                
                         <img class="card-img-top" src=src="./upload/${dto.s_image.split(',')[0] }">
-                    </a>
-                   
-                    <h3 class="text-warning" style="text-align:center;">${dto.s_name}</h3>
-                    <h6 style="text-align:center; "${dto.rev_star }><img src="mypage/star_77949.png" style="height:20px;"alt="">
-                    <span style="color:orange;">평점 : ${dto.rev_star} 점</span></h6>
+                        
+                        
+                    <a href="./storeDetails.st?s_no=${dto.s_no }"><h3 class="text-warning" style="text-align:center;">${dto.s_name}</h3></a>
+                    <h6 style="text-align:center; "><img src="mypage/star_77949.png" style="height:20px;"alt="">
+                    <span style="color:orange;">평점 : ${dto.s_star} 점</span></h6>
                     <h6 style="text-align:center;">${dto.s_type } </h6>
                     
       

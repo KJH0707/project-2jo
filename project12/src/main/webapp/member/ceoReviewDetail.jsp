@@ -14,7 +14,7 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-<title>Fork and Knife | 리뷰 상세보기</title>
+<title>Insert title here</title>
 
 <style>
 div.polaroid {
@@ -183,6 +183,7 @@ font-size:15px;
   </c:choose>
   </div>
   <div class="poltext">
+  <p>${rdto.rev_subject }</p>
   <p>
   <small>${rdto.rev_content }</small>
   </p>
@@ -199,7 +200,7 @@ font-size:15px;
 		</details>
 	</c:when>
 	<c:otherwise>
-		<p align="left"><b>사장님</b> <!-- {rdto.c_date } -->
+		<p align="left"><b>사장님</b>
 			<button type="button" id="update"><i class="fa-sharp fa-solid fa-pen"></i></button>
 			<button type="button" id="delete"><i class="fa-solid fa-trash"></i></button>
 		</p>

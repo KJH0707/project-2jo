@@ -278,7 +278,7 @@
                      	 </p>
                      	</c:when>
                      	<c:otherwise>
-                     <p class="cent" style="font-size:0.7vw; text-align:left; padding:0px 10px 0px 40px; width:100%; line-height:170%">
+                    <p class="cent" style="font-size:0.7vw; text-align:left; padding:0px 10px 0px 40px; width:100%; height:220px; line-height:170%">
                        <b style="font-size:0.9vw;" >[${info[i].s_name }] </b><br>
                        <b>예약번호 : ${info[i].res_no }</b> <br>
                        <b>성함 : ${info[i].res_name }</b> <br>
@@ -322,7 +322,7 @@
                      	 </p>
                      	</c:when>
                      	<c:otherwise>
-                     <p class="cent" style="font-size:0.7vw; text-align:left; padding:0px 10px 0px 40px; width:100%; line-height:170%">
+                     <p class="cent" style="font-size:0.7vw; text-align:left; padding:0px 10px 0px 40px; width:100%; height:220px; line-height:170%">
                        <b style="font-size:0.9vw;" >[${info[i].s_name }] </b><br>
                        <b>예약번호 : ${info[i].res_no }</b> <br>
                        <b>성함 : ${info[i].res_name }</b> <br>
