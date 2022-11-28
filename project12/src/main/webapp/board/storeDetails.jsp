@@ -28,10 +28,40 @@ crossorigin="anonymous"/>
       
 <script src="./board/jquery-3.6.1.js"></script>
 <script type="text/javascript">
+function copyToClipBoard() {
+    var content = document.getElementById('textArea');
+    content.select();
+    document.execCommand('copy');
+    alert("전화번호가 복사되었습니다.");
+}
+
+function clip(){
+	var url = '';
+	var textarea = document.createElement("textarea");
+	document.body.appendChild(textarea);
+	url = window.document.location.href;
+	textarea.value = url;
+	textarea.select();
+	document.execCommand("copy");
+	document.body.removeChild(textarea);
+	alert("URL이 복사되었습니다.");
+};
+
+
 function bkgo() {
     document.bf.submit();
  }
+
+
 $(document).ready(function(){
+	var now_utc = Date.now() // 지금 날짜를 밀리초로
+	//getTimezoneOffset()은 현재 시간과의 차이를 분 단위로 반환
+	var timeOff = new Date().getTimezoneOffset()*60000; // 분단위를 밀리초로 변환
+	//new Date(now_utc-timeOff).toISOString()은 '2022-05-11T18:09:38.134Z'를 반환
+	var today = new Date(now_utc-timeOff).toISOString().split("T")[0];
+	document.getElementById("Date").setAttribute("min", today);
+	
+	
 	
 	//좋아
 	$('.like-content').one('click','.like-review', function(e) {
@@ -47,23 +77,6 @@ $(document).ready(function(){
 		});
 	
 	
-	
-	function clip(){
-		var url = '';
-		var textarea = document.createElement("textarea");
-		document.body.appendChild(textarea);
-		url = window.document.location.href;
-		textarea.value = url;
-		textarea.select();
-		document.execCommand("copy");
-		document.body.removeChild(textarea);
-		alert("URL이 복사되었습니다.");
-	};
-	
-	
-	  
-	
-
 	
 // $.getJSON("foodmenu.json",function(data){
 // 	console.log(data);
@@ -86,11 +99,32 @@ $(document).ready(function(){
             $('#image-gallery').removeClass('cS-hidden');
         }
     });
-	
+    
 });
+
+function sub() {
+	if(document.rs.date.value==""){
+	alert('날짜 입력해주세요');
+	return false;
+	}
+	if(document.rs.time.value==""){
+		alert('시간 입력해주세요');
+		return false;
+		}
+	if(document.rs.total.value==""){
+		alert('인원 입력해주세요');
+		return false;
+		}
+}
+
+var today = new Date();
+today.setDate(today.getDate() + 7); // 7일 더하여 setting
+
 </script>
 
-
+ <script>
+ 
+</script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	
@@ -102,7 +136,7 @@ $(document).ready(function(){
 
 
      
-     <title>Fork & Knife | ${dto.s_name }</title>
+     <title>Fork & Knife | Itwill 2 team</title>
      <meta name="description" content="project">
      <meta name="author" content="Kimarotec">
      <meta name="keyword" content="html5, css, bootstrap, property, real-estate theme , bootstrap template">
@@ -148,13 +182,14 @@ $(document).ready(function(){
 								 <!-- 배너 이미지  -->
 								<table> 
 									<ul id="image-gallery" class="gallery list-unstyled cS-hidden">
-										<c:set var="img" value="${dto.s_image }"/>
+										<c:set var="img" value="${dto.s_menuImg }"/>
 										<c:forEach var="i" begin="0" end="2" step="1" >
 											<c:if test="${img.split(',')[i]!='null'}">
 												<li data-thumb="./upload/${img.split(',')[i] }"> 
 												<img src="./upload/${img.split(',')[i] }" />
 												</li>
 											</c:if>
+											
 										</c:forEach>
 									</ul>
 									</table>
@@ -298,7 +333,7 @@ $(document).ready(function(){
 								<hr>
 								<%-- ${dto.s_menuname } --%>
 					<c:forEach var="i" begin="0" end="${dto.s_menuname[i]+1 }" step="1">
-							<span><img src="${dto.s_menuImg.split(',')[i]}" /> <br><br></span>
+							<span><img src="./upload/${dto.s_menuImg.split(',')[i]}" /> <br><br></span>
 							 <span class="glyphicon glyphicon-ok"> 메뉴 - ${dto.s_menuname.split(',')[i]} </span> <br>
 							<span class="glyphicon glyphicon-ok"> 가격 - ${dto.s_menuprice.split(',')[i] }원 </span> <br>
 							<br>
@@ -418,24 +453,21 @@ $(document).ready(function(){
                                     
                                  <div class="like-content">
                                     <button type="button" onclick="bkgo()" class="btn-secondary like-review">
-                                       <i class="fa fa-heart" aria-hidden="true"></i> Like
+                                       <i class="fa fa-heart" aria-hidden="true"></i> ${BookCnt} Like 
+                                       
                                     </button>
-                                 </div>
+                                 </div> 
                                  </c:when>
                                  <c:otherwise>
                                  <div class="like-content">
                                     <button type="button" onclick="bkgo()" class="btn-secondary like-review">
-                                       <i class="far fa-heart" aria-hidden="true"></i> Like
+                                       <i class="far fa-heart" aria-hidden="true"></i> ${BookCnt} Like
                                     </button>
                                  </div>
                                  </c:otherwise>
                                  </c:choose>
                                  
-                                 ${BookCnt } 
                               </form>
-										
-										
-										
 										
 										
 										
@@ -444,11 +476,11 @@ $(document).ready(function(){
 									
                                      <div class="clear">
                                          <ul class="dealer-contacts">                                       
-                                             <li>📍  <a href="#" onclick="clip(); return false;" data-value=" ${dto.s_addr}"> &nbsp; MAP url 
+                                             <li>📍  <a href="#" onclick="clip(); return false;"> &nbsp;Store url 
                                              </a></li>
-                                             <li>📞 <a href="">Store Tel : ${dto.s_tel } </a></li>
-                                             <li>⭐  <b style="color:black;"><fmt:formatNumber value="${dto.s_star }"/></b></li>
-                                             <li>♨ <b style="color:black;"><a href="./storeReport.st?s_no=${param.s_no }">신고</a></b></li>
+                                             <li>📞  <a href="#" onclick="copyToClipBoard()" >&nbsp;Store Tel : ${dto.s_tel } </a></li>
+                                             <li>⭐ &nbsp; <b style="color:black;"><fmt:formatNumber value="${dto.s_star }"/></b></li>
+                                             <li>♬ <b style="color:black;"><a href="./storeReport.st?s_no=${param.s_no }">신고</a></b></li>
                                          </ul>
                                          <p> ${dto.s_content }</p>
                                         
@@ -470,7 +502,7 @@ $(document).ready(function(){
          </div>
          <div class="panel-body search-widget">
          
-             <form action="./reservation.br" class="form-inline" method="get"> 
+             <form action="./reservation.br" class="form-inline" method="get" name="rs"> 
               <input type="hidden" name="s_no" value="${param.s_no }">
              <input type="hidden" name="s_name" value="${dto.s_name }">
              <input type="hidden" name="s_addr" value="${dto.s_addr }">
@@ -489,16 +521,16 @@ $(document).ready(function(){
 
 				<div class="col-xs-6" style=" font-family: monospace;">
 					<label for="property-geo">날짜</label> 
-						<input type="date"id="start" name="date"
-					       value="today"
-					       min="today" max="2030-12-31">
+						<input type="date" id="Date" name="date" required >
 							
 				</div>
 				
 				<div class="row">
                            <div class="col-xs-6">
 								<label for="price-range"> 몇시에 오시나요? </label>
-								<input type="time" value="now" min="11:00" max="21:00" step="3600000" name="time" required >
+								<input type="time" name ="time" min="11:00" max="17:00" step="3600" required >
+								
+<!-- 								<input type="time" name="time" min="10:00" max="20:00" step="3600000" required > -->
 
                            </div>
                            </div>
@@ -515,7 +547,7 @@ $(document).ready(function(){
 <hr>
                           <div class="panel panel-default sidebar-menu wow fadeInRight animated"> 
                             <div class="panel-heading">
-                                <h3 class="panel-title">F & K 의 추천</h3>
+                                <h3 class="panel-title">Fork & Knife 의 추천</h3>
                             </div>
                             <div class="panel-body recent-property-widget">
                                         <ul>
@@ -540,14 +572,15 @@ $(document).ready(function(){
                         </div>
 
 
-
+<br><br>
                            <div class="panel panel-default sidebar-menu wow fadeInRight animated">
                                <div class="panel-heading">
-                                   <h3 class="panel-title">Ads her  </h3>
+                                   <h3 class="panel-title">Ads   </h3>
+                                   <p>최고의 레스토랑에서 식사를 해보세요. </p>
                                </div>
                                <div class="panel-body recent-property-widget">
                                   <c:set var="img" value="${dto.s_image }"/>
-										<c:forEach var="i" begin="0" end="2" step="1" >
+										<c:forEach var="i" begin="0" end="1" step="1" >
 											<c:if test="${img.split(',')[i]!='null'}">
 												<li data-thumb="./upload/${img.split(',')[i] }"> 
 												<img src="./upload/${img.split(',')[i] }" />
@@ -560,8 +593,9 @@ $(document).ready(function(){
                            
                        </aside>
                    </div>
-
-
+<div style="display:none">
+<textarea id="textArea">051-803-0909</textarea>	
+</div>
 
            </div>
        </div>
@@ -672,6 +706,12 @@ p {
  .hi { 
     width: 80%; 
  }
+ 
+ .favorite-and-print .printer-icon {
+    color: #131111;
+    border: 2px solid #322e2e;
+    border-radius: 50%;
+    padding: 10px 7px 4px 7px;
       </style>
       
       

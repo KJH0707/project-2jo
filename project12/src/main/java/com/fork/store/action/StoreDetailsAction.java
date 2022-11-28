@@ -25,19 +25,20 @@ public class StoreDetailsAction implements Action {
 		BookMarkDAO bdao = new BookMarkDAO();
 		int result = bdao.checkBookMark(id, s_no);
 		
-		int count = bdao.countBookMark();
+		int count = bdao.countBookMark(s_no);
 		
 		
 		
 		
 		
 		StoreDAO dao = new StoreDAO();
+		ArrayList recStore = dao.getRecStoreList();
 		dao.updateReadcount(s_no);
 		
 		System.out.println(" M : 조회수 1증가 완료! ");
 		
 		int cnt = dao.getBoardCount();
-		ArrayList recStore = dao.getRecStoreList();
+//		ArrayList recStore = dao.getBoardList(cnt);
 		//request저장
 		
 		request.setAttribute("recStore", recStore);

@@ -21,27 +21,29 @@ public class ReviewWriteAction implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request,
 							HttpServletResponse response) throws Exception {
-		// 아이디 제어
 		HttpSession session = request.getSession();
-		String id = null;
+		String id = (String)session.getAttribute("id");
 		
-		if(session.getAttribute("id")!=null) {
-			id = (String)session.getAttribute("id");
-		}
+		PrintWriter out = response.getWriter();
+		UserDAO udao = new UserDAO();
+		
+		
 		
 		ActionForward forward = new ActionForward();
-		
-		if(id == null) {
-			response.setContentType("text/html; charset=UTF-8");
-			PrintWriter out = response.getWriter();		
-			out.print("<script>");
-			out.print("alert('로그인 하쇼.');");
-			out.print("location.href='./Login.us';");
-			out.print("</script>");
-			out.close();
-			return null;
+		if(id!=null) {   //아이디가 null 이 아니면 
+			if (id.equals("admin") || (String)session.getAttribute("c")!=null) {  //아이디가 admin이나, ceo 면 못 쓰게 
+			forward.setPath("./Login.us");
+//			out.print("<script>");
+//			out.print("alert('로그인하이소');"); 
+//			out.print("</script>");
+			forward.setRedirect(true);
+			return forward;
+			}
+		} else{  //아이디가 null 이면 
+			forward.setPath("./Login.us");
+			forward.setRedirect(true);
+			return forward;
 		}
-		// 아이디 제어 (일반)
 		
 		System.out.println(" M : ReviewWriteAction_execute() 호출 ");
 		
@@ -50,7 +52,7 @@ public class ReviewWriteAction implements Action {
 		ServletContext CTX = request.getServletContext();
 		String realPath = CTX.getRealPath("/upload");
 		System.out.println(" M : realPath : "+realPath);
-		UserDAO udao = new UserDAO();
+		
 		int maxSize = 10 * 1024 * 1024;
 		MultipartRequest multi
 		= new MultipartRequest(

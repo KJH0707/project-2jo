@@ -17,7 +17,7 @@
 
          <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Fork And Knife | Review 답글</title>
+        <title>Fork And Knife | Review Write</title>
         <meta name="description" content="company is a real-estate template">
         <meta name="author" content="Kimarotec">
         <meta name="keyword" content="html5, css, bootstrap, property, real-estate theme , bootstrap template">
@@ -51,7 +51,21 @@ $(document).ready(function(){
 	
 
 });
+
+function sub() {
+	if (document.frm.rev_subject.value=="") {
+		alert('제목 쓰셈 ㅋ');
+		return false;
+	}
+	if (document.frm.rev_content.value=="") {
+		alert('내용 쓰셈 ㅋ');
+		return false;
+	}
+
+}
 </script>
+
+
     </head>
     
     
@@ -89,12 +103,11 @@ $(document).ready(function(){
                   <div align="center">
                         <hr>
                         <h2>답글 달기</h2>
-                        <form action="./ReviewReplyAction.rv?pageNum=${param.pageNum }&s_no=${param.s_no }" method="post">
-                      ${sdto }
+                        <form action="./ReviewReplyAction.rv?pageNum=${param.pageNum }&s_no=${param.s_no }" method="post" name="frm" onsubmit="return sub()">
+                     
 
                                 <br>
-                              
-${sdto.s_name }
+
 	<input type="hidden" name="rev_no" value="${param.rev_no }">
 	<input type="hidden" name="rev_ref" value="${param.rev_ref }">
 	<input type="hidden" name="rev_seq" value="${param.rev_seq }">

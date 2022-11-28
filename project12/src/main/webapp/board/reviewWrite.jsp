@@ -78,11 +78,11 @@ function sub() {
 	}
 	
 	if (document.frm.rev_subject.value=="") {
-		alert('제목을 입력하세요.');
+		alert('제목 쓰셈 ㅋ');
 		return false;
 	}
 	if (document.frm.rev_content.value=="") {
-		alert('내용을 입력하세요.');
+		alert('내용 쓰셈 ㅋ');
 		return false;
 	}
 

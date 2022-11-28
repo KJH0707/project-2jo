@@ -174,12 +174,13 @@ public class ReviewDAO {
 						con = getConnection();
 						
 						
-						sql = "select rev_subject, rev_content, rev_star, s_name, m_nickname, s_readcount, rev_date, rev_file, rev_no, m_id, C.m_no "
-								+ "from reviewcs A, store B, member C "
-								+ "where A.s_no = B.s_no "
-								+ "and A.m_no = C.m_no "
-								+ "and A.rev_category=1 "
-								+ "and B.s_no=? limit ?,?";
+						sql = "select s.*,r.*, "
+								  + "(select m_nickname from member m where m.m_no = r.m_no) m_nickname, "
+								  + "(select m_id from member m where m.m_no = r.m_no) m_id "		
+								  + "from store s " 
+								  + "join reviewcs r on s.s_no = r.s_no "
+								  + "where s.s_no=? and r.rev_category=1 " 
+								 + "order by rev_ref desc,rev_seq asc limit ?,?";
 						pstmt = con.prepareStatement(sql);
 						// ?????
 						pstmt.setInt(1, s_no);
@@ -191,17 +192,25 @@ public class ReviewDAO {
 						// 5. 데이터 처리(DB->DTO->List)
 						while(rs.next()) {
 							hm = new HashMap<String,Object>();
-							hm.put("rev_subject",rs.getString("rev_subject"));
-							hm.put("rev_content",rs.getString("rev_content"));
-							hm.put("rev_star",rs.getDouble("rev_star"));
-							hm.put("s_name",rs.getString("s_name"));
-							hm.put("m_nickname",rs.getString("m_nickname"));
-							hm.put("s_readcount",rs.getString("s_readcount"));
-							hm.put("rev_date",rs.getTimestamp("rev_date"));
-							hm.put("rev_file",rs.getString("rev_file"));
-							hm.put("rev_no", rs.getInt("rev_no"));
+							hm.put("s_name", rs.getString("s_name"));
+							hm.put("s_readcount", rs.getInt("s_readcount"));
+							hm.put("s_star", rs.getDouble("s_star"));
+							hm.put("s_no", rs.getInt("s_no"));
+							
+							hm.put("m_nickName", rs.getString("m_nickName"));
 							hm.put("m_no", rs.getInt("m_no"));
-							hm.put("m_id",rs.getString("m_id"));
+							hm.put("m_id", rs.getString("m_id"));
+							hm.put("rev_no", rs.getInt("rev_no"));
+							hm.put("rev_date", rs.getTimestamp("rev_date"));
+							hm.put("rev_star", rs.getInt("rev_star"));
+							hm.put("rev_subject", rs.getString("rev_subject"));
+							hm.put("rev_category", rs.getInt("rev_category"));
+//							dto.setQna_sort(rs.getString("qna_sort"));
+							hm.put("rev_content", rs.getString("rev_content"));
+							hm.put("rev_file", rs.getString("rev_file"));
+							hm.put("rev_ref", rs.getInt("rev_ref"));
+							hm.put("rev_seq", rs.getInt("rev_seq"));
+							
 							reviewList.add(hm);
 							
 							
@@ -438,10 +447,12 @@ public class ReviewDAO {
 				sql="select s_no from store A, ceo B where A.c_no=B.c_no and B.c_id=?";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, id);
+				rs = pstmt.executeQuery();
 				
 				while (rs.next()) {
 					if(rs.getInt("s_no")==s_no) {
 						result=1;
+						break;
 					}
 				}
 			} catch (Exception e) {
