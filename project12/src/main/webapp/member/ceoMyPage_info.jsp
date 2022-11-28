@@ -377,7 +377,7 @@
        <div class="container">
          <div class="row">
              <div class="page-head-content">
-                 <h1 class="page-title">List Layout With Sidebar</h1>               
+                 <h1 class="page-title">My page</h1>               
              </div>
          </div>
        </div>

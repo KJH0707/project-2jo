@@ -1,8 +1,11 @@
 package com.fork.review.action;
 
+import java.io.PrintWriter;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.fork.review.db.ReviewDAO;
 import com.fork.review.db.ReviewDTO;
@@ -15,6 +18,31 @@ public class ReviewUpdateProAction implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
+		// 아이디 제어
+		HttpSession session = request.getSession();
+		String id = null;
+		
+		if(session.getAttribute("id")!=null) {
+			id = (String)session.getAttribute("id");
+		}
+		
+		ActionForward forward = new ActionForward();
+		
+		if(id == null) {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();		
+			out.print("<script>");
+			out.print("alert('로그인 하쇼.');");
+			out.print("location.href='./Login.us';");
+			out.print("</script>");
+			out.close();
+			return null;
+		}
+		// 아이디 제어 (일반)
+		
+		
+		
+		
 		System.out.println(" M : BoardUpdateProAction_execute() 호출 ");
 		ServletContext CTX = request.getServletContext();
 		String realPath = CTX.getRealPath("/upload");
@@ -55,7 +83,6 @@ public class ReviewUpdateProAction implements Action {
 		request.setAttribute("dto", dto);
 		request.setAttribute("sdto", sdto);
 		
-		ActionForward forward = new ActionForward();
 		forward.setPath("./ReviewList.rv?s_no="+dto.getS_no()+"&pageNum="+pageNum);
 		forward.setRedirect(true);
 		

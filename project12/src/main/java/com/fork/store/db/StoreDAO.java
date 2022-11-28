@@ -2300,6 +2300,8 @@ public class StoreDAO {
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			} finally {
+				closeDB();
 			}
 			return result;
 		}
@@ -2341,6 +2343,8 @@ public class StoreDAO {
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			}  finally {
+				closeDB();
 			}
 			return result;
 		}
@@ -2361,6 +2365,8 @@ public class StoreDAO {
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			} finally {
+				closeDB();
 			}
 			
 			

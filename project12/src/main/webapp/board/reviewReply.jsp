@@ -122,10 +122,7 @@ function sub() {
                                     <label for="message">내용</label>
                   <textarea id="rev_content" class="form-control" name="rev_content" width="730px" placeholder="답글을 입력하세요." 
                   								value="rev_content"></textarea>
-<!--                                     </div> -->
-<!--                                 </div> -->
 					<br>
-<!--                                 <div class="col-sm-12 text-center"> -->
                                 <button type="submit" class="btn btn-primary"><i class="fa fa-envelope-o"></i> 
                                답글 달기 </button></form>
 							

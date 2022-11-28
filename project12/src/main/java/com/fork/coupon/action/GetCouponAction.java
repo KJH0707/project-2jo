@@ -1,5 +1,6 @@
 package com.fork.coupon.action;
 
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,16 +19,28 @@ public class GetCouponAction implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		System.out.println(" M : GetCouponAction_execute() ");
 		
-		// 세션처리
+		// 아이디 제어
 		HttpSession session = request.getSession();
-		String id = (String)session.getAttribute("id");
-		ActionForward forward = new ActionForward();
-		if(id==null) {
-			forward.setPath("./Login.us");
-			forward.setRedirect(true);
-			return forward;
+		String id = null;
+		
+		if(session.getAttribute("id")!=null) {
+			id = (String)session.getAttribute("id");
 		}
-		System.out.println(" M : 세션제어 ");
+		
+		ActionForward forward = new ActionForward();
+		
+		if(id == null) {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();		
+			out.print("<script>");
+			out.print("alert('로그인 하쇼.');");
+			out.print("location.href='./Login.us';");
+			out.print("</script>");
+			out.close();
+			return null;
+		}
+		// 아이디 제어 (일반)
+		
 		// 정보 저장 - m_no 가져오기
 		UserDAO udao = new UserDAO();
 		MemberDTO mdto = udao.getMember(id);

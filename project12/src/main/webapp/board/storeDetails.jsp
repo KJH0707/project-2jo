@@ -136,7 +136,7 @@ today.setDate(today.getDate() + 7); // 7일 더하여 setting
 
 
      
-     <title>Fork & Knife | Itwill 2 team</title>
+     <title>Fork & Knife | ${dto.s_name }</title>
      <meta name="description" content="project">
      <meta name="author" content="Kimarotec">
      <meta name="keyword" content="html5, css, bootstrap, property, real-estate theme , bootstrap template">
@@ -445,11 +445,11 @@ today.setDate(today.getDate() + 7); // 7일 더하여 setting
                                 <form action="./BookMark.bk" method="post" name="bf">
                                  <!-- 좋아요 기능 -->
                                  <input type="hidden" name="s_no" value="${dto.s_no}">
-                                 <input type="hidden" name="result" value="${result}">
+                                 <input type="hidden" name="result" value="${result1}">
                                  <input type="hidden" name="result" value="${dto}">
                                  
                                   <c:choose>
-                                    <c:when test="${result==1}">
+                                    <c:when test="${result1==1}">
                                     
                                  <div class="like-content">
                                     <button type="button" onclick="bkgo()" class="btn-secondary like-review">

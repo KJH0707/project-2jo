@@ -77,7 +77,7 @@
                                     <nav aria-label="breadcrumb">
                                         <ol class="breadcrumb">
                                             <li class="breadcrumb-item"><a class="breadcrumb-link">Dashboard</a></li>
-                                            <li class="breadcrumb-item active" aria-current="page">점주 회원 관리 (아이디 클릭시 상세 보기 가능)</li>
+                                            <li class="breadcrumb-item active" aria-current="page">이벤트 목록</li>
                                         </ol>
                                     </nav>
                                 </div>

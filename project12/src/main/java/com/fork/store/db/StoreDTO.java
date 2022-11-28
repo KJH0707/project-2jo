@@ -22,6 +22,7 @@ public class StoreDTO {
 	private String s_menuImg;
 	private int s_number; // 사업자 번호
 	private int c_no;
+	private int s_readcount;
 	private Double s_star;
 	private Timestamp s_regdate;
 	private int s_price;

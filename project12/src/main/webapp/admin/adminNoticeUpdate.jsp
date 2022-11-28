@@ -56,7 +56,7 @@
 												<li class="breadcrumb-item">
 												<a href="#" class="breadcrumb-link">Dashboard</a></li>
 												<li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Forms</a></li>
-												<li class="breadcrumb-item active" aria-current="page">관리자 공지 작성</li>
+												<li class="breadcrumb-item active" aria-current="page">관리자 공지 수정</li>
 											</ol>
 										</nav>
 									</div>

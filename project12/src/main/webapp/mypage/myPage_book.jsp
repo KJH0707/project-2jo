@@ -81,17 +81,6 @@
                                </div>
                            </li>
                            <li>
-                           	  <a href="./MemberCoupon.co">
-                               <div class="col-md-3 col-sm-3 col-xs-3 blg-thumb p0">
-                                   <img src="assets/img/myPage/coupon.png" width="20" height="20">
-                               </div>
-                              </a>
-                               <div class="col-md-8 col-sm-8 col-xs-8 blg-entry">
-                                   <h6> <a href="./MemberCoupon.co">쿠폰 관리</a></h6>
-<!--                                     <span class="property-price">3000000$</span> -->
-                               </div>
-                           </li>
-                           <li>
                            	  <a href="./MemberInfoEdit.us">
                                <div class="col-md-3 col-sm-3 col-xs-3 blg-thumb p0">
                                    <img src="assets/img/myPage/note.png" width="20" height="20">
@@ -113,7 +102,7 @@
   <div class="row tm-content-row tm-mt-big" >
   	<i class="fas fa-3x fa-tachometer-alt tm-site-icon"></i>
                 <div class="col-xl-8 col-lg-12 tm-md-12 tm-sm-12 tm-col">
-                    <div class="bg-white tm-block h-100">
+                    <div class="bg-white tm-block h-100" style="width:1000px">
                         <div class="row">
                             <div class="col-md-8 col-sm-12">
                                 <h3 class="tm-block-title d-inline-block">예 약 내 역 </h3>
@@ -132,8 +121,9 @@
                                         <th scope="col" class="text-center" width="100px">날짜 및 시간</th>
                                         <th scope="col" class="text-center" width="200px">메세지</th>
                                         <th scope="col" class="text-center" width="120px">연락처</th>
-                                        <th scope="col" class="text-center" width="80px">예약상태</th>
                                         <th scope="col" class="text-center" width="80px">가게보기</th>
+                                        <th scope="col" class="text-center" width="100px">예약상태</th>
+                                        <th scope="col" class="text-center" width="150px">리뷰쓰기</th>
                                         
                                         
                                      
@@ -162,13 +152,21 @@
                                         <td class="text-center">
                                         ${dto.res_name }</td>
                                         <td class="text-center">${dto.res_num }</td>
-                                        <td class="text-center">${dto.res_date }<br>${dto.res_time }</td>
+                                        <td class="text-center">${dto.res_date }<br>${dto.res_time } 시</td>
                                         <!-- style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;" -->
                                         <td class="text-center">
                                         ${dto.res_msg }</td>
                                         <td class="text-center">${dto.res_tel }</td>
-                                        <td class="text-center">${status }</td>
                                         <td class="text-center"><small class="text-mute"><a href="./storeDetails.st?s_no=${dto.s_no }">보기</a></small></td>
+                                        <td class="text-center">${status }</td>
+										<td class="text-center">
+										<c:if test="${dto.res_status == 1}">
+											<input type="button" style="width:60px" value="쓰기" class="reviewWrite"
+											onclick="location.href='./ReviewWrite.rv?s_no=${dto.s_no }&rev_category=1';">
+										</c:if>
+										&nbsp;
+										</td>
+									
                                     </tr>
                                 </c:forEach>
                                 </tbody>

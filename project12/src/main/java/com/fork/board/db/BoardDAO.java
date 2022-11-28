@@ -514,6 +514,8 @@ public class BoardDAO {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			closeDB();
 		}
 		
 		
@@ -540,6 +542,8 @@ public void insertPayment(PaymentDTO dto) {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			closeDB();
 		}
 	}
 	

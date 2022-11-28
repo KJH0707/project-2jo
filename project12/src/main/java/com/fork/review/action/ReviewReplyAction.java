@@ -1,5 +1,7 @@
 package com.fork.review.action;
 
+import java.io.PrintWriter;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -17,16 +19,37 @@ System.out.println(" M : BoardReWriteAction.bo 호출");
 		
 		//한글처리(form-post방식) 생략 - filter 걸어놓음
 
-		//세션 관리  (관리자만 글쓰기 가능하게)
+//아이디 제어 (점주)
 		HttpSession session = request.getSession();
-		String id = (String) session.getAttribute("id");
 		
+		String id = null;
+		if (session.getAttribute("id")!=null) {
+			id = (String) session.getAttribute("id");
+		}
 		ActionForward forward = new ActionForward();
+		StoreDAO sdao = new StoreDAO();
+		
 		if(id==null) {
-				forward.setPath("./Login.us");
-				forward.setRedirect(true);
-				return forward;
-			}
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();		
+			out.print("<script>");
+			out.print("alert('잘못된 접근입니다');");
+			out.print("history.back();");
+			out.print("</script>");
+			out.close();
+			return null;
+			
+		} else if(sdao.isCeo(id)==0) {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();		
+			out.print("<script>");
+			out.print("alert('잘못된 접근입니다');");
+			out.print("history.back();");
+			out.print("</script>");
+			out.close();
+			return null;
+		}	
+		// 아이디 제어 (점주)
 		
 	
 	

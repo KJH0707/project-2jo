@@ -3959,6 +3959,8 @@ public class UserDAO {
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			} finally {
+				closeDB();
 			}
 			
 			

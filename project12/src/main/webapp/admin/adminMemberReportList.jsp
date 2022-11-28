@@ -71,7 +71,7 @@
                                     <nav aria-label="breadcrumb">
                                         <ol class="breadcrumb">
                                             <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Dashboard</a></li>
-                                            <li class="breadcrumb-item active" aria-current="page">일반 회원 관리</li>
+                                            <li class="breadcrumb-item active" aria-current="page">신고 목록</li>
                                         </ol>
                                     </nav>
                                 </div>
@@ -125,7 +125,7 @@
                                                         <td>${rep.m_nickname }(<a href="./adminGenMemDetail.us?m=${rep.m_no}"><b>${rep.m_id }</b></a>)</td>
                                                         <td>${rep.rep_m_nickname }(<a href="./adminGenMemDetail.us?m=${rep.rep_m_no}"><b>${rep.rep_m_id }</b></a>)</td>
                                                         <td>${rep.rep_howmany }</td>
-                                                        <td><a href="./reportDetails.us?rep_no=${rep.rep_no }&u=1"><b>상세 보기</b></a></td>
+                                                        <td><a href="#" onclick="window.open('./reportDetail.bk','예약 메세지','width=700, height=1000, left=700, top=400')"><b>상세 보기</b></a></td>
                                                         
                                                         <td>${rep.rep_date}</td>
                                                        

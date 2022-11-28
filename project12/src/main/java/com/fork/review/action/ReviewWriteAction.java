@@ -21,29 +21,27 @@ public class ReviewWriteAction implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request,
 							HttpServletResponse response) throws Exception {
+		// 아이디 제어
 		HttpSession session = request.getSession();
-		String id = (String)session.getAttribute("id");
+		String id = null;
 		
-		PrintWriter out = response.getWriter();
-		UserDAO udao = new UserDAO();
-		
-		
+		if(session.getAttribute("id")!=null) {
+			id = (String)session.getAttribute("id");
+		}
 		
 		ActionForward forward = new ActionForward();
-		if(id!=null) {   //아이디가 null 이 아니면 
-			if (id.equals("admin") || (String)session.getAttribute("c")!=null) {  //아이디가 admin이나, ceo 면 못 쓰게 
-			forward.setPath("./Login.us");
-//			out.print("<script>");
-//			out.print("alert('로그인하이소');"); 
-//			out.print("</script>");
-			forward.setRedirect(true);
-			return forward;
-			}
-		} else{  //아이디가 null 이면 
-			forward.setPath("./Login.us");
-			forward.setRedirect(true);
-			return forward;
+		
+		if(id == null) {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();		
+			out.print("<script>");
+			out.print("alert('로그인 하쇼.');");
+			out.print("location.href='./Login.us';");
+			out.print("</script>");
+			out.close();
+			return null;
 		}
+		// 아이디 제어 (일반)
 		
 		System.out.println(" M : ReviewWriteAction_execute() 호출 ");
 		
@@ -65,7 +63,7 @@ public class ReviewWriteAction implements Action {
 		System.out.println(" M : 첨부파일 업로드 완료! ");
 
 		// 전달정보 (파라메터 저장)
-		
+		UserDAO udao = new UserDAO();
 		ReviewDTO dto = new ReviewDTO();
 		StoreDTO sdto = new StoreDTO();
 		MemberDTO mdto = udao.getMember(id);

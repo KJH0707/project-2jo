@@ -163,6 +163,26 @@ public class BoardFrontController extends HttpServlet{
 			forward.setPath("./board/reservationComplete.jsp");
 			forward.setRedirect(false);
 		}
+		else if(command.equals("/aboutCorp.br")){ 
+			forward = new ActionForward();
+			
+			forward.setPath("./main/aboutCorp.jsp");
+			forward.setRedirect(false);
+		}
+		
+		else if(command.equals("/aboutEmployee.br")){ 
+			forward = new ActionForward();
+			
+			forward.setPath("./main/aboutEmployee.jsp");
+			forward.setRedirect(false);
+		}
+		
+		else if(command.equals("/faq.br")){ 
+			forward = new ActionForward();
+			
+			forward.setPath("./main/QnA.jsp");
+			forward.setRedirect(false);
+		}
 		
 		// 3. 페이지 이동
 		if(forward != null) {

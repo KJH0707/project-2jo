@@ -42,7 +42,7 @@ crossorigin="anonymous"/>
 
 
      
-     <title>Fork & Knife</title>
+     <title>Fork and Knife | EVENT</title>
      <meta name="description" content="project">
      <meta name="author" content="Kimarotec">
      <meta name="keyword" content="html5, css, bootstrap, property, real-estate theme , bootstrap template">

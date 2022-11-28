@@ -19,7 +19,7 @@ public class CeoMypage_stAction implements Action {
 		
 		// 아이디 제어 (점주)
 		HttpSession session = request.getSession();
-		
+//		
 		String id = null;
 		if (session.getAttribute("id")!=null) {
 			id = (String) session.getAttribute("id");

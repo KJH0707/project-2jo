@@ -47,7 +47,7 @@ public class StoreDetailsAction implements Action {
 		
 		request.setAttribute("s_name", s_name);
 		request.setAttribute("BookCnt", count);
-		request.setAttribute("result",result);
+		request.setAttribute("result1",result);
 		
 		//이동하라
 		ActionForward forward = new ActionForward();

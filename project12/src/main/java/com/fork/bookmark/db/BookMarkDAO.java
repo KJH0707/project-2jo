@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
 
@@ -183,5 +184,25 @@ public class BookMarkDAO {
     		return count;
     }
     //찜 카운트 
+    
+   public HashMap<String,Object> getReportDetail(int rep_no) {
+	   HashMap<String,Object> hm = null;
+	   
+	   try {
+		con = getConnection();
+		sql = "select * from report where rep_no=?";
+		pstmt = con.prepareStatement(sql);
+		pstmt.setInt(1, rep_no); 
+		
+		
+		
+	} catch (Exception e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	   
+	   
+	   return null;
+   }
 			
 }

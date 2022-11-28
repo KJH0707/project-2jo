@@ -20,21 +20,28 @@ public class GetCouponProAction implements Action {
 		
 		response.setContentType("text/html; charset=UTF-8");
 		// => 응답페이지의 형태를 html 형태로 사용
-		PrintWriter out = response.getWriter();
-		// 세션처리- 메시지 띄우기
+		
+		// 아이디 제어
 		HttpSession session = request.getSession();
-		String id = (String)session.getAttribute("id");
+		String id = null;
+		
+		if(session.getAttribute("id")!=null) {
+			id = (String)session.getAttribute("id");
+		}
+		
 		ActionForward forward = new ActionForward();
-		if(id==null) {
+		PrintWriter out = response.getWriter();	
+		if(id == null) {
+			response.setContentType("text/html; charset=UTF-8");
+				
 			out.print("<script>");
 			out.print("alert('쿠폰 발급은 로그인시 가능합니다.');");
 			out.print("history.back();");
 			out.print("</script>");
 			out.close();
-			
 			return null;
 		}
-		
+		// 아이디 제어 (일반)
 		System.out.println(" M : 세션제어 ");
 		// 정보 저장 - m_no 가져오기
 		UserDAO udao = new UserDAO();

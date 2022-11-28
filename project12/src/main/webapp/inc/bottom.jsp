@@ -7,102 +7,20 @@
                 <div class="container">
                     <div class="row">
 
-                        <div class="col-md-3 col-sm-6 wow fadeInRight animated">
+                        <div class="col-md-3 col-sm-6 wow fadeInRight animated" style="width:50%">
                             <div class="single-footer">
                                 <h4>About us </h4>
                                 <div class="footer-title-line"></div>
 
-                                <img src="assets/img/forks.jpg" alt="" class="wow pulse" data-wow-delay="1s">
-                                <p>Lorem ipsum dolor cum necessitatibus su quisquam molestias. Vel unde, blanditiis.</p>
+                                <img src="assets/img/forks.jpg" width=100>
+                                <p>(주)Fork & Knife</p>
                                 <ul class="footer-adress">
-                                    <li><i class="pe-7s-map-marker strong"> </i> 9089 your adress her</li>
-                                    <li><i class="pe-7s-mail strong"> </i> email@yourcompany.com</li>
-                                    <li><i class="pe-7s-call strong"> </i> +1 908 967 5906</li>
+                                    <li><i class="pe-7s-map-marker strong"> </i> 부산광역시 부산진구 동천로 109 삼한골든게이트 7층</li>
+                                    <li><i class="pe-7s-mail strong"> </i> develop221108@gmail.com</li>
+                                    <li><i class="pe-7s-call strong"> </i> 051-803-0909</li>
                                 </ul>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6 wow fadeInRight animated">
-                            <div class="single-footer">
-                                <h4>Quick links </h4>
-                                <div class="footer-title-line"></div>
-                                <ul class="footer-menu">
-                                    <li><a href="properties.html">Properties</a>  </li> 
-                                    <li><a href="#">Services</a>  </li> 
-                                    <li><a href="submit-property.html">Submit property </a></li> 
-                                    <li><a href="contact.html">Contact us</a></li> 
-                                    <li><a href="faq.html">fqa</a>  </li> 
-                                    <li><a href="faq.html">Terms </a>  </li> 
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6 wow fadeInRight animated">
-                            <div class="single-footer">
-                                <h4>Last News</h4>
-                                <div class="footer-title-line"></div>
-                                <ul class="footer-blog">
-                                    <li>
-                                        <div class="col-md-3 col-sm-4 col-xs-4 blg-thumb p0">
-                                            <a href="single.html">
-                                                <img src="assets/img/demo/small-proerty-2.jpg">
-                                            </a>
-                                            <span class="blg-date">12-12-2016</span>
-
-                                        </div>
-                                        <div class="col-md-8  col-sm-8 col-xs-8  blg-entry">
-                                            <h6> <a href="single.html">Add news functions </a></h6> 
-                                            <p style="line-height: 17px; padding: 8px 2px;">Lorem ipsum dolor sit amet, nulla ...</p>
-                                        </div>
-                                    </li> 
-
-                                    <li>
-                                        <div class="col-md-3 col-sm-4 col-xs-4 blg-thumb p0">
-                                            <a href="single.html">
-                                                <img src="assets/img/demo/small-proerty-2.jpg">
-                                            </a>
-                                            <span class="blg-date">12-12-2016</span>
-
-                                        </div>
-                                        <div class="col-md-8  col-sm-8 col-xs-8  blg-entry">
-                                            <h6> <a href="single.html">Add news functions </a></h6> 
-                                            <p style="line-height: 17px; padding: 8px 2px;">Lorem ipsum dolor sit amet, nulla ...</p>
-                                        </div>
-                                    </li> 
-
-                                    <li>
-                                        <div class="col-md-3 col-sm-4 col-xs-4 blg-thumb p0">
-                                            <a href="single.html">
-                                                <img src="assets/img/demo/small-proerty-2.jpg">
-                                            </a>
-                                            <span class="blg-date">12-12-2016</span>
-
-                                        </div>
-                                        <div class="col-md-8  col-sm-8 col-xs-8  blg-entry">
-                                            <h6> <a href="single.html">Add news functions </a></h6> 
-                                            <p style="line-height: 17px; padding: 8px 2px;">Lorem ipsum dolor sit amet, nulla ...</p>
-                                        </div>
-                                    </li> 
-
-
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6 wow fadeInRight animated">
-                            <div class="single-footer news-letter">
-                                <h4>Stay in touch</h4>
-                                <div class="footer-title-line"></div>
-                                <p>Lorem ipsum dolor sit amet, nulla  suscipit similique quisquam molestias. Vel unde, blanditiis.</p>
-
-                                <form>
-                                    <div class="input-group">
-                                        <input class="form-control" type="text" placeholder="E-mail ... ">
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-primary subscribe" type="button"><i class="pe-7s-paper-plane pe-2x"></i></button>
-                                        </span>
-                                    </div>
-                                    <!-- /input-group -->
-                                </form> 
-
-                                <div class="social pull-right"> 
+                                <br>
+                                   <div class="social pull-left"> 
                                     <ul>
                                         <li><a class="wow fadeInUp animated" href="https://twitter.com/kimarotec"><i class="fa fa-twitter"></i></a></li>
                                         <li><a class="wow fadeInUp animated" href="https://www.facebook.com/kimarotec" data-wow-delay="0.2s"><i class="fa fa-facebook"></i></a></li>
@@ -111,6 +29,27 @@
                                         <li><a class="wow fadeInUp animated" href="https://instagram.com/kimarotec" data-wow-delay="0.6s"><i class="fa fa-dribbble"></i></a></li>
                                     </ul> 
                                 </div>
+                            </div>
+                        </div>
+                  
+                   
+                        <div class="col-md-3 col-sm-6 wow fadeInRight animated" style="width:50%">
+                            <div class="single-footer news-letter">
+                                <h4>terms</h4>
+                                <div class="footer-title-line"></div>
+                                <p>Fork & Knife(이하 회사)는 예약을 중개하는 플랫폼 서비스만을 제공할 뿐, 예약을 직접 관리하는 당사자가 아닙니다.
+                                "가게"와 "회원" 사이에 이루어지는 예약에 관련하여 발생하는 취소,변경,환불 등의 거래진행은 거래의 당사자인
+                                "가게"와 "회원" 각각의 책임 하에 이루어집니다. "회사"는 "가게"와 "회원" 사이의 예약에 대해 관여하지 않으며, 이에 대하여
+                                어떠한 책임도 부담하지 않습니다.</p>
+                                
+								<hr style="border:solid 1px #4C4C4C;">
+								
+								<div align="center" >
+								<a href="#" style="color:gray; padding:30px; text-decoration:underline;">제휴문의</a>
+								<a href="#" style="color:gray; padding:30px; text-decoration:underline;">광고문의</a>
+								<a href="#" style="color:gray; padding:30px; text-decoration:underline;">이용약관</a>
+								<a href="#" style="color:gray; padding:30px; text-decoration:underline;">개인정보 처리방침</a>
+                             	</div>
                             </div>
                         </div>
 
@@ -122,15 +61,10 @@
                 <div class="container">
                     <div class="row">
                         <div class="pull-left">
-                            <span> (C) <a href="http://www.KimaroTec.com">KimaroTheme</a> , All rights reserved 2016  </span> 
+                            <span> (C) <a href="./main.st">Fork & Knife</a> , All rights reserved 2022  </span> 
                         </div> 
                         <div class="bottom-menu pull-right"> 
-                            <ul> 
-                                <li><a class="wow fadeInUp animated" href="#" data-wow-delay="0.2s">Home</a></li>
-                                <li><a class="wow fadeInUp animated" href="#" data-wow-delay="0.3s">Property</a></li>
-                                <li><a class="wow fadeInUp animated" href="#" data-wow-delay="0.4s">Faq</a></li>
-                                <li><a class="wow fadeInUp animated" href="#" data-wow-delay="0.6s">Contact</a></li>
-                            </ul> 
+                          <span>Designed By garo-estate-master</span>
                         </div>
                     </div>
                 </div>
@@ -147,6 +81,7 @@
 
         <script src="assets/js/easypiechart.min.js"></script>
         <script src="assets/js/jquery.easypiechart.min.js"></script>
+
         <script src="assets/js/owl.carousel.min.js"></script>        
 
         <script src="assets/js/wow.js"></script>

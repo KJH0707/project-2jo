@@ -48,7 +48,6 @@ public class ReportWriteAction implements Action {
 		
 		UserDAO udao = new UserDAO();
 		MemberDTO mdto = udao.getMember(id);
-		System.out.println("ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd");		
 		// 한글처리
 		//request.setCharacterEncoding("UTf-8");
 		ServletContext CTX = request.getServletContext();

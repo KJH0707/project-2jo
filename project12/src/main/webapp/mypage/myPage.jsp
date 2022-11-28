@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html class="no-js"> <!--<![endif]-->
    <head>
-      <title>Insert title here</title>
+      <title>Fork and Knife | My page</title>
 
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css"/>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -25,7 +25,7 @@
        <div class="container">
          <div class="row">
              <div class="page-head-content">
-                 <h1 class="page-title">List Layout With Sidebar</h1>               
+                 <h1 class="page-title">My page</h1>               
              </div>
          </div>
        </div>
@@ -82,17 +82,6 @@
                                </div>
                            </li>
                            <li>
-                           	  <a href="./MemberCoupon.co">
-                               <div class="col-md-3 col-sm-3 col-xs-3 blg-thumb p0">
-                                   <img src="assets/img/myPage/coupon.png" width="20" height="20">
-                               </div>
-                              </a>
-                               <div class="col-md-8 col-sm-8 col-xs-8 blg-entry">
-                                   <h6> <a href="./MemberCoupon.co">쿠폰 관리</a></h6>
-<!--                                     <span class="property-price">3000000$</span> -->
-                               </div>
-                           </li>
-                           <li>
                            	  <a href="./MemberInfoEdit.us">
                                <div class="col-md-3 col-sm-3 col-xs-3 blg-thumb p0">
                                    <img src="assets/img/myPage/note.png" width="20" height="20">
@@ -128,7 +117,7 @@
                 <div class="row">
                     <div class="col-sm-6 col-md-4">
 <!--                     /380x500 -->
-                        <img src="assets/img/myPage/cat.jpg" alt="profile" width=500 height=500 style="border-radius:50%" />
+                        <img src="./mypage/account_avatar_face_man_people_profile_user_icon_123197.png" alt="profile" width=200 height=200 style="border-radius:50%;  opacity: 0.5;" />
                     </div>
                     
                     
@@ -140,7 +129,7 @@
                         	<b>아이디</b>&nbsp;&nbsp;&nbsp;${dto.m_id }
                             <span style="margin-left:48px">
 <!--                             <i class="glyphicon glyphicon-envelope"></i> -->
-                            <b>이&nbsp;&nbsp;&nbsp;름</b>&nbsp;&nbsp;&nbsp;${dto.m_name }</span>
+                            <b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이&nbsp;&nbsp;&nbsp;름</b>&nbsp;&nbsp;&nbsp;${dto.m_name }</span>
                             <br />
 <!--                             <i class="glyphicon glyphicon-envelope"></i> -->
                             <b>연락처</b>&nbsp;&nbsp;&nbsp;${dto.m_tel }

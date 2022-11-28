@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html class="no-js"> <!--<![endif]-->
    <head>
-      <title>Insert title here</title>
+      <title>Fork and Knife | My page</title>
 
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css"/>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
@@ -24,7 +24,7 @@
        <div class="container">
          <div class="row">
              <div class="page-head-content">
-                 <h1 class="page-title">List Layout With Sidebar</h1>               
+                 <h1 class="page-title">My page</h1>               
              </div>
          </div>
        </div>

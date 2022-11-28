@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Insert title here</title>
+<title>Fork and Knife | 회원 가입</title>
 
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="description" content="GARO is a real-estate template">
@@ -546,7 +546,7 @@
             <div class="container">
                 <div class="row">
                     <div class="page-head-content">
-                        <h1 class="page-title">Submit new property</h1>               
+                        <h1 class="page-title">회원 가입 페이지</h1>               
                     </div>
                 </div>
             </div>
