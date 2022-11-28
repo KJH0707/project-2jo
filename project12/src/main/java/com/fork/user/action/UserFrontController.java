@@ -361,10 +361,17 @@ public class UserFrontController extends HttpServlet {
 						e.printStackTrace();
 					}
 				}
+				
+				//회원 마이 페이지(메인페이지)
+			else if(command.equals("/MemberMyPage.us")) {
+			System.out.println(" C : /MemberMypageMain.us 호출 ");
+			System.out.println(" C : 패턴1) DB 사용 x, view 이동 ");
 			
-			
-			
-			
+			forward = new ActionForward();
+			forward.setPath("./mypage/myPage.jsp");
+			forward.setRedirect(false);
+			}
+			//회원 마이 페이지(메인페이지)
 			
 			//회원 정보 수정
 			else if(command.equals("/MemberInfoEdit.us")) {

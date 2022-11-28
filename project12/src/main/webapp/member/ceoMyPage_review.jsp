@@ -131,6 +131,16 @@ div.poltext {
                                </div>
                            </li>
                            <li>
+                           	  <a href="./CouponManage.co">
+                               <div class="col-md-3 col-sm-3 col-xs-3 blg-thumb p0">
+                                   <img src="assets/img/myPage/coupon.png" width="20" height="20">
+                               </div>
+                              </a>
+                               <div class="col-md-8 col-sm-8 col-xs-8 blg-entry">
+                                   <h6> <a href="./CouponManage.co">쿠폰 관리</a></h6>
+                               </div>
+                           </li>
+                           <li>
                            	  <a href="./CeoMyPage_Info.us">
                                <div class="col-md-3 col-sm-3 col-xs-3 blg-thumb p0">
                                    <img src="assets/img/myPage/note.png" width="20" height="20">

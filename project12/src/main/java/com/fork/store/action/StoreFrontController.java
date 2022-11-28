@@ -113,7 +113,6 @@ public class StoreFrontController extends HttpServlet {
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
-					
 				}
 				
 				else if(command.equals("/StoreUpdate.st")) {
@@ -127,6 +126,10 @@ public class StoreFrontController extends HttpServlet {
 						e.printStackTrace();
 					}
 				}
+				
+				
+				
+				
 				
 				
 				System.out.println(" C : 2. 가상주소 매핑 끝 \n");
