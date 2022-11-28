@@ -190,7 +190,7 @@
                                                         <td>${rep.rep_subject}</td>
                                                         
                                                         <td>${rep.rep_howmany }</td>
-                                                        <td><a href="#">상세 보기</a></td>
+                                                        <td><a href="#" onclick="window.open('./reportDetail.bk?rep_no=${rep.rep_no}','예약 메세지','width=700, height=1000, left=700, top=400')"><b>상세 보기</b></a></td>
                                                         <td>${rep.rep_date }</td>
                                                       
                                                        

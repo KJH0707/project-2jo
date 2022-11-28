@@ -1292,7 +1292,7 @@ public class StoreDAO {
 				}
 
 				sql = "insert into store(s_no,s_name,s_addr,s_tel,s_hours,s_type,s_image,s_content,s_facility,s_menuname,s_menuprice,s_menuImg,s_number,c_no,s_price) "
-						+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+						+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
 				pstmt = con.prepareStatement(sql);
 
 				pstmt.setInt(1, s_no);
