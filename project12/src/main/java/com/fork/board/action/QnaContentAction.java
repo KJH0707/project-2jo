@@ -10,18 +10,21 @@ import javax.servlet.http.HttpSession;
 
 import com.fork.board.db.BoardDAO;
 import com.fork.board.db.BoardDTO;
+import com.fork.user.db.MemberDTO;
+import com.fork.user.db.UserDAO;
 
 public class QnaContentAction implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		HttpSession session = request.getSession();
-		String id = (String) session.getAttribute("m_id");
+		String id = (String)session.getAttribute("id");
 		ActionForward forward = new ActionForward();
-//		if(id == null) {
-//			forward.setPath("./loginAction.us");
-//			forward.setRedirect(true);
-//		}
+
+		
+		UserDAO udao = new UserDAO();
+		MemberDTO Mdto = udao.getMember(id);
+		int m_no = Mdto.getM_no();
 		
 		String pageNum = request.getParameter("pageNum");
 		int rev_no = Integer.parseInt(request.getParameter("rev_no"));
@@ -30,6 +33,7 @@ public class QnaContentAction implements Action {
 		BoardDAO dao = new BoardDAO();
 		HashMap<String,Object> dto = dao.getQnaBoard(rev_no);
 		
+		request.setAttribute("m_noo", m_no);
 		request.setAttribute("dto", dto);
 		request.setAttribute("m_id", id);
 		

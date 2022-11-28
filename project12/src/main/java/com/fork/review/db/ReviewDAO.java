@@ -75,8 +75,6 @@ public class ReviewDAO {
 				sql = "insert into reviewcs(rev_no,s_no,rev_date,rev_star,rev_subject,"
 						+ "rev_category,m_no,rev_content,rev_file,rev_ref,rev_seq) "
 						+ "values(?,?,now(),?,?,?,?,?,?,?,?)";
-//				sql = "insert into reviewcs(rev_no,s_no,rev_date,rev_subject,rev_content) values(?,?,now(),?,?)";
-//						+ "values(?,now(),?,?,?,?,?,?,?,?)";
 				
 				pstmt = con.prepareStatement(sql);
 				
@@ -98,10 +96,10 @@ public class ReviewDAO {
 				pstmt.executeUpdate();
 				
 				sql="update store A set s_star=("
-						+ "select avg(rev_star) "
+						+ "select avg(rev_star)) "
 						+ "from reviewcs B "
 						+ "where A.s_no=B.s_no) "
-						+ "where A.s_no=? and (s_star != 0 or s_star != null)";
+						+ "where A.s_no=? and (rev_star != 0 or rev_star != null)";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1,dto.getS_no());
 				

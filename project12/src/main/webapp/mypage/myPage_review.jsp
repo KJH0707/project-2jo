@@ -130,7 +130,7 @@
                             <div class="col-sm-6 col-md-4 p0" style="width:270px">
                                     <div class="box-two proerty-item">
                                         <div class="text-left">
-                                            <img src=src="./upload/${dto.rev_file.split(',')[0] }"  style="width:100px; height:100px; padding:5px;">
+                                            <img src="./upload/${dto.rev_file}"  style="width:100px; height:100px; padding:5px;">
                                             <p class="text-right" style="margin-bottom:-10px; margin-top:-70px; margin-right:20px; line-height:0;"><b> </b></p><br>
                                             <br>
                                             <p class="text-right" style="margin-bottom:10px; margin-top:-25px; line-height:0; margin-right:60px;">
@@ -149,7 +149,7 @@
                                         	<div style="font-weight: bold;">평점 : ${dto.rev_star }점</div><br>
                                             <div>${dto.rev_content }</div><br>
                                           <small class="text-mute"><a href="./ReviewUpdate.rv?rev_no=${dto.rev_no }&pageNum=${pageNum }&rev_star=${dto.rev_star}">수정/</a></small>
-                                                       <small class="text-mute"> <a href="./ReviewDelete.rv?rev_no=${dto.rev_no }&s_no=${st.s_no }">삭제 </a></small> <br><br>
+                                                       <small class="text-mute"> <a href="./ReviewDelete.rv?rev_no=${dto.rev_no }&s_no=${dto.s_no }">삭제 </a></small> <br><br>
 <!--                                             <div class="text-right">[답글]</div> -->
 											
                                         </div>

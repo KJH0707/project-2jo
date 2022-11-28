@@ -140,7 +140,7 @@
             <div class="card shadow">
                 <div class="card-body text-center" >
                 
-                        <img class="card-img-top" src=src="./upload/${dto.s_image.split(',')[0] }">
+                        <img class="card-img-top" src="./upload/${dto.s_image}">
                         
                         
                     <a href="./storeDetails.st?s_no=${dto.s_no }"><h3 class="text-warning" style="text-align:center;">${dto.s_name}</h3></a>

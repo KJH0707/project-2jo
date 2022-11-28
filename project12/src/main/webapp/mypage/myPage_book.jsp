@@ -80,6 +80,17 @@
 <!--                                     <span class="property-price">3000000$</span> -->
                                </div>
                            </li>
+                            <li>
+                           	  <a href="./MemberCoupon.co">
+                               <div class="col-md-3 col-sm-3 col-xs-3 blg-thumb p0">
+                                   <img src="assets/img/myPage/coupon.png" width="20" height="20">
+                               </div>
+                              </a>
+                               <div class="col-md-8 col-sm-8 col-xs-8 blg-entry">
+                                   <h6> <a href="./MemberCoupon.co">쿠폰 관리</a></h6>
+<!--                                     <span class="property-price">3000000$</span> -->
+                               </div>
+                           </li>
                            <li>
                            	  <a href="./MemberInfoEdit.us">
                                <div class="col-md-3 col-sm-3 col-xs-3 blg-thumb p0">

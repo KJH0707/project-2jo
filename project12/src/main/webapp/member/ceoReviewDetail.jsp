@@ -168,7 +168,7 @@ font-size:15px;
   	  </div>
   	  <div align="right">
   	  <p style="padding: 10px 0px;"><small>
-  	  	<a href="">신고</a>
+  	  	
   	  </small></p>
   	  </div>
   	  </div>

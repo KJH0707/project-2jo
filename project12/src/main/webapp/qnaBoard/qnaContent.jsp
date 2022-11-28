@@ -104,7 +104,7 @@
                     </div>
 <!--                   <div class="dealer-action pull-right">                                         -->
 						
- 					<c:if test="${sessionScope.m_no eq dto.m_no }">
+ 					<c:if test="${m_noo eq dto.m_no }">
                       <input type="button" onclick="location.href='./QnaUpdate.br?rev_no=${param.rev_no}&pageNum=${param.pageNum}&s_no=${param.s_no}&rev_category=0'" value="edit" style="width:156px">
 <!--                                                     <input type="button" onclick="location.href='submit-property.html'" value="edit" class="button">Edit </a> -->
                     <input type="button" onclick="location.href='./QnaDelete.br?rev_no=${param.rev_no}&pageNum=${param.pageNum}&s_no=${param.s_no}'" value="delete" style="width:156px">  

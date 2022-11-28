@@ -711,6 +711,14 @@ p {
     border: 2px solid #322e2e;
     border-radius: 50%;
     padding: 10px 7px 4px 7px;
+    
+    @media (min-width: 1200px)
+.container {
+    width: 1272px;
+}
+.hi {
+    width: 93%;
+}
       </style>
       
       

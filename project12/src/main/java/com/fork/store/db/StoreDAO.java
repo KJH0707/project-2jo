@@ -1291,7 +1291,7 @@ public class StoreDAO {
 					s_no = rs.getInt(1)+1; // 첫번째 인덱스를 가져와서 +1
 				}
 
-				sql = "insert into store(s_no,s_name,s_addr,s_tel,s_hours,s_type,s_image,s_content,s_facility,s_menuname,s_menuprice,s_menuImg,s_number,c_no) "
+				sql = "insert into store(s_no,s_name,s_addr,s_tel,s_hours,s_type,s_image,s_content,s_facility,s_menuname,s_menuprice,s_menuImg,s_number,c_no,s_price) "
 						+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
 				pstmt = con.prepareStatement(sql);
 
@@ -1308,9 +1308,9 @@ public class StoreDAO {
 				pstmt.setString(11, dto.getS_menuprice());
 				pstmt.setString(12, dto.getS_menuImg());
 				pstmt.setInt(13, dto.getS_number());
-
+					
 				pstmt.setInt(14, c_no);
-
+				pstmt.setInt(15, dto.getS_price());
 				result = pstmt.executeUpdate(); // result = 1 / 실패시 0 
 
 				System.out.println(" DAO : 가게입력(1-성공/0-실패) " + result);
@@ -1883,7 +1883,7 @@ public class StoreDAO {
 		// getStoreDetails 가게 상세보기 (s_no)
 		
 				
-				// 조회수 1증가 - updateReadcount(bno)
+				// 조회수 1증가 - Readcount(bno)
 		public void updateReadcount(int s_no) {
 			
 			try {

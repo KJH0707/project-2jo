@@ -20,7 +20,7 @@ public class QnaListAction implements Action {
 		int rev_category = Integer.parseInt(request.getParameter("rev_category"));
 		
 		HttpSession session = request.getSession();
-		String id = (String) session.getAttribute("id");
+		String id = (String)session.getAttribute("id");
 		ActionForward forward = new ActionForward();
 		if(id == null) {
 			forward.setPath("./Login.us");

@@ -245,6 +245,14 @@ public class BoardDAO {
 		}
 		// 글 삭제하기 - deleteQnaBoard()
 	
+		
+		
+		
+		
+		
+		
+		
+		
 		// 글 확인 - getQnaBoard()
 		public HashMap<String,Object> getQnaBoard(int rev_no) {
 			System.out.println(" DAO : getQnaBoardList() 호출 ");
@@ -426,12 +434,11 @@ public class BoardDAO {
 				
 				// 3. sql 작성(select) & pstmt 객체
 	//											sql = "select * from itwill_board";
-				sql = "select s.*,r.*, "
-						  + "(select m_nickname from member m where m.m_no = r.m_no) m_nickname "
+				sql = "select s.*,r.* "
 						  + "from store s " 
 						  + "join reviewcs r on s.s_no = r.s_no "
 						  + "where s.s_no=? and rev_category=0 "             
-						 + "order by rev_ref desc, rev_seq asc limit ?,?";
+						  + "order by rev_ref desc, rev_seq asc limit ?,?";
 						pstmt = con.prepareStatement(sql);
 						// ?????
 						pstmt.setString(1, s_no);
@@ -450,7 +457,6 @@ public class BoardDAO {
 					hm.put("s_star", rs.getDouble("s_star"));
 					hm.put("s_no", rs.getInt("s_no"));
 					
-					hm.put("m_nickName", rs.getString("m_nickName"));
 					hm.put("m_no", rs.getInt("m_no"));
 					
 					hm.put("rev_no", rs.getInt("rev_no"));

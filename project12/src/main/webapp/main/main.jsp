@@ -34,6 +34,7 @@
         <link rel="stylesheet" href="assets/css/style.css">
         <link rel="stylesheet" href="assets/css/wizard.css">
         <link rel="stylesheet" href="assets/css/responsive.css">
+        <link rel="stylesheet" href="assets/vendor/fonts/fontawesome/css/fontawesome-all.css">
         
 <!--         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script> -->
 <!--         <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" /> -->
@@ -334,40 +335,16 @@
 </div>
 
 
-<!-- 메뉴 랜덤 추천 -->
-<!-- <div class="panel-body recent-property-widget"> -->
-<!--           <ul> -->
-<%--          	 <c:forEach var="rec" items="${recStore}"> --%>
-<!--           <li> -->
-<!--               <div class="col-md-3 col-sm-3 col-xs-3 blg-thumb p0"> -->
-<!--                   <a href="single.html"><img src="assets/img/demo/small-property-2.jpg"></a> -->
-<!--                   <span class="property-seeker"> -->
-<!--                       <b class="b-1"></b> -->
-<%--                       <b class="b-2">${rec.s_type }</b> --%>
-<!--                   </span> -->
-<!--               </div> -->
-<!--               <div class="col-md-8 col-sm-8 col-xs-8 blg-entry"> -->
-<%--                   <h6> <a href="single.htmlr">${rec.s_name } </a></h6> --%>
-<%--                   <span class="property-price">별점 : ${rec.s_star }</span> --%>
-<!--                 </div> -->
-<!--             </li> -->
-<%--             </c:forEach> --%>
-
-<!--         </ul> -->
-<!-- </div> -->
-
 <div class="content-area recent-property" style="background-color: #FCFCFC; padding-bottom: 55px;">
 <div class="container">
     <div class="row">
         <div class="col-md-10 col-md-offset-1 col-sm-12 text-center page-title">
             <!-- /.feature title -->
            <h2>이런 음식점 어떠세요?</h2>
-<%--            ${recStore } --%>
        </div>
    </div>
    <div class="row">
    <div class="proerty-th">
-<%--    ${recStore } --%>
          	 <c:forEach var="rec" items="${recStore}">
     		<div class="col-sm-6 col-md-3 p0">
     		<div class="box-two proerty-item">
@@ -381,7 +358,14 @@
               <div class="item-entry overflow">
                   <h6> <a href="./storeDetails.st?s_no=${rec.s_no}">${rec.s_name } </a></h6>
                   <div class="dot-hr"></div>
-                  <span class="pull-left"><span class="property-price">별점 : ${rec.s_star }</span> </span>
+                  <span class="pull-left"><span class="property-price">별점 : ${rec.s_star.toString().substring(0,3) }<c:forEach var="i" begin="1" end="5" step="1">
+                                                       	 	<c:if test="${rec.s_star>=i }">
+                                                        		<i id="star${k}" class="fa fa-star" style= color:red;></i>
+                                                       		</c:if>
+                                                       		<c:if test="${rec.s_star<i }">
+                                                       			 <i id="star${k}" class="far fa-star" style= color:red;></i>
+                                                       		</c:if>
+                                                        </c:forEach></span> </span>
                    <span class="proerty-price pull-right">  </span>
                 </div>
                 </div>
@@ -437,7 +421,14 @@
               <div class="item-entry overflow">
                   <h6> <a href="./storeDetails.st?s_no=${cost.s_no}">${cost.s_name } </a></h6>
                   <div class="dot-hr"></div>
-                  <span class="pull-left"><span class="property-price">별점 : ${cost.s_star }</span> </span>
+                  <span class="pull-left"><span class="property-price">별점 : ${cost.s_star.toString().substring(0,3) } <c:forEach var="i" begin="1" end="5" step="1">
+                                                       	 	<c:if test="${cost.s_star>=i }">
+                                                        		<i id="star${k}" class="fa fa-star" style= color:red;></i>
+                                                       		</c:if>
+                                                       		<c:if test="${cost.s_star<i }">
+                                                       			 <i id="star${k}" class="far fa-star" style= color:red;></i>
+                                                       		</c:if>
+                                                        </c:forEach></span>
                    <span class="proerty-price pull-right">  </span>
                 </div>
                 </div>
@@ -472,7 +463,14 @@
               <div class="item-entry overflow">
                   <h6> <a href="./storeDetails.st?s_no=${cost.s_no}">${cost.s_name } </a></h6>
                   <div class="dot-hr"></div>
-                  <span class="pull-left"><span class="property-price">별점 : ${cost.s_star }</span> </span>
+                  <span class="pull-left"><span class="property-price">별점 : ${cost.s_star.toString().substring(0,3) } <c:forEach var="i" begin="1" end="5" step="1">
+                                                       	 	<c:if test="${cost.s_star>=i }">
+                                                        		<i id="star${k}" class="fa fa-star" style= color:red;></i>
+                                                       		</c:if>
+                                                       		<c:if test="${cost.s_star<i }">
+                                                       			 <i id="star${k}" class="far fa-star" style= color:red;></i>
+                                                       		</c:if>
+                                                        </c:forEach></span> </span>
                    <span class="proerty-price pull-right">  </span>
                 </div>
                 </div>
@@ -508,7 +506,14 @@
               <div class="item-entry overflow">
                   <h6> <a href="./storeDetails.st?s_no=${cost.s_no}">${cost.s_name } </a></h6>
                   <div class="dot-hr"></div>
-                  <span class="pull-left"><span class="property-price">별점 : ${cost.s_star }</span> </span>
+                  <span class="pull-left"><span class="property-price">별점 : ${cost.s_star.toString().substring(0,3) } <c:forEach var="i" begin="1" end="5" step="1">
+                                                       	 	<c:if test="${cost.s_star>=i }">
+                                                        		<i id="star${k}" class="fa fa-star" style= color:red;></i>
+                                                       		</c:if>
+                                                       		<c:if test="${cost.s_star<i }">
+                                                       			 <i id="star${k}" class="far fa-star" style= color:red;></i>
+                                                       		</c:if>
+                                                        </c:forEach></span> </span>
                    <span class="proerty-price pull-right">  </span>
                 </div>
                 </div>
@@ -544,7 +549,14 @@
               <div class="item-entry overflow">
                   <h6> <a href="./storeDetails.st?s_no=${cost.s_no}">${cost.s_name } </a></h6>
                   <div class="dot-hr"></div>
-                  <span class="pull-left"><span class="property-price">별점 : ${cost.s_star }</span> </span>
+                  <span class="pull-left"><span class="property-price">별점 : ${cost.s_star.toString().substring(0,3) } <c:forEach var="i" begin="1" end="5" step="1">
+                                                       	 	<c:if test="${cost.s_star>=i }">
+                                                        		<i id="star${k}" class="fa fa-star" style= color:red;></i>
+                                                       		</c:if>
+                                                       		<c:if test="${cost.s_star<i }">
+                                                       			 <i id="star${k}" class="far fa-star" style= color:red;></i>
+                                                       		</c:if>
+                                                        </c:forEach></span> </span>
                    <span class="proerty-price pull-right">  </span>
                 </div>
                 </div>
@@ -594,7 +606,14 @@
               <div class="item-entry overflow">
                   <h6> <a href="./storeDetails.st?s_no=${star.s_no}">${star.s_name } </a></h6>
                   <div class="dot-hr"></div>
-                  <span class="pull-left"><span class="property-price">별점 : ${star.s_star }</span> </span>
+                  <span class="pull-left"><span class="property-price">별점 : ${star.s_star.toString().substring(0,3) } <c:forEach var="i" begin="1" end="5" step="1">
+                                                       	 	<c:if test="${star.s_star>=i }">
+                                                        		<i id="star${k}" class="fa fa-star" style= color:red;></i>
+                                                       		</c:if>
+                                                       		<c:if test="${star.s_star<i }">
+                                                       			 <i id="star${k}" class="far fa-star" style= color:red;></i>
+                                                       		</c:if>
+                                                        </c:forEach></span> </span>
                    <span class="proerty-price pull-right">  </span>
                 </div>
                 </div>
@@ -633,7 +652,14 @@
               <div class="item-entry overflow">
                   <h6> <a href="./storeDetails.st?s_no=${read.s_no}">${read.s_name } </a></h6>
                   <div class="dot-hr"></div>
-                  <span class="pull-left"><span class="property-price">별점 : ${read.s_star }</span> </span>
+                  <span class="pull-left"><span class="property-price">별점 : ${read.s_star.toString().substring(0,3) } <c:forEach var="i" begin="1" end="5" step="1">
+                                                       	 	<c:if test="${read.s_star>=i }">
+                                                        		<i id="star${k}" class="fa fa-star" style= color:red;></i>
+                                                       		</c:if>
+                                                       		<c:if test="${read.s_star<i }">
+                                                       			 <i id="star${k}" class="far fa-star" style= color:red;></i>
+                                                       		</c:if>
+                                                        </c:forEach></span> </span>
                    <span class="proerty-price pull-right">  </span>
                 </div>
                 </div>
@@ -666,7 +692,14 @@
                             <div class="client-text" style="overflow: hidden;"> 
 <!--                             	<div class="col-md-6">                              -->
                                 <p>${review.rev_content}</p>
-                                <h4><strong>${review.s_name}, </strong><i>별점 ${review.rev_star}</i></h4>
+                                <h4><strong>${review.s_name}, </strong><i>별점 ${review.rev_star } <c:forEach var="i" begin="1" end="5" step="1">
+                                                       	 	<c:if test="${review.rev_star>=i }">
+                                                        		<i id="star${k}" class="fa fa-star" style= color:red;></i>
+                                                       		</c:if>
+                                                       		<c:if test="${review.rev_star<i }">
+                                                       			 <i id="star${k}" class="far fa-star" style= color:red;></i>
+                                                       		</c:if>
+                                                        </c:forEach></i></h4>
 <!--                                 </div>   -->
 <!--                                 <div class="col-md-6"> -->
 <!--                                 <div class="client-face wow fadeInRight" data-wow-delay=".9s">  -->

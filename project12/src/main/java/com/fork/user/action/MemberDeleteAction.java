@@ -30,7 +30,7 @@ public class MemberDeleteAction implements Action {
 			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter();		
 			out.print("<script>");
-			out.print("alert('로그인 하쇼.');");
+			out.print("alert('로그인 하세요.');");
 			out.print("location.href='./Login.us';");
 			out.print("</script>");
 			out.close();
@@ -75,7 +75,8 @@ public class MemberDeleteAction implements Action {
 			
 			out.print("<script>");
 			out.print(" alert('회원정보 삭제완료'); ");
-			out.print(" location.href='./MemberInfoEdit.us'; ");
+			out.print("window.open('','_self').close();");
+			out.print("window.opener.location.href='http://itwillbs10.cafe24.com/Fork/main.st';");
 			out.print("</script>");
 			out.close();
 			

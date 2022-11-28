@@ -17,7 +17,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700,800' rel='stylesheet' type='text/css'>
-
+ <link rel="stylesheet" href="assets/vendor/fonts/fontawesome/css/fontawesome-all.css">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 		<script type="text/javascript">
 // 			$(document).ready(function() {
@@ -301,7 +301,7 @@
                                         <c:forEach var="rec" items="${recStore}">
                                         <li>
                                             <div class="col-md-3 col-sm-3 col-xs-3 blg-thumb p0">
-                                                <a href="./storeDetails.st?s_no=${rec.s_no }"><img src="assets/img/demo/small-property-2.jpg"></a>
+                                                <a href="./storeDetails.st?s_no=${rec.s_no }"><img src="./upload/<img src="./upload/${rec.s_image.split(',')[0] }">"></a>
                                                 <span class="property-seeker">
 <!--                                                     <b class="b-1"></b> -->
                                                     <b class="b-2">${rec.s_type }</b>
@@ -376,13 +376,20 @@
                             		
                                     <div class="box-two proerty-item">
                                         <div class="item-thumb">
-                                            <a href="storeDetails.st?s_no=${dto.s_no }" ><img src="assets/img/demo/property-3.jpg"></a>
+                                            <a href="storeDetails.st?s_no=${dto.s_no }" ><img src="./upload/${dto.s_image.split(',')[0] }"></a>
                                         </div>
 
                                         <div class="item-entry overflow">
-                                            <h5><a href="property-1.html">${dto.s_name } (${dto.s_type })</a></h5>
+                                            <h5><a href="storeDetails.st?s_no=${dto.s_no }">${dto.s_name } (${dto.s_type })</a></h5>
                                             <div class="dot-hr"></div>
-                                            <span class="pull-left"><b> 별점 :</b> ${dto.s_star} </span>
+                                            <span class="pull-left"><b> 별점 :</b> ${dto.s_star.toString().substring(0,3)}<c:forEach var="i" begin="1" end="5" step="1">
+                                                       	 	<c:if test="${dto.s_star>=i }">
+                                                        		<i id="star${k}" class="fa fa-star" style= color:red;></i>
+                                                       		</c:if>
+                                                       		<c:if test="${dto.s_star<i }">
+                                                       			 <i id="star${k}" class="far fa-star" style= color:red;></i>
+                                                       		</c:if>
+                                                        </c:forEach>  </span>
 <!--                                             <span class="proerty-price pull-right"> $ 300,000</span> -->
                                             <p style="display: none;">${dto.s_content }</p>
 

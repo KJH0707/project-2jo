@@ -188,6 +188,8 @@
                             </div>
                         </div>
                     </div>
+            
+                    
 <!--              </div> -->
 <!--        </div> -->
 <!--     </div> -->
@@ -195,6 +197,8 @@
 <!------ Include the above in your HEAD tag ---------->
 
 <!-- 	/////// 목록//////////////// -->
+	</div>
+	</div>
 	</div>
 	</div>
 	</div>
