@@ -445,8 +445,7 @@ today.setDate(today.getDate() + 7); // 7일 더하여 setting
                                 <form action="./BookMark.bk" method="post" name="bf">
                                  <!-- 좋아요 기능 -->
                                  <input type="hidden" name="s_no" value="${dto.s_no}">
-                                 <input type="hidden" name="result" value="${result1}">
-                                 <input type="hidden" name="result" value="${dto}">
+                                 <input type="hidden" name="result1" value="${result1}">
                                  
                                   <c:choose>
                                     <c:when test="${result1==1}">

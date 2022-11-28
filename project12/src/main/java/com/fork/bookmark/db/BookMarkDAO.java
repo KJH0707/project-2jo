@@ -193,7 +193,15 @@ public class BookMarkDAO {
 		sql = "select * from report where rep_no=?";
 		pstmt = con.prepareStatement(sql);
 		pstmt.setInt(1, rep_no); 
+		rs = pstmt.executeQuery();
 		
+		if(rs.next()) {
+			hm = new HashMap<String,Object>();
+			
+			hm.put("rep_subject", rs.getString("rep_subject"));
+			hm.put("rep_file", rs.getString("rep_file"));
+			hm.put("rep_reason", rs.getString("rep_reason"));
+		}
 		
 		
 	} catch (Exception e) {
@@ -202,7 +210,7 @@ public class BookMarkDAO {
 	}
 	   
 	   
-	   return null;
+	   return hm;
    }
 			
 }

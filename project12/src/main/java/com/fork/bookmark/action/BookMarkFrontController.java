@@ -52,9 +52,14 @@ public class BookMarkFrontController extends HttpServlet {
 				
 				else if(command.equals("/reportDetail.bk")) {
 				        	
-					forward = new ActionForward();
-					forward.setPath("./admin/reportDetail.jsp");
-					forward.setRedirect(false);
+					action = new reportDetailAction();
+					
+					try {
+						forward = action.execute(request, response);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				            
 				            
 		        } 

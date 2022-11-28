@@ -33,14 +33,14 @@
                             <!-- ============================================================== -->
                             <div class="card">
                                 <div class="card-body">
-                                    <b>제목 : </b>
+                                    <b>제목 : ${rep.rep_subject }</b>
                                 </div>
                                 <div class="card-body border-top">
-                                <img src="assets/img/banner7.jpg" width="500" height="400">
+                                <img src="../upload/${rep.rep_file }" width="500" height="400">
                                    
                                 </div>
                                 <div class="card-body border-top">
-                                    내용 :
+                                    내용 : ${rep.rep_reason }
                                 </div>
                                
                             </div>
