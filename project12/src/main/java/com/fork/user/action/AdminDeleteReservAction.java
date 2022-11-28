@@ -19,21 +19,33 @@ public class AdminDeleteReservAction implements Action {
 		String id =null;
 		HttpSession session = request.getSession();
 		if (session.getAttribute("id")!=null) {
-			 id = (String) session.getAttribute("c_id");
+			 id = (String) session.getAttribute("id");
 		}
 		ActionForward forward = new ActionForward();
 		
-		if(!(id.equals("admin")) | id == null) {
+		if(id == null) {
 			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter();		
 			out.print("<script>");
 			out.print("alert('잘못된 접근입니다');");
-			out.print("history.back()';");
+			out.print("history.back();");
 			out.print("</script>");
 			out.close();
 			return null;
 		}
-		// 아이디 제어 (어드민)
+		else if (!(id.equals("admin"))){
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();		
+			out.print("<script>");
+			out.print("alert('잘못된 접근입니다');");
+			out.print("history.back();");
+			out.print("</script>");
+			out.close();
+			return null;
+		}
+		
+		// 아이디 제어 (어드민)		
+		
 		int res_no = Integer.parseInt(request.getParameter("res_no"));
 		int pageNum = Integer.parseInt(request.getParameter("pageNum"));
 		

@@ -19,22 +19,34 @@ public class CeoMypage_revDetailAction implements Action {
 		
 		// 아이디 제어 (점주)
 		HttpSession session = request.getSession();
-		String id = (String) session.getAttribute("c_id");
+		
+		String id = null;
+		if (session.getAttribute("id")!=null) {
+			id = (String) session.getAttribute("id");
+		}
 		ActionForward forward = new ActionForward();
 		StoreDAO sdao = new StoreDAO();
 		
-		if(id!=null) {
-			if(sdao.isCeo(id)==0) {
-				response.setContentType("text/html; charset=UTF-8");
-				PrintWriter out = response.getWriter();		
-				out.print("<script>");
-				out.print("alert('잘못된 접근입니다');");
-				out.print("history.back()';");
-				out.print("</script>");
-				out.close();
-				return null;
-			}	
-		}
+		if(id==null) {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();		
+			out.print("<script>");
+			out.print("alert('잘못된 접근입니다');");
+			out.print("history.back();");
+			out.print("</script>");
+			out.close();
+			return null;
+			
+		} else if(sdao.isCeo(id)==0) {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();		
+			out.print("<script>");
+			out.print("alert('잘못된 접근입니다');");
+			out.print("history.back();");
+			out.print("</script>");
+			out.close();
+			return null;
+		}	
 		// 아이디 제어 (점주)
 		
 		// 정보 저장
