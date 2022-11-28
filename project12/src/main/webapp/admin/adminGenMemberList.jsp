@@ -193,7 +193,7 @@
                     		</div>
                     		<div class="col-xl-9">
                     		<form action="./adminGenMemList.us" method="post">
-                                <input class="form-controlkjh" type="text" placeholder="아이디 검색" name="m_id" value="${keyword }">
+                                <input class="form-controlkjh" type="text" placeholder="아이디 검색" name="keyword" value="${keyword }">
                                 <input type="submit" value="검색" class="btn btn-primary">
                                 <a href="./adminGenMemList.us" class="btn btn-primary">전체보기</a>
                             </form>

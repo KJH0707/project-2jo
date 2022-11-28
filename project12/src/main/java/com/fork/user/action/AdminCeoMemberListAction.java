@@ -50,7 +50,7 @@ public class AdminCeoMemberListAction implements Action {
 		// 아이디 제어 (어드민)
 		
 		int pageSize = 9;
-		String c_id = (String)request.getParameter("c_id");
+		String keyword = (String)request.getParameter("keyword");
 		
 		
 		
@@ -78,12 +78,12 @@ public class AdminCeoMemberListAction implements Action {
 		//ArrayList boardListAll = dao.getBoardList();
 		List ceoMemList = null;
 		StringBuffer sb = new StringBuffer();
-		if (c_id!=null) {
-			request.setAttribute("keyword",c_id );
-			c_id = c_id.trim();
-			sb.append(c_id);
+		if (keyword!=null) {
+			request.setAttribute("keyword",keyword );
+			keyword = keyword.trim();
+			sb.append(keyword);
 			sb.insert(0, "%");
-			sb.insert(c_id.length()+1, "%");
+			sb.insert(keyword.length()+1, "%");
 			ceoMemList = dao.adminGetCeoMemList(startRow, pageSize, sb.toString());
 			cnt = dao.adminCntGetCeoMemList(startRow, pageSize, sb.toString());
 		}

@@ -95,13 +95,12 @@ public class ReviewDAO {
 				// 4. 
 				pstmt.executeUpdate();
 				
-				sql="update store A set s_star=("
-						+ "select avg(rev_star)) "
-						+ "from reviewcs B "
-						+ "where A.s_no=B.s_no) "
-						+ "where A.s_no=? and (rev_star != 0 or rev_star != null)";
+				sql="update store set "
+						+ "s_star=(select avg(rev_star) from reviewcs where s_no=? and (rev_star != 0 or rev_star != null)) "
+						+ "where s_no=?;";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1,dto.getS_no());
+				pstmt.setInt(2,dto.getS_no());
 				
 				pstmt.executeUpdate();
 				

@@ -484,7 +484,7 @@ public class UserDAO {
 					pstmt = con.prepareStatement(sql);
 				// ?????
 					pstmt.setString(1, m_id); // 시작행-1
-					pstmt.setInt(2, startRow);
+					pstmt.setInt(2, startRow-1);
 					pstmt.setInt(3, pageSize);
 					// 개수
 				// 4. sql 실행
@@ -774,7 +774,7 @@ public class UserDAO {
 					pstmt = con.prepareStatement(sql);
 				// ?????
 					pstmt.setString(1, c_id); // 시작행-1
-					pstmt.setInt(2, startRow);
+					pstmt.setInt(2, startRow-1);
 					pstmt.setInt(3, pageSize);
 				// 4. sql 실행
 					rs = pstmt.executeQuery();

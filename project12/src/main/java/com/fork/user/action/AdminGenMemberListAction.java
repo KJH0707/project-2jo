@@ -48,7 +48,7 @@ public class AdminGenMemberListAction implements Action {
 		
 		// 아이디 제어 (어드민)
 		
-		String m_id = (String)request.getParameter("m_id");
+		String keyword = (String)request.getParameter("keyword");
 		
 		
 		int cnt = dao.getGenMemCount();
@@ -75,13 +75,14 @@ public class AdminGenMemberListAction implements Action {
 		//ArrayList boardListAll = dao.getBoardList();
 		List genMemList = null;
 		
-		if (m_id!=null) {
+		if (keyword!=null) {
 			StringBuffer sb = new StringBuffer();
-			request.setAttribute("keyword", m_id);
-			m_id = m_id.trim();
-			sb.append(m_id);
+			request.setAttribute("keyword", keyword);
+			keyword = keyword.trim();
+			sb.append(keyword);
 			sb.insert(0, "%");
-			sb.insert(m_id.length()+1, "%");
+			sb.insert(keyword.length()+1, "%");
+			System.out.println(sb);
 			genMemList = dao.adminGetGenMemList(startRow,pageSize,sb.toString());
 			cnt = dao.adminCntGetGenMemList(startRow,pageSize,sb.toString());
 		}

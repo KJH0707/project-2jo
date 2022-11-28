@@ -448,7 +448,7 @@ public class StoreDAO {
 				con = getConnection();
 			// 3. sql 작성(select) & pstmt 객체
 //				sql = "select * from itwill_board";
-				sql = "select * from store where ? < s_price and s_price<?" + "limit ?,? ";
+				sql = "select * from store where s_price between ? and ?" + "limit ?,? ";
 				pstmt = con.prepareStatement(sql);
 			// ?????
 				pstmt.setString(1, price.split(",")[0]);
@@ -496,7 +496,7 @@ public class StoreDAO {
 				con = getConnection();
 			// 3. sql 작성(select) & pstmt 객체
 //				sql = "select * from itwill_board";
-				sql = "select count(*) from store where ? < s_price and s_price<?";
+				sql = "select count(*) from store where s_price between ? and ?";
 				pstmt = con.prepareStatement(sql);
 			// ?????
 				pstmt.setString(1, price.split(",")[0]);
@@ -2187,7 +2187,7 @@ public class StoreDAO {
 				
 				try {
 					con = getConnection();
-					sql = "select * from store where s_price between 0 and 24999 order by rand() limit 3";
+					sql = "select * from store where s_price between 0 and 25000 order by rand() limit 3";
 					pstmt = con.prepareStatement(sql);
 					rs = pstmt.executeQuery();
 					while(rs.next()) {
@@ -2202,7 +2202,7 @@ public class StoreDAO {
 						
 						list1.add(dto);
 					}
-					sql = "select * from store where s_price between 25000 and 49999 order by rand() limit 3";
+					sql = "select * from store where s_price between 25001 and 50000 order by rand() limit 3";
 					pstmt = con.prepareStatement(sql);
 					rs = pstmt.executeQuery();
 					while(rs.next()) {
@@ -2217,7 +2217,7 @@ public class StoreDAO {
 						
 						list2.add(dto);
 					}
-					sql = "select * from store where s_price between 50000 and 74999 order by rand() limit 3";
+					sql = "select * from store where s_price between 50001 and 75000 order by rand() limit 3";
 					pstmt = con.prepareStatement(sql);
 					rs = pstmt.executeQuery();
 					while(rs.next()) {
@@ -2232,7 +2232,7 @@ public class StoreDAO {
 						
 						list3.add(dto);
 					}
-					sql = "select * from store where s_price between 75000 and 100000 order by rand() limit 3";
+					sql = "select * from store where s_price between 75001 and 100000 order by rand() limit 3";
 					pstmt = con.prepareStatement(sql);
 					rs = pstmt.executeQuery();
 					while(rs.next()) {
