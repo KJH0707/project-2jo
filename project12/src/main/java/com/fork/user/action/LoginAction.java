@@ -34,6 +34,17 @@ public class LoginAction implements Action {
 			return null;
 		}
 		
+		if(result == 3) {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();		
+			out.print("<script>");
+			out.print("alert('정지된 계정입니다. 이메일을 확인해주세요.');");
+			out.print("history.back();");
+			out.print("</script>");
+			out.close();
+			return null;
+		}
+		
 		if(result == -1) {
 			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter();		

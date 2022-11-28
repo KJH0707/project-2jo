@@ -1,6 +1,8 @@
 package com.fork.user.action;
 
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -8,12 +10,16 @@ import javax.servlet.http.HttpSession;
 
 import com.fork.user.db.UserDAO;
 
-public class AdminDeleteStoreListACtion implements Action {
+public class AdminSanctionProAction implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		UserDAO dao = new UserDAO();
+
+		StopMsgEmail email = new StopMsgEmail();
+		
+		int cnt = dao.getNoticeCount(1);
 		
 		// 아이디 제어 (어드민)
 		String id =null;
@@ -46,15 +52,29 @@ public class AdminDeleteStoreListACtion implements Action {
 		
 		// 아이디 제어 (어드민)
 		
-		int s_no = Integer.parseInt(request.getParameter("s_no"));
-		int pageNum = Integer.parseInt(request.getParameter("pageNum"));
+		int rep_m_no = Integer.parseInt(request.getParameter("rep_m"));
+		int day = Integer.parseInt(request.getParameter("day"));
 		
 		
-		dao.adminDeleteStore(s_no);
 		
+		String m_email = (String)request.getParameter("m_email");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		
-		forward.setPath("/adminList.us?pageNum="+pageNum);
+        Calendar c1 = Calendar.getInstance();
+        if (day==100) {
+        	c1.add(Calendar.YEAR, day);
+        } else {
+        	c1.add(Calendar.DATE, day);
+        }
+        int stopDay = Integer.parseInt(sdf.format(c1.getTime()));
+		String reason = (String)request.getParameter("reason");
+		
+		dao.memStop(rep_m_no, stopDay);
+		email.connectEmail(m_email, reason);
+		
+		forward.setPath("./admin/done.jsp");
 		forward.setRedirect(true);
+		
 		return forward;
 	}
 

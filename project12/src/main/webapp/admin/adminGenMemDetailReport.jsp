@@ -14,7 +14,7 @@
     <link href="assets/vendor/fonts/circular-std/style.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/libs/css/style.css">
     <link rel="stylesheet" href="assets/vendor/fonts/fontawesome/css/fontawesome-all.css">
-    <title>Concept - Bootstrap 4 Admin Dashboard Template</title>
+    <title>Fork and Knife | Admin</title>
 </head>
 
 <body>
@@ -165,13 +165,12 @@
                                             <table class="table">
                                                 <thead class="bg-light">
                                                     <tr class="border-0">
-                                                        <th class="border-0">No.</th>
-                                                        <th class="border-0">가게 이름</th>
-                                                        <th class="border-0">점주 이름</th>
-                                                        <th class="border-0">신고자 ID</th>
-                                                        <th class="border-0">신고자명</th>
-                                                        <th class="border-0">신고 사유</th>
+                                                        <th class="border-0">신고 No.</th>
+                                                        <th class="border-0">가게 No.</th>
+                                                        <th class="border-0">피신고자 No.</th>
+                                                        <th class="border-0">신고 제목</th>
                                                         <th class="border-0">신고 횟수</th>
+                                                        <th class="border-0">신고 내용</th>
                                                         <th class="border-0">신고일자</th>
                                                         <th class="border-0">관리</th>
                                                         
@@ -186,19 +185,21 @@
 <!--                                                         <td> -->
 <!--                                                             <div class="m-r-10"><img src="assets/images/product-pic.jpg" alt="user" class="rounded" width="45"></div> -->
 <!--                                                         </td> -->
-                                                        <td>${rep.s_name }</td>
-                                                        <td>${rep.c_name }</td>
-                                                        <td>${rep.m_id}</td>
+                                                        <td><a href="./storeDetails.st?s_no=${rep.s_no}"><b>${rep.s_no }</b></a></td>
+                                                        <td><a href="./adminGenMemDetail.us?m=${rep.rep_m_no}"><b>${rep.rep_m_no }</b></a></td>
+                                                        <td>${rep.rep_subject}</td>
                                                         
-                                                        <td>${rep.m_name }</td>
-                                                        <td>${rep.rep_reason }</td>
                                                         <td>${rep.rep_howmany }</td>
+                                                        <td><a href="#">상세 보기</a></td>
+                                                        <td>${rep.rep_date }</td>
                                                       
-                                                        <td>${rep.rep_date}</td>
+                                                       
                                                        
                                                         <td>
-                                                        	<a href="#">수정</a> 
-                                                        	
+                                                        <c:if test='${rep.rep_sort==0 }'>
+                                                        	<a href="#" onclick="window.open('./adminSanction.us?s=${rep.s_no}&m_email=${rep.m_email }&rep_m=${rep.rep_m_no }','예약 메세지','width=420, height=360, left=700, top=400')">
+                                                    제재</a>
+                                                    </c:if>
                                                         	<a href="javascript: isDelete(${rep.rep_no },${pageNum })">삭제</a>
                                                          </td>
                                                     </tr>

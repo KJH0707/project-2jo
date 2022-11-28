@@ -1,5 +1,6 @@
 package com.fork.store.action;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import java.util.List;
@@ -33,9 +34,14 @@ public class StoreJoinProAction implements Action {
 		//System.out.println(c_no);
 		ActionForward forward = new ActionForward();
 		if(id == null || cno == null) {
-			forward.setPath("./Login.us"); 
-			forward.setRedirect(true);
-			return forward;
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();		
+			out.print("<script>");
+			out.print("alert('잘못된 접근입니다');");
+			out.print("history.back()';");
+			out.print("</script>");
+			out.close();
+			return null;
 		}
 		
 		// 첨부파일

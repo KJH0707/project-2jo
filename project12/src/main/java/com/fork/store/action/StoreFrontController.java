@@ -128,10 +128,39 @@ public class StoreFrontController extends HttpServlet {
 				}
 				
 				
+				else if(command.equals("/storeReport.st")) {
+					
+					action = new StoreReportAction();
+					
+					try {
+						forward = action.execute(request, response);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+				}
 				
-				
-				
-				
+				else if(command.equals("/userReport.st")) {
+					
+					forward = new ActionForward();
+					forward.setPath("./board/userReport.jsp");
+					forward.setRedirect(false);
+					
+				}
+
+				else if(command.equals("/storeReportPro.st")) {
+					
+					action = new ReportWriteAction();
+					
+					try {
+						forward = action.execute(request, response);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+				}
 				System.out.println(" C : 2. 가상주소 매핑 끝 \n");
 				// 3. 페이지 이동
 				if(forward != null) {

@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="assets/vendor/fonts/material-design-iconic-font/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="assets/vendor/charts/c3charts/c3.css">
     <link rel="stylesheet" href="assets/vendor/fonts/flag-icon-css/flag-icon.min.css">
-    <title>Admin Dashboard </title>
+    <title>Fork and Knife | Admin</title>
     <script type="text/javascript">
     function isDelete(x,y){
     
@@ -85,6 +85,17 @@
                             <!-- 가게 목록  -->
                             <!-- ============================================================== -->
                             <div class="col-xl-9 col-lg-12 col-md-6 col-sm-12 col-12">
+                            <div class="influence-profile-content pills-regular">
+                                <ul class="nav nav-pills mb-3 nav-justified" id="pills-tab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" href="#">가게 신고 목록</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link " href="./adminReportList.us?u=1">일반 회원 신고 목록</a>
+                                    </li>
+                                </ul>
+                                </div>
+                                <div class="tab-content" id="pills-tabContent">
                                 <div class="card">
                                     <h5 class="card-header">General Member List</h5>
                                     <div class="card-body p-0">
@@ -113,9 +124,9 @@
 <!--                                                         <td> -->
 <!--                                                             <div class="m-r-10"><img src="assets/images/product-pic.jpg" alt="user" class="rounded" width="45"></div> -->
 <!--                                                         </td> -->
-                                                        <td>${rep.s_name }</td>
+                                                        <td><a href="./storeDetails.st?s_no=${rep.s_no}"><b>${rep.s_name }</b></a></td>
                                                         <td>${rep.c_name }</td>
-                                                        <td>${rep.m_id}</td>
+                                                        <td><a href="./adminGenMemDetail.us?m=${rep.m_no}"><b>${rep.m_id}</b></a></td>
                                                         
                                                         <td>${rep.m_name }</td>
                                                         <td colspan="4"><h4 class="mb-0"><a href="#" onclick="window.open('./genMemReservMsg.us?msg=${rep.rep_reason}','예약 메세지','width=600, height=150, left=700, top=400')">
@@ -125,7 +136,8 @@
                                                         <td>${rep.rep_date}</td>
                                                        
                                                         <td>
-                                                        	<a href="#">수정</a> 
+                                                       
+                                                        	
                                                         	
                                                         	<a href="javascript: isDelete(${rep.rep_no },${pageNum })">삭제</a>
                                                          </td>
@@ -159,10 +171,10 @@
                                 </div>
                             </div>
                             <div class="col-xl-9">
-                    		<form action="./adminReportList.us" method="post">
+                    		<form action="./adminReportList.us?s=1" method="post">
                                 <input class="form-controlkjh" type="text" placeholder="가게 이름이나 신고자 명 검색" name="keyword" value="${keyword }">
                                 <input type="submit" value="검색" class="btn btn-primary">
-                                <a href="./adminReportList.us" class="btn btn-primary">전체보기</a>
+                                <a href="./adminReportList.us?s=1" class="btn btn-primary">전체보기</a>
                             </form>
                             	
                     		</div>

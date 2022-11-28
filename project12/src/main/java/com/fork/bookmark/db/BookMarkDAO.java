@@ -131,7 +131,7 @@ public class BookMarkDAO {
           rs = pstmt.executeQuery();
           
           if(rs.next()) {
-          sql = "delete from bookmark where (select m_no from member where m_id=?) && s_no=?";
+          sql = "delete from bookmark where m_no=(select m_no from member where m_id=?) && s_no=?";
           pstmt = con.prepareStatement(sql);
           
           pstmt.setString(1, id);
@@ -156,8 +156,8 @@ public class BookMarkDAO {
 //    찜 해제 - delete
 			
     //찜 카운트 
-    public int countBookMark() {
-    	BookMarkDTO bkdto = new BookMarkDTO();
+    public int countBookMark(int s_no) {
+//    	BookMarkDTO bkdto = new BookMarkDTO();
     	int count = 0;
     	
     	try {
@@ -165,7 +165,7 @@ public class BookMarkDAO {
 			sql = "select count(*) from bookmark where s_no=?";
 			
 			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1,bkdto.getS_no());
+			pstmt.setInt(1,s_no);
 			
 			rs = pstmt.executeQuery();
 			

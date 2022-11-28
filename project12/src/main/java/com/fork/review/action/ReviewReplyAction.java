@@ -22,7 +22,7 @@ System.out.println(" M : BoardReWriteAction.bo 호출");
 		String id = (String) session.getAttribute("id");
 		
 		ActionForward forward = new ActionForward();
-		if(id==null && !id.contains("ceo")) {
+		if(id==null) {
 				forward.setPath("./Login.us");
 				forward.setRedirect(true);
 				return forward;

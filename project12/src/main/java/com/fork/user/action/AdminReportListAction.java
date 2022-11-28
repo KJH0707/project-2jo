@@ -1,5 +1,6 @@
 package com.fork.user.action;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,21 +17,36 @@ public class AdminReportListAction implements Action {
 		
 		UserDAO dao = new UserDAO();
 
+		// 아이디 제어 (어드민)
+		String id =null;
+		HttpSession session = request.getSession();
+		if (session.getAttribute("id")!=null) {
+			 id = (String) session.getAttribute("id");
+		}
 		ActionForward forward = new ActionForward();
 		
-		HttpSession session = request.getSession();
-		String id = (String)session.getAttribute("id");
-		// 어드민
+		if(id == null) {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();		
+			out.print("<script>");
+			out.print("alert('잘못된 접근입니다');");
+			out.print("history.back();");
+			out.print("</script>");
+			out.close();
+			return null;
+		}
+		else if (!(id.equals("admin"))){
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();		
+			out.print("<script>");
+			out.print("alert('잘못된 접근입니다');");
+			out.print("history.back();");
+			out.print("</script>");
+			out.close();
+			return null;
+		}
 		
-		// 어드민
-		
-		
-		if (!(id.equals("admin"))) {
-			forward.setPath("./main.st");
-			forward.setRedirect(true);
-			return forward;
-			
-		} // 로그인 제어
+		// 아이디 제어 (어드민)
 		
 		int pageSize = 9;
 		
@@ -60,26 +76,57 @@ public class AdminReportListAction implements Action {
 			cnt = dao.getReportCount(m_no);
 			forward.setPath("./admin/adminGenMemDetailReport.jsp");
 			forward.setRedirect(false);
-		} 
-		else {
-			repList = dao.adminGetReportList(startRow,pageSize);
-			cnt = dao.getReportCount();
-			forward.setPath("./admin/adminReportList.jsp");
+		}
+		
+		
+		
+		if (request.getParameter("s")!=null) {
+			request.setAttribute("s", "s");
+			
+			repList = dao.adminGetStoreReportList(startRow,pageSize);
+			cnt = dao.getStoreReportCount();
+			forward.setPath("./admin/adminStoreReportList.jsp");
 			forward.setRedirect(false);
 			
-		}
-		String keyword;
-		StringBuffer sb = new StringBuffer();
-		if (request.getParameter("keyword")!=null) {
-			keyword = (String)request.getParameter("keyword");
-			keyword.trim();
-			sb.append(keyword);
-			sb.insert(0, "%");
-			sb.insert(keyword.length()+1, "%");
-			repList = dao.adminGetReportList(startRow, pageSize, sb.toString());
+			String keyword;
+			StringBuffer sb = new StringBuffer();
+			if (request.getParameter("keyword")!=null) {
+				
+				keyword = (String)request.getParameter("keyword");
+				request.setAttribute("keyword", keyword);
+				keyword.trim();
+				sb.append(keyword);
+				sb.insert(0, "%");
+				sb.insert(keyword.length()+1, "%");
+				cnt = dao.adminGetCntStoreReportList(keyword);
+				repList = dao.adminGetStoreReportList(startRow, pageSize, sb.toString());
+				forward.setPath("./admin/adminStoreReportList.jsp");
+				forward.setRedirect(false);
+				
+			}
+		} else if (request.getParameter("u")!=null){ 
 			
+				repList = dao.adminGetUserReportList(startRow,pageSize);
+				cnt = dao.getUserReportCount();
+				forward.setPath("./admin/adminMemberReportList.jsp");
+				forward.setRedirect(false);
 			
-			
+			String keyword;
+			StringBuffer sb = new StringBuffer();
+			if (request.getParameter("keyword")!=null) {
+				keyword = (String)request.getParameter("keyword");
+				request.setAttribute("keyword", keyword);
+				keyword.trim();
+				sb.append(keyword);
+				sb.insert(0, "%");
+				sb.insert(keyword.length()+1, "%");
+				cnt= dao.adminGetCntUserReportList(keyword); 
+				repList = dao.adminGetUserReportList(startRow, pageSize, sb.toString());
+				forward.setPath("./admin/adminMemberReportList.jsp");
+				forward.setRedirect(false);
+				
+				
+			}
 		}
 		
 		
@@ -117,7 +164,6 @@ public class AdminReportListAction implements Action {
 		
 		request.setAttribute("repList", repList);
 		//request.setAttribute("boardListAll", dao.getBoardList());
-		
 		// 페이징처리 정보 저장
 		request.setAttribute("pageNum", pageNum);
 		request.setAttribute("totalCnt", cnt);

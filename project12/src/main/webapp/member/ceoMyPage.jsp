@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html class="no-js"> <!--<![endif]-->
    <head>
-      <title>Insert title here</title>
+      <title>Fork and Knife | My page</title>
       
      	 <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="description" content="GARO is a real-estate template">
@@ -288,6 +288,7 @@
                      	 </p>
                      	</c:when>
                      	<c:otherwise>
+                    
                      <p class="cent" style="font-size:0.7vw; text-align:left; padding:0px 10px 0px 40px; width:100%; height:220px; line-height:170%">
                        <b style="font-size:0.9vw;" >[${info[i].s_name }] </b><br>
                        <b>예약번호 : ${info[i].res_no }</b> <br>

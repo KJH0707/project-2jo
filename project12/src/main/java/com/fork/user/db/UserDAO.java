@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 
@@ -87,7 +88,7 @@ public class UserDAO {
 					
 					// 회원가입
 					sql = "insert into member "
-							+ "values(?,?,?,?,?,?,?,?,?,now())";
+							+ "values(?,?,?,?,?,?,?,?,?,now(),?)";
 					pstmt = con.prepareStatement(sql);
 					
 					// ??
@@ -100,6 +101,7 @@ public class UserDAO {
 					pstmt.setString(7, dto.getM_birth());
 					pstmt.setString(8, dto.getM_gender());
 					pstmt.setString(9, dto.getM_tel());
+					pstmt.setInt(10, dto.getM_stop());
 					
 					
 					int result = pstmt.executeUpdate();
@@ -113,7 +115,7 @@ public class UserDAO {
 				} finally {
 					closeDB();
 				}
-
+	
 			} // 회원가입 - memberJoin(DTO)
 			
 			// 아이디 중복확인 - checkId(id)
@@ -907,14 +909,43 @@ public class UserDAO {
 			// 어드민 점주 삭제
 			
 			// 어드민 신고 갯수 조회
-			public int getReportCount() {
+			public int getStoreReportCount() {
 				int cnt = 0;
 				
 				// 1.2. 디비연결
 				try {
 					con = getConnection();
 					// 3. sql
-					sql = "select count(*) from report";
+					sql = "select count(*) from report where rep_sort=1";
+					pstmt = con.prepareStatement(sql);
+					
+					// 4. sql 실행
+					rs = pstmt.executeQuery();
+					// 5. 데이터처리
+					if(rs.next()) {
+						
+//						cnt = rs.getInt(count(*));
+						cnt = rs.getInt("count(*)");
+					}
+					System.out.println(" DAO : 전체 일반 회원 수 : " +cnt+"개");
+				} catch (Exception e) {
+					e.printStackTrace();
+				} finally {
+					closeDB();
+				}
+				
+				return cnt;
+			}
+			// 어드민 신고 갯수 조회
+			
+			public int getUserReportCount() {
+				int cnt = 0;
+				
+				// 1.2. 디비연결
+				try {
+					con = getConnection();
+					// 3. sql
+					sql = "select count(*) from report where rep_sort=0";
 					pstmt = con.prepareStatement(sql);
 					
 					// 4. sql 실행
@@ -968,7 +999,7 @@ public class UserDAO {
 			// 어드민 신고 갯수 조회
 			
 			// 어드민 신고 목록 조히
-			public List<Map> adminGetReportList(int startRow, int pageSize) {
+			public List<Map> adminGetStoreReportList(int startRow, int pageSize) {
 				System.out.println(" DAO : getBoardList() 호출 ");
 				// 글정보 모두 저장하는 배열
 				List<Map> reportList = new ArrayList<Map>();
@@ -979,10 +1010,11 @@ public class UserDAO {
 					con = getConnection();
 				// 3. sql 작성(select) & pstmt 객체
 //					sql = "select * from itwill_board";
-					sql = "SELECT r.rep_no, s.s_name,c.c_name, m.m_id, m.m_name, r.rep_reason, r.rep_howmany, r.rep_date "
+					sql = "SELECT r.rep_no, s.s_name,c.c_name, m.m_id, m.m_name, r.rep_reason, r.rep_howmany, r.rep_date, m.m_no, s.s_no, m.m_email, r.rep_m_no, r.rep_sort "
 							+ "FROM report r, member m, store s, ceo c "
 							+ "where r.s_no = s.s_no "
 							+ "and r.m_no = m.m_no "
+							+ "and r.rep_sort=1 "
 							+ "and s.c_no = c.c_no limit ?,?;";
 					pstmt = con.prepareStatement(sql);
 				// ?????
@@ -994,7 +1026,11 @@ public class UserDAO {
 					while(rs.next()) {
 						// DB -> DTO
 						hm = new HashMap<String,Object>();
+						hm.put("rep_m_no", rs.getInt("rep_m_no"));
+						hm.put("rep_sort", rs.getInt("rep_sort"));
 						hm.put("rep_no", rs.getInt("rep_no"));
+						hm.put("m_no", rs.getInt("m_no"));
+						hm.put("s_no", rs.getInt("s_no"));
 						hm.put("s_name", rs.getString("s_name"));
 						hm.put("c_name", rs.getString("c_name"));
 						hm.put("m_id", rs.getString("m_id"));
@@ -1002,6 +1038,7 @@ public class UserDAO {
 						hm.put("rep_reason",rs.getString("rep_reason"));
 						hm.put("rep_howmany",rs.getInt("rep_howmany"));
 						hm.put("rep_date", rs.getTimestamp("rep_date"));
+						hm.put("m_email",rs.getString("m_email"));
 						//DTO -> List
 						
 						reportList.add(hm);
@@ -1019,6 +1056,57 @@ public class UserDAO {
 			}
 			// 어드민 신고 목록 조회
 			
+			public List<Map> adminGetUserReportList(int startRow, int pageSize) {
+				System.out.println(" DAO : getBoardList() 호출 ");
+				// 글정보 모두 저장하는 배열
+				List<Map> reportList = new ArrayList<Map>();
+				HashMap<String,Object> hm = null;
+				
+				try {
+				// 1.2. 디비 연결
+					con = getConnection();
+				// 3. sql 작성(select) & pstmt 객체
+//					sql = "select * from itwill_board";
+					sql = "select B.rep_no, B.rep_howmany, A.m_id, A.m_nickname, B.rep_date, B.rep_m_no, A.m_no, "
+							+ "(select C.m_id from member C, report D where D.rep_m_no=C.m_no limit 1) rep_m_id, "
+							+ "(select C.m_nickname from member C, report D where D.rep_m_no=C.m_no limit 1) rep_m_nickname, "
+							+ "(select C.m_email from member C, report D where D.rep_m_no=C.m_no limit 1) m_email "
+							+ "from member A, report B "
+							+ "where A.m_no=B.m_no and B.rep_sort=0 limit ?,?";
+					pstmt = con.prepareStatement(sql);
+				// ?????
+					pstmt.setInt(1, startRow-1); // 시작행-1
+					pstmt.setInt(2, pageSize); // 개수
+				// 4. sql 실행
+					rs = pstmt.executeQuery();
+				// 5. 데이터 처리 (DB -> DTO -> List)
+					while(rs.next()) {
+						// DB -> DTO
+						hm = new HashMap<String,Object>();
+						hm.put("rep_no", rs.getInt("rep_no"));
+						hm.put("rep_m_no", rs.getInt("rep_m_no"));
+						hm.put("m_no", rs.getInt("m_no"));
+						hm.put("rep_howmany", rs.getInt("rep_howmany"));
+						hm.put("m_id", rs.getString("m_id"));
+						hm.put("m_nickname", rs.getString("m_nickname"));
+						hm.put("rep_date", rs.getTimestamp("rep_date"));
+						hm.put("rep_m_id", rs.getString("rep_m_id"));
+						hm.put("rep_m_nickname", rs.getString("rep_m_nickname"));
+						hm.put("m_email", rs.getString("m_email"));
+						//DTO -> List
+						
+						reportList.add(hm);
+					}//while
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}finally {
+					closeDB();
+				}
+				
+				return reportList;
+			}
+			
 			// 어드민 신고 목록 조히
 			public List<Map> adminGetReportList(int startRow, int pageSize, int m_no) {
 				System.out.println(" DAO : getBoardList() 호출 ");
@@ -1031,12 +1119,7 @@ public class UserDAO {
 					con = getConnection();
 				// 3. sql 작성(select) & pstmt 객체
 	//								sql = "select * from itwill_board";
-					sql = "SELECT r.rep_no, s.s_name,c.c_name, m.m_id, m.m_name, r.rep_reason, r.rep_howmany, r.rep_date "
-							+ "FROM report r, member m, store s, ceo c "
-							+ "where r.s_no = s.s_no "
-							+ "and r.m_no = m.m_no "
-							+ "and s.c_no = c.c_no "
-							+ "and m.m_no=? limit ?,?;";
+					sql = "SELECT * FROM report where m_no=? limit ?,?";
 					pstmt = con.prepareStatement(sql);
 				// ?????
 					pstmt.setInt(1, m_no);
@@ -1045,19 +1128,18 @@ public class UserDAO {
 				// 4. sql 실행
 					rs = pstmt.executeQuery();
 				// 5. 데이터 처리 (DB -> DTO -> List)
-					while(rs.next()) {
+					while(rs.next())            {
 						// DB -> DTO
 						hm = new HashMap<String,Object>();
 						hm.put("rep_no", rs.getInt("rep_no"));
-						hm.put("s_name", rs.getString("s_name"));
-						hm.put("c_name", rs.getString("c_name"));
-						hm.put("m_id", rs.getString("m_id"));
-						hm.put("m_name", rs.getString("m_name"));
-						hm.put("rep_reason",rs.getString("rep_reason"));
-						hm.put("rep_howmany",rs.getInt("rep_howmany"));
+						hm.put("s_no", rs.getInt("s_no"));
+						hm.put("rep_m_no", rs.getInt("rep_m_no"));
+						hm.put("rep_subject", rs.getString("rep_subject"));
+						hm.put("rep_howmany", rs.getInt("rep_howmany"));
 						hm.put("rep_date", rs.getTimestamp("rep_date"));
+						hm.put("rep_sort", rs.getInt("rep_sort"));
 						//DTO -> List
-						
+						System.out.println("ddddddddddddddddddddddddddddddddddddddddddddddddddddd"+hm);
 						reportList.add(hm);
 					}//while
 					System.out.println(reportList);
@@ -1073,7 +1155,9 @@ public class UserDAO {
 			}
 			// 어드민 신고 목록 조회 with m_no
 			
-			public List<Map> adminGetReportList(int startRow, int pageSize, String keyword) {
+			
+			
+			public List<Map> adminGetStoreReportList(int startRow, int pageSize, String keyword) {
 				System.out.println(" DAO : getBoardList() 호출 ");
 				// 글정보 모두 저장하는 배열
 				List<Map> reportList = new ArrayList<Map>();
@@ -1084,7 +1168,7 @@ public class UserDAO {
 					con = getConnection();
 				// 3. sql 작성(select) & pstmt 객체
 	//								sql = "select * from itwill_board";
-					sql = "SELECT r.rep_no, s.s_name,c.c_name, m.m_id, m.m_name, r.rep_reason, r.rep_howmany, r.rep_date "
+					sql = "SELECT r.rep_no, s.s_name,c.c_name, m.m_id, m.m_name, r.rep_reason, r.rep_howmany, r.rep_date, m.m_no, s.s_no , m.m_email, r.rep_no, r.rep_sort "
 							+ "FROM report r, member m, store s, ceo c "
 							+ "where r.s_no = s.s_no "
 							+ "and r.m_no = m.m_no "
@@ -1103,6 +1187,7 @@ public class UserDAO {
 					while(rs.next()) {
 						// DB -> DTO
 						hm = new HashMap<String,Object>();
+						hm.put("rep_sort", rs.getInt("rep_sort"));
 						hm.put("rep_no", rs.getInt("rep_no"));
 						hm.put("s_name", rs.getString("s_name"));
 						hm.put("c_name", rs.getString("c_name"));
@@ -1111,6 +1196,7 @@ public class UserDAO {
 						hm.put("rep_reason",rs.getString("rep_reason"));
 						hm.put("rep_howmany",rs.getInt("rep_howmany"));
 						hm.put("rep_date", rs.getTimestamp("rep_date"));
+						hm.put("m_email",rs.getString("m_email"));
 						//DTO -> List
 						
 						reportList.add(hm);
@@ -1125,6 +1211,137 @@ public class UserDAO {
 				}
 				
 				return reportList;
+			}
+			
+			public int adminGetCntStoreReportList(String keyword) {
+				System.out.println(" DAO : getBoardList() 호출 ");
+				// 글정보 모두 저장하는 배열
+				int cnt=0;
+				try {
+				// 1.2. 디비 연결
+					con = getConnection();
+				// 3. sql 작성(select) & pstmt 객체
+	//								sql = "select * from itwill_board";
+					sql = "SELECT count(*) "
+							+ "FROM report r, member m, store s, ceo c "
+							+ "where r.s_no = s.s_no "
+							+ "and r.m_no = m.m_no "
+							+ "and s.c_no = c.c_no "
+							+ "and (s.s_name Like ? "
+							+ "or m.m_name Like ?)";
+					pstmt = con.prepareStatement(sql);
+				// ?????
+					pstmt.setString(1, keyword);
+					pstmt.setString(2, keyword);
+				// 4. sql 실행
+					rs = pstmt.executeQuery();
+				// 5. 데이터 처리 (DB -> DTO -> List)
+					if(rs.next()) {
+						// DB -> DTO
+						//DTO -> List
+						cnt = rs.getInt(1);
+					}//while
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}finally {
+					closeDB();
+				}
+				
+				return cnt;
+			}
+			
+			public List<Map> adminGetUserReportList(int startRow, int pageSize, String keyword) {
+				System.out.println(" DAO : getBoardList() 호출 ");
+				// 글정보 모두 저장하는 배열
+				List<Map> reportList = new ArrayList<Map>();
+				HashMap<String,Object> hm = null;
+				
+				try {
+				// 1.2. 디비 연결
+					con = getConnection();
+				// 3. sql 작성(select) & pstmt 객체
+	//								sql = "select * from itwill_board";
+					sql = "select B.rep_no, B.rep_howmany, A.m_id, A.m_nickname, B.rep_date, "
+							+ "(select C.m_id from member C, report D where D.rep_m_no=C.m_no limit 1) rep_m_id, "
+							+ "(select C.m_nickname from member C, report D where D.rep_m_no=C.m_no limit 1) rep_m_nickname, "
+							+ "(select C.m_email from member C, report D where D.rep_m_no=C.m_no limit 1) m_email, rep_m_no "
+							+ "from member A, report B "
+							+ "where A.m_no=B.m_no and B.rep_sort=0 "
+							+ "and (A.m_nickname Like ? "
+							+ "or (select C.m_nickname from member C, report D where D.rep_m_no=C.m_no limit 1) Like ?) limit ?,?";
+					pstmt = con.prepareStatement(sql);
+				// ?????
+					pstmt.setString(1, keyword);
+					pstmt.setString(2, keyword);
+					pstmt.setInt(3, startRow-1); // 시작행-1
+					pstmt.setInt(4, pageSize); // 개수
+					
+				// 4. sql 실행
+					rs = pstmt.executeQuery();
+				// 5. 데이터 처리 (DB -> DTO -> List)
+					while(rs.next()) {
+						// DB -> DTO
+						hm = new HashMap<String,Object>();
+						hm.put("rep_no", rs.getInt("rep_no"));
+						hm.put("rep_m_no", rs.getInt("rep_m_no"));
+						hm.put("rep_howmany", rs.getInt("rep_howmany"));
+						hm.put("m_id", rs.getString("m_id"));
+						hm.put("m_nickname", rs.getString("m_nickname"));
+						hm.put("rep_date", rs.getTimestamp("rep_date"));
+						hm.put("rep_m_id", rs.getString("rep_m_id"));
+						hm.put("rep_m_nickname", rs.getString("rep_m_nickname"));
+						hm.put("m_email", rs.getString("m_email"));
+						
+						//DTO -> List
+						
+						reportList.add(hm);
+					}//while
+					System.out.println(reportList);
+					System.out.println(" DAO : 게시판 목록 저장완료!");
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}finally {
+					closeDB();
+				}
+				
+				return reportList;
+			}
+			
+			public int adminGetCntUserReportList(String keyword) {
+				System.out.println(" DAO : getBoardList() 호출 ");
+				// 글정보 모두 저장하는 배열
+				int cnt = 0;
+				try {
+				// 1.2. 디비 연결
+					con = getConnection();
+				// 3. sql 작성(select) & pstmt 객체
+	//								sql = "select * from itwill_board";
+					sql = "select count(*) "
+							+ "from member A, report B "
+							+ "where A.m_no=B.m_no and B.rep_sort=0 "
+							+ "and (A.m_nickname Like ? "
+							+ "or rep_m_nickname Like ?)";
+					pstmt = con.prepareStatement(sql);
+				// ?????
+					pstmt.setString(1, keyword);
+					pstmt.setString(2, keyword);
+				// 4. sql 실행
+					rs = pstmt.executeQuery();
+				// 5. 데이터 처리 (DB -> DTO -> List)
+					if(rs.next()) {
+						// DB -> DTO
+						cnt = rs.getInt(1);
+					}//while
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}finally {
+					closeDB();
+				}
+				
+				return cnt;
 			}
 			
 			public int adminCntGetReportList(int startRow, int pageSize, String keyword) {
@@ -1690,12 +1907,16 @@ public class UserDAO {
 			 */
 			public int userLogin(String id, String pw) {
 				int result = -1;
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 				
+		        Calendar c1 = Calendar.getInstance();
+		        
+		        int stopDay = Integer.parseInt(sdf.format(c1.getTime()));
 				try {
 					// 1.2. 디비연결
 					con = getConnection();
 					// 3. sql & pstmt
-					sql = "select m_pw from member where m_id=?";
+					sql = "select m_pw, m_stop from member where m_id=?";
 					pstmt = con.prepareStatement(sql);
 					//???
 					pstmt.setString(1, id);
@@ -1707,8 +1928,13 @@ public class UserDAO {
 					if(rs.next()) {
 						// 회원
 						if(pw.equals(rs.getString("m_pw"))) {
+							if (stopDay > rs.getInt("m_stop")) {
 							// 로그인 성공
 							result = 1;
+							} else {
+								result =3;
+							}
+							
 						}else {
 							// 로그인 실패
 							result = 0;
@@ -2847,7 +3073,7 @@ public class UserDAO {
 							+ "(select count(*) from reviewcs r where s.s_no = r.s_no) rcount "
 							+ "from store s Join ceo c "
 							+ "on c.c_no = s.c_no where c.c_id=? "
-							+ "order by " + listType + " asc, s.s_no desc limit ?,?";
+							+ "order by v.res_no desc limit ?,?";
 					pstmt = con.prepareStatement(sql);
 					
 					pstmt.setString(1, id);
@@ -3095,7 +3321,6 @@ public class UserDAO {
 							+ "join ceo c on s.c_no = c.c_no "
 							+ "join reservation v on s.s_no = v.s_no "
 							+ "where c.c_id=? "
-//							+ "order by v.res_date desc, v.res_time desc limit ?,?";
 							+ "order by v.res_no desc limit ?,?";
 					pstmt = con.prepareStatement(sql);
 					
@@ -3191,7 +3416,6 @@ public class UserDAO {
 								+ "join ceo c on s.c_no = c.c_no "
 								+ "join reservation v on s.s_no = v.s_no "
 								+ "where c.c_id=? && "+schList+" like '%"+search+"%' "
-//								+ "order by v.res_date desc, v.res_time desc limit ?,?";
 								+ "order by v.res_no desc limit ?,?";
 						pstmt = con.prepareStatement(sql);
 						
@@ -3225,7 +3449,6 @@ public class UserDAO {
 								+ "join ceo c on s.c_no = c.c_no "
 								+ "join reservation v on s.s_no = v.s_no "
 								+ "where c.c_id=? && v.s_no=? && "+schList+" like '%"+search+"%' "
-//								+ "order by v.res_date desc, v.res_time desc limit ?,?";
 								+ "order by v.res_no desc limit ?,?";
 						pstmt = con.prepareStatement(sql);
 						
@@ -3720,6 +3943,26 @@ public class UserDAO {
 						return result;
 					}
 		
+			
+		public void memStop(int rep_m_no, int stopDay) {
+			
+			try {
+				con = getConnection();
+				sql = "update member set m_stop=? where m_no=?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, stopDay);
+				pstmt.setInt(2, rep_m_no);
+				
+				pstmt.executeUpdate();
+				
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+		}
 }
 
 

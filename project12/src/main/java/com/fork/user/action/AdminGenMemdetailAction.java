@@ -1,5 +1,6 @@
 package com.fork.user.action;
 
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,25 +17,36 @@ public class AdminGenMemdetailAction implements Action {
 		
 		UserDAO dao = new UserDAO();
 		int m_no = Integer.parseInt(request.getParameter("m"));
+		// 아이디 제어 (어드민)
+		String id =null;
+		HttpSession session = request.getSession();
+		if (session.getAttribute("id")!=null) {
+			 id = (String) session.getAttribute("id");
+		}
 		ActionForward forward = new ActionForward();
 		
-		HttpSession session = request.getSession();
-		String id = (String)session.getAttribute("id");
-
-		//로그인 제어
-		
-		if(id!=null) {
-			if (!(id.equals("admin"))) {
-			forward.setPath("./main.st");
-			forward.setRedirect(true);
-			return forward;
-			}
-		} else{
-			forward.setPath("./main.st");
-			forward.setRedirect(true);
-			return forward;
+		if(id == null) {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();		
+			out.print("<script>");
+			out.print("alert('잘못된 접근입니다');");
+			out.print("history.back();");
+			out.print("</script>");
+			out.close();
+			return null;
 		}
-		// 로그인 제어
+		else if (!(id.equals("admin"))){
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();		
+			out.print("<script>");
+			out.print("alert('잘못된 접근입니다');");
+			out.print("history.back();");
+			out.print("</script>");
+			out.close();
+			return null;
+		}
+		
+		// 아이디 제어 (어드민)
 		
 		int pageSize = 3;
 		

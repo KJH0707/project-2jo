@@ -18,15 +18,13 @@ public class ReviewListAction implements Action {
 		
 		String id=null;
 		int c=0;
-		if(session.getAttribute("m_id")!=null) {
-			id = (String) session.getAttribute("m_id");
+		if(session.getAttribute("id")!=null) {
+			id = (String) session.getAttribute("id");
 		}
 		
 		if (session.getAttribute("c")!=null) {
 			c = (int) session.getAttribute("c");
 		}
-		//모두가 리뷰 게시판은 볼수잇어야됨
-		
 		
 		int s_no = Integer.parseInt(request.getParameter("s_no"));
 		String pageNum = request.getParameter("pageNum");
@@ -37,20 +35,12 @@ public class ReviewListAction implements Action {
 		System.out.println(cnt);		
 		int pageSize =9;
 		
-		if (id!=null & c!=0) {
+		if (id!=null & c==1) {
 			int result = dao.isMine(id, s_no);
 			if (result==1) {
 				session.setAttribute("mine", 1);
 			}
 		}
-//		ReviewDTO dto = new ReviewDTO();
-		
-//		dto.setS_no(Integer.parseInt(request.getParameter("s_no")));
-		// 	http://localhost:8088/JSP/board/boardList.jsp?pageNum=3 
-		
-		// 현 페이지가 몇 페이지 인지 확인..
-		
-		
 		
 		if(pageNum == null){
 			pageNum = "1";

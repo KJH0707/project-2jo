@@ -23,7 +23,7 @@
                                             <a class="nav-link" href="./adminStoreList.us">가게 목록</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="./adminReportList.us">신고 목록</a>
+                                            <a class="nav-link" href="./adminReportList.us?s=1">신고 목록</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" href="./ApiStore.ap">api 가게 목록</a>

@@ -17,7 +17,7 @@
 
          <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Fork And Knife | Review Write</title>
+        <title>Fork And Knife | Report Write</title>
         <meta name="description" content="company is a real-estate template">
         <meta name="author" content="Kimarotec">
         <meta name="keyword" content="html5, css, bootstrap, property, real-estate theme , bootstrap template">
@@ -44,28 +44,23 @@
         <link rel="stylesheet" href="assets/css/owl.transitions.css">
         <link rel="stylesheet" href="assets/css/style.css">
         <link rel="stylesheet" href="assets/css/responsive.css">
-        
+        <jsp:include page="../inc/top.jsp"></jsp:include>
 <script src="./board/jquery-3.6.1.js"></script>
 <script type="text/javascript">
-$(document).ready(function(){
-	
-
-});
 
 function sub() {
+	
 	if (document.frm.rev_subject.value=="") {
-		alert('제목 쓰셈 ㅋ');
+		alert('제목을 입력하세요.');
 		return false;
 	}
 	if (document.frm.rev_content.value=="") {
-		alert('내용 쓰셈 ㅋ');
+		alert('내용을 입력하세요.');
 		return false;
 	}
 
 }
 </script>
-
-
     </head>
     
     
@@ -76,6 +71,7 @@ function sub() {
 <!--         </div> -->
         <!-- Body content -->
 
+
             
         <!--End top header -->
 
@@ -85,7 +81,7 @@ function sub() {
             <div class="container">
                 <div class="row">
                     <div class="page-head-content">
-                        <h1 class="page-title">리뷰게시판</h1>               
+                        <h1 class="page-title">신고 페이지</h1>               
                     </div>
                 </div>
             </div>
@@ -99,41 +95,27 @@ function sub() {
                 <div class="col-md-9">
 
                     <div class="" id="contact1">                        
-                  
                   <div align="center">
                         <hr>
-                        <h2>답글 달기</h2>
-                        <form action="./ReviewReplyAction.rv?pageNum=${param.pageNum }&s_no=${param.s_no }" method="post" name="frm" onsubmit="return sub()">
-                     
-
-                                <br>
-
-	<input type="hidden" name="rev_no" value="${param.rev_no }">
-	<input type="hidden" name="rev_ref" value="${param.rev_ref }">
-	<input type="hidden" name="rev_seq" value="${param.rev_seq }">
-	<input type="hidden" name="s_no" value="${param.s_no }">
-	
-		
-									
-                   <label for="subject">제목</label>
-                 <input type="text" class="form-control" id="subject" name="rev_subject" value="[CEO 답글] ${param.rev_subject }">
-
-
-                                    <label for="message">내용</label>
-                  <textarea id="rev_content" class="form-control" name="rev_content" width="730px" placeholder="답글을 입력하세요." 
-                  								value="rev_content"></textarea>
-<!--                                     </div> -->
-<!--                                 </div> -->
+                        <h2>유저 신고</h2>
+                        <form action="./storeReportPro.st" method="post" enctype="multipart/form-data" name="frm" onsubmit="return sub()">
+                       <input type="hidden" value="${param.s_no }" name="s_no">
+                       <input type="hidden" value="${param.m_no }" name="rep_m_no">
+                                    <label for="subject">제목</label>
+                                  	  <input type="text" class="form-control" id="subject" name="rep_subject" placeholder="제목을 적으세요">
+                                    <label for="subject">첨부파일</label>
+                                  	  <input type="file" class="form-control" id="file" name="rep_file">
+                                    <label for="message">어떤 문제인가요?</label>
+                                    <textarea id="message" class="form-control" name="rep_reason" rows="10" placeholder="신고 내용을 적어주세요"></textarea>
 					<br>
-<!--                                 <div class="col-sm-12 text-center"> -->
+							
                                 <button type="submit" class="btn btn-primary"><i class="fa fa-envelope-o"></i> 
-                               답글 달기 </button></form>
-							
-							
+                               신고 </button></form>
+                        
                     </div>
                 </div>
-                <!-- /.col-md-9 -->    
-                <a href="javascript:window.history.back();">뒤로가기</a>          
+               
+               <i class="fa-solid fa-arrow-rotate-left"></i><a href="javascript:window.history.back();">뒤로가기</a>          
             </div>
         </div>
         
@@ -158,6 +140,30 @@ function sub() {
         <script src="assets/js/gmaps.init.js"></script>
 
         <script src="assets/js/main.js"></script>
+	
+
+
+
+
+<style type="text/css">
+  #star a{
+   text-decoration: none;
+   color: gray;
+  }
+  #star a.on{
+   color: red;
+  } 
+
+element.style {
+    height: 350px;
+}
+
+.col-md-9 {
+    width: 100%;
+}
+</style>
+
+
 
     </body>
 </html>

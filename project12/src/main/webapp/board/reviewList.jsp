@@ -227,11 +227,9 @@
                                 <div id="submenu-9" class="collapse submenu" style="">
                                     <ul class="nav flex-column">
                                         <li class="nav-item">
-                                            <a class="nav-link" href="pages/map-google.html">Google Maps</a>
+                                            <a class="nav-link" href="./storeDetails.st?s_no=${st.s_no }">KaKao Maps</a>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="pages/map-vector.html">Vector Maps</a>
-                                        </li>
+                                      
                                     </ul>
                                 </div>
                             </li>
@@ -399,30 +397,37 @@
                                                     </c:otherwise>
                                                     </c:choose>
                                                   
-                                                  ${dto.m_id }
+                                                 
                                                     
+<%--                                                     ${id } / --%>
+<%-- 											${mine } --%>
                                                     <span class="text-dark font-weight-bold">${dto.m_nickname } </span>
                                                     <small class="text-mute"> <fmt:formatDate value="${dto.rev_date }"/></small>
                                                     
                                                     <c:if test="${id eq dto.m_id || id eq 'admin'}">
                                           <small class="text-mute"><a href="./ReviewUpdate.rv?rev_no=${dto.rev_no }&pageNum=${pageNum }&rev_star=${dto.rev_star}">수정/</a></small>
                                                        <small class="text-mute"> <a href="./ReviewDelete.rv?rev_no=${dto.rev_no }&s_no=${st.s_no }">삭제 </a></small> <br><br>
-                                              		       </c:if>                
-
-                                                
+                                              		       </c:if> 
+                                              		       
+                                              		     
+                                              		       <c:if test="${sessionScope.c eq c}">
+                                          <small class="text-mute"><a href="./ReviewUpdate.rv?rev_no=${dto.rev_no }&pageNum=${pageNum }&rev_star=${dto.rev_star}">수정/</a></small>
+                                                       <small class="text-mute"> <a href="./ReviewDelete.rv?rev_no=${dto.rev_no }&s_no=${st.s_no }">삭제 </a></small> <br><br>
+                                              		       </c:if>                 
+														♨ <b style="color:black;"><a href="./userReport.st?m_no=${dto.m_no }&s_no=${st.s_no }">신고</a></b>
+<%-- 										${sessionScope.id } / ${dto.rev_seq } ${sessionScope.mine } --%>
+									
                                           &nbsp;
                                           <!-- 관리자 아이디 제어  -->
-                                           <c:if test="${id.equals('admin') }">
-                                           <c:if test="${dto.rev_seq < 1 }">
+                                           <c:if test="${dto.rev_seq == 0 }">
+                                           <c:if test="${sessionScope.id == 'admin' || mine != null}">
                                          	
                                             <small class="text-mute"> 
-                                            <input type="button" value="답글"onclick="location.href='./reviewReply.rv?rev_no=${dto.rev_no}&pageNum=${pageNum }&rev_ref=${dto.rev_ref }&rev_seq=${dto.rev_seq }&rev_subject=${dto.rev_subject }&s_no=${dto.s_no }'" >
+                                            <input type="button" value="답글"onclick="location.href='./reviewReply.rv?rev_no=${dto.rev_no}&pageNum=${pageNum }&rev_ref=${dto.rev_ref }&rev_seq=${dto.rev_seq }&rev_subject=${dto.rev_subject }&s_no=${st.s_no }'" >
 											</small>
 											</c:if>
 											 </c:if>
-											<c:if test="${mine!=null}">
-											<input type="button" value="답글"onclick="location.href='./reviewReply.rv?rev_no=${dto.rev_no}&pageNum=${pageNum }&rev_ref=${dto.rev_ref }&rev_seq=${dto.rev_seq }&rev_subject=${dto.rev_subject }&s_no=${dto.s_no }'" >
-											</c:if>
+											 
 											</div>
                                             </div>
 											

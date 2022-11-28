@@ -22,21 +22,14 @@
     <link rel="stylesheet" href="assets/vendor/charts/c3charts/c3.css">
     <link rel="stylesheet" href="assets/vendor/fonts/flag-icon-css/flag-icon.min.css">
     <title>Fork and Knife | Admin</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script type="text/javascript">
-    
-    
-    
-    
-    
-    
-    function isGenDelete(x,y){
+    function isDelete(x,y){
     
     var isMove = confirm("진짜 삭제하실?");
 	
 	if(isMove){
 		// 장바구니 페이지 이동
-		location.href="./adminDeleteCeoMemAction.us?c_no="+x+"&pageNum="+y;
+		location.href="./adminDeleteReportAction.us?rep_no="+x+"&pageNum="+y;
 	}
 	
 	}
@@ -70,14 +63,15 @@
                     <!-- ============================================================== -->
                     <div class="row">
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        
                             <div class="page-header">
                                 <h2 class="pageheader-title">관리자 Dashboard</h2>
-                                
+                                <p class="pageheader-text">Nulla euismod urna eros, sit amet scelerisque torton lectus vel mauris facilisis faucibus at enim quis massa lobortis rutrum.</p>
                                 <div class="page-breadcrumb">
                                     <nav aria-label="breadcrumb">
                                         <ol class="breadcrumb">
-                                            <li class="breadcrumb-item"><a class="breadcrumb-link">Dashboard</a></li>
-                                            <li class="breadcrumb-item active" aria-current="page">점주 회원 관리 (아이디 클릭시 상세 보기 가능)</li>
+                                            <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Dashboard</a></li>
+                                            <li class="breadcrumb-item active" aria-current="page">일반 회원 관리</li>
                                         </ol>
                                     </nav>
                                 </div>
@@ -92,55 +86,54 @@
                             <!-- 가게 목록  -->
                             <!-- ============================================================== -->
                             <div class="col-xl-9 col-lg-12 col-md-6 col-sm-12 col-12">
-                                <div class="influence-profile-content pills-regular">
+                            <div class="influence-profile-content pills-regular">
                                 <ul class="nav nav-pills mb-3 nav-justified" id="pills-tab" role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link active" href="#">공지</a>
+                                        <a class="nav-link" href="./adminReportList.us?s=1">가게 신고 목록</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="./adminEventList.us">이벤트</a>
+                                        <a class="nav-link active" href="#">일반 회원 신고 목록</a>
                                     </li>
                                 </ul>
-                                <div class="tab-content" id="pills-tabContent">
-                                
-                            		<div class="tab-pane fade show active" id="pills-ceo" role="tabpanel" aria-labelledby="pills-ceo-tab">
-                            		<div class="card">
-                                    <h5 class="card-header">Notice List</h5>
+                                </div>
+                                <div class="card">
+                                    <h5 class="card-header">General Member List</h5>
                                     <div class="card-body p-0">
                                         <div class="table-responsive">
                                             <table class="table">
                                                 <thead class="bg-light">
                                                     <tr class="border-0">
-                                                    
                                                         <th class="border-0">No.</th>
-                                                        <th class="border-0" width="400px">공지명</th>
-                                                        
-                                                        <th class="border-0">조회수</th>
-                                        
-                                                        <th class="border-0">작성일자</th>
-                                                        <th class="border-0">이벤트 기간</th>
+                                                        <th class="border-0">신고자 닉네임(ID)</th>
+                                                        <th class="border-0">피신고자 닉네임(ID)</th>
+                                                        <th class="border-0">신고 횟수</th>
+                                                        <th class="border-0">신고 상세보기</th>
+                                                        <th class="border-0">신고 일자</th>
                                                         <th class="border-0">관리</th>
                                                         
                                                     </tr>
                                                 </thead>
                                                 <!-- 가게 정보입력 -->
                                                 <tbody>
-                                                    <c:forEach var="ntL" items="${noticeList }">
+                                                    <c:forEach var="rep" items="${repList }">
                                                     <tr>
                                                     
-                                                        <td>${ntL.n_no }</td>
+                                                        <td>${rep.rep_no}</td>
 <!--                                                         <td> -->
 <!--                                                             <div class="m-r-10"><img src="assets/images/product-pic.jpg" alt="user" class="rounded" width="45"></div> -->
 <!--                                                         </td> -->
-                                                        <td>${ntL.n_title }</td>
-                                                        <td>${ntL.n_readcount }</td>
-                                                        <td>${ntL.n_date }</td>
-                                                        <td>${ntL.n_eventSdate } ~ ${ntL.n_eventEdate }</td>
+                                                        <td>${rep.m_nickname }(<a href="./adminGenMemDetail.us?m=${rep.m_no}"><b>${rep.m_id }</b></a>)</td>
+                                                        <td>${rep.rep_m_nickname }(<a href="./adminGenMemDetail.us?m=${rep.rep_m_no}"><b>${rep.rep_m_id }</b></a>)</td>
+                                                        <td>${rep.rep_howmany }</td>
+                                                        <td><a href="./reportDetails.us?rep_no=${rep.rep_no }&u=1"><b>상세 보기</b></a></td>
                                                         
+                                                        <td>${rep.rep_date}</td>
+                                                       
                                                         <td>
-                                                        	<a href="#">수정</a> 
+                                                        	<a href="#" onclick="window.open('./adminSanction.us?s=${rep.s_no}&m_email=${rep.m_email }&rep_m=${rep.rep_m_no }','예약 메세지','width=420, height=360, left=700, top=400')">
+                                                    제재</a>
                                                         	
-                                                        	<a href="javascript: isDelete(${ntL.n_no },${pageNum })">삭제</a>
+                                                        	<a href="javascript: isDelete(${rep.rep_no },${pageNum })">삭제</a>
                                                          </td>
                                                     </tr>
                                                    </c:forEach>
@@ -150,13 +143,13 @@
 				                                            <ul class="pagination">
 				                                            	<c:if test="${reqeustScope.totalCnt != 0 }">
 				                                            		<c:if test="${startPage > pageBlock }">
-						                                                <li class="page-item"><a class="page-link" href="./adminNoticeList.us?pageNum=${startPage-pageBlock }">Previous</a></li>
+						                                                <li class="page-item"><a class="page-link" href="./adminReportList.us?pageNum=${startPage-pageBlock }">Previous</a></li>
 						                                            </c:if>
 						                                            <c:forEach var="i" begin="${startPage }" end="${endPage }" step="1">
-						                                                <li class="page-item"><a class="page-link"  href="./adminNoticeList.us?pageNum=${i }">${i }</a></li>
+						                                                <li class="page-item"><a class="page-link"  href="./adminReportList.us?pageNum=${i }">${i }</a></li>
 						                                            </c:forEach>   
 						                                            <c:if test="${endPage < pageCount }">
-						                                                <li class="page-item"><a class="page-link"  href="./adminNoticeList.us?pageNum=${startPage+pageBlock }">[Next]]</a></li>
+						                                                <li class="page-item"><a class="page-link"  href="./adminReportList.us?pageNum=${startPage+pageBlock }">[Next]]</a></li>
 						                                            </c:if>
 						                                            
 						                                        </c:if>
@@ -170,24 +163,29 @@
                                         </div>
                                     </div>
                                 </div>
-                        			</div>
-
-            						</div>
-                        		</div>
-                    		</div>
-                    		<div class="col-xl-9">
-                    		<form action="./adminNoticeList.us" method="post">
-                                <input class="form-controlkjh" type="text" placeholder="제목 검색" name="keyword" value="${keyword }">
+                            </div>
+                            <div class="col-xl-9">
+                    		<form action="./adminReportList.us?u=1" method="post">
+                                <input class="form-controlkjh" type="text" placeholder="신고자 닉네임 검색" name="keyword" value="${keyword }">
                                 <input type="submit" value="검색" class="btn btn-primary">
-                                <a href="./adminNoticeList.us" class="btn btn-primary">전체보기</a>
+                                <a href="./adminReportList.us?u=1" class="btn btn-primary">전체보기</a>
                             </form>
                             	
                     		</div>
-                    		
-                    		
-                		</div>
-                	</div>
-            	</div>
+                            <!-- ============================================================== -->
+                            <!-- end recent orders  -->
+
+    
+                            <!-- ============================================================== -->
+                            <!-- ============================================================== -->
+                            <!-- customer acquistion  -->
+                            <!-- ============================================================== -->
+                            
+                        </div>
+                            
+                        
+                    </div>
+                </div>
             </div>
             <!-- ============================================================== -->
             <!-- footer -->
