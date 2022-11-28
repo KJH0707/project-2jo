@@ -33,12 +33,12 @@ public class ReportWriteAction implements Action {
 		
 		ActionForward forward = new ActionForward();
 		
-		if (id==null){  //아이디가 null 이면 
+		if(id == null) {
 			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter();		
 			out.print("<script>");
-			out.print("alert('로그인 해주세요.');");
-			out.print("location.href='./login.us");
+			out.print("alert('로그인 하쇼.');");
+			out.print("location.href='./Login.us';");
 			out.print("</script>");
 			out.close();
 			return null;

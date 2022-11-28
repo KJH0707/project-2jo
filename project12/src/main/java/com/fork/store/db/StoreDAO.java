@@ -2158,4 +2158,26 @@ public class StoreDAO {
 			}
 			return result;
 		}
+		
+		public int isCeo(String c_id) {
+			int result=0;
+			try {
+				con = getConnection();
+				sql = "select * from ceo where c_id=?";
+				pstmt= con.prepareStatement(sql);
+				pstmt.setString(1, c_id);
+				rs = pstmt.executeQuery();
+				
+				if(rs.next()) {
+					result=1;
+				}
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+			return result;
+		}
 }

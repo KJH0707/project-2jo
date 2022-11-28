@@ -1,5 +1,7 @@
 package com.fork.review.action;
 
+import java.io.PrintWriter;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -11,14 +13,27 @@ public class ReviewUpdateAction implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		// 아이디 제어
 		HttpSession session = request.getSession();
-		String id = (String)session.getAttribute("id");
-		ActionForward forward = new ActionForward();
-		if(id == null) {
-			forward.setPath("./Login.us");
-			forward.setRedirect(true);
-			return forward;			
+		String id = null;
+		
+		if(session.getAttribute("id")!=null) {
+			id = (String)session.getAttribute("id");
 		}
+		
+		ActionForward forward = new ActionForward();
+		
+		if(id == null) {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();		
+			out.print("<script>");
+			out.print("alert('로그인 하쇼.');");
+			out.print("location.href='./Login.us';");
+			out.print("</script>");
+			out.close();
+			return null;
+		}
+		// 아이디 제어 (일반)
 		
 		
 		System.out.println(" M : reviewupdateAction_execute() 호출  ");
@@ -51,11 +66,10 @@ public class ReviewUpdateAction implements Action {
 		
 		// view 출력 (./board/updateForm.jsp)
 		// 페이지 이동(티켓)
-		ActionForward forward2 = new ActionForward();
-		forward2.setPath("./board/reviewUpdate.jsp");
-		forward2.setRedirect(false);
+		forward.setPath("./board/reviewUpdate.jsp");
+		forward.setRedirect(false);
 		
-		return forward2;
+		return forward;
 	}
 
 }

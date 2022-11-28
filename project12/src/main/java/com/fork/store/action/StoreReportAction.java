@@ -1,23 +1,17 @@
-package com.fork.board.action;
+package com.fork.store.action;
 
 import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServletRequest;
-
-
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.fork.board.db.BoardDAO;
-import com.fork.store.db.StoreDAO;
-import com.fork.store.db.StoreDTO;
-import com.fork.user.db.UserDAO;
-
-public class UserReservAction implements Action {
+public class StoreReportAction implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
+		System.out.println("스토어 리포트 호출");
 		// 아이디 제어
 		HttpSession session = request.getSession();
 		String id = null;
@@ -38,17 +32,10 @@ public class UserReservAction implements Action {
 			out.close();
 			return null;
 		}
-		// 아이디 제어 (일반)
-		
-		UserDAO dao = new UserDAO();
-	
+		// 아이디 제어 (일반)		
 		
 		
-		
-		request.setAttribute("udto", dao.getMember(id));
-		
-		
-		forward.setPath("./board/reservation.jsp");
+		forward.setPath("./board/storeReport.jsp");
 		forward.setRedirect(false);
 		return forward;
 	}

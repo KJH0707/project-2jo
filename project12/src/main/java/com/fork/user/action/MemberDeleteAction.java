@@ -16,6 +16,29 @@ public class MemberDeleteAction implements Action {
 
 		System.out.println(" M : MemberDeleteAction_execute() "); 
 		
+		// 아이디 제어
+		HttpSession session = request.getSession();
+		String id2 = null;
+		
+		if(session.getAttribute("id")!=null) {
+			id2 = (String)session.getAttribute("id");
+		}
+		
+		ActionForward forward = new ActionForward();
+		
+		if(id2 == null) {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();		
+			out.print("<script>");
+			out.print("alert('로그인 하쇼.');");
+			out.print("location.href='./Login.us';");
+			out.print("</script>");
+			out.close();
+			return null;
+		}
+		// 아이디 제어 (일반)
+		
+		
 		// 전달정보 저장
 		String id = request.getParameter("id");
 		String pw = request.getParameter("pw");
@@ -48,7 +71,6 @@ public class MemberDeleteAction implements Action {
 			return null;
 		}else { // result == 1
 			// 세션 초기화
-			HttpSession session = request.getSession();
 			session.invalidate();
 			
 			out.print("<script>");

@@ -1,5 +1,7 @@
 package com.fork.user.action;
 
+import java.io.PrintWriter;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,24 +18,25 @@ public class AdminNoticeWriteAction implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		
-		// 로그인 제어
+		// 아이디 제어 (어드민)
+		String id =null;
 		HttpSession session = request.getSession();
-		String id = (String)session.getAttribute("id");
-	
+		if (session.getAttribute("id")!=null) {
+			 id = (String) session.getAttribute("c_id");
+		}
 		ActionForward forward = new ActionForward();
 		
-		if(id!=null) {
-			if (!(id.equals("admin"))) {
-			forward.setPath("./main.st");
-			forward.setRedirect(true);
-			return forward;
-			}
-		} else{
-			forward.setPath("./main.st");
-			forward.setRedirect(true);
-			return forward;
+		if(!(id.equals("admin")) | id == null) {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();		
+			out.print("<script>");
+			out.print("alert('잘못된 접근입니다');");
+			out.print("history.back()';");
+			out.print("</script>");
+			out.close();
+			return null;
 		}
-		// 로그인 제어
+		// 아이디 제어 (어드민)
 		
 		NoticeDTO dto = new NoticeDTO();
 		UserDAO dao = new UserDAO();

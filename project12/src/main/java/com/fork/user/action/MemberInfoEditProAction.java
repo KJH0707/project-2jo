@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.fork.user.db.MemberDTO;
 import com.fork.user.db.UserDAO;
@@ -15,6 +16,29 @@ public class MemberInfoEditProAction implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		System.out.println(" M : MemberInfoEditProAction_execute()");
+		
+		// 아이디 제어
+		HttpSession session = request.getSession();
+		String id = null;
+		
+		if(session.getAttribute("id")!=null) {
+			id = (String)session.getAttribute("id");
+		}
+		
+		ActionForward forward = new ActionForward();
+		
+		if(id == null) {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();		
+			out.print("<script>");
+			out.print("alert('로그인 하쇼.');");
+			out.print("location.href='./Login.us';");
+			out.print("</script>");
+			out.close();
+			return null;
+		}
+		// 아이디 제어 (일반)
+		
 		
 		
 		// 한글처리(필터)

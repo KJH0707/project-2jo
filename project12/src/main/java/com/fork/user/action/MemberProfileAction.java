@@ -1,5 +1,7 @@
 package com.fork.user.action;
 
+import java.io.PrintWriter;
+
 import javax.servlet.http.*;
 
 import com.fork.user.db.*;
@@ -11,16 +13,29 @@ public class MemberProfileAction implements Action{
 
 			System.out.println(" M : MemberInfoEditAction_execute 호출 ");
 			
-			// 세션제어
+			// 아이디 제어
 			HttpSession session = request.getSession();
-			String id = (String) session.getAttribute("id");
+			String id = null;
+			
+			if(session.getAttribute("id")!=null) {
+				id = (String)session.getAttribute("id");
+			}
 			
 			ActionForward forward = new ActionForward();
+			
 			if(id == null) {
-				forward.setPath("./main.us");
-				forward.setRedirect(true);
-				return forward;
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter out = response.getWriter();		
+				out.print("<script>");
+				out.print("alert('로그인 하쇼.');");
+				out.print("location.href='./Login.us';");
+				out.print("</script>");
+				out.close();
+				return null;
 			}
+			// 아이디 제어 (일반)
+			
+			
 			// DAO - 기존의 회원정보 가져오기(getMember(ID))
 			UserDAO dao = new UserDAO();
 			MemberDTO dto = dao.getMember(id);

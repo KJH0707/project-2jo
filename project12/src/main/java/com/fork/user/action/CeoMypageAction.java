@@ -1,11 +1,13 @@
 package com.fork.user.action;
 
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.fork.store.db.StoreDAO;
 import com.fork.user.db.CeoDTO;
 import com.fork.user.db.UserDAO;
 
@@ -15,16 +17,25 @@ public class CeoMypageAction implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		System.out.println(" M : CeoMypageAction_execute 호출 ");
 		
-		// 세션제어
+		// 아이디 제어 (점주)
 		HttpSession session = request.getSession();
-		String id = (String)session.getAttribute("id");
-		
+		String id = (String) session.getAttribute("c_id");
 		ActionForward forward = new ActionForward();
-		if(id == null) {
-			forward.setPath("./main.st");
-			forward.setRedirect(true);
-			return forward;
+		StoreDAO sdao = new StoreDAO();
+		
+		if(id!=null) {
+			if(sdao.isCeo(id)==0) {
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter out = response.getWriter();		
+				out.print("<script>");
+				out.print("alert('잘못된 접근입니다');");
+				out.print("history.back()';");
+				out.print("</script>");
+				out.close();
+				return null;
+			}	
 		}
+		// 아이디 제어 (점주)
 		
 		// DAO - 회원정보 가져오기(getCEO(id))
 		UserDAO cdao = new UserDAO();

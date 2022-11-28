@@ -1,5 +1,7 @@
 package com.fork.user.action;
 
+import java.io.PrintWriter;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -13,24 +15,25 @@ public class AdminDeleteReservAction implements Action {
 		
 		UserDAO dao = new UserDAO();
 		
-		// 로그인 제어
+		// 아이디 제어 (어드민)
+		String id =null;
 		HttpSession session = request.getSession();
-		String id = (String)session.getAttribute("id");
-	
+		if (session.getAttribute("id")!=null) {
+			 id = (String) session.getAttribute("c_id");
+		}
 		ActionForward forward = new ActionForward();
 		
-		if(id!=null) {
-			if (!(id.equals("admin"))) {
-			forward.setPath("./main.st");
-			forward.setRedirect(true);
-			return forward;
-			}
-		} else{
-			forward.setPath("./main.st");
-			forward.setRedirect(true);
-			return forward;
+		if(!(id.equals("admin")) | id == null) {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();		
+			out.print("<script>");
+			out.print("alert('잘못된 접근입니다');");
+			out.print("history.back()';");
+			out.print("</script>");
+			out.close();
+			return null;
 		}
-		// 로그인 제어
+		// 아이디 제어 (어드민)
 		int res_no = Integer.parseInt(request.getParameter("res_no"));
 		int pageNum = Integer.parseInt(request.getParameter("pageNum"));
 		

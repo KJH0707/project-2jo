@@ -1,11 +1,14 @@
 package com.fork.board.action;
 
+import java.io.PrintWriter;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.fork.board.db.BoardDAO;
 import com.fork.board.db.BoardDTO;
+import com.fork.store.db.StoreDAO;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
@@ -15,15 +18,27 @@ public class QnaBoardReWriteAction implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		System.out.println("M : QnaBoardReWriteAction 호출");
 		
+		// 아이디 제어 (점주)
 		HttpSession session = request.getSession();
 		String id = (String) session.getAttribute("c_id");
 		ActionForward forward = new ActionForward();
+		StoreDAO sdao = new StoreDAO();
+		
 		if(id!=null) {
-			if(!id.contains("ceo") || !id.contains("store")) {
-				forward.setPath("./loginAction.us");
-				forward.setRedirect(true);
+			if(sdao.isCeo(id)==0) {
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter out = response.getWriter();		
+				out.print("<script>");
+				out.print("alert('잘못된 접근입니다');");
+				out.print("history.back()';");
+				out.print("</script>");
+				out.close();
+				return null;
 			}	
 		}
+		// 아이디 제어 (점주)
+		
+		
 		String pageNum = request.getParameter("pageNum");
 		 String realPath = request.getRealPath("/upload");
 	      System.out.println(" M : realPath : "+realPath);

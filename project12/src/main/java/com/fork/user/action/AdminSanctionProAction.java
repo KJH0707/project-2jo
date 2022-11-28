@@ -1,5 +1,6 @@
 package com.fork.user.action;
 
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -16,24 +17,29 @@ public class AdminSanctionProAction implements Action {
 		
 		UserDAO dao = new UserDAO();
 
-		ActionForward forward = new ActionForward();
 		StopMsgEmail email = new StopMsgEmail();
 		
-		HttpSession session = request.getSession();
-		String id = (String)session.getAttribute("id");
 		int cnt = dao.getNoticeCount(1);
 		
-		if(id!=null) {
-			if (!(id.equals("admin"))) {
-			forward.setPath("./main.st");
-			forward.setRedirect(true);
-			return forward;
-			}
-		} else{
-			forward.setPath("./main.st");
-			forward.setRedirect(true);
-			return forward;
+		// 아이디 제어 (어드민)
+		String id =null;
+		HttpSession session = request.getSession();
+		if (session.getAttribute("id")!=null) {
+			 id = (String) session.getAttribute("c_id");
 		}
+		ActionForward forward = new ActionForward();
+		
+		if(!(id.equals("admin")) | id == null) {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();		
+			out.print("<script>");
+			out.print("alert('잘못된 접근입니다');");
+			out.print("history.back()';");
+			out.print("</script>");
+			out.close();
+			return null;
+		}
+		// 아이디 제어 (어드민)
 		
 		int rep_m_no = Integer.parseInt(request.getParameter("rep_m"));
 		int day = Integer.parseInt(request.getParameter("day"));

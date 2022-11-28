@@ -1,5 +1,6 @@
 package com.fork.user.action;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,27 +17,28 @@ public class AdminNoticeListAction implements Action {
 		
 		UserDAO dao = new UserDAO();
 
+		// 아이디 제어 (어드민)
+		String id =null;
+		HttpSession session = request.getSession();
+		if (session.getAttribute("id")!=null) {
+			 id = (String) session.getAttribute("c_id");
+		}
 		ActionForward forward = new ActionForward();
 		
-		HttpSession session = request.getSession();
-		String id = (String)session.getAttribute("id");
-		int cnt = dao.getNoticeCount(0);
-		
-		if(id!=null) {
-			if (!(id.equals("admin"))) {
-			forward.setPath("./main.st");
-			forward.setRedirect(true);
-			return forward;
-			}
-		} else{
-			forward.setPath("./main.st");
-			forward.setRedirect(true);
-			return forward;
+		if(!(id.equals("admin")) | id == null) {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();		
+			out.print("<script>");
+			out.print("alert('잘못된 접근입니다');");
+			out.print("history.back()';");
+			out.print("</script>");
+			out.close();
+			return null;
 		}
-		// 로그인 제어
+		// 아이디 제어 (어드민)
 		
 		int pageSize = 9;
-		
+		int cnt = dao.getNoticeCount(0);
 		// http://localhost:8088/JSP/board/boardList.jsp?pageNum=2
 		
 		// 현 페이지가 몇페이지 인지 확인
