@@ -14,7 +14,7 @@
     <link href="assets/vendor/fonts/circular-std/style.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/libs/css/style.css">
     <link rel="stylesheet" href="assets/vendor/fonts/fontawesome/css/fontawesome-all.css">
-    <title>Admin | 점주 상세</title>
+    <title>Fork and Knife | Admin</title>
 </head>
 
 <body>

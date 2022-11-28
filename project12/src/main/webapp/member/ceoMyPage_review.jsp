@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html class="no-js"> <!--<![endif]-->
    <head>
-      <title>Insert title here</title>
+      <title>Fork and Knife | My page</title>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="description" content="GARO is a real-estate template">
         <meta name="author" content="Kimarotec">

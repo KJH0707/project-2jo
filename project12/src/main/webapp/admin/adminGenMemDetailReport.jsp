@@ -14,7 +14,7 @@
     <link href="assets/vendor/fonts/circular-std/style.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/libs/css/style.css">
     <link rel="stylesheet" href="assets/vendor/fonts/fontawesome/css/fontawesome-all.css">
-    <title>Concept - Bootstrap 4 Admin Dashboard Template</title>
+    <title>Fork and Knife | Admin</title>
 </head>
 
 <body>
@@ -185,8 +185,8 @@
 <!--                                                         <td> -->
 <!--                                                             <div class="m-r-10"><img src="assets/images/product-pic.jpg" alt="user" class="rounded" width="45"></div> -->
 <!--                                                         </td> -->
-                                                        <td>${rep.s_no }</td>
-                                                        <td>${rep.rep_m_no }</td>
+                                                        <td><a href="./storeDetails.st?s_no=${rep.s_no}"><b>${rep.s_no }</b></a></td>
+                                                        <td><a href="./adminGenMemDetail.us?m=${rep.rep_m_no}"><b>${rep.rep_m_no }</b></a></td>
                                                         <td>${rep.rep_subject}</td>
                                                         
                                                         <td>${rep.rep_howmany }</td>
@@ -196,7 +196,10 @@
                                                        
                                                        
                                                         <td>
-                                                        	
+                                                        <c:if test='${rep.rep_sort==0 }'>
+                                                        	<a href="#" onclick="window.open('./adminSanction.us?s=${rep.s_no}&m_email=${rep.m_email }&rep_m=${rep.rep_m_no }','예약 메세지','width=420, height=360, left=700, top=400')">
+                                                    제재</a>
+                                                    </c:if>
                                                         	<a href="javascript: isDelete(${rep.rep_no },${pageNum })">삭제</a>
                                                          </td>
                                                     </tr>

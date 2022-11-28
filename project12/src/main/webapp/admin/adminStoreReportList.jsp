@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="assets/vendor/fonts/material-design-iconic-font/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="assets/vendor/charts/c3charts/c3.css">
     <link rel="stylesheet" href="assets/vendor/fonts/flag-icon-css/flag-icon.min.css">
-    <title>Admin Dashboard </title>
+    <title>Fork and Knife | Admin</title>
     <script type="text/javascript">
     function isDelete(x,y){
     
@@ -124,9 +124,9 @@
 <!--                                                         <td> -->
 <!--                                                             <div class="m-r-10"><img src="assets/images/product-pic.jpg" alt="user" class="rounded" width="45"></div> -->
 <!--                                                         </td> -->
-                                                        <td>${rep.s_name }</td>
+                                                        <td><a href="./storeDetails.st?s_no=${rep.s_no}"><b>${rep.s_name }</b></a></td>
                                                         <td>${rep.c_name }</td>
-                                                        <td>${rep.m_id}</td>
+                                                        <td><a href="./adminGenMemDetail.us?m=${rep.m_no}"><b>${rep.m_id}</b></a></td>
                                                         
                                                         <td>${rep.m_name }</td>
                                                         <td colspan="4"><h4 class="mb-0"><a href="#" onclick="window.open('./genMemReservMsg.us?msg=${rep.rep_reason}','예약 메세지','width=600, height=150, left=700, top=400')">

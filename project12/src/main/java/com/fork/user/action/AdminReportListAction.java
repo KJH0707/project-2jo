@@ -56,6 +56,7 @@ public class AdminReportListAction implements Action {
 		// 디비에 전체 글 리스트 가져오기
 		//ArrayList boardListAll = dao.getBoardList();
 		if (request.getParameter("m")!=null) {
+			m_no = Integer.parseInt(request.getParameter("m"));
 			repList = dao.adminGetReportList(startRow,pageSize,m_no);
 			cnt = dao.getReportCount(m_no);
 			forward.setPath("./admin/adminGenMemDetailReport.jsp");

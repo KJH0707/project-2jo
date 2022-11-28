@@ -102,7 +102,7 @@ $(document).ready(function(){
 
 
      
-     <title>Fork & Knife | Itwill 2 team</title>
+     <title>Fork & Knife | ${dto.s_name }</title>
      <meta name="description" content="project">
      <meta name="author" content="Kimarotec">
      <meta name="keyword" content="html5, css, bootstrap, property, real-estate theme , bootstrap template">

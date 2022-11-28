@@ -1066,7 +1066,7 @@ public class UserDAO {
 					con = getConnection();
 				// 3. sql 작성(select) & pstmt 객체
 //					sql = "select * from itwill_board";
-					sql = "select B.rep_no, B.rep_howmany, A.m_id, A.m_nickname, B.rep_date, B.rep_m_no, "
+					sql = "select B.rep_no, B.rep_howmany, A.m_id, A.m_nickname, B.rep_date, B.rep_m_no, A.m_no, "
 							+ "(select C.m_id from member C, report D where D.rep_m_no=C.m_no limit 1) rep_m_id, "
 							+ "(select C.m_nickname from member C, report D where D.rep_m_no=C.m_no limit 1) rep_m_nickname, "
 							+ "(select C.m_email from member C, report D where D.rep_m_no=C.m_no limit 1) m_email "
@@ -1084,6 +1084,7 @@ public class UserDAO {
 						hm = new HashMap<String,Object>();
 						hm.put("rep_no", rs.getInt("rep_no"));
 						hm.put("rep_m_no", rs.getInt("rep_m_no"));
+						hm.put("m_no", rs.getInt("m_no"));
 						hm.put("rep_howmany", rs.getInt("rep_howmany"));
 						hm.put("m_id", rs.getString("m_id"));
 						hm.put("m_nickname", rs.getString("m_nickname"));
@@ -1134,7 +1135,8 @@ public class UserDAO {
 						hm.put("rep_m_no", rs.getInt("rep_m_no"));
 						hm.put("rep_subject", rs.getString("rep_subject"));
 						hm.put("rep_howmany", rs.getInt("rep_howmany"));
-						hm.put("rep_date", rs.getInt("rep_date"));
+						hm.put("rep_date", rs.getTimestamp("rep_date"));
+						hm.put("rep_sort", rs.getInt("rep_sort"));
 						//DTO -> List
 						System.out.println("ddddddddddddddddddddddddddddddddddddddddddddddddddddd"+hm);
 						reportList.add(hm);

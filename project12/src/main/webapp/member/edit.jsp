@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Insert title here</title>
+<title>Fork and Knife | 회원정보 수정</title>
 
 		
         <link rel="stylesheet" href="./assets/css/wizard.css"> 

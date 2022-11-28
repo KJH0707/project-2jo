@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="assets/vendor/fonts/material-design-iconic-font/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="assets/vendor/charts/c3charts/c3.css">
     <link rel="stylesheet" href="assets/vendor/fonts/flag-icon-css/flag-icon.min.css">
-    <title>Admin Dashboard </title>
+    <title>Fork and Knife | Admin</title>
     <script type="text/javascript">
     function isDelete(x,y){
     
@@ -105,8 +105,8 @@
                                                     <tr class="border-0">
                                                         <th class="border-0">No.</th>
                                                         <th class="border-0">신고자 닉네임(ID)</th>
-                                                        <th class="border-0">신고 횟수</th>
                                                         <th class="border-0">피신고자 닉네임(ID)</th>
+                                                        <th class="border-0">신고 횟수</th>
                                                         <th class="border-0">신고 상세보기</th>
                                                         <th class="border-0">신고 일자</th>
                                                         <th class="border-0">관리</th>
@@ -122,9 +122,9 @@
 <!--                                                         <td> -->
 <!--                                                             <div class="m-r-10"><img src="assets/images/product-pic.jpg" alt="user" class="rounded" width="45"></div> -->
 <!--                                                         </td> -->
-                                                        <td>${rep.m_nickname }(${rep.m_id })</td>
+                                                        <td>${rep.m_nickname }(<a href="./adminGenMemDetail.us?m=${rep.m_no}"><b>${rep.m_id }</b></a>)</td>
+                                                        <td>${rep.rep_m_nickname }(<a href="./adminGenMemDetail.us?m=${rep.rep_m_no}"><b>${rep.rep_m_id }</b></a>)</td>
                                                         <td>${rep.rep_howmany }</td>
-                                                        <td>${rep.rep_m_nickname }(${rep.rep_m_id })</td>
                                                         <td><a href="./reportDetails.us?rep_no=${rep.rep_no }&u=1"><b>상세 보기</b></a></td>
                                                         
                                                         <td>${rep.rep_date}</td>
