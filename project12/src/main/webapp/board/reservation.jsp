@@ -70,7 +70,7 @@
                             <hr>
                             <div id="map"></div>
                             <hr>
-                            <h2>예약 드가자</h2>
+                            <h2>예약</h2>
                             <form action="./reservation.st" method="post" name="fr">
                             <input type="hidden" value="${param.s_no }" name="s_no">
                             <input type="hidden" value="${param.m_no }" name="m_no">
